@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'local/database.dart';
 import 'repositories/journal_repository.dart';
 import 'repositories/mood_repository.dart';
+import 'repositories/settings_repository.dart';
 import 'repositories/task_repository.dart';
 import 'repositories/timeline_repository.dart';
 
@@ -16,6 +17,10 @@ final appDatabaseProvider = Provider<AppDatabase>((ref) {
     'appDatabaseProvider must be overridden with an opened AppDatabase',
   );
 });
+
+final settingsRepositoryProvider = Provider<SettingsRepository>(
+  (ref) => SettingsRepository(ref.watch(appDatabaseProvider)),
+);
 
 final moodRepositoryProvider = Provider<MoodRepository>(
   (ref) => MoodRepository(ref.watch(appDatabaseProvider)),

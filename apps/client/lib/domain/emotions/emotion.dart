@@ -1,19 +1,13 @@
 /// A primary emotion from Plutchik's wheel.
+///
+/// The model carries no display text: labels are resolved at the presentation
+/// layer from [key] via the localizations (see `l10n/emotion_labels.dart`), so
+/// the same catalog serves every language.
 class Emotion {
-  const Emotion({
-    required this.key,
-    required this.label,
-    required this.opposite,
-  });
+  const Emotion({required this.key, required this.opposite});
 
-  /// Stable identifier persisted in the database. NEVER localize this.
+  /// Stable identifier persisted in the database. NEVER localized.
   final String key;
-
-  /// Human-readable name.
-  ///
-  /// Placeholder English. The UI language / i18n strategy is still an open
-  /// decision — when it lands, labels move to ARB files keyed by [key].
-  final String label;
 
   /// [key] of the diametrically opposite emotion on the wheel.
   final String opposite;

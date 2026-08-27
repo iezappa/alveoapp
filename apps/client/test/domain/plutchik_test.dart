@@ -28,7 +28,7 @@ void main() {
   });
 
   test('lookup helpers', () {
-    expect(emotionForKey('joy')!.label, 'Joy');
+    expect(emotionForKey('joy')!.opposite, 'sadness');
     expect(emotionForKey('not-an-emotion'), isNull);
     expect(isKnownEmotionKey('anger'), isTrue);
     expect(isKnownEmotionKey('anger '), isFalse);

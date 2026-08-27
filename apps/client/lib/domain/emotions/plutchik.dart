@@ -4,16 +4,17 @@ import 'emotion.dart';
 ///
 /// The wheel's finer gradations (serenity/ecstasy around joy, etc.) and the
 /// dyads (love = joy + trust) are layered on top of these later; Fase 1 only
-/// needs the eight anchors.
+/// needs the eight anchors. Display labels come from the localizations, keyed
+/// by [Emotion.key].
 const List<Emotion> plutchikPrimaryEmotions = [
-  Emotion(key: 'joy', label: 'Joy', opposite: 'sadness'),
-  Emotion(key: 'sadness', label: 'Sadness', opposite: 'joy'),
-  Emotion(key: 'trust', label: 'Trust', opposite: 'disgust'),
-  Emotion(key: 'disgust', label: 'Disgust', opposite: 'trust'),
-  Emotion(key: 'fear', label: 'Fear', opposite: 'anger'),
-  Emotion(key: 'anger', label: 'Anger', opposite: 'fear'),
-  Emotion(key: 'surprise', label: 'Surprise', opposite: 'anticipation'),
-  Emotion(key: 'anticipation', label: 'Anticipation', opposite: 'surprise'),
+  Emotion(key: 'joy', opposite: 'sadness'),
+  Emotion(key: 'sadness', opposite: 'joy'),
+  Emotion(key: 'trust', opposite: 'disgust'),
+  Emotion(key: 'disgust', opposite: 'trust'),
+  Emotion(key: 'fear', opposite: 'anger'),
+  Emotion(key: 'anger', opposite: 'fear'),
+  Emotion(key: 'surprise', opposite: 'anticipation'),
+  Emotion(key: 'anticipation', opposite: 'surprise'),
 ];
 
 final Map<String, Emotion> _byKey = {

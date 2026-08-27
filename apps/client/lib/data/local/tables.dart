@@ -121,3 +121,14 @@ class JournalEntryTags extends Table {
   @override
   Set<Column> get primaryKey => {journalEntryId, tagId};
 }
+
+/// Small key/value store for app-level preferences (UI language, and later
+/// things like the export folder or lock settings). Deliberately generic so
+/// each new preference is a row, not a migration.
+class AppSettings extends Table {
+  TextColumn get key => text()();
+  TextColumn get value => text()();
+
+  @override
+  Set<Column> get primaryKey => {key};
+}

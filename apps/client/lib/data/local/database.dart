@@ -18,6 +18,7 @@ part 'database.g.dart';
     Tags,
     MoodEntryTags,
     JournalEntryTags,
+    AppSettings,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -32,11 +33,16 @@ class AppDatabase extends _$AppDatabase {
       AppDatabase(NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onCreate: (m) => m.createAll(),
+        onUpgrade: (m, from, to) async {
+          if (from < 2) {
+            await m.createTable(appSettings);
+          }
+        },
         beforeOpen: (details) async {
           // Drift does not enable foreign keys by default.
           await customStatement('PRAGMA foreign_keys = ON');

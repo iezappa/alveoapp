@@ -1,0 +1,17 @@
+{
+  "@@locale": "es",
+  "appTitle": "Terapia",
+  "settingsLanguage": "Idioma",
+  "languageEnglish": "Inglés",
+  "languageSpanish": "Español",
+  "navTimeline": "Línea de tiempo",
+  "navSettings": "Ajustes",
+  "emotionJoy": "Alegría",
+  "emotionSadness": "Tristeza",
+  "emotionTrust": "Confianza",
+  "emotionDisgust": "Asco",
+  "emotionFear": "Miedo",
+  "emotionAnger": "Enojo",
+  "emotionSurprise": "Sorpresa",
+  "emotionAnticipation": "Anticipación"
+}
