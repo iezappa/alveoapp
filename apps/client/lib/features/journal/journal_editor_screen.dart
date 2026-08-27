@@ -8,7 +8,7 @@ import '../../domain/journal/journal_section.dart';
 import '../../l10n/app_localizations.dart';
 import '../timeline/timeline_providers.dart';
 import 'journal_providers.dart';
-import 'markdown_editor.dart';
+import 'live_markdown_field.dart';
 
 class JournalEditorScreen extends ConsumerStatefulWidget {
   const JournalEditorScreen({
@@ -33,7 +33,7 @@ class JournalEditorScreen extends ConsumerStatefulWidget {
 
 class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
   final _titleController = TextEditingController();
-  final _bodyController = TextEditingController();
+  final _bodyController = MarkdownStylingController();
 
   late JournalSection _section = widget.section;
   late bool _isReview = widget.isMonthlyReview;
@@ -182,10 +182,8 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
             ),
             const SizedBox(height: 12),
             Expanded(
-              child: MarkdownEditor(
+              child: LiveMarkdownField(
                 controller: _bodyController,
-                writeLabel: l10n.editorWrite,
-                previewLabel: l10n.editorPreview,
                 hintText: l10n.journalBodyHint,
               ),
             ),

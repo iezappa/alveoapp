@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
-import '../journal/markdown_editor.dart';
+import '../journal/live_markdown_field.dart';
 import '../timeline/timeline_providers.dart';
 import 'session_links_tab.dart';
 import 'session_providers.dart';
@@ -23,9 +23,9 @@ class SessionEditorScreen extends ConsumerStatefulWidget {
 }
 
 class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
-  final _agenda = TextEditingController();
-  final _notes = TextEditingController();
-  final _takeaways = TextEditingController();
+  final _agenda = MarkdownStylingController();
+  final _notes = MarkdownStylingController();
+  final _takeaways = MarkdownStylingController();
 
   DateTime _scheduledFor = _defaultSlot();
   bool _loading = false;
@@ -214,7 +214,7 @@ class _EditorPane extends StatelessWidget {
     required this.l10n,
   });
 
-  final TextEditingController controller;
+  final MarkdownStylingController controller;
   final String hint;
   final AppLocalizations l10n;
 
@@ -222,12 +222,7 @@ class _EditorPane extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: MarkdownEditor(
-        controller: controller,
-        writeLabel: l10n.editorWrite,
-        previewLabel: l10n.editorPreview,
-        hintText: hint,
-      ),
+      child: LiveMarkdownField(controller: controller, hintText: hint),
     );
   }
 }
