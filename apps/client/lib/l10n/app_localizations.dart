@@ -356,6 +356,54 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get navSettings;
 
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @searchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search entries, sessions, tasks…'**
+  String get searchHint;
+
+  /// No description provided for @searchStartTyping.
+  ///
+  /// In en, this message translates to:
+  /// **'Type to search'**
+  String get searchStartTyping;
+
+  /// No description provided for @searchNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No matches'**
+  String get searchNoResults;
+
+  /// No description provided for @searchTypeMood.
+  ///
+  /// In en, this message translates to:
+  /// **'Mood'**
+  String get searchTypeMood;
+
+  /// No description provided for @searchTypeJournal.
+  ///
+  /// In en, this message translates to:
+  /// **'Journal'**
+  String get searchTypeJournal;
+
+  /// No description provided for @searchTypeTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get searchTypeTask;
+
+  /// No description provided for @searchTypeSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get searchTypeSession;
+
   /// No description provided for @journalSectionOneLiner.
   ///
   /// In en, this message translates to:

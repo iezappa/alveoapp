@@ -49,6 +49,15 @@
   "navJournal": "Diario",
   "navSettings": "Ajustes",
 
+  "search": "Buscar",
+  "searchHint": "Buscá entradas, sesiones, tareas…",
+  "searchStartTyping": "Escribí para buscar",
+  "searchNoResults": "Sin coincidencias",
+  "searchTypeMood": "Ánimo",
+  "searchTypeJournal": "Diario",
+  "searchTypeTask": "Tareas",
+  "searchTypeSession": "Sesiones",
+
   "journalSectionOneLiner": "Líneas del día",
   "journalSectionStudent": "Estudio",
   "journalSectionCreative": "Creatividad",

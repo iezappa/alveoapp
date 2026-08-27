@@ -67,6 +67,15 @@
   "navJournal": "Journal",
   "navSettings": "Settings",
 
+  "search": "Search",
+  "searchHint": "Search entries, sessions, tasks…",
+  "searchStartTyping": "Type to search",
+  "searchNoResults": "No matches",
+  "searchTypeMood": "Mood",
+  "searchTypeJournal": "Journal",
+  "searchTypeTask": "Tasks",
+  "searchTypeSession": "Sessions",
+
   "journalSectionOneLiner": "One-liners",
   "journalSectionStudent": "Student",
   "journalSectionCreative": "Creative",

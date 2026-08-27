@@ -143,6 +143,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navSettings => 'Ajustes';
 
   @override
+  String get search => 'Buscar';
+
+  @override
+  String get searchHint => 'Buscá entradas, sesiones, tareas…';
+
+  @override
+  String get searchStartTyping => 'Escribí para buscar';
+
+  @override
+  String get searchNoResults => 'Sin coincidencias';
+
+  @override
+  String get searchTypeMood => 'Ánimo';
+
+  @override
+  String get searchTypeJournal => 'Diario';
+
+  @override
+  String get searchTypeTask => 'Tareas';
+
+  @override
+  String get searchTypeSession => 'Sesiones';
+
+  @override
   String get journalSectionOneLiner => 'Líneas del día';
 
   @override

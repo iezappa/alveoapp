@@ -32,6 +32,11 @@ class TimelineScreen extends ConsumerWidget {
         title: Text(l10n.navTimeline),
         actions: [
           IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () => context.push('/search'),
+            tooltip: l10n.search,
+          ),
+          IconButton(
             icon: const Icon(Icons.note_add_outlined),
             onPressed: () => context.push('/journal/new'),
             tooltip: l10n.journalNewTitle,

@@ -6,6 +6,7 @@ import '../features/journal/journal_editor_screen.dart';
 import '../features/journal/journal_labels.dart';
 import '../features/journal/journal_screen.dart';
 import '../features/journal/journal_section_screen.dart';
+import '../features/search/search_screen.dart';
 import '../features/sessions/session_editor_screen.dart';
 import '../features/sessions/session_list_screen.dart';
 import '../features/settings/settings_screen.dart';
@@ -110,6 +111,10 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/tasks/:id',
         builder: (context, state) =>
             TaskEditorScreen(taskId: state.pathParameters['id']),
+      ),
+      GoRoute(
+        path: '/search',
+        builder: (context, state) => const SearchScreen(),
       ),
       GoRoute(
         path: '/settings',
