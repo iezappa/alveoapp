@@ -9,10 +9,10 @@ import '../../l10n/app_localizations.dart';
 import 'link_providers.dart';
 
 IconData _iconFor(LinkTargetType type) => switch (type) {
-      LinkTargetType.task => Icons.checklist_outlined,
-      LinkTargetType.journal => Icons.notes_outlined,
-      LinkTargetType.mood => Icons.favorite_outline,
-    };
+  LinkTargetType.task => Icons.checklist_outlined,
+  LinkTargetType.journal => Icons.notes_outlined,
+  LinkTargetType.mood => Icons.favorite_outline,
+};
 
 String _labelFor(AppLocalizations l10n, LinkedItem item) {
   final title = item.title?.trim();
@@ -73,6 +73,7 @@ class SessionLinksTab extends ConsumerWidget {
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: null,
         onPressed: () => _pickAndLink(context, ref, l10n, locale, refresh),
         icon: const Icon(Icons.add_link),
         label: Text(l10n.linkAdd),
@@ -87,8 +88,9 @@ class SessionLinksTab extends ConsumerWidget {
     String locale,
     VoidCallback refresh,
   ) async {
-    final candidates =
-        await ref.read(linkRepositoryProvider).linkableItems(sessionId);
+    final candidates = await ref
+        .read(linkRepositoryProvider)
+        .linkableItems(sessionId);
     if (!context.mounted) return;
 
     if (candidates.isEmpty) {

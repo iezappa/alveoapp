@@ -12,7 +12,8 @@ final taskListProvider = FutureProvider<List<Task>>((ref) async {
   bool isOpen(Task t) =>
       t.status == TaskStatus.pending || t.status == TaskStatus.inProgress;
 
-  final sorted = [...tasks]..sort((a, b) {
+  final sorted = [...tasks]
+    ..sort((a, b) {
       if (isOpen(a) != isOpen(b)) return isOpen(a) ? -1 : 1;
 
       final aDue = a.dueDate;

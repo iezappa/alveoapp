@@ -5,11 +5,9 @@ class ImportReport {
 
   final Map<String, TableImport> tables;
 
-  int get totalInserted =>
-      tables.values.fold(0, (sum, t) => sum + t.inserted);
+  int get totalInserted => tables.values.fold(0, (sum, t) => sum + t.inserted);
 
-  int get totalSkipped =>
-      tables.values.fold(0, (sum, t) => sum + t.skipped);
+  int get totalSkipped => tables.values.fold(0, (sum, t) => sum + t.skipped);
 }
 
 class TableImport {

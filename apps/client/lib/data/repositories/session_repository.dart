@@ -18,7 +18,9 @@ class SessionRepository {
     String? id,
   }) async {
     final sessionId = id ?? _uuid.v4();
-    await _db.into(_db.sessions).insert(
+    await _db
+        .into(_db.sessions)
+        .insert(
           SessionsCompanion.insert(
             id: sessionId,
             scheduledFor: scheduledFor,
@@ -50,14 +52,15 @@ class SessionRepository {
 
   /// All sessions, soonest-scheduled last (chronological).
   Future<List<Session>> getAll() {
-    return (_db.select(_db.sessions)
-          ..orderBy([(t) => OrderingTerm.asc(t.scheduledFor)]))
-        .get();
+    return (_db.select(
+      _db.sessions,
+    )..orderBy([(t) => OrderingTerm.asc(t.scheduledFor)])).get();
   }
 
   Future<Session?> getById(String id) {
-    return (_db.select(_db.sessions)..where((t) => t.id.equals(id)))
-        .getSingleOrNull();
+    return (_db.select(
+      _db.sessions,
+    )..where((t) => t.id.equals(id))).getSingleOrNull();
   }
 
   /// The most recent session scheduled strictly before [when] — i.e. the one

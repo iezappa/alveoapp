@@ -38,11 +38,7 @@ class DayJournalEntry {
 }
 
 class DayTask {
-  const DayTask({
-    required this.title,
-    required this.done,
-    this.closingNote,
-  });
+  const DayTask({required this.title, required this.done, this.closingNote});
 
   final String title;
   final bool done;
@@ -62,8 +58,7 @@ class DailyExport {
   final List<DayJournalEntry> journals;
   final List<DayTask> tasks;
 
-  bool get isEmpty =>
-      moods.isEmpty && journals.isEmpty && tasks.isEmpty;
+  bool get isEmpty => moods.isEmpty && journals.isEmpty && tasks.isEmpty;
 }
 
 String _isoDate(DateTime d) =>
@@ -94,7 +89,8 @@ String renderDailyMarkdown(
   buffer.writeln('---');
   buffer.writeln('date: ${_isoDate(data.day)}');
   if (data.moods.isNotEmpty) {
-    final avg = data.moods.map((m) => m.mood).reduce((a, b) => a + b) /
+    final avg =
+        data.moods.map((m) => m.mood).reduce((a, b) => a + b) /
         data.moods.length;
     buffer.writeln('mood_avg: ${_trimNumber(avg)}');
   }

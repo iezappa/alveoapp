@@ -20,7 +20,9 @@ class TaskRepository {
   }) async {
     final taskId = id ?? _uuid.v4();
 
-    await _db.into(_db.tasks).insert(
+    await _db
+        .into(_db.tasks)
+        .insert(
           TasksCompanion.insert(
             id: taskId,
             title: title,
@@ -40,9 +42,7 @@ class TaskRepository {
     return (_db.update(_db.tasks)..where((t) => t.id.equals(id))).write(
       TasksCompanion(
         status: Value(status),
-        completedAt: Value(
-          status == TaskStatus.done ? DateTime.now() : null,
-        ),
+        completedAt: Value(status == TaskStatus.done ? DateTime.now() : null),
       ),
     );
   }
@@ -65,17 +65,16 @@ class TaskRepository {
         status: Value(status),
         closingNote: Value(closingNote),
         completedAt: Value(
-          status == TaskStatus.done
-              ? (completedAt ?? DateTime.now())
-              : null,
+          status == TaskStatus.done ? (completedAt ?? DateTime.now()) : null,
         ),
       ),
     );
   }
 
   Future<Task?> getById(String id) {
-    return (_db.select(_db.tasks)..where((t) => t.id.equals(id)))
-        .getSingleOrNull();
+    return (_db.select(
+      _db.tasks,
+    )..where((t) => t.id.equals(id))).getSingleOrNull();
   }
 
   /// Marks the task done and records how it went.
@@ -95,9 +94,9 @@ class TaskRepository {
 
   /// All tasks, newest first.
   Future<List<Task>> getAll() {
-    return (_db.select(_db.tasks)
-          ..orderBy([(t) => OrderingTerm.desc(t.createdAt)]))
-        .get();
+    return (_db.select(
+      _db.tasks,
+    )..orderBy([(t) => OrderingTerm.desc(t.createdAt)])).get();
   }
 
   Future<void> delete(String id) {

@@ -70,7 +70,9 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
       lastDate: DateTime(2100),
     );
     if (picked != null) {
-      setState(() => _entryDate = DateTime(picked.year, picked.month, picked.day));
+      setState(
+        () => _entryDate = DateTime(picked.year, picked.month, picked.day),
+      );
     }
   }
 
@@ -107,7 +109,7 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
     if (context.canPop()) {
       context.pop();
     } else {
-      context.go('/');
+      context.go('/timeline');
     }
   }
 
@@ -122,7 +124,9 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isNew ? l10n.journalNewTitle : l10n.journalEditTitle),
+        title: Text(
+          widget.isNew ? l10n.journalNewTitle : l10n.journalEditTitle,
+        ),
         actions: [
           IconButton(
             onPressed: _saving ? null : _save,

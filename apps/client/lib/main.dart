@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app/lock_controller.dart';
 import 'app/locale_controller.dart';
 import 'app/router.dart';
+import 'app/theme.dart';
 import 'data/local/database.dart';
 import 'data/providers.dart';
 import 'features/security/lock_screen.dart';
@@ -20,10 +21,7 @@ Future<void> main() async {
   await container.read(lockControllerProvider.notifier).initialize();
 
   runApp(
-    UncontrolledProviderScope(
-      container: container,
-      child: const TerapiaApp(),
-    ),
+    UncontrolledProviderScope(container: container, child: const TerapiaApp()),
   );
 }
 
@@ -65,10 +63,8 @@ class _TerapiaAppState extends ConsumerState<TerapiaApp>
       locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: const Color(0xFF4C6FFF),
-      ),
+      theme: buildLightTheme(),
+      darkTheme: buildDarkTheme(),
       routerConfig: ref.watch(routerProvider),
       builder: (context, child) {
         final locked = ref.watch(lockControllerProvider);
@@ -76,9 +72,7 @@ class _TerapiaAppState extends ConsumerState<TerapiaApp>
         // Host the lock screen in its own Overlay: replacing `child` removes
         // the Navigator, and text fields need an Overlay ancestor.
         return Overlay(
-          initialEntries: [
-            OverlayEntry(builder: (_) => const LockScreen()),
-          ],
+          initialEntries: [OverlayEntry(builder: (_) => const LockScreen())],
         );
       },
     );

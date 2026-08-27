@@ -196,8 +196,7 @@ class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
                     hint: l10n.sessionTakeawaysHint,
                     l10n: l10n,
                   ),
-                  if (showLinks)
-                    SessionLinksTab(sessionId: widget.sessionId!),
+                  if (showLinks) SessionLinksTab(sessionId: widget.sessionId!),
                 ],
               ),
             ),

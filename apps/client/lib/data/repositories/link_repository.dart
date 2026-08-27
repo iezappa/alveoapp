@@ -11,12 +11,10 @@ class LinkRepository {
 
   final AppDatabase _db;
 
-  Future<void> link(
-    String sessionId,
-    LinkTargetType type,
-    String targetId,
-  ) {
-    return _db.into(_db.sessionLinks).insert(
+  Future<void> link(String sessionId, LinkTargetType type, String targetId) {
+    return _db
+        .into(_db.sessionLinks)
+        .insert(
           SessionLinksCompanion.insert(
             sessionId: sessionId,
             targetType: type,
@@ -26,34 +24,31 @@ class LinkRepository {
         );
   }
 
-  Future<void> unlink(
-    String sessionId,
-    LinkTargetType type,
-    String targetId,
-  ) {
-    return (_db.delete(_db.sessionLinks)
-          ..where((t) =>
+  Future<void> unlink(String sessionId, LinkTargetType type, String targetId) {
+    return (_db.delete(_db.sessionLinks)..where(
+          (t) =>
               t.sessionId.equals(sessionId) &
               t.targetType.equalsValue(type) &
-              t.targetId.equals(targetId)))
+              t.targetId.equals(targetId),
+        ))
         .go();
   }
 
   /// Drops every link that points at [targetId] of [type]. Call this when the
   /// target record itself is deleted.
   Future<void> removeLinksTo(LinkTargetType type, String targetId) {
-    return (_db.delete(_db.sessionLinks)
-          ..where((t) =>
-              t.targetType.equalsValue(type) & t.targetId.equals(targetId)))
+    return (_db.delete(_db.sessionLinks)..where(
+          (t) => t.targetType.equalsValue(type) & t.targetId.equals(targetId),
+        ))
         .go();
   }
 
   /// Items linked to [sessionId], resolved against live rows (dangling links
   /// skipped), newest first.
   Future<List<LinkedItem>> linkedItems(String sessionId) async {
-    final links = await (_db.select(_db.sessionLinks)
-          ..where((t) => t.sessionId.equals(sessionId)))
-        .get();
+    final links = await (_db.select(
+      _db.sessionLinks,
+    )..where((t) => t.sessionId.equals(sessionId))).get();
 
     final wanted = <LinkTargetType, Set<String>>{};
     for (final link in links) {
@@ -68,9 +63,9 @@ class LinkRepository {
   /// Every task / journal / mood record not yet linked to [sessionId],
   /// newest first — the candidates for a new link.
   Future<List<LinkedItem>> linkableItems(String sessionId) async {
-    final links = await (_db.select(_db.sessionLinks)
-          ..where((t) => t.sessionId.equals(sessionId)))
-        .get();
+    final links = await (_db.select(
+      _db.sessionLinks,
+    )..where((t) => t.sessionId.equals(sessionId))).get();
     final taken = {
       for (final link in links) _key(link.targetType, link.targetId),
     };
@@ -104,11 +99,7 @@ class LinkRepository {
           title: j.title,
         ),
       for (final m in moods)
-        LinkedItem(
-          type: LinkTargetType.mood,
-          id: m.id,
-          when: m.occurredAt,
-        ),
+        LinkedItem(type: LinkTargetType.mood, id: m.id, when: m.occurredAt),
     ];
   }
 
@@ -119,40 +110,52 @@ class LinkRepository {
 
     final taskIds = wanted[LinkTargetType.task];
     if (taskIds != null && taskIds.isNotEmpty) {
-      final rows = await (_db.select(_db.tasks)
-            ..where((t) => t.id.isIn(taskIds.toList())))
-          .get();
-      result.addAll(rows.map((t) => LinkedItem(
+      final rows = await (_db.select(
+        _db.tasks,
+      )..where((t) => t.id.isIn(taskIds.toList()))).get();
+      result.addAll(
+        rows.map(
+          (t) => LinkedItem(
             type: LinkTargetType.task,
             id: t.id,
             when: t.createdAt,
             title: t.title,
-          )));
+          ),
+        ),
+      );
     }
 
     final journalIds = wanted[LinkTargetType.journal];
     if (journalIds != null && journalIds.isNotEmpty) {
-      final rows = await (_db.select(_db.journalEntries)
-            ..where((t) => t.id.isIn(journalIds.toList())))
-          .get();
-      result.addAll(rows.map((j) => LinkedItem(
+      final rows = await (_db.select(
+        _db.journalEntries,
+      )..where((t) => t.id.isIn(journalIds.toList()))).get();
+      result.addAll(
+        rows.map(
+          (j) => LinkedItem(
             type: LinkTargetType.journal,
             id: j.id,
             when: j.createdAt,
             title: j.title,
-          )));
+          ),
+        ),
+      );
     }
 
     final moodIds = wanted[LinkTargetType.mood];
     if (moodIds != null && moodIds.isNotEmpty) {
-      final rows = await (_db.select(_db.moodEntries)
-            ..where((t) => t.id.isIn(moodIds.toList())))
-          .get();
-      result.addAll(rows.map((m) => LinkedItem(
+      final rows = await (_db.select(
+        _db.moodEntries,
+      )..where((t) => t.id.isIn(moodIds.toList()))).get();
+      result.addAll(
+        rows.map(
+          (m) => LinkedItem(
             type: LinkTargetType.mood,
             id: m.id,
             when: m.occurredAt,
-          )));
+          ),
+        ),
+      );
     }
 
     return result;

@@ -189,7 +189,7 @@ class _TaskEditorScreenState extends ConsumerState<TaskEditorScreen> {
                     _dueDate == null
                         ? l10n.taskNoDueDate
                         : '${l10n.taskDueDate}: '
-                            '${DateFormat.yMMMd(locale).format(_dueDate!)}',
+                              '${DateFormat.yMMMd(locale).format(_dueDate!)}',
                   ),
                 ),
               ),

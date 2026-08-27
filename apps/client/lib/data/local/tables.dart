@@ -28,8 +28,7 @@ class MoodEntries extends Table {
   /// note with a full journal document.
   TextColumn get note => text().nullable()();
 
-  DateTimeColumn get createdAt =>
-      dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -41,8 +40,8 @@ class MoodEntries extends Table {
 /// table: the catalog is static, so a table would only add migrations for no
 /// gain.
 class MoodEntryEmotions extends Table {
-  TextColumn get moodEntryId => text()
-      .references(MoodEntries, #id, onDelete: KeyAction.cascade)();
+  TextColumn get moodEntryId =>
+      text().references(MoodEntries, #id, onDelete: KeyAction.cascade)();
 
   TextColumn get emotionKey => text()();
 
@@ -63,10 +62,8 @@ class JournalEntries extends Table {
   /// the previous day for the daily export.
   DateTimeColumn get entryDate => dateTime()();
 
-  DateTimeColumn get createdAt =>
-      dateTime().withDefault(currentDateAndTime)();
-  DateTimeColumn get updatedAt =>
-      dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
 
   TextColumn get title => text().nullable()();
   TextColumn get bodyMarkdown => text()();
@@ -79,8 +76,7 @@ class JournalEntries extends Table {
 class Tasks extends Table {
   TextColumn get id => text()();
 
-  DateTimeColumn get createdAt =>
-      dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
   TextColumn get title => text()();
   TextColumn get descriptionMarkdown => text().nullable()();
@@ -107,8 +103,8 @@ class Tags extends Table {
 }
 
 class MoodEntryTags extends Table {
-  TextColumn get moodEntryId => text()
-      .references(MoodEntries, #id, onDelete: KeyAction.cascade)();
+  TextColumn get moodEntryId =>
+      text().references(MoodEntries, #id, onDelete: KeyAction.cascade)();
   TextColumn get tagId =>
       text().references(Tags, #id, onDelete: KeyAction.cascade)();
 
@@ -117,8 +113,8 @@ class MoodEntryTags extends Table {
 }
 
 class JournalEntryTags extends Table {
-  TextColumn get journalEntryId => text()
-      .references(JournalEntries, #id, onDelete: KeyAction.cascade)();
+  TextColumn get journalEntryId =>
+      text().references(JournalEntries, #id, onDelete: KeyAction.cascade)();
   TextColumn get tagId =>
       text().references(Tags, #id, onDelete: KeyAction.cascade)();
 
@@ -145,8 +141,7 @@ class Sessions extends Table {
   /// When the session takes (or took) place.
   DateTimeColumn get scheduledFor => dateTime()();
 
-  DateTimeColumn get createdAt =>
-      dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
   TextColumn get agendaMarkdown => text().nullable()();
   TextColumn get notesMarkdown => text().nullable()();

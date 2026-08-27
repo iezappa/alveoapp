@@ -43,7 +43,9 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
   Future<void> _save() async {
     setState(() => _saving = true);
     final note = _noteController.text.trim();
-    await ref.read(moodRepositoryProvider).add(
+    await ref
+        .read(moodRepositoryProvider)
+        .add(
           mood: _mood,
           occurredAt: DateTime.now(),
           note: note.isEmpty ? null : note,
@@ -56,13 +58,12 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
 
     if (!mounted) return;
     final l10n = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(l10n.checkInSaved)),
-    );
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(l10n.checkInSaved)));
     if (context.canPop()) {
       context.pop();
     } else {
-      context.go('/');
+      context.go('/timeline');
     }
   }
 
@@ -75,16 +76,20 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
         children: [
-          Text(l10n.overallMood,
-              style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            l10n.overallMood,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           const SizedBox(height: 8),
           _ScaleSelector(
             value: _mood,
             onChanged: (v) => setState(() => _mood = v),
           ),
           const SizedBox(height: 24),
-          Text(l10n.emotionsSectionTitle,
-              style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            l10n.emotionsSectionTitle,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           const SizedBox(height: 8),
           PlutchikWheel(
             selected: _emotions.keys.toSet(),
@@ -120,6 +125,7 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: null,
         onPressed: _saving ? null : _save,
         icon: const Icon(Icons.check),
         label: Text(l10n.saveButton),

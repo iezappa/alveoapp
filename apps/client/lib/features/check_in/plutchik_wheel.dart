@@ -25,7 +25,8 @@ const List<PlutchikWedge> plutchikWheel = [
 
 const int _wedgeCount = 8; // == plutchikWheel.length
 const double _sweep = 2 * math.pi / _wedgeCount;
-const double _startAngle = -math.pi / 2 - _sweep / 2; // wedge 0 centred on north
+const double _startAngle =
+    -math.pi / 2 - _sweep / 2; // wedge 0 centred on north
 
 /// Interactive Plutchik wheel. Tapping a wedge toggles it through [onToggle];
 /// [selected] holds the currently chosen emotion keys.
@@ -123,12 +124,14 @@ class _WheelPainter extends CustomPainter {
         Paint()
           ..style = PaintingStyle.stroke
           ..strokeWidth = isSelected ? 3 : 1
-          ..color = isSelected ? outlineColor : outlineColor.withValues(alpha: 0.4),
+          ..color = isSelected
+              ? outlineColor
+              : outlineColor.withValues(alpha: 0.4),
       );
 
       final mid = start + _sweep / 2;
-      final labelPos = center +
-          Offset(math.cos(mid), math.sin(mid)) * (radius * 0.62);
+      final labelPos =
+          center + Offset(math.cos(mid), math.sin(mid)) * (radius * 0.62);
       final tp = TextPainter(
         text: TextSpan(
           text: labelFor(wedge.key),

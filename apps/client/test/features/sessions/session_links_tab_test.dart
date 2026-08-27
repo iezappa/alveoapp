@@ -26,9 +26,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.byIcon(Icons.more_vert));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Sessions'));
+    await tester.tap(find.text('Sessions')); // navigation rail / bar
     await tester.pumpAndSettle();
     await tester.tap(find.byType(ListTile).first);
     await tester.pumpAndSettle();

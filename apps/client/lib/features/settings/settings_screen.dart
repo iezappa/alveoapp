@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/lock_controller.dart';
 import '../../app/locale_controller.dart';
+import '../../app/theme.dart';
+import '../../app/ui.dart';
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../security/pin_dialogs.dart';
@@ -21,78 +23,72 @@ class SettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.navSettings)),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          Text(
-            l10n.settingsLanguage,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 8),
-          SegmentedButton<String>(
-            segments: [
-              ButtonSegment(value: 'es', label: Text(l10n.languageSpanish)),
-              ButtonSegment(value: 'en', label: Text(l10n.languageEnglish)),
+      body: Align(
+        alignment: Alignment.topCenter,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: kContentMaxWidth),
+          child: ListView(
+            padding: const EdgeInsets.all(kGutter),
+            children: [
+              SectionLabel(l10n.settingsLanguage),
+              SegmentedButton<String>(
+                segments: [
+                  ButtonSegment(value: 'es', label: Text(l10n.languageSpanish)),
+                  ButtonSegment(value: 'en', label: Text(l10n.languageEnglish)),
+                ],
+                selected: {active == 'es' ? 'es' : 'en'},
+                onSelectionChanged: (selection) {
+                  ref
+                      .read(localeControllerProvider.notifier)
+                      .setLocale(Locale(selection.first));
+                },
+              ),
+              const SizedBox(height: 28),
+              SectionLabel(l10n.pinSectionTitle),
+              hasPin.when(
+                loading: () => const LinearProgressIndicator(),
+                error: (e, _) => Text('$e'),
+                data: (enabled) => enabled
+                    ? Column(
+                        children: [
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            leading: const Icon(Icons.password_outlined),
+                            title: Text(l10n.pinChange),
+                            onTap: () => _changePin(context, ref),
+                          ),
+                          ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            leading: const Icon(Icons.lock_open_outlined),
+                            title: Text(l10n.pinRemove),
+                            onTap: () => _removePin(context, ref),
+                          ),
+                        ],
+                      )
+                    : ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: const Icon(Icons.lock_outline),
+                        title: Text(l10n.pinSet),
+                        onTap: () => _setPin(context, ref),
+                      ),
+              ),
+              const SizedBox(height: 28),
+              SectionLabel(l10n.dataSectionTitle),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.upload_file_outlined),
+                title: Text(l10n.exportBackup),
+                onTap: () => runExportBackup(context, ref),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.download_outlined),
+                title: Text(l10n.importBackup),
+                onTap: () => runImportBackup(context, ref),
+              ),
             ],
-            selected: {active == 'es' ? 'es' : 'en'},
-            onSelectionChanged: (selection) {
-              ref
-                  .read(localeControllerProvider.notifier)
-                  .setLocale(Locale(selection.first));
-            },
           ),
-          const SizedBox(height: 24),
-          Text(
-            l10n.pinSectionTitle,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 8),
-          hasPin.when(
-            loading: () => const LinearProgressIndicator(),
-            error: (e, _) => Text('$e'),
-            data: (enabled) => enabled
-                ? Column(
-                    children: [
-                      ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        leading: const Icon(Icons.password_outlined),
-                        title: Text(l10n.pinChange),
-                        onTap: () => _changePin(context, ref),
-                      ),
-                      ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        leading: const Icon(Icons.lock_open_outlined),
-                        title: Text(l10n.pinRemove),
-                        onTap: () => _removePin(context, ref),
-                      ),
-                    ],
-                  )
-                : ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.lock_outline),
-                    title: Text(l10n.pinSet),
-                    onTap: () => _setPin(context, ref),
-                  ),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            l10n.dataSectionTitle,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 8),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.upload_file_outlined),
-            title: Text(l10n.exportBackup),
-            onTap: () => runExportBackup(context, ref),
-          ),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.download_outlined),
-            title: Text(l10n.importBackup),
-            onTap: () => runImportBackup(context, ref),
-          ),
-        ],
+        ),
       ),
     );
   }

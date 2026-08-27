@@ -19,18 +19,18 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Timeline is the start screen.
-    expect(find.text('Timeline'), findsOneWidget);
+    // Timeline is the start screen (its FAB is unique to it).
+    expect(find.text('New check-in'), findsOneWidget);
 
-    await tester.tap(find.byIcon(Icons.more_vert));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Settings'));
+    await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
 
-    expect(find.text('Language'), findsOneWidget);
+    expect(find.text('Spanish'), findsOneWidget); // language segment, in English
     await tester.tap(find.text('Spanish'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Idioma'), findsOneWidget);
+    // The segment now shows its Spanish label.
+    expect(find.text('Español'), findsOneWidget);
+    expect(find.text('Spanish'), findsNothing);
   });
 }

@@ -26,8 +26,9 @@ class LockController extends Notifier<bool> {
   }
 }
 
-final lockControllerProvider =
-    NotifierProvider<LockController, bool>(LockController.new);
+final lockControllerProvider = NotifierProvider<LockController, bool>(
+  LockController.new,
+);
 
 /// Whether a PIN is currently configured (for the settings screen).
 final hasPinProvider = FutureProvider<bool>(

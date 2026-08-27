@@ -23,7 +23,9 @@ class JournalRepository {
     final now = createdAt ?? DateTime.now();
 
     await _db.transaction(() async {
-      await _db.into(_db.journalEntries).insert(
+      await _db
+          .into(_db.journalEntries)
+          .insert(
             JournalEntriesCompanion.insert(
               id: entryId,
               entryDate: entryDate,
@@ -58,7 +60,9 @@ class JournalRepository {
     String? title,
     DateTime? updatedAt,
   }) {
-    return (_db.update(_db.journalEntries)..where((t) => t.id.equals(id))).write(
+    return (_db.update(
+      _db.journalEntries,
+    )..where((t) => t.id.equals(id))).write(
       JournalEntriesCompanion(
         bodyMarkdown: Value(bodyMarkdown),
         title: Value(title),
@@ -69,14 +73,15 @@ class JournalRepository {
 
   /// All journal entries, newest first.
   Future<List<JournalEntry>> getAll() {
-    return (_db.select(_db.journalEntries)
-          ..orderBy([(t) => OrderingTerm.desc(t.createdAt)]))
-        .get();
+    return (_db.select(
+      _db.journalEntries,
+    )..orderBy([(t) => OrderingTerm.desc(t.createdAt)])).get();
   }
 
   Future<JournalEntry?> getById(String id) {
-    return (_db.select(_db.journalEntries)..where((t) => t.id.equals(id)))
-        .getSingleOrNull();
+    return (_db.select(
+      _db.journalEntries,
+    )..where((t) => t.id.equals(id))).getSingleOrNull();
   }
 
   /// Entries filed under [day] (compared on the date part only).
@@ -84,9 +89,11 @@ class JournalRepository {
     final start = DateTime(day.year, day.month, day.day);
     final end = start.add(const Duration(days: 1));
     return (_db.select(_db.journalEntries)
-          ..where((t) =>
-              t.entryDate.isBiggerOrEqualValue(start) &
-              t.entryDate.isSmallerThanValue(end))
+          ..where(
+            (t) =>
+                t.entryDate.isBiggerOrEqualValue(start) &
+                t.entryDate.isSmallerThanValue(end),
+          )
           ..orderBy([(t) => OrderingTerm.asc(t.createdAt)]))
         .get();
   }

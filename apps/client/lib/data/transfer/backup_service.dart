@@ -96,25 +96,30 @@ class BackupService {
         tagsSkipped++;
         continue;
       }
-      await _db.into(_db.tags).insert(
+      await _db
+          .into(_db.tags)
+          .insert(
             TagsCompanion.insert(id: id, name: name),
             mode: InsertMode.insertOrIgnore,
           );
       tagsInserted++;
     }
-    report['tags'] =
-        TableImport(inserted: tagsInserted, skipped: tagsSkipped);
+    report['tags'] = TableImport(inserted: tagsInserted, skipped: tagsSkipped);
 
     String remapTagId(String id) => tagRemap[id] ?? id;
 
     // Parents before children so foreign keys resolve (each merge commits).
     report['sessions'] = await _merge(_db.sessions, rows('sessions'));
     report['moodEntries'] = await _merge(_db.moodEntries, rows('moodEntries'));
-    report['journalEntries'] =
-        await _merge(_db.journalEntries, rows('journalEntries'));
+    report['journalEntries'] = await _merge(
+      _db.journalEntries,
+      rows('journalEntries'),
+    );
     report['tasks'] = await _merge(_db.tasks, rows('tasks'));
-    report['moodEntryEmotions'] =
-        await _merge(_db.moodEntryEmotions, rows('moodEntryEmotions'));
+    report['moodEntryEmotions'] = await _merge(
+      _db.moodEntryEmotions,
+      rows('moodEntryEmotions'),
+    );
     report['moodEntryTags'] = await _merge(
       _db.moodEntryTags,
       rows('moodEntryTags')
@@ -127,8 +132,10 @@ class BackupService {
           .map((r) => {...r, 'tag_id': remapTagId(r['tag_id'] as String)})
           .toList(),
     );
-    report['sessionLinks'] =
-        await _merge(_db.sessionLinks, rows('sessionLinks'));
+    report['sessionLinks'] = await _merge(
+      _db.sessionLinks,
+      rows('sessionLinks'),
+    );
 
     return ImportReport(report);
   }
@@ -157,10 +164,7 @@ class BackupService {
 
     final after = await _countRows(name);
     final inserted = after - before;
-    return TableImport(
-      inserted: inserted,
-      skipped: jsonRows.length - inserted,
-    );
+    return TableImport(inserted: inserted, skipped: jsonRows.length - inserted);
   }
 
   Future<int> _countRows(String tableName) async {

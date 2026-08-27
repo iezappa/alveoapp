@@ -17,7 +17,9 @@ class LocaleController extends Notifier<Locale?> {
 
   /// Loads the persisted choice. Call once during startup before `runApp`.
   Future<void> load() async {
-    final code = await ref.read(settingsRepositoryProvider).get(localeSettingKey);
+    final code = await ref
+        .read(settingsRepositoryProvider)
+        .get(localeSettingKey);
     state = code == null ? null : Locale(code);
   }
 
@@ -34,5 +36,6 @@ class LocaleController extends Notifier<Locale?> {
   }
 }
 
-final localeControllerProvider =
-    NotifierProvider<LocaleController, Locale?>(LocaleController.new);
+final localeControllerProvider = NotifierProvider<LocaleController, Locale?>(
+  LocaleController.new,
+);

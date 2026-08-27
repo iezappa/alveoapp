@@ -15,9 +15,7 @@ Future<void> _openTasks(WidgetTester tester, AppDatabase db) async {
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.byIcon(Icons.more_vert));
-  await tester.pumpAndSettle();
-  await tester.tap(find.text('Tasks'));
+  await tester.tap(find.text('Tasks')); // navigation rail / bar destination
   await tester.pumpAndSettle();
 }
 

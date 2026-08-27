@@ -24,9 +24,7 @@ void main() {
 
     await _pumpApp(tester, db);
 
-    await tester.tap(find.byIcon(Icons.more_vert));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('New entry'));
+    await tester.tap(find.byIcon(Icons.note_add_outlined));
     await tester.pumpAndSettle();
 
     // Title field first, Markdown body field last.
@@ -39,7 +37,7 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Timeline'), findsOneWidget);
+    expect(find.text('New check-in'), findsOneWidget); // back on the timeline
 
     final entries = await JournalRepository(db).getAll();
     expect(entries, hasLength(1));

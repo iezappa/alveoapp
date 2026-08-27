@@ -41,7 +41,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Returned to the timeline.
-    expect(find.text('Timeline'), findsOneWidget);
+    expect(find.text('New check-in'), findsOneWidget); // back on the timeline
 
     final repo = MoodRepository(db);
     final entries = await repo.getAll();

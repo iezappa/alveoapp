@@ -41,6 +41,6 @@ void main() {
     await tester.enterText(find.byType(TextField), '1234');
     await tester.tap(find.text('Unlock'));
     await tester.pumpAndSettle();
-    expect(find.text('Timeline'), findsOneWidget);
+    expect(find.text('New check-in'), findsOneWidget); // timeline is visible
   });
 }

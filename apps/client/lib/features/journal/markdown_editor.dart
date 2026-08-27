@@ -89,13 +89,10 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
               ],
               selected: {_showPreview},
               showSelectedIcon: false,
-              onSelectionChanged: (s) =>
-                  setState(() => _showPreview = s.first),
+              onSelectionChanged: (s) => setState(() => _showPreview = s.first),
             ),
             const SizedBox(height: 8),
-            Expanded(
-              child: _showPreview ? _buildPreview() : _buildEditor(),
-            ),
+            Expanded(child: _showPreview ? _buildPreview() : _buildEditor()),
           ],
         );
       },

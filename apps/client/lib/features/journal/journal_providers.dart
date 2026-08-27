@@ -9,7 +9,9 @@ final journalListProvider = FutureProvider<List<JournalEntry>>((ref) {
 });
 
 /// A single journal entry by id (null while editing a brand-new one).
-final journalEntryProvider =
-    FutureProvider.family<JournalEntry?, String>((ref, id) {
+final journalEntryProvider = FutureProvider.family<JournalEntry?, String>((
+  ref,
+  id,
+) {
   return ref.watch(journalRepositoryProvider).getById(id);
 });

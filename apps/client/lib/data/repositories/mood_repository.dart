@@ -39,7 +39,9 @@ class MoodRepository {
     final entryId = id ?? _uuid.v4();
 
     await _db.transaction(() async {
-      await _db.into(_db.moodEntries).insert(
+      await _db
+          .into(_db.moodEntries)
+          .insert(
             MoodEntriesCompanion.insert(
               id: entryId,
               occurredAt: occurredAt,
@@ -76,15 +78,15 @@ class MoodRepository {
 
   /// All mood entries, newest first.
   Future<List<MoodEntry>> getAll() {
-    return (_db.select(_db.moodEntries)
-          ..orderBy([(t) => OrderingTerm.desc(t.occurredAt)]))
-        .get();
+    return (_db.select(
+      _db.moodEntries,
+    )..orderBy([(t) => OrderingTerm.desc(t.occurredAt)])).get();
   }
 
   Future<List<MoodEntryEmotion>> emotionsFor(String moodEntryId) {
-    return (_db.select(_db.moodEntryEmotions)
-          ..where((t) => t.moodEntryId.equals(moodEntryId)))
-        .get();
+    return (_db.select(
+      _db.moodEntryEmotions,
+    )..where((t) => t.moodEntryId.equals(moodEntryId))).get();
   }
 
   /// Removes the entry and, by cascade, its emotions and tag links.
