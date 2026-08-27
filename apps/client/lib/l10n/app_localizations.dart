@@ -128,11 +128,83 @@ abstract class AppLocalizations {
   /// **'Timeline'**
   String get navTimeline;
 
+  /// No description provided for @navTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get navTasks;
+
   /// No description provided for @navSettings.
   ///
   /// In en, this message translates to:
   /// **'Settings'**
   String get navSettings;
+
+  /// No description provided for @tasksEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks yet'**
+  String get tasksEmpty;
+
+  /// No description provided for @newTask.
+  ///
+  /// In en, this message translates to:
+  /// **'New task'**
+  String get newTask;
+
+  /// No description provided for @editTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit task'**
+  String get editTask;
+
+  /// No description provided for @taskTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Task'**
+  String get taskTitleHint;
+
+  /// No description provided for @taskDescriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Description (optional)'**
+  String get taskDescriptionHint;
+
+  /// No description provided for @taskDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get taskDueDate;
+
+  /// No description provided for @taskNoDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get taskNoDueDate;
+
+  /// No description provided for @taskClearDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear due date'**
+  String get taskClearDueDate;
+
+  /// No description provided for @taskStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get taskStatus;
+
+  /// No description provided for @taskClosingNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'How it went (optional)'**
+  String get taskClosingNoteHint;
+
+  /// No description provided for @taskSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Task saved'**
+  String get taskSaved;
 
   /// No description provided for @checkInTitle.
   ///

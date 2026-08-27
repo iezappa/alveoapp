@@ -25,7 +25,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navTimeline => 'Timeline';
 
   @override
+  String get navTasks => 'Tasks';
+
+  @override
   String get navSettings => 'Settings';
+
+  @override
+  String get tasksEmpty => 'No tasks yet';
+
+  @override
+  String get newTask => 'New task';
+
+  @override
+  String get editTask => 'Edit task';
+
+  @override
+  String get taskTitleHint => 'Task';
+
+  @override
+  String get taskDescriptionHint => 'Description (optional)';
+
+  @override
+  String get taskDueDate => 'Due';
+
+  @override
+  String get taskNoDueDate => 'No due date';
+
+  @override
+  String get taskClearDueDate => 'Clear due date';
+
+  @override
+  String get taskStatus => 'Status';
+
+  @override
+  String get taskClosingNoteHint => 'How it went (optional)';
+
+  @override
+  String get taskSaved => 'Task saved';
 
   @override
   String get checkInTitle => 'How are you feeling?';

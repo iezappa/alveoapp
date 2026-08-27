@@ -6,7 +6,20 @@
   "languageSpanish": "Español",
 
   "navTimeline": "Línea de tiempo",
+  "navTasks": "Tareas",
   "navSettings": "Ajustes",
+
+  "tasksEmpty": "Todavía no hay tareas",
+  "newTask": "Nueva tarea",
+  "editTask": "Editar tarea",
+  "taskTitleHint": "Tarea",
+  "taskDescriptionHint": "Descripción (opcional)",
+  "taskDueDate": "Para",
+  "taskNoDueDate": "Sin fecha límite",
+  "taskClearDueDate": "Quitar fecha límite",
+  "taskStatus": "Estado",
+  "taskClosingNoteHint": "Cómo fue (opcional)",
+  "taskSaved": "Tarea guardada",
 
   "checkInTitle": "¿Cómo te sentís?",
   "overallMood": "Estado general",

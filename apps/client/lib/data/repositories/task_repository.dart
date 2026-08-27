@@ -34,9 +34,48 @@ class TaskRepository {
     return taskId;
   }
 
+  /// Changes only the status, keeping `completedAt` consistent (set when the
+  /// task becomes done, cleared otherwise).
   Future<void> setStatus(String id, TaskStatus status) {
-    return (_db.update(_db.tasks)..where((t) => t.id.equals(id)))
-        .write(TasksCompanion(status: Value(status)));
+    return (_db.update(_db.tasks)..where((t) => t.id.equals(id))).write(
+      TasksCompanion(
+        status: Value(status),
+        completedAt: Value(
+          status == TaskStatus.done ? DateTime.now() : null,
+        ),
+      ),
+    );
+  }
+
+  /// Overwrites the editable fields of an existing task.
+  Future<void> update({
+    required String id,
+    required String title,
+    String? descriptionMarkdown,
+    DateTime? dueDate,
+    required TaskStatus status,
+    String? closingNote,
+    DateTime? completedAt,
+  }) {
+    return (_db.update(_db.tasks)..where((t) => t.id.equals(id))).write(
+      TasksCompanion(
+        title: Value(title),
+        descriptionMarkdown: Value(descriptionMarkdown),
+        dueDate: Value(dueDate),
+        status: Value(status),
+        closingNote: Value(closingNote),
+        completedAt: Value(
+          status == TaskStatus.done
+              ? (completedAt ?? DateTime.now())
+              : null,
+        ),
+      ),
+    );
+  }
+
+  Future<Task?> getById(String id) {
+    return (_db.select(_db.tasks)..where((t) => t.id.equals(id)))
+        .getSingleOrNull();
   }
 
   /// Marks the task done and records how it went.

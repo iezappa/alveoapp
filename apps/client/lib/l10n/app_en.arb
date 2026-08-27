@@ -13,7 +13,20 @@
   "languageSpanish": "Spanish",
 
   "navTimeline": "Timeline",
+  "navTasks": "Tasks",
   "navSettings": "Settings",
+
+  "tasksEmpty": "No tasks yet",
+  "newTask": "New task",
+  "editTask": "Edit task",
+  "taskTitleHint": "Task",
+  "taskDescriptionHint": "Description (optional)",
+  "taskDueDate": "Due",
+  "taskNoDueDate": "No due date",
+  "taskClearDueDate": "Clear due date",
+  "taskStatus": "Status",
+  "taskClosingNoteHint": "How it went (optional)",
+  "taskSaved": "Task saved",
 
   "checkInTitle": "How are you feeling?",
   "overallMood": "Overall mood",

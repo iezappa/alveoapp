@@ -25,7 +25,43 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navTimeline => 'Línea de tiempo';
 
   @override
+  String get navTasks => 'Tareas';
+
+  @override
   String get navSettings => 'Ajustes';
+
+  @override
+  String get tasksEmpty => 'Todavía no hay tareas';
+
+  @override
+  String get newTask => 'Nueva tarea';
+
+  @override
+  String get editTask => 'Editar tarea';
+
+  @override
+  String get taskTitleHint => 'Tarea';
+
+  @override
+  String get taskDescriptionHint => 'Descripción (opcional)';
+
+  @override
+  String get taskDueDate => 'Para';
+
+  @override
+  String get taskNoDueDate => 'Sin fecha límite';
+
+  @override
+  String get taskClearDueDate => 'Quitar fecha límite';
+
+  @override
+  String get taskStatus => 'Estado';
+
+  @override
+  String get taskClosingNoteHint => 'Cómo fue (opcional)';
+
+  @override
+  String get taskSaved => 'Tarea guardada';
 
   @override
   String get checkInTitle => '¿Cómo te sentís?';

@@ -12,8 +12,11 @@ import 'timeline_providers.dart';
 /// Route to open for a timeline item, or null if it has no detail screen yet.
 String? _routeFor(TimelineItem item) => switch (item) {
       JournalTimelineItem(:final entry) => '/journal/${entry.id}',
+      TaskTimelineItem(:final task) => '/tasks/${task.id}',
       _ => null,
     };
+
+enum _TimelineMenuAction { newJournal, tasks, exportDay, settings }
 
 class TimelineScreen extends ConsumerWidget {
   const TimelineScreen({super.key});
@@ -27,20 +30,37 @@ class TimelineScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(l10n.navTimeline),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.note_add_outlined),
-            onPressed: () => context.push('/journal/new'),
-            tooltip: l10n.journalNewTitle,
-          ),
-          IconButton(
-            icon: const Icon(Icons.ios_share),
-            onPressed: () => runDailyExport(context, ref),
-            tooltip: l10n.exportDayTooltip,
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () => context.push('/settings'),
-            tooltip: l10n.navSettings,
+          PopupMenuButton<_TimelineMenuAction>(
+            onSelected: (action) {
+              switch (action) {
+                case _TimelineMenuAction.newJournal:
+                  context.push('/journal/new');
+                case _TimelineMenuAction.tasks:
+                  context.push('/tasks');
+                case _TimelineMenuAction.exportDay:
+                  runDailyExport(context, ref);
+                case _TimelineMenuAction.settings:
+                  context.push('/settings');
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: _TimelineMenuAction.newJournal,
+                child: Text(l10n.journalNewTitle),
+              ),
+              PopupMenuItem(
+                value: _TimelineMenuAction.tasks,
+                child: Text(l10n.navTasks),
+              ),
+              PopupMenuItem(
+                value: _TimelineMenuAction.exportDay,
+                child: Text(l10n.exportDayTooltip),
+              ),
+              PopupMenuItem(
+                value: _TimelineMenuAction.settings,
+                child: Text(l10n.navSettings),
+              ),
+            ],
           ),
         ],
       ),

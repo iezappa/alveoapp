@@ -24,7 +24,9 @@ void main() {
 
     await _pumpApp(tester, db);
 
-    await tester.tap(find.byTooltip('New entry'));
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('New entry'));
     await tester.pumpAndSettle();
 
     // Title field first, Markdown body field last.
