@@ -61,6 +61,24 @@
     }
   },
 
+  "obsidianSection": "Obsidian",
+  "obsidianVaultFolder": "Vault folder",
+  "obsidianNotSet": "Not set",
+  "obsidianExport": "Export journal to Obsidian",
+  "obsidianImport": "Import journal from Obsidian",
+  "obsidianNoVault": "Choose a vault folder first",
+  "obsidianExported": "{count} notes written",
+  "@obsidianExported": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "obsidianImported": "{created} added, {updated} updated",
+  "@obsidianImported": {
+    "placeholders": {
+      "created": { "type": "int" },
+      "updated": { "type": "int" }
+    }
+  },
+
   "navTimeline": "Timeline",
   "navTasks": "Tasks",
   "navSessions": "Sessions",

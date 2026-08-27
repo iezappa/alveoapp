@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'export/export_service.dart';
 import 'local/database.dart';
+import 'obsidian/obsidian_service.dart';
 import 'repositories/journal_repository.dart';
 import 'repositories/link_repository.dart';
 import 'repositories/mood_repository.dart';
@@ -38,6 +39,16 @@ final backupServiceProvider = Provider<BackupService>(
 
 final searchServiceProvider = Provider<SearchService>(
   (ref) => SearchService(ref.watch(appDatabaseProvider)),
+);
+
+const obsidianVaultKey = 'obsidian.vault_path';
+
+final obsidianServiceProvider = Provider<ObsidianService>(
+  (ref) => ObsidianService(ref.watch(journalRepositoryProvider)),
+);
+
+final obsidianVaultProvider = FutureProvider<String?>(
+  (ref) => ref.watch(settingsRepositoryProvider).get(obsidianVaultKey),
 );
 
 final moodRepositoryProvider = Provider<MoodRepository>(

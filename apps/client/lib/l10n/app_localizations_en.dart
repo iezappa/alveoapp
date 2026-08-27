@@ -128,6 +128,34 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get obsidianSection => 'Obsidian';
+
+  @override
+  String get obsidianVaultFolder => 'Vault folder';
+
+  @override
+  String get obsidianNotSet => 'Not set';
+
+  @override
+  String get obsidianExport => 'Export journal to Obsidian';
+
+  @override
+  String get obsidianImport => 'Import journal from Obsidian';
+
+  @override
+  String get obsidianNoVault => 'Choose a vault folder first';
+
+  @override
+  String obsidianExported(int count) {
+    return '$count notes written';
+  }
+
+  @override
+  String obsidianImported(int created, int updated) {
+    return '$created added, $updated updated';
+  }
+
+  @override
   String get navTimeline => 'Timeline';
 
   @override

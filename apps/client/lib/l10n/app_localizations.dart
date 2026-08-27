@@ -326,6 +326,54 @@ abstract class AppLocalizations {
   /// **'Import failed: {reason}'**
   String importFailed(String reason);
 
+  /// No description provided for @obsidianSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Obsidian'**
+  String get obsidianSection;
+
+  /// No description provided for @obsidianVaultFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Vault folder'**
+  String get obsidianVaultFolder;
+
+  /// No description provided for @obsidianNotSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get obsidianNotSet;
+
+  /// No description provided for @obsidianExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export journal to Obsidian'**
+  String get obsidianExport;
+
+  /// No description provided for @obsidianImport.
+  ///
+  /// In en, this message translates to:
+  /// **'Import journal from Obsidian'**
+  String get obsidianImport;
+
+  /// No description provided for @obsidianNoVault.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a vault folder first'**
+  String get obsidianNoVault;
+
+  /// No description provided for @obsidianExported.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} notes written'**
+  String obsidianExported(int count);
+
+  /// No description provided for @obsidianImported.
+  ///
+  /// In en, this message translates to:
+  /// **'{created} added, {updated} updated'**
+  String obsidianImported(int created, int updated);
+
   /// No description provided for @navTimeline.
   ///
   /// In en, this message translates to:

@@ -8,6 +8,7 @@ import '../../app/theme_controller.dart';
 import '../../app/ui.dart';
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../obsidian/obsidian_actions.dart';
 import '../security/pin_dialogs.dart';
 import '../transfer/backup_actions.dart';
 
@@ -22,6 +23,7 @@ class SettingsScreen extends ConsumerWidget {
         chosen?.languageCode ?? Localizations.localeOf(context).languageCode;
     final hasPin = ref.watch(hasPinProvider);
     final theme = ref.watch(themeControllerProvider);
+    final vault = ref.watch(obsidianVaultProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.navSettings)),
@@ -132,6 +134,33 @@ class SettingsScreen extends ConsumerWidget {
                 leading: const Icon(Icons.download_outlined),
                 title: Text(l10n.importBackup),
                 onTap: () => runImportBackup(context, ref),
+              ),
+              const SizedBox(height: 28),
+              SectionLabel(l10n.obsidianSection),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.folder_open_outlined),
+                title: Text(l10n.obsidianVaultFolder),
+                subtitle: Text(
+                  vault.asData?.value ?? l10n.obsidianNotSet,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                onTap: () => pickObsidianVault(context, ref),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.arrow_upward),
+                enabled: vault.asData?.value != null,
+                title: Text(l10n.obsidianExport),
+                onTap: () => runObsidianExport(context, ref),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.arrow_downward),
+                enabled: vault.asData?.value != null,
+                title: Text(l10n.obsidianImport),
+                onTap: () => runObsidianImport(context, ref),
               ),
             ],
           ),

@@ -43,6 +43,15 @@
   "importSummary": "{inserted} agregados, {skipped} ya presentes",
   "importFailed": "Falló la importación: {reason}",
 
+  "obsidianSection": "Obsidian",
+  "obsidianVaultFolder": "Carpeta de la bóveda",
+  "obsidianNotSet": "Sin configurar",
+  "obsidianExport": "Exportar diario a Obsidian",
+  "obsidianImport": "Importar diario de Obsidian",
+  "obsidianNoVault": "Elegí primero una carpeta",
+  "obsidianExported": "{count} notas escritas",
+  "obsidianImported": "{created} agregadas, {updated} actualizadas",
+
   "navTimeline": "Línea de tiempo",
   "navTasks": "Tareas",
   "navSessions": "Sesiones",
