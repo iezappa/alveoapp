@@ -4,8 +4,28 @@
   "settingsLanguage": "Idioma",
   "languageEnglish": "Inglés",
   "languageSpanish": "Español",
+
   "navTimeline": "Línea de tiempo",
   "navSettings": "Ajustes",
+
+  "checkInTitle": "¿Cómo te sentís?",
+  "overallMood": "Estado general",
+  "emotionsSectionTitle": "Emociones",
+  "intensityLabel": "Intensidad",
+  "noteLabel": "Nota (opcional)",
+  "saveButton": "Guardar",
+  "checkInSaved": "Registro guardado",
+  "addCheckIn": "Nuevo registro",
+
+  "timelineEmpty": "Todavía no hay registros",
+  "timelineMoodLabel": "Ánimo {score}/5",
+  "journalUntitled": "Entrada sin título",
+
+  "taskStatusPending": "Pendiente",
+  "taskStatusInProgress": "En curso",
+  "taskStatusDone": "Hecha",
+  "taskStatusSkipped": "Omitida",
+
   "emotionJoy": "Alegría",
   "emotionSadness": "Tristeza",
   "emotionTrust": "Confianza",

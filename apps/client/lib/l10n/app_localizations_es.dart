@@ -28,6 +28,53 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navSettings => 'Ajustes';
 
   @override
+  String get checkInTitle => '¿Cómo te sentís?';
+
+  @override
+  String get overallMood => 'Estado general';
+
+  @override
+  String get emotionsSectionTitle => 'Emociones';
+
+  @override
+  String get intensityLabel => 'Intensidad';
+
+  @override
+  String get noteLabel => 'Nota (opcional)';
+
+  @override
+  String get saveButton => 'Guardar';
+
+  @override
+  String get checkInSaved => 'Registro guardado';
+
+  @override
+  String get addCheckIn => 'Nuevo registro';
+
+  @override
+  String get timelineEmpty => 'Todavía no hay registros';
+
+  @override
+  String timelineMoodLabel(int score) {
+    return 'Ánimo $score/5';
+  }
+
+  @override
+  String get journalUntitled => 'Entrada sin título';
+
+  @override
+  String get taskStatusPending => 'Pendiente';
+
+  @override
+  String get taskStatusInProgress => 'En curso';
+
+  @override
+  String get taskStatusDone => 'Hecha';
+
+  @override
+  String get taskStatusSkipped => 'Omitida';
+
+  @override
   String get emotionJoy => 'Alegría';
 
   @override

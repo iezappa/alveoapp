@@ -5,7 +5,8 @@ import 'package:terapia/data/providers.dart';
 import 'package:terapia/main.dart';
 
 void main() {
-  testWidgets('language toggle switches UI copy to Spanish', (tester) async {
+  testWidgets('language toggle in settings switches UI copy to Spanish',
+      (tester) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
 
@@ -17,13 +18,16 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // No stored choice → resolves to English in the test environment.
-    expect(find.text('Language'), findsOneWidget);
+    // Timeline is the start screen.
+    expect(find.text('Timeline'), findsOneWidget);
 
+    await tester.tap(find.byTooltip('Settings'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Language'), findsOneWidget);
     await tester.tap(find.text('Spanish'));
     await tester.pumpAndSettle();
 
     expect(find.text('Idioma'), findsOneWidget);
-    expect(find.text('Language'), findsNothing);
   });
 }

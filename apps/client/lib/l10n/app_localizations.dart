@@ -134,6 +134,96 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get navSettings;
 
+  /// No description provided for @checkInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How are you feeling?'**
+  String get checkInTitle;
+
+  /// No description provided for @overallMood.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall mood'**
+  String get overallMood;
+
+  /// No description provided for @emotionsSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Emotions'**
+  String get emotionsSectionTitle;
+
+  /// No description provided for @intensityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Intensity'**
+  String get intensityLabel;
+
+  /// No description provided for @noteLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get noteLabel;
+
+  /// No description provided for @saveButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get saveButton;
+
+  /// No description provided for @checkInSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in saved'**
+  String get checkInSaved;
+
+  /// No description provided for @addCheckIn.
+  ///
+  /// In en, this message translates to:
+  /// **'New check-in'**
+  String get addCheckIn;
+
+  /// No description provided for @timelineEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing logged yet'**
+  String get timelineEmpty;
+
+  /// No description provided for @timelineMoodLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Mood {score}/5'**
+  String timelineMoodLabel(int score);
+
+  /// No description provided for @journalUntitled.
+  ///
+  /// In en, this message translates to:
+  /// **'Untitled entry'**
+  String get journalUntitled;
+
+  /// No description provided for @taskStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get taskStatusPending;
+
+  /// No description provided for @taskStatusInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get taskStatusInProgress;
+
+  /// No description provided for @taskStatusDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get taskStatusDone;
+
+  /// No description provided for @taskStatusSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped'**
+  String get taskStatusSkipped;
+
   /// No description provided for @emotionJoy.
   ///
   /// In en, this message translates to:

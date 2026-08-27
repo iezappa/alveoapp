@@ -15,6 +15,29 @@
   "navTimeline": "Timeline",
   "navSettings": "Settings",
 
+  "checkInTitle": "How are you feeling?",
+  "overallMood": "Overall mood",
+  "emotionsSectionTitle": "Emotions",
+  "intensityLabel": "Intensity",
+  "noteLabel": "Note (optional)",
+  "saveButton": "Save",
+  "checkInSaved": "Check-in saved",
+  "addCheckIn": "New check-in",
+
+  "timelineEmpty": "Nothing logged yet",
+  "timelineMoodLabel": "Mood {score}/5",
+  "@timelineMoodLabel": {
+    "placeholders": {
+      "score": { "type": "int" }
+    }
+  },
+  "journalUntitled": "Untitled entry",
+
+  "taskStatusPending": "Pending",
+  "taskStatusInProgress": "In progress",
+  "taskStatusDone": "Done",
+  "taskStatusSkipped": "Skipped",
+
   "emotionJoy": "Joy",
   "emotionSadness": "Sadness",
   "emotionTrust": "Trust",
