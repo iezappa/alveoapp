@@ -3,6 +3,9 @@ import 'package:go_router/go_router.dart';
 
 import '../features/check_in/check_in_screen.dart';
 import '../features/journal/journal_editor_screen.dart';
+import '../features/journal/journal_labels.dart';
+import '../features/journal/journal_screen.dart';
+import '../features/journal/journal_section_screen.dart';
 import '../features/sessions/session_editor_screen.dart';
 import '../features/sessions/session_list_screen.dart';
 import '../features/settings/settings_screen.dart';
@@ -10,6 +13,16 @@ import '../features/tasks/task_editor_screen.dart';
 import '../features/tasks/task_list_screen.dart';
 import '../features/timeline/timeline_screen.dart';
 import 'home_shell.dart';
+
+DateTime? _parseMonth(String? value) {
+  if (value == null) return null;
+  final parts = value.split('-');
+  if (parts.length != 2) return null;
+  final year = int.tryParse(parts[0]);
+  final month = int.tryParse(parts[1]);
+  if (year == null || month == null) return null;
+  return DateTime(year, month);
+}
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -23,6 +36,14 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: '/timeline',
                 builder: (context, state) => const TimelineScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/journal',
+                builder: (context, state) => const JournalScreen(),
               ),
             ],
           ),
@@ -51,8 +72,21 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const CheckInScreen(),
       ),
       GoRoute(
+        path: '/journal/section/:section',
+        builder: (context, state) => JournalSectionScreen(
+          section: journalSectionFromName(state.pathParameters['section']),
+        ),
+      ),
+      GoRoute(
         path: '/journal/new',
-        builder: (context, state) => const JournalEditorScreen(),
+        builder: (context, state) {
+          final q = state.uri.queryParameters;
+          return JournalEditorScreen(
+            section: journalSectionFromName(q['section']),
+            isMonthlyReview: q['review'] != null,
+            reviewMonth: _parseMonth(q['review']),
+          );
+        },
       ),
       GoRoute(
         path: '/journal/:id',

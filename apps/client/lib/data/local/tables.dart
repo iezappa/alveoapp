@@ -1,7 +1,9 @@
 import 'package:drift/drift.dart';
 
+import '../../domain/journal/journal_section.dart';
 import '../../domain/links/link_target_type.dart';
 
+export '../../domain/journal/journal_section.dart';
 export '../../domain/links/link_target_type.dart';
 
 /// Lifecycle of a task assigned by the therapist.
@@ -67,6 +69,16 @@ class JournalEntries extends Table {
 
   TextColumn get title => text().nullable()();
   TextColumn get bodyMarkdown => text()();
+
+  /// Which notebook this entry belongs to.
+  IntColumn get section => intEnum<JournalSection>().withDefault(
+    Constant(JournalSection.oneLiner.index),
+  )();
+
+  /// True for the monthly-review entry of the "Diario" section (its
+  /// [entryDate] is the first day of the month it reviews).
+  BoolColumn get isMonthlyReview =>
+      boolean().withDefault(const Constant(false))();
 
   @override
   Set<Column> get primaryKey => {id};

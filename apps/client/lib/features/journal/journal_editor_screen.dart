@@ -4,15 +4,25 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../data/providers.dart';
+import '../../domain/journal/journal_section.dart';
 import '../../l10n/app_localizations.dart';
 import '../timeline/timeline_providers.dart';
 import 'journal_providers.dart';
 import 'markdown_editor.dart';
 
 class JournalEditorScreen extends ConsumerStatefulWidget {
-  const JournalEditorScreen({super.key, this.entryId});
+  const JournalEditorScreen({
+    super.key,
+    this.entryId,
+    this.section = JournalSection.oneLiner,
+    this.isMonthlyReview = false,
+    this.reviewMonth,
+  });
 
   final String? entryId;
+  final JournalSection section;
+  final bool isMonthlyReview;
+  final DateTime? reviewMonth;
 
   bool get isNew => entryId == null;
 
@@ -25,11 +35,15 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
   final _titleController = TextEditingController();
   final _bodyController = TextEditingController();
 
-  DateTime _entryDate = _today();
+  late JournalSection _section = widget.section;
+  late bool _isReview = widget.isMonthlyReview;
+  late DateTime _entryDate = _initialDate();
   bool _loading = false;
   bool _saving = false;
 
-  static DateTime _today() {
+  DateTime _initialDate() {
+    final m = widget.reviewMonth;
+    if (widget.isMonthlyReview && m != null) return DateTime(m.year, m.month);
     final now = DateTime.now();
     return DateTime(now.year, now.month, now.day);
   }
@@ -48,10 +62,15 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
             _titleController.text = entry.title ?? '';
             _bodyController.text = entry.bodyMarkdown;
             _entryDate = entry.entryDate;
+            _section = entry.section;
+            _isReview = entry.isMonthlyReview;
           }
           _loading = false;
         });
       });
+    } else if (widget.isMonthlyReview && widget.reviewMonth != null) {
+      final month = DateFormat.yMMMM().format(widget.reviewMonth!);
+      _titleController.text = 'Review — $month';
     }
   }
 
@@ -90,6 +109,8 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
         bodyMarkdown: body,
         entryDate: _entryDate,
         title: title,
+        section: _section,
+        isMonthlyReview: _isReview,
       );
     } else {
       await repo.updateBody(
@@ -100,6 +121,7 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
     }
 
     ref.invalidate(journalListProvider);
+    ref.invalidate(journalSectionEntriesProvider(_section));
     ref.invalidate(timelineProvider);
 
     if (!mounted) return;
@@ -109,7 +131,7 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
     if (context.canPop()) {
       context.pop();
     } else {
-      context.go('/timeline');
+      context.go('/journal');
     }
   }
 
@@ -122,11 +144,13 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
+    final title = _isReview
+        ? l10n.monthlyReview
+        : (widget.isNew ? l10n.journalNewTitle : l10n.journalEditTitle);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.isNew ? l10n.journalNewTitle : l10n.journalEditTitle,
-        ),
+        title: Text(title),
         actions: [
           IconButton(
             onPressed: _saving ? null : _save,
@@ -142,10 +166,7 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
           children: [
             TextField(
               controller: _titleController,
-              decoration: InputDecoration(
-                labelText: l10n.journalTitleHint,
-                border: const OutlineInputBorder(),
-              ),
+              decoration: InputDecoration(hintText: l10n.journalTitleHint),
             ),
             const SizedBox(height: 12),
             Align(

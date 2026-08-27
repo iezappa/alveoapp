@@ -28,6 +28,7 @@ class HomeShell extends StatelessWidget {
         selected: Icons.timeline,
         label: l10n.navTimeline,
       ),
+      (icon: Icons.book_outlined, selected: Icons.book, label: l10n.navJournal),
       (
         icon: Icons.psychology_outlined,
         selected: Icons.psychology,

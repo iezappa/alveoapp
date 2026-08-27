@@ -278,11 +278,77 @@ abstract class AppLocalizations {
   /// **'Sessions'**
   String get navSessions;
 
+  /// No description provided for @navJournal.
+  ///
+  /// In en, this message translates to:
+  /// **'Journal'**
+  String get navJournal;
+
   /// No description provided for @navSettings.
   ///
   /// In en, this message translates to:
   /// **'Settings'**
   String get navSettings;
+
+  /// No description provided for @journalSectionOneLiner.
+  ///
+  /// In en, this message translates to:
+  /// **'One-liners'**
+  String get journalSectionOneLiner;
+
+  /// No description provided for @journalSectionStudent.
+  ///
+  /// In en, this message translates to:
+  /// **'Student'**
+  String get journalSectionStudent;
+
+  /// No description provided for @journalSectionCreative.
+  ///
+  /// In en, this message translates to:
+  /// **'Creative'**
+  String get journalSectionCreative;
+
+  /// No description provided for @journalSectionFreedom.
+  ///
+  /// In en, this message translates to:
+  /// **'Freedom'**
+  String get journalSectionFreedom;
+
+  /// No description provided for @journalSectionTherapy.
+  ///
+  /// In en, this message translates to:
+  /// **'Therapy'**
+  String get journalSectionTherapy;
+
+  /// No description provided for @journalSectionWinLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Win log'**
+  String get journalSectionWinLog;
+
+  /// No description provided for @journalSectionEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing here yet'**
+  String get journalSectionEmpty;
+
+  /// No description provided for @journalEntryCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 entry} other{{count} entries}}'**
+  String journalEntryCount(int count);
+
+  /// No description provided for @monthlyReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly review'**
+  String get monthlyReview;
+
+  /// No description provided for @writeMonthlyReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Write this month\'s review'**
+  String get writeMonthlyReview;
 
   /// No description provided for @sessionsUpcoming.
   ///

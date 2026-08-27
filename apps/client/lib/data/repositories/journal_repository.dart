@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../domain/journal/journal_section.dart';
 import '../local/database.dart';
 
 class JournalRepository {
@@ -15,6 +16,8 @@ class JournalRepository {
     required String bodyMarkdown,
     required DateTime entryDate,
     String? title,
+    JournalSection section = JournalSection.oneLiner,
+    bool isMonthlyReview = false,
     DateTime? createdAt,
     List<String> tagIds = const [],
     String? id,
@@ -31,6 +34,8 @@ class JournalRepository {
               entryDate: entryDate,
               bodyMarkdown: bodyMarkdown,
               title: Value(title),
+              section: Value(section),
+              isMonthlyReview: Value(isMonthlyReview),
               createdAt: Value(now),
               updatedAt: Value(now),
             ),
@@ -82,6 +87,30 @@ class JournalRepository {
     return (_db.select(
       _db.journalEntries,
     )..where((t) => t.id.equals(id))).getSingleOrNull();
+  }
+
+  /// Entries in [section], newest first.
+  Future<List<JournalEntry>> getBySection(JournalSection section) {
+    return (_db.select(_db.journalEntries)
+          ..where((t) => t.section.equalsValue(section))
+          ..orderBy([(t) => OrderingTerm.desc(t.entryDate)]))
+        .get();
+  }
+
+  /// The monthly-review entry filed under the month containing [month], if one
+  /// exists. Only meaningful for [JournalSection.oneLiner].
+  Future<JournalEntry?> getMonthlyReview(DateTime month) {
+    final start = DateTime(month.year, month.month);
+    final end = DateTime(month.year, month.month + 1);
+    return (_db.select(_db.journalEntries)
+          ..where(
+            (t) =>
+                t.isMonthlyReview.equals(true) &
+                t.entryDate.isBiggerOrEqualValue(start) &
+                t.entryDate.isSmallerThanValue(end),
+          )
+          ..limit(1))
+        .getSingleOrNull();
   }
 
   /// Entries filed under [day] (compared on the date part only).

@@ -51,7 +51,24 @@
   "navTimeline": "Timeline",
   "navTasks": "Tasks",
   "navSessions": "Sessions",
+  "navJournal": "Journal",
   "navSettings": "Settings",
+
+  "journalSectionOneLiner": "One-liners",
+  "journalSectionStudent": "Student",
+  "journalSectionCreative": "Creative",
+  "journalSectionFreedom": "Freedom",
+  "journalSectionTherapy": "Therapy",
+  "journalSectionWinLog": "Win log",
+  "journalSectionEmpty": "Nothing here yet",
+  "journalEntryCount": "{count, plural, =1{1 entry} other{{count} entries}}",
+  "@journalEntryCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "monthlyReview": "Monthly review",
+  "writeMonthlyReview": "Write this month's review",
 
   "sessionsUpcoming": "Upcoming",
   "sessionsPast": "Past",

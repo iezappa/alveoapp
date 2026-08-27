@@ -33,7 +33,7 @@ class AppDatabase extends _$AppDatabase {
   factory AppDatabase.forTesting() => AppDatabase(NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -47,6 +47,10 @@ class AppDatabase extends _$AppDatabase {
       }
       if (from < 4) {
         await m.createTable(sessionLinks);
+      }
+      if (from < 5) {
+        await m.addColumn(journalEntries, journalEntries.section);
+        await m.addColumn(journalEntries, journalEntries.isMonthlyReview);
       }
     },
     beforeOpen: (details) async {

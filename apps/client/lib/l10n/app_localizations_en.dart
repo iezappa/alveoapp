@@ -104,7 +104,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navSessions => 'Sessions';
 
   @override
+  String get navJournal => 'Journal';
+
+  @override
   String get navSettings => 'Settings';
+
+  @override
+  String get journalSectionOneLiner => 'One-liners';
+
+  @override
+  String get journalSectionStudent => 'Student';
+
+  @override
+  String get journalSectionCreative => 'Creative';
+
+  @override
+  String get journalSectionFreedom => 'Freedom';
+
+  @override
+  String get journalSectionTherapy => 'Therapy';
+
+  @override
+  String get journalSectionWinLog => 'Win log';
+
+  @override
+  String get journalSectionEmpty => 'Nothing here yet';
+
+  @override
+  String journalEntryCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count entries',
+      one: '1 entry',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get monthlyReview => 'Monthly review';
+
+  @override
+  String get writeMonthlyReview => 'Write this month\'s review';
 
   @override
   String get sessionsUpcoming => 'Upcoming';

@@ -104,7 +104,48 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navSessions => 'Sesiones';
 
   @override
+  String get navJournal => 'Diario';
+
+  @override
   String get navSettings => 'Ajustes';
+
+  @override
+  String get journalSectionOneLiner => 'Líneas del día';
+
+  @override
+  String get journalSectionStudent => 'Estudio';
+
+  @override
+  String get journalSectionCreative => 'Creatividad';
+
+  @override
+  String get journalSectionFreedom => 'Libertad';
+
+  @override
+  String get journalSectionTherapy => 'Terapia';
+
+  @override
+  String get journalSectionWinLog => 'Logros y gratitud';
+
+  @override
+  String get journalSectionEmpty => 'Todavía no hay nada acá';
+
+  @override
+  String journalEntryCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count entradas',
+      one: '1 entrada',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get monthlyReview => 'Repaso del mes';
+
+  @override
+  String get writeMonthlyReview => 'Escribir el repaso del mes';
 
   @override
   String get sessionsUpcoming => 'Próximas';

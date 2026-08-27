@@ -713,6 +713,31 @@ class $JournalEntriesTable extends JournalEntries
     requiredDuringInsert: true,
   );
   @override
+  late final GeneratedColumnWithTypeConverter<JournalSection, int> section =
+      GeneratedColumn<int>(
+        'section',
+        aliasedName,
+        false,
+        type: DriftSqlType.int,
+        requiredDuringInsert: false,
+        defaultValue: Constant(JournalSection.oneLiner.index),
+      ).withConverter<JournalSection>($JournalEntriesTable.$convertersection);
+  static const VerificationMeta _isMonthlyReviewMeta = const VerificationMeta(
+    'isMonthlyReview',
+  );
+  @override
+  late final GeneratedColumn<bool> isMonthlyReview = GeneratedColumn<bool>(
+    'is_monthly_review',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_monthly_review" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
   List<GeneratedColumn> get $columns => [
     id,
     entryDate,
@@ -720,6 +745,8 @@ class $JournalEntriesTable extends JournalEntries
     updatedAt,
     title,
     bodyMarkdown,
+    section,
+    isMonthlyReview,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -775,6 +802,15 @@ class $JournalEntriesTable extends JournalEntries
     } else if (isInserting) {
       context.missing(_bodyMarkdownMeta);
     }
+    if (data.containsKey('is_monthly_review')) {
+      context.handle(
+        _isMonthlyReviewMeta,
+        isMonthlyReview.isAcceptableOrUnknown(
+          data['is_monthly_review']!,
+          _isMonthlyReviewMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -808,6 +844,16 @@ class $JournalEntriesTable extends JournalEntries
         DriftSqlType.string,
         data['${effectivePrefix}body_markdown'],
       )!,
+      section: $JournalEntriesTable.$convertersection.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.int,
+          data['${effectivePrefix}section'],
+        )!,
+      ),
+      isMonthlyReview: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_monthly_review'],
+      )!,
     );
   }
 
@@ -815,6 +861,9 @@ class $JournalEntriesTable extends JournalEntries
   $JournalEntriesTable createAlias(String alias) {
     return $JournalEntriesTable(attachedDatabase, alias);
   }
+
+  static JsonTypeConverter2<JournalSection, int, int> $convertersection =
+      const EnumIndexConverter<JournalSection>(JournalSection.values);
 }
 
 class JournalEntry extends DataClass implements Insertable<JournalEntry> {
@@ -828,6 +877,13 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
   final DateTime updatedAt;
   final String? title;
   final String bodyMarkdown;
+
+  /// Which notebook this entry belongs to.
+  final JournalSection section;
+
+  /// True for the monthly-review entry of the "Diario" section (its
+  /// [entryDate] is the first day of the month it reviews).
+  final bool isMonthlyReview;
   const JournalEntry({
     required this.id,
     required this.entryDate,
@@ -835,6 +891,8 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
     required this.updatedAt,
     this.title,
     required this.bodyMarkdown,
+    required this.section,
+    required this.isMonthlyReview,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -847,6 +905,12 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
       map['title'] = Variable<String>(title);
     }
     map['body_markdown'] = Variable<String>(bodyMarkdown);
+    {
+      map['section'] = Variable<int>(
+        $JournalEntriesTable.$convertersection.toSql(section),
+      );
+    }
+    map['is_monthly_review'] = Variable<bool>(isMonthlyReview);
     return map;
   }
 
@@ -860,6 +924,8 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
           ? const Value.absent()
           : Value(title),
       bodyMarkdown: Value(bodyMarkdown),
+      section: Value(section),
+      isMonthlyReview: Value(isMonthlyReview),
     );
   }
 
@@ -875,6 +941,10 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
       title: serializer.fromJson<String?>(json['title']),
       bodyMarkdown: serializer.fromJson<String>(json['bodyMarkdown']),
+      section: $JournalEntriesTable.$convertersection.fromJson(
+        serializer.fromJson<int>(json['section']),
+      ),
+      isMonthlyReview: serializer.fromJson<bool>(json['isMonthlyReview']),
     );
   }
   @override
@@ -887,6 +957,10 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
       'title': serializer.toJson<String?>(title),
       'bodyMarkdown': serializer.toJson<String>(bodyMarkdown),
+      'section': serializer.toJson<int>(
+        $JournalEntriesTable.$convertersection.toJson(section),
+      ),
+      'isMonthlyReview': serializer.toJson<bool>(isMonthlyReview),
     };
   }
 
@@ -897,6 +971,8 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
     DateTime? updatedAt,
     Value<String?> title = const Value.absent(),
     String? bodyMarkdown,
+    JournalSection? section,
+    bool? isMonthlyReview,
   }) => JournalEntry(
     id: id ?? this.id,
     entryDate: entryDate ?? this.entryDate,
@@ -904,6 +980,8 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
     updatedAt: updatedAt ?? this.updatedAt,
     title: title.present ? title.value : this.title,
     bodyMarkdown: bodyMarkdown ?? this.bodyMarkdown,
+    section: section ?? this.section,
+    isMonthlyReview: isMonthlyReview ?? this.isMonthlyReview,
   );
   JournalEntry copyWithCompanion(JournalEntriesCompanion data) {
     return JournalEntry(
@@ -915,6 +993,10 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
       bodyMarkdown: data.bodyMarkdown.present
           ? data.bodyMarkdown.value
           : this.bodyMarkdown,
+      section: data.section.present ? data.section.value : this.section,
+      isMonthlyReview: data.isMonthlyReview.present
+          ? data.isMonthlyReview.value
+          : this.isMonthlyReview,
     );
   }
 
@@ -926,14 +1008,24 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
           ..write('title: $title, ')
-          ..write('bodyMarkdown: $bodyMarkdown')
+          ..write('bodyMarkdown: $bodyMarkdown, ')
+          ..write('section: $section, ')
+          ..write('isMonthlyReview: $isMonthlyReview')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, entryDate, createdAt, updatedAt, title, bodyMarkdown);
+  int get hashCode => Object.hash(
+    id,
+    entryDate,
+    createdAt,
+    updatedAt,
+    title,
+    bodyMarkdown,
+    section,
+    isMonthlyReview,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -943,7 +1035,9 @@ class JournalEntry extends DataClass implements Insertable<JournalEntry> {
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt &&
           other.title == this.title &&
-          other.bodyMarkdown == this.bodyMarkdown);
+          other.bodyMarkdown == this.bodyMarkdown &&
+          other.section == this.section &&
+          other.isMonthlyReview == this.isMonthlyReview);
 }
 
 class JournalEntriesCompanion extends UpdateCompanion<JournalEntry> {
@@ -953,6 +1047,8 @@ class JournalEntriesCompanion extends UpdateCompanion<JournalEntry> {
   final Value<DateTime> updatedAt;
   final Value<String?> title;
   final Value<String> bodyMarkdown;
+  final Value<JournalSection> section;
+  final Value<bool> isMonthlyReview;
   final Value<int> rowid;
   const JournalEntriesCompanion({
     this.id = const Value.absent(),
@@ -961,6 +1057,8 @@ class JournalEntriesCompanion extends UpdateCompanion<JournalEntry> {
     this.updatedAt = const Value.absent(),
     this.title = const Value.absent(),
     this.bodyMarkdown = const Value.absent(),
+    this.section = const Value.absent(),
+    this.isMonthlyReview = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   JournalEntriesCompanion.insert({
@@ -970,6 +1068,8 @@ class JournalEntriesCompanion extends UpdateCompanion<JournalEntry> {
     this.updatedAt = const Value.absent(),
     this.title = const Value.absent(),
     required String bodyMarkdown,
+    this.section = const Value.absent(),
+    this.isMonthlyReview = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        entryDate = Value(entryDate),
@@ -981,6 +1081,8 @@ class JournalEntriesCompanion extends UpdateCompanion<JournalEntry> {
     Expression<DateTime>? updatedAt,
     Expression<String>? title,
     Expression<String>? bodyMarkdown,
+    Expression<int>? section,
+    Expression<bool>? isMonthlyReview,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -990,6 +1092,8 @@ class JournalEntriesCompanion extends UpdateCompanion<JournalEntry> {
       if (updatedAt != null) 'updated_at': updatedAt,
       if (title != null) 'title': title,
       if (bodyMarkdown != null) 'body_markdown': bodyMarkdown,
+      if (section != null) 'section': section,
+      if (isMonthlyReview != null) 'is_monthly_review': isMonthlyReview,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1001,6 +1105,8 @@ class JournalEntriesCompanion extends UpdateCompanion<JournalEntry> {
     Value<DateTime>? updatedAt,
     Value<String?>? title,
     Value<String>? bodyMarkdown,
+    Value<JournalSection>? section,
+    Value<bool>? isMonthlyReview,
     Value<int>? rowid,
   }) {
     return JournalEntriesCompanion(
@@ -1010,6 +1116,8 @@ class JournalEntriesCompanion extends UpdateCompanion<JournalEntry> {
       updatedAt: updatedAt ?? this.updatedAt,
       title: title ?? this.title,
       bodyMarkdown: bodyMarkdown ?? this.bodyMarkdown,
+      section: section ?? this.section,
+      isMonthlyReview: isMonthlyReview ?? this.isMonthlyReview,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1035,6 +1143,14 @@ class JournalEntriesCompanion extends UpdateCompanion<JournalEntry> {
     if (bodyMarkdown.present) {
       map['body_markdown'] = Variable<String>(bodyMarkdown.value);
     }
+    if (section.present) {
+      map['section'] = Variable<int>(
+        $JournalEntriesTable.$convertersection.toSql(section.value),
+      );
+    }
+    if (isMonthlyReview.present) {
+      map['is_monthly_review'] = Variable<bool>(isMonthlyReview.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1050,6 +1166,8 @@ class JournalEntriesCompanion extends UpdateCompanion<JournalEntry> {
           ..write('updatedAt: $updatedAt, ')
           ..write('title: $title, ')
           ..write('bodyMarkdown: $bodyMarkdown, ')
+          ..write('section: $section, ')
+          ..write('isMonthlyReview: $isMonthlyReview, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -3970,6 +4088,8 @@ typedef $$JournalEntriesTableCreateCompanionBuilder =
       Value<DateTime> updatedAt,
       Value<String?> title,
       required String bodyMarkdown,
+      Value<JournalSection> section,
+      Value<bool> isMonthlyReview,
       Value<int> rowid,
     });
 typedef $$JournalEntriesTableUpdateCompanionBuilder =
@@ -3980,6 +4100,8 @@ typedef $$JournalEntriesTableUpdateCompanionBuilder =
       Value<DateTime> updatedAt,
       Value<String?> title,
       Value<String> bodyMarkdown,
+      Value<JournalSection> section,
+      Value<bool> isMonthlyReview,
       Value<int> rowid,
     });
 
@@ -4051,6 +4173,17 @@ class $$JournalEntriesTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnWithTypeConverterFilters<JournalSection, JournalSection, int>
+  get section => $composableBuilder(
+    column: $table.section,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<bool> get isMonthlyReview => $composableBuilder(
+    column: $table.isMonthlyReview,
+    builder: (column) => ColumnFilters(column),
+  );
+
   Expression<bool> journalEntryTagsRefs(
     Expression<bool> Function($$JournalEntryTagsTableFilterComposer f) f,
   ) {
@@ -4115,6 +4248,16 @@ class $$JournalEntriesTableOrderingComposer
     column: $table.bodyMarkdown,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<int> get section => $composableBuilder(
+    column: $table.section,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isMonthlyReview => $composableBuilder(
+    column: $table.isMonthlyReview,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$JournalEntriesTableAnnotationComposer
@@ -4143,6 +4286,14 @@ class $$JournalEntriesTableAnnotationComposer
 
   GeneratedColumn<String> get bodyMarkdown => $composableBuilder(
     column: $table.bodyMarkdown,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<JournalSection, int> get section =>
+      $composableBuilder(column: $table.section, builder: (column) => column);
+
+  GeneratedColumn<bool> get isMonthlyReview => $composableBuilder(
+    column: $table.isMonthlyReview,
     builder: (column) => column,
   );
 
@@ -4208,6 +4359,8 @@ class $$JournalEntriesTableTableManager
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<String?> title = const Value.absent(),
                 Value<String> bodyMarkdown = const Value.absent(),
+                Value<JournalSection> section = const Value.absent(),
+                Value<bool> isMonthlyReview = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => JournalEntriesCompanion(
                 id: id,
@@ -4216,6 +4369,8 @@ class $$JournalEntriesTableTableManager
                 updatedAt: updatedAt,
                 title: title,
                 bodyMarkdown: bodyMarkdown,
+                section: section,
+                isMonthlyReview: isMonthlyReview,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -4226,6 +4381,8 @@ class $$JournalEntriesTableTableManager
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<String?> title = const Value.absent(),
                 required String bodyMarkdown,
+                Value<JournalSection> section = const Value.absent(),
+                Value<bool> isMonthlyReview = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => JournalEntriesCompanion.insert(
                 id: id,
@@ -4234,6 +4391,8 @@ class $$JournalEntriesTableTableManager
                 updatedAt: updatedAt,
                 title: title,
                 bodyMarkdown: bodyMarkdown,
+                section: section,
+                isMonthlyReview: isMonthlyReview,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
