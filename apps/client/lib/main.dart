@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'app/lock_controller.dart';
 import 'app/locale_controller.dart';
 import 'app/router.dart';
 import 'data/local/database.dart';
 import 'data/providers.dart';
+import 'features/security/lock_screen.dart';
 import 'l10n/app_localizations.dart';
 
 Future<void> main() async {
@@ -15,6 +17,7 @@ Future<void> main() async {
     overrides: [appDatabaseProvider.overrideWithValue(database)],
   );
   await container.read(localeControllerProvider.notifier).load();
+  await container.read(lockControllerProvider.notifier).initialize();
 
   runApp(
     UncontrolledProviderScope(
@@ -24,11 +27,37 @@ Future<void> main() async {
   );
 }
 
-class TerapiaApp extends ConsumerWidget {
+class TerapiaApp extends ConsumerStatefulWidget {
   const TerapiaApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TerapiaApp> createState() => _TerapiaAppState();
+}
+
+class _TerapiaAppState extends ConsumerState<TerapiaApp>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.hidden) {
+      ref.read(lockControllerProvider.notifier).lockIfProtected();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final locale = ref.watch(localeControllerProvider);
 
     return MaterialApp.router(
@@ -41,6 +70,17 @@ class TerapiaApp extends ConsumerWidget {
         colorSchemeSeed: const Color(0xFF4C6FFF),
       ),
       routerConfig: ref.watch(routerProvider),
+      builder: (context, child) {
+        final locked = ref.watch(lockControllerProvider);
+        if (!locked) return child ?? const SizedBox.shrink();
+        // Host the lock screen in its own Overlay: replacing `child` removes
+        // the Navigator, and text fields need an Overlay ancestor.
+        return Overlay(
+          initialEntries: [
+            OverlayEntry(builder: (_) => const LockScreen()),
+          ],
+        );
+      },
     );
   }
 }

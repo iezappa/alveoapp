@@ -7,6 +7,7 @@ import 'repositories/mood_repository.dart';
 import 'repositories/settings_repository.dart';
 import 'repositories/task_repository.dart';
 import 'repositories/timeline_repository.dart';
+import 'security/pin_service.dart';
 
 /// Holds the opened [AppDatabase].
 ///
@@ -21,6 +22,10 @@ final appDatabaseProvider = Provider<AppDatabase>((ref) {
 
 final settingsRepositoryProvider = Provider<SettingsRepository>(
   (ref) => SettingsRepository(ref.watch(appDatabaseProvider)),
+);
+
+final pinServiceProvider = Provider<PinService>(
+  (ref) => PinService(ref.watch(settingsRepositoryProvider)),
 );
 
 final moodRepositoryProvider = Provider<MoodRepository>(

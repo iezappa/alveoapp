@@ -122,6 +122,96 @@ abstract class AppLocalizations {
   /// **'Spanish'**
   String get languageSpanish;
 
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @pinSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN lock'**
+  String get pinSectionTitle;
+
+  /// No description provided for @pinSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a PIN'**
+  String get pinSet;
+
+  /// No description provided for @pinChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change PIN'**
+  String get pinChange;
+
+  /// No description provided for @pinRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove PIN'**
+  String get pinRemove;
+
+  /// No description provided for @pinNewLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'New PIN'**
+  String get pinNewLabel;
+
+  /// No description provided for @pinConfirmLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm PIN'**
+  String get pinConfirmLabel;
+
+  /// No description provided for @pinCurrentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Current PIN'**
+  String get pinCurrentLabel;
+
+  /// No description provided for @pinEnterTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your PIN'**
+  String get pinEnterTitle;
+
+  /// No description provided for @pinUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock'**
+  String get pinUnlock;
+
+  /// No description provided for @pinWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong PIN'**
+  String get pinWrong;
+
+  /// No description provided for @pinTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least 4 digits'**
+  String get pinTooShort;
+
+  /// No description provided for @pinMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'The PINs don\'t match'**
+  String get pinMismatch;
+
+  /// No description provided for @pinUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN updated'**
+  String get pinUpdated;
+
+  /// No description provided for @pinRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN removed'**
+  String get pinRemoved;
+
   /// No description provided for @navTimeline.
   ///
   /// In en, this message translates to:

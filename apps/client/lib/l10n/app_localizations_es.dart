@@ -22,6 +22,51 @@ class AppLocalizationsEs extends AppLocalizations {
   String get languageSpanish => 'Español';
 
   @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get pinSectionTitle => 'Bloqueo con PIN';
+
+  @override
+  String get pinSet => 'Configurar un PIN';
+
+  @override
+  String get pinChange => 'Cambiar PIN';
+
+  @override
+  String get pinRemove => 'Quitar PIN';
+
+  @override
+  String get pinNewLabel => 'Nuevo PIN';
+
+  @override
+  String get pinConfirmLabel => 'Confirmá el PIN';
+
+  @override
+  String get pinCurrentLabel => 'PIN actual';
+
+  @override
+  String get pinEnterTitle => 'Ingresá tu PIN';
+
+  @override
+  String get pinUnlock => 'Desbloquear';
+
+  @override
+  String get pinWrong => 'PIN incorrecto';
+
+  @override
+  String get pinTooShort => 'Usá al menos 4 dígitos';
+
+  @override
+  String get pinMismatch => 'Los PIN no coinciden';
+
+  @override
+  String get pinUpdated => 'PIN actualizado';
+
+  @override
+  String get pinRemoved => 'PIN quitado';
+
+  @override
   String get navTimeline => 'Línea de tiempo';
 
   @override

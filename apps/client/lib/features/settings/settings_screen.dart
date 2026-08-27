@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../app/lock_controller.dart';
 import '../../app/locale_controller.dart';
+import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../security/pin_dialogs.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -13,34 +16,114 @@ class SettingsScreen extends ConsumerWidget {
     final chosen = ref.watch(localeControllerProvider);
     final active =
         chosen?.languageCode ?? Localizations.localeOf(context).languageCode;
+    final hasPin = ref.watch(hasPinProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.navSettings)),
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              l10n.settingsLanguage,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8),
-            SegmentedButton<String>(
-              segments: [
-                ButtonSegment(value: 'es', label: Text(l10n.languageSpanish)),
-                ButtonSegment(value: 'en', label: Text(l10n.languageEnglish)),
-              ],
-              selected: {active == 'es' ? 'es' : 'en'},
-              onSelectionChanged: (selection) {
-                ref
-                    .read(localeControllerProvider.notifier)
-                    .setLocale(Locale(selection.first));
-              },
-            ),
-          ],
-        ),
+        children: [
+          Text(
+            l10n.settingsLanguage,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 8),
+          SegmentedButton<String>(
+            segments: [
+              ButtonSegment(value: 'es', label: Text(l10n.languageSpanish)),
+              ButtonSegment(value: 'en', label: Text(l10n.languageEnglish)),
+            ],
+            selected: {active == 'es' ? 'es' : 'en'},
+            onSelectionChanged: (selection) {
+              ref
+                  .read(localeControllerProvider.notifier)
+                  .setLocale(Locale(selection.first));
+            },
+          ),
+          const SizedBox(height: 24),
+          Text(
+            l10n.pinSectionTitle,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 8),
+          hasPin.when(
+            loading: () => const LinearProgressIndicator(),
+            error: (e, _) => Text('$e'),
+            data: (enabled) => enabled
+                ? Column(
+                    children: [
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: const Icon(Icons.password_outlined),
+                        title: Text(l10n.pinChange),
+                        onTap: () => _changePin(context, ref),
+                      ),
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: const Icon(Icons.lock_open_outlined),
+                        title: Text(l10n.pinRemove),
+                        onTap: () => _removePin(context, ref),
+                      ),
+                    ],
+                  )
+                : ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.lock_outline),
+                    title: Text(l10n.pinSet),
+                    onTap: () => _setPin(context, ref),
+                  ),
+          ),
+        ],
       ),
     );
+  }
+
+  Future<void> _setPin(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final pin = await promptNewPin(context, l10n.pinSet);
+    if (pin == null) return;
+
+    await ref.read(pinServiceProvider).setPin(pin);
+    ref.invalidate(hasPinProvider);
+    messenger.showSnackBar(SnackBar(content: Text(l10n.pinUpdated)));
+  }
+
+  Future<void> _changePin(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final pinService = ref.read(pinServiceProvider);
+
+    final current = await promptExistingPin(context, l10n.pinChange);
+    if (current == null) return;
+    if (!await pinService.verify(current)) {
+      messenger.showSnackBar(SnackBar(content: Text(l10n.pinWrong)));
+      return;
+    }
+    if (!context.mounted) return;
+
+    final next = await promptNewPin(context, l10n.pinChange);
+    if (next == null) return;
+
+    await pinService.setPin(next);
+    ref.invalidate(hasPinProvider);
+    messenger.showSnackBar(SnackBar(content: Text(l10n.pinUpdated)));
+  }
+
+  Future<void> _removePin(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final pinService = ref.read(pinServiceProvider);
+
+    final current = await promptExistingPin(context, l10n.pinRemove);
+    if (current == null) return;
+    if (!await pinService.verify(current)) {
+      messenger.showSnackBar(SnackBar(content: Text(l10n.pinWrong)));
+      return;
+    }
+
+    await pinService.clearPin();
+    ref.invalidate(hasPinProvider);
+    messenger.showSnackBar(SnackBar(content: Text(l10n.pinRemoved)));
   }
 }
