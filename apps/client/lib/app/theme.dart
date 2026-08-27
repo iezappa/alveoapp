@@ -3,7 +3,20 @@ import 'package:flutter/material.dart';
 /// A calm, low-chrome look: one muted accent, generous whitespace, soft
 /// rounded shapes, and almost no elevation. Shared by light and dark.
 
-const _seed = Color(0xFF5E8B7E); // muted sage — calm, not clinical
+/// The pickable accent colours. Every seed is desaturated so the palette stays
+/// calm regardless of hue.
+enum AppAccent { green, blue, pink, violet, orange, red }
+
+extension AppAccentSeed on AppAccent {
+  Color get seed => switch (this) {
+    AppAccent.green => const Color(0xFF5E8B7E),
+    AppAccent.blue => const Color(0xFF5C7C9E),
+    AppAccent.pink => const Color(0xFFB56C86),
+    AppAccent.violet => const Color(0xFF7C6BA8),
+    AppAccent.orange => const Color(0xFFC1804E),
+    AppAccent.red => const Color(0xFFB25E54),
+  };
+}
 
 /// Standard page padding. Screens use this so spacing stays consistent.
 const double kGutter = 16;
@@ -12,11 +25,13 @@ const double kGutter = 16;
 /// windows instead of stretching edge to edge.
 const double kContentMaxWidth = 640;
 
-ThemeData buildLightTheme() =>
-    _base(ColorScheme.fromSeed(seedColor: _seed, brightness: Brightness.light));
+ThemeData buildLightTheme([AppAccent accent = AppAccent.green]) => _base(
+  ColorScheme.fromSeed(seedColor: accent.seed, brightness: Brightness.light),
+);
 
-ThemeData buildDarkTheme() =>
-    _base(ColorScheme.fromSeed(seedColor: _seed, brightness: Brightness.dark));
+ThemeData buildDarkTheme([AppAccent accent = AppAccent.green]) => _base(
+  ColorScheme.fromSeed(seedColor: accent.seed, brightness: Brightness.dark),
+);
 
 ThemeData _base(ColorScheme scheme) {
   final radius12 = BorderRadius.circular(12);

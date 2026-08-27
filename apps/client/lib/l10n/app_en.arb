@@ -13,6 +13,19 @@
   "languageSpanish": "Spanish",
 
   "cancel": "Cancel",
+
+  "appearanceSection": "Appearance",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "accentColor": "Accent colour",
+  "accentGreen": "Green",
+  "accentBlue": "Blue",
+  "accentPink": "Pink",
+  "accentViolet": "Violet",
+  "accentOrange": "Orange",
+  "accentRed": "Red",
+
   "pinSectionTitle": "PIN lock",
   "pinSet": "Set a PIN",
   "pinChange": "Change PIN",

@@ -5,6 +5,7 @@ import 'app/lock_controller.dart';
 import 'app/locale_controller.dart';
 import 'app/router.dart';
 import 'app/theme.dart';
+import 'app/theme_controller.dart';
 import 'data/local/database.dart';
 import 'data/providers.dart';
 import 'features/security/lock_screen.dart';
@@ -18,6 +19,7 @@ Future<void> main() async {
     overrides: [appDatabaseProvider.overrideWithValue(database)],
   );
   await container.read(localeControllerProvider.notifier).load();
+  await container.read(themeControllerProvider.notifier).load();
   await container.read(lockControllerProvider.notifier).initialize();
 
   runApp(
@@ -57,14 +59,16 @@ class _TerapiaAppState extends ConsumerState<TerapiaApp>
   @override
   Widget build(BuildContext context) {
     final locale = ref.watch(localeControllerProvider);
+    final theme = ref.watch(themeControllerProvider);
 
     return MaterialApp.router(
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: buildLightTheme(),
-      darkTheme: buildDarkTheme(),
+      theme: buildLightTheme(theme.accent),
+      darkTheme: buildDarkTheme(theme.accent),
+      themeMode: theme.mode,
       routerConfig: ref.watch(routerProvider),
       builder: (context, child) {
         final locked = ref.watch(lockControllerProvider);

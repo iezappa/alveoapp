@@ -25,6 +25,39 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cancel => 'Cancelar';
 
   @override
+  String get appearanceSection => 'Apariencia';
+
+  @override
+  String get themeSystem => 'Sistema';
+
+  @override
+  String get themeLight => 'Claro';
+
+  @override
+  String get themeDark => 'Oscuro';
+
+  @override
+  String get accentColor => 'Color de acento';
+
+  @override
+  String get accentGreen => 'Verde';
+
+  @override
+  String get accentBlue => 'Azul';
+
+  @override
+  String get accentPink => 'Rosa';
+
+  @override
+  String get accentViolet => 'Violeta';
+
+  @override
+  String get accentOrange => 'Naranja';
+
+  @override
+  String get accentRed => 'Rojo';
+
+  @override
   String get pinSectionTitle => 'Bloqueo con PIN';
 
   @override

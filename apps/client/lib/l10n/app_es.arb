@@ -6,6 +6,19 @@
   "languageSpanish": "Español",
 
   "cancel": "Cancelar",
+
+  "appearanceSection": "Apariencia",
+  "themeSystem": "Sistema",
+  "themeLight": "Claro",
+  "themeDark": "Oscuro",
+  "accentColor": "Color de acento",
+  "accentGreen": "Verde",
+  "accentBlue": "Azul",
+  "accentPink": "Rosa",
+  "accentViolet": "Violeta",
+  "accentOrange": "Naranja",
+  "accentRed": "Rojo",
+
   "pinSectionTitle": "Bloqueo con PIN",
   "pinSet": "Configurar un PIN",
   "pinChange": "Cambiar PIN",

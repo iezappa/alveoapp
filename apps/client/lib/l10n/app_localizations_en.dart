@@ -25,6 +25,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
+  String get appearanceSection => 'Appearance';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get accentColor => 'Accent colour';
+
+  @override
+  String get accentGreen => 'Green';
+
+  @override
+  String get accentBlue => 'Blue';
+
+  @override
+  String get accentPink => 'Pink';
+
+  @override
+  String get accentViolet => 'Violet';
+
+  @override
+  String get accentOrange => 'Orange';
+
+  @override
+  String get accentRed => 'Red';
+
+  @override
   String get pinSectionTitle => 'PIN lock';
 
   @override
