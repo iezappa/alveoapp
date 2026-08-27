@@ -21,6 +21,15 @@
   "pinUpdated": "PIN actualizado",
   "pinRemoved": "PIN quitado",
 
+  "dataSectionTitle": "Datos",
+  "exportBackup": "Exportar copia",
+  "importBackup": "Importar copia",
+  "backupFileType": "Copia de Terapia",
+  "backupSaved": "Copia guardada",
+  "importDone": "Importación completa",
+  "importSummary": "{inserted} agregados, {skipped} ya presentes",
+  "importFailed": "Falló la importación: {reason}",
+
   "navTimeline": "Línea de tiempo",
   "navTasks": "Tareas",
   "navSessions": "Sesiones",

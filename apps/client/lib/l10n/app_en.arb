@@ -28,6 +28,26 @@
   "pinUpdated": "PIN updated",
   "pinRemoved": "PIN removed",
 
+  "dataSectionTitle": "Data",
+  "exportBackup": "Export backup",
+  "importBackup": "Import backup",
+  "backupFileType": "Terapia backup",
+  "backupSaved": "Backup saved",
+  "importDone": "Import complete",
+  "importSummary": "{inserted} added, {skipped} already present",
+  "@importSummary": {
+    "placeholders": {
+      "inserted": { "type": "int" },
+      "skipped": { "type": "int" }
+    }
+  },
+  "importFailed": "Import failed: {reason}",
+  "@importFailed": {
+    "placeholders": {
+      "reason": { "type": "String" }
+    }
+  },
+
   "navTimeline": "Timeline",
   "navTasks": "Tasks",
   "navSessions": "Sessions",

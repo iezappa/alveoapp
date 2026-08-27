@@ -67,6 +67,34 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pinRemoved => 'PIN quitado';
 
   @override
+  String get dataSectionTitle => 'Datos';
+
+  @override
+  String get exportBackup => 'Exportar copia';
+
+  @override
+  String get importBackup => 'Importar copia';
+
+  @override
+  String get backupFileType => 'Copia de Terapia';
+
+  @override
+  String get backupSaved => 'Copia guardada';
+
+  @override
+  String get importDone => 'Importación completa';
+
+  @override
+  String importSummary(int inserted, int skipped) {
+    return '$inserted agregados, $skipped ya presentes';
+  }
+
+  @override
+  String importFailed(String reason) {
+    return 'Falló la importación: $reason';
+  }
+
+  @override
   String get navTimeline => 'Línea de tiempo';
 
   @override

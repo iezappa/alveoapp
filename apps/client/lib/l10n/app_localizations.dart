@@ -212,6 +212,54 @@ abstract class AppLocalizations {
   /// **'PIN removed'**
   String get pinRemoved;
 
+  /// No description provided for @dataSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get dataSectionTitle;
+
+  /// No description provided for @exportBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Export backup'**
+  String get exportBackup;
+
+  /// No description provided for @importBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Import backup'**
+  String get importBackup;
+
+  /// No description provided for @backupFileType.
+  ///
+  /// In en, this message translates to:
+  /// **'Terapia backup'**
+  String get backupFileType;
+
+  /// No description provided for @backupSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup saved'**
+  String get backupSaved;
+
+  /// No description provided for @importDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Import complete'**
+  String get importDone;
+
+  /// No description provided for @importSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{inserted} added, {skipped} already present'**
+  String importSummary(int inserted, int skipped);
+
+  /// No description provided for @importFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Import failed: {reason}'**
+  String importFailed(String reason);
+
   /// No description provided for @navTimeline.
   ///
   /// In en, this message translates to:

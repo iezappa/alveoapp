@@ -67,6 +67,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pinRemoved => 'PIN removed';
 
   @override
+  String get dataSectionTitle => 'Data';
+
+  @override
+  String get exportBackup => 'Export backup';
+
+  @override
+  String get importBackup => 'Import backup';
+
+  @override
+  String get backupFileType => 'Terapia backup';
+
+  @override
+  String get backupSaved => 'Backup saved';
+
+  @override
+  String get importDone => 'Import complete';
+
+  @override
+  String importSummary(int inserted, int skipped) {
+    return '$inserted added, $skipped already present';
+  }
+
+  @override
+  String importFailed(String reason) {
+    return 'Import failed: $reason';
+  }
+
+  @override
   String get navTimeline => 'Timeline';
 
   @override

@@ -6,6 +6,7 @@ import '../../app/locale_controller.dart';
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../security/pin_dialogs.dart';
+import '../transfer/backup_actions.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -72,6 +73,24 @@ class SettingsScreen extends ConsumerWidget {
                     title: Text(l10n.pinSet),
                     onTap: () => _setPin(context, ref),
                   ),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            l10n.dataSectionTitle,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 8),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.upload_file_outlined),
+            title: Text(l10n.exportBackup),
+            onTap: () => runExportBackup(context, ref),
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.download_outlined),
+            title: Text(l10n.importBackup),
+            onTap: () => runImportBackup(context, ref),
           ),
         ],
       ),
