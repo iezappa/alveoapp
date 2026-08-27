@@ -320,6 +320,42 @@ abstract class AppLocalizations {
   /// **'Therapy session'**
   String get sessionTimelineLabel;
 
+  /// No description provided for @sessionLinks.
+  ///
+  /// In en, this message translates to:
+  /// **'Links'**
+  String get sessionLinks;
+
+  /// No description provided for @linkAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Link an item'**
+  String get linkAdd;
+
+  /// No description provided for @linkRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlink'**
+  String get linkRemove;
+
+  /// No description provided for @linkEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing linked yet'**
+  String get linkEmpty;
+
+  /// No description provided for @linkNothingToLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to link'**
+  String get linkNothingToLink;
+
+  /// No description provided for @linkMoodLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Mood check-in'**
+  String get linkMoodLabel;
+
   /// No description provided for @tasksEmpty.
   ///
   /// In en, this message translates to:

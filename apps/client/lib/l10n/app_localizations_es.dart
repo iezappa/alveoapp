@@ -121,6 +121,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sessionTimelineLabel => 'Sesión de terapia';
 
   @override
+  String get sessionLinks => 'Vínculos';
+
+  @override
+  String get linkAdd => 'Vincular un elemento';
+
+  @override
+  String get linkRemove => 'Desvincular';
+
+  @override
+  String get linkEmpty => 'Todavía no hay nada vinculado';
+
+  @override
+  String get linkNothingToLink => 'No hay nada para vincular';
+
+  @override
+  String get linkMoodLabel => 'Registro de ánimo';
+
+  @override
   String get tasksEmpty => 'Todavía no hay tareas';
 
   @override

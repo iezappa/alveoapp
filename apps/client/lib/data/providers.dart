@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'export/export_service.dart';
 import 'local/database.dart';
 import 'repositories/journal_repository.dart';
+import 'repositories/link_repository.dart';
 import 'repositories/mood_repository.dart';
 import 'repositories/session_repository.dart';
 import 'repositories/settings_repository.dart';
@@ -43,6 +44,10 @@ final taskRepositoryProvider = Provider<TaskRepository>(
 
 final sessionRepositoryProvider = Provider<SessionRepository>(
   (ref) => SessionRepository(ref.watch(appDatabaseProvider)),
+);
+
+final linkRepositoryProvider = Provider<LinkRepository>(
+  (ref) => LinkRepository(ref.watch(appDatabaseProvider)),
 );
 
 final timelineRepositoryProvider = Provider<TimelineRepository>(

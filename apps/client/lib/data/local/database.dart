@@ -20,6 +20,7 @@ part 'database.g.dart';
     JournalEntryTags,
     AppSettings,
     Sessions,
+    SessionLinks,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -34,7 +35,7 @@ class AppDatabase extends _$AppDatabase {
       AppDatabase(NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -45,6 +46,9 @@ class AppDatabase extends _$AppDatabase {
           }
           if (from < 3) {
             await m.createTable(sessions);
+          }
+          if (from < 4) {
+            await m.createTable(sessionLinks);
           }
         },
         beforeOpen: (details) async {

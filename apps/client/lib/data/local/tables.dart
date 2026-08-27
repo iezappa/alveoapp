@@ -1,5 +1,9 @@
 import 'package:drift/drift.dart';
 
+import '../../domain/links/link_target_type.dart';
+
+export '../../domain/links/link_target_type.dart';
+
 /// Lifecycle of a task assigned by the therapist.
 ///
 /// Stored by index via [intEnum]. APPEND-ONLY: never reorder or remove
@@ -150,4 +154,19 @@ class Sessions extends Table {
 
   @override
   Set<Column> get primaryKey => {id};
+}
+
+/// Associates a session with another record (a task, journal entry, or mood
+/// entry). [targetId] is polymorphic so it carries no foreign key; dangling
+/// rows are dropped on read and cleaned up when the target is deleted.
+class SessionLinks extends Table {
+  TextColumn get sessionId =>
+      text().references(Sessions, #id, onDelete: KeyAction.cascade)();
+
+  IntColumn get targetType => intEnum<LinkTargetType>()();
+
+  TextColumn get targetId => text()();
+
+  @override
+  Set<Column> get primaryKey => {sessionId, targetType, targetId};
 }

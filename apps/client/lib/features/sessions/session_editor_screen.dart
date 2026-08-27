@@ -7,6 +7,7 @@ import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../journal/markdown_editor.dart';
 import '../timeline/timeline_providers.dart';
+import 'session_links_tab.dart';
 import 'session_providers.dart';
 
 class SessionEditorScreen extends ConsumerStatefulWidget {
@@ -137,8 +138,10 @@ class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
+    final showLinks = !widget.isNew;
+
     return DefaultTabController(
-      length: 3,
+      length: showLinks ? 4 : 3,
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.isNew ? l10n.newSession : l10n.editSession),
@@ -150,10 +153,12 @@ class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
             ),
           ],
           bottom: TabBar(
+            isScrollable: showLinks,
             tabs: [
               Tab(text: l10n.sessionAgenda),
               Tab(text: l10n.sessionNotes),
               Tab(text: l10n.sessionTakeaways),
+              if (showLinks) Tab(text: l10n.sessionLinks),
             ],
           ),
         ),
@@ -191,6 +196,8 @@ class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
                     hint: l10n.sessionTakeawaysHint,
                     l10n: l10n,
                   ),
+                  if (showLinks)
+                    SessionLinksTab(sessionId: widget.sessionId!),
                 ],
               ),
             ),

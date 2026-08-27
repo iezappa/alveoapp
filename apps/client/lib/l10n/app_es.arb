@@ -40,6 +40,12 @@
   "sessionTakeawaysHint": "¿Con qué te quedaste?",
   "sessionSaved": "Sesión guardada",
   "sessionTimelineLabel": "Sesión de terapia",
+  "sessionLinks": "Vínculos",
+  "linkAdd": "Vincular un elemento",
+  "linkRemove": "Desvincular",
+  "linkEmpty": "Todavía no hay nada vinculado",
+  "linkNothingToLink": "No hay nada para vincular",
+  "linkMoodLabel": "Registro de ánimo",
 
   "tasksEmpty": "Todavía no hay tareas",
   "newTask": "Nueva tarea",

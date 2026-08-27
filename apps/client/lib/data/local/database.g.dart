@@ -2903,6 +2903,285 @@ class SessionsCompanion extends UpdateCompanion<Session> {
   }
 }
 
+class $SessionLinksTable extends SessionLinks
+    with TableInfo<$SessionLinksTable, SessionLink> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SessionLinksTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _sessionIdMeta = const VerificationMeta(
+    'sessionId',
+  );
+  @override
+  late final GeneratedColumn<String> sessionId = GeneratedColumn<String>(
+    'session_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES sessions (id) ON DELETE CASCADE',
+    ),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<LinkTargetType, int> targetType =
+      GeneratedColumn<int>(
+        'target_type',
+        aliasedName,
+        false,
+        type: DriftSqlType.int,
+        requiredDuringInsert: true,
+      ).withConverter<LinkTargetType>($SessionLinksTable.$convertertargetType);
+  static const VerificationMeta _targetIdMeta = const VerificationMeta(
+    'targetId',
+  );
+  @override
+  late final GeneratedColumn<String> targetId = GeneratedColumn<String>(
+    'target_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [sessionId, targetType, targetId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'session_links';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SessionLink> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('session_id')) {
+      context.handle(
+        _sessionIdMeta,
+        sessionId.isAcceptableOrUnknown(data['session_id']!, _sessionIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sessionIdMeta);
+    }
+    if (data.containsKey('target_id')) {
+      context.handle(
+        _targetIdMeta,
+        targetId.isAcceptableOrUnknown(data['target_id']!, _targetIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_targetIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {sessionId, targetType, targetId};
+  @override
+  SessionLink map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SessionLink(
+      sessionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}session_id'],
+      )!,
+      targetType: $SessionLinksTable.$convertertargetType.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.int,
+          data['${effectivePrefix}target_type'],
+        )!,
+      ),
+      targetId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}target_id'],
+      )!,
+    );
+  }
+
+  @override
+  $SessionLinksTable createAlias(String alias) {
+    return $SessionLinksTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<LinkTargetType, int, int> $convertertargetType =
+      const EnumIndexConverter<LinkTargetType>(LinkTargetType.values);
+}
+
+class SessionLink extends DataClass implements Insertable<SessionLink> {
+  final String sessionId;
+  final LinkTargetType targetType;
+  final String targetId;
+  const SessionLink({
+    required this.sessionId,
+    required this.targetType,
+    required this.targetId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['session_id'] = Variable<String>(sessionId);
+    {
+      map['target_type'] = Variable<int>(
+        $SessionLinksTable.$convertertargetType.toSql(targetType),
+      );
+    }
+    map['target_id'] = Variable<String>(targetId);
+    return map;
+  }
+
+  SessionLinksCompanion toCompanion(bool nullToAbsent) {
+    return SessionLinksCompanion(
+      sessionId: Value(sessionId),
+      targetType: Value(targetType),
+      targetId: Value(targetId),
+    );
+  }
+
+  factory SessionLink.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SessionLink(
+      sessionId: serializer.fromJson<String>(json['sessionId']),
+      targetType: $SessionLinksTable.$convertertargetType.fromJson(
+        serializer.fromJson<int>(json['targetType']),
+      ),
+      targetId: serializer.fromJson<String>(json['targetId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'sessionId': serializer.toJson<String>(sessionId),
+      'targetType': serializer.toJson<int>(
+        $SessionLinksTable.$convertertargetType.toJson(targetType),
+      ),
+      'targetId': serializer.toJson<String>(targetId),
+    };
+  }
+
+  SessionLink copyWith({
+    String? sessionId,
+    LinkTargetType? targetType,
+    String? targetId,
+  }) => SessionLink(
+    sessionId: sessionId ?? this.sessionId,
+    targetType: targetType ?? this.targetType,
+    targetId: targetId ?? this.targetId,
+  );
+  SessionLink copyWithCompanion(SessionLinksCompanion data) {
+    return SessionLink(
+      sessionId: data.sessionId.present ? data.sessionId.value : this.sessionId,
+      targetType: data.targetType.present
+          ? data.targetType.value
+          : this.targetType,
+      targetId: data.targetId.present ? data.targetId.value : this.targetId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SessionLink(')
+          ..write('sessionId: $sessionId, ')
+          ..write('targetType: $targetType, ')
+          ..write('targetId: $targetId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(sessionId, targetType, targetId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SessionLink &&
+          other.sessionId == this.sessionId &&
+          other.targetType == this.targetType &&
+          other.targetId == this.targetId);
+}
+
+class SessionLinksCompanion extends UpdateCompanion<SessionLink> {
+  final Value<String> sessionId;
+  final Value<LinkTargetType> targetType;
+  final Value<String> targetId;
+  final Value<int> rowid;
+  const SessionLinksCompanion({
+    this.sessionId = const Value.absent(),
+    this.targetType = const Value.absent(),
+    this.targetId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SessionLinksCompanion.insert({
+    required String sessionId,
+    required LinkTargetType targetType,
+    required String targetId,
+    this.rowid = const Value.absent(),
+  }) : sessionId = Value(sessionId),
+       targetType = Value(targetType),
+       targetId = Value(targetId);
+  static Insertable<SessionLink> custom({
+    Expression<String>? sessionId,
+    Expression<int>? targetType,
+    Expression<String>? targetId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (sessionId != null) 'session_id': sessionId,
+      if (targetType != null) 'target_type': targetType,
+      if (targetId != null) 'target_id': targetId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SessionLinksCompanion copyWith({
+    Value<String>? sessionId,
+    Value<LinkTargetType>? targetType,
+    Value<String>? targetId,
+    Value<int>? rowid,
+  }) {
+    return SessionLinksCompanion(
+      sessionId: sessionId ?? this.sessionId,
+      targetType: targetType ?? this.targetType,
+      targetId: targetId ?? this.targetId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (sessionId.present) {
+      map['session_id'] = Variable<String>(sessionId.value);
+    }
+    if (targetType.present) {
+      map['target_type'] = Variable<int>(
+        $SessionLinksTable.$convertertargetType.toSql(targetType.value),
+      );
+    }
+    if (targetId.present) {
+      map['target_id'] = Variable<String>(targetId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SessionLinksCompanion(')
+          ..write('sessionId: $sessionId, ')
+          ..write('targetType: $targetType, ')
+          ..write('targetId: $targetId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2918,6 +3197,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   );
   late final $AppSettingsTable appSettings = $AppSettingsTable(this);
   late final $SessionsTable sessions = $SessionsTable(this);
+  late final $SessionLinksTable sessionLinks = $SessionLinksTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2932,6 +3212,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     journalEntryTags,
     appSettings,
     sessions,
+    sessionLinks,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -2969,6 +3250,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [TableUpdate('journal_entry_tags', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'sessions',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('session_links', kind: UpdateKind.delete)],
     ),
   ]);
 }
@@ -5445,6 +5733,29 @@ typedef $$SessionsTableUpdateCompanionBuilder = SessionsCompanion Function({
   Value<int> rowid,
 });
 
+final class $$SessionsTableReferences
+    extends BaseReferences<_$AppDatabase, $SessionsTable, Session> {
+  $$SessionsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$SessionLinksTable, List<SessionLink>>
+  _sessionLinksRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.sessionLinks,
+    aliasName: 'sessions__id__session_links__session_id',
+  );
+
+  $$SessionLinksTableProcessedTableManager get sessionLinksRefs {
+    final manager = $$SessionLinksTableTableManager(
+      $_db,
+      $_db.sessionLinks,
+    ).filter((f) => f.sessionId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_sessionLinksRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
 class $$SessionsTableFilterComposer
     extends Composer<_$AppDatabase, $SessionsTable> {
   $$SessionsTableFilterComposer({
@@ -5483,6 +5794,31 @@ class $$SessionsTableFilterComposer
     column: $table.takeawaysMarkdown,
     builder: (column) => ColumnFilters(column),
   );
+
+  Expression<bool> sessionLinksRefs(
+    Expression<bool> Function($$SessionLinksTableFilterComposer f) f,
+  ) {
+    final $$SessionLinksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.sessionLinks,
+      getReferencedColumn: (t) => t.sessionId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SessionLinksTableFilterComposer(
+            $db: $db,
+            $table: $db.sessionLinks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$SessionsTableOrderingComposer
@@ -5559,6 +5895,31 @@ class $$SessionsTableAnnotationComposer
     column: $table.takeawaysMarkdown,
     builder: (column) => column,
   );
+
+  Expression<T> sessionLinksRefs<T extends Object>(
+    Expression<T> Function($$SessionLinksTableAnnotationComposer a) f,
+  ) {
+    final $$SessionLinksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.sessionLinks,
+      getReferencedColumn: (t) => t.sessionId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SessionLinksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.sessionLinks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$SessionsTableTableManager
@@ -5572,9 +5933,9 @@ class $$SessionsTableTableManager
           $$SessionsTableAnnotationComposer,
           $$SessionsTableCreateCompanionBuilder,
           $$SessionsTableUpdateCompanionBuilder,
-          (Session, BaseReferences<_$AppDatabase, $SessionsTable, Session>),
+          (Session, $$SessionsTableReferences),
           Session,
-          PrefetchHooks Function()
+          PrefetchHooks Function({bool sessionLinksRefs})
         > {
   $$SessionsTableTableManager(_$AppDatabase db, $SessionsTable table)
     : super(
@@ -5624,9 +5985,42 @@ class $$SessionsTableTableManager
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$SessionsTableReferences(db, table, e),
+                ),
+              )
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({sessionLinksRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (sessionLinksRefs) db.sessionLinks],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (sessionLinksRefs)
+                    await $_getPrefetchedData<
+                      Session,
+                      $SessionsTable,
+                      SessionLink
+                    >(
+                      currentTable: table,
+                      referencedTable: $$SessionsTableReferences
+                          ._sessionLinksRefsTable(db),
+                      managerFromTypedResult: (p0) => $$SessionsTableReferences(
+                        db,
+                        table,
+                        p0,
+                      ).sessionLinksRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.sessionId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
         ),
       );
 }
@@ -5641,9 +6035,290 @@ typedef $$SessionsTableProcessedTableManager =
       $$SessionsTableAnnotationComposer,
       $$SessionsTableCreateCompanionBuilder,
       $$SessionsTableUpdateCompanionBuilder,
-      (Session, BaseReferences<_$AppDatabase, $SessionsTable, Session>),
+      (Session, $$SessionsTableReferences),
       Session,
-      PrefetchHooks Function()
+      PrefetchHooks Function({bool sessionLinksRefs})
+    >;
+typedef $$SessionLinksTableCreateCompanionBuilder =
+    SessionLinksCompanion Function({
+      required String sessionId,
+      required LinkTargetType targetType,
+      required String targetId,
+      Value<int> rowid,
+    });
+typedef $$SessionLinksTableUpdateCompanionBuilder =
+    SessionLinksCompanion Function({
+      Value<String> sessionId,
+      Value<LinkTargetType> targetType,
+      Value<String> targetId,
+      Value<int> rowid,
+    });
+
+final class $$SessionLinksTableReferences
+    extends BaseReferences<_$AppDatabase, $SessionLinksTable, SessionLink> {
+  $$SessionLinksTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $SessionsTable _sessionIdTable(_$AppDatabase db) =>
+      db.sessions.createAlias('session_links__session_id__sessions__id');
+
+  $$SessionsTableProcessedTableManager get sessionId {
+    final $_column = $_itemColumn<String>('session_id')!;
+
+    final manager = $$SessionsTableTableManager(
+      $_db,
+      $_db.sessions,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_sessionIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$SessionLinksTableFilterComposer
+    extends Composer<_$AppDatabase, $SessionLinksTable> {
+  $$SessionLinksTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnWithTypeConverterFilters<LinkTargetType, LinkTargetType, int>
+  get targetType => $composableBuilder(
+    column: $table.targetType,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<String> get targetId => $composableBuilder(
+    column: $table.targetId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$SessionsTableFilterComposer get sessionId {
+    final $$SessionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.sessionId,
+      referencedTable: $db.sessions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SessionsTableFilterComposer(
+            $db: $db,
+            $table: $db.sessions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SessionLinksTableOrderingComposer
+    extends Composer<_$AppDatabase, $SessionLinksTable> {
+  $$SessionLinksTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get targetType => $composableBuilder(
+    column: $table.targetType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get targetId => $composableBuilder(
+    column: $table.targetId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$SessionsTableOrderingComposer get sessionId {
+    final $$SessionsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.sessionId,
+      referencedTable: $db.sessions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SessionsTableOrderingComposer(
+            $db: $db,
+            $table: $db.sessions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SessionLinksTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SessionLinksTable> {
+  $$SessionLinksTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumnWithTypeConverter<LinkTargetType, int> get targetType =>
+      $composableBuilder(
+        column: $table.targetType,
+        builder: (column) => column,
+      );
+
+  GeneratedColumn<String> get targetId =>
+      $composableBuilder(column: $table.targetId, builder: (column) => column);
+
+  $$SessionsTableAnnotationComposer get sessionId {
+    final $$SessionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.sessionId,
+      referencedTable: $db.sessions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$SessionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.sessions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$SessionLinksTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SessionLinksTable,
+          SessionLink,
+          $$SessionLinksTableFilterComposer,
+          $$SessionLinksTableOrderingComposer,
+          $$SessionLinksTableAnnotationComposer,
+          $$SessionLinksTableCreateCompanionBuilder,
+          $$SessionLinksTableUpdateCompanionBuilder,
+          (SessionLink, $$SessionLinksTableReferences),
+          SessionLink,
+          PrefetchHooks Function({bool sessionId})
+        > {
+  $$SessionLinksTableTableManager(_$AppDatabase db, $SessionLinksTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SessionLinksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SessionLinksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SessionLinksTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> sessionId = const Value.absent(),
+                Value<LinkTargetType> targetType = const Value.absent(),
+                Value<String> targetId = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SessionLinksCompanion(
+                sessionId: sessionId,
+                targetType: targetType,
+                targetId: targetId,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String sessionId,
+                required LinkTargetType targetType,
+                required String targetId,
+                Value<int> rowid = const Value.absent(),
+              }) => SessionLinksCompanion.insert(
+                sessionId: sessionId,
+                targetType: targetType,
+                targetId: targetId,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$SessionLinksTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({sessionId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (sessionId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.sessionId,
+                        referencedTable: $$SessionLinksTableReferences
+                            ._sessionIdTable(db),
+                        referencedColumn: $$SessionLinksTableReferences
+                            ._sessionIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$SessionLinksTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SessionLinksTable,
+      SessionLink,
+      $$SessionLinksTableFilterComposer,
+      $$SessionLinksTableOrderingComposer,
+      $$SessionLinksTableAnnotationComposer,
+      $$SessionLinksTableCreateCompanionBuilder,
+      $$SessionLinksTableUpdateCompanionBuilder,
+      (SessionLink, $$SessionLinksTableReferences),
+      SessionLink,
+      PrefetchHooks Function({bool sessionId})
     >;
 
 class $AppDatabaseManager {
@@ -5666,4 +6341,6 @@ class $AppDatabaseManager {
       $$AppSettingsTableTableManager(_db, _db.appSettings);
   $$SessionsTableTableManager get sessions =>
       $$SessionsTableTableManager(_db, _db.sessions);
+  $$SessionLinksTableTableManager get sessionLinks =>
+      $$SessionLinksTableTableManager(_db, _db.sessionLinks);
 }

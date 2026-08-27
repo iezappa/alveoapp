@@ -47,6 +47,12 @@
   "sessionTakeawaysHint": "What did you take away?",
   "sessionSaved": "Session saved",
   "sessionTimelineLabel": "Therapy session",
+  "sessionLinks": "Links",
+  "linkAdd": "Link an item",
+  "linkRemove": "Unlink",
+  "linkEmpty": "Nothing linked yet",
+  "linkNothingToLink": "Nothing to link",
+  "linkMoodLabel": "Mood check-in",
 
   "tasksEmpty": "No tasks yet",
   "newTask": "New task",
