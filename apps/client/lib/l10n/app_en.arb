@@ -32,6 +32,14 @@
     }
   },
   "journalUntitled": "Untitled entry",
+  "journalNewTitle": "New entry",
+  "journalEditTitle": "Edit entry",
+  "journalTitleHint": "Title (optional)",
+  "journalBodyHint": "Write in Markdown…",
+  "journalDate": "Date",
+  "journalSaved": "Entry saved",
+  "editorWrite": "Write",
+  "editorPreview": "Preview",
 
   "taskStatusPending": "Pending",
   "taskStatusInProgress": "In progress",

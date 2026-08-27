@@ -200,6 +200,54 @@ abstract class AppLocalizations {
   /// **'Untitled entry'**
   String get journalUntitled;
 
+  /// No description provided for @journalNewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New entry'**
+  String get journalNewTitle;
+
+  /// No description provided for @journalEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit entry'**
+  String get journalEditTitle;
+
+  /// No description provided for @journalTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Title (optional)'**
+  String get journalTitleHint;
+
+  /// No description provided for @journalBodyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write in Markdown…'**
+  String get journalBodyHint;
+
+  /// No description provided for @journalDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get journalDate;
+
+  /// No description provided for @journalSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry saved'**
+  String get journalSaved;
+
+  /// No description provided for @editorWrite.
+  ///
+  /// In en, this message translates to:
+  /// **'Write'**
+  String get editorWrite;
+
+  /// No description provided for @editorPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get editorPreview;
+
   /// No description provided for @taskStatusPending.
   ///
   /// In en, this message translates to:

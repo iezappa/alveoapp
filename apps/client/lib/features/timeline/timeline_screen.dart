@@ -8,6 +8,12 @@ import '../../domain/timeline/timeline_item.dart';
 import '../../l10n/app_localizations.dart';
 import 'timeline_providers.dart';
 
+/// Route to open for a timeline item, or null if it has no detail screen yet.
+String? _routeFor(TimelineItem item) => switch (item) {
+      JournalTimelineItem(:final entry) => '/journal/${entry.id}',
+      _ => null,
+    };
+
 class TimelineScreen extends ConsumerWidget {
   const TimelineScreen({super.key});
 
@@ -20,6 +26,11 @@ class TimelineScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(l10n.navTimeline),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.note_add_outlined),
+            onPressed: () => context.push('/journal/new'),
+            tooltip: l10n.journalNewTitle,
+          ),
           IconButton(
             icon: const Icon(Icons.settings_outlined),
             onPressed: () => context.push('/settings'),
@@ -82,11 +93,15 @@ class _TimelineTile extends StatelessWidget {
         ),
     };
 
+    final route = _routeFor(item);
+    final hasSubtitle = subtitle != null && subtitle.isNotEmpty;
+
     return ListTile(
       leading: Icon(icon),
       title: Text(title),
-      subtitle: Text([when, if (subtitle != null && subtitle.isNotEmpty) subtitle].join(' · ')),
-      isThreeLine: subtitle != null && subtitle.isNotEmpty,
+      subtitle: Text([when, if (hasSubtitle) subtitle].join(' · ')),
+      isThreeLine: hasSubtitle,
+      onTap: route == null ? null : () => context.push(route),
     );
   }
 

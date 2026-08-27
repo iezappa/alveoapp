@@ -50,18 +50,18 @@ class JournalRepository {
     return entryId;
   }
 
-  /// Rewrites the body (and optionally the title) and bumps `updatedAt`.
-  /// Omit [title] to leave it unchanged; pass `Value(null)` to clear it.
+  /// Rewrites the body and title and bumps `updatedAt`. A null [title]
+  /// clears it.
   Future<void> updateBody({
     required String id,
     required String bodyMarkdown,
-    Value<String?> title = const Value.absent(),
+    String? title,
     DateTime? updatedAt,
   }) {
     return (_db.update(_db.journalEntries)..where((t) => t.id.equals(id))).write(
       JournalEntriesCompanion(
         bodyMarkdown: Value(bodyMarkdown),
-        title: title,
+        title: Value(title),
         updatedAt: Value(updatedAt ?? DateTime.now()),
       ),
     );
@@ -72,6 +72,11 @@ class JournalRepository {
     return (_db.select(_db.journalEntries)
           ..orderBy([(t) => OrderingTerm.desc(t.createdAt)]))
         .get();
+  }
+
+  Future<JournalEntry?> getById(String id) {
+    return (_db.select(_db.journalEntries)..where((t) => t.id.equals(id)))
+        .getSingleOrNull();
   }
 
   /// Entries filed under [day] (compared on the date part only).

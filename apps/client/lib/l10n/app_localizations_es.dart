@@ -63,6 +63,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String get journalUntitled => 'Entrada sin título';
 
   @override
+  String get journalNewTitle => 'Nueva entrada';
+
+  @override
+  String get journalEditTitle => 'Editar entrada';
+
+  @override
+  String get journalTitleHint => 'Título (opcional)';
+
+  @override
+  String get journalBodyHint => 'Escribí en Markdown…';
+
+  @override
+  String get journalDate => 'Fecha';
+
+  @override
+  String get journalSaved => 'Entrada guardada';
+
+  @override
+  String get editorWrite => 'Escribir';
+
+  @override
+  String get editorPreview => 'Vista previa';
+
+  @override
   String get taskStatusPending => 'Pendiente';
 
   @override
