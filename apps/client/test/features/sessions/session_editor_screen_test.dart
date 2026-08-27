@@ -42,14 +42,13 @@ void main() {
     expect(sessions.single.agendaMarkdown, contains('boundaries'));
   });
 
-  testWidgets('opens an existing session and updates its agenda',
-      (tester) async {
+  testWidgets('opens an existing session and updates its agenda', (
+    tester,
+  ) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    final id = await SessionRepository(db).create(
-      scheduledFor: DateTime(2026, 9, 1, 10),
-      agendaMarkdown: 'prep',
-    );
+    final id = await SessionRepository(db)
+        .create(scheduledFor: DateTime(2026, 9, 1, 10), agendaMarkdown: 'prep');
 
     await _openSessions(tester, db);
 

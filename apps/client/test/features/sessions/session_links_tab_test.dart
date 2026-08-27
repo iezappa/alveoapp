@@ -13,10 +13,8 @@ void main() {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
     await TaskRepository(db).create(title: 'Practice grounding');
-    await SessionRepository(db).create(
-      scheduledFor: DateTime(2026, 9, 1, 10),
-      agendaMarkdown: 'prep',
-    );
+    await SessionRepository(db)
+        .create(scheduledFor: DateTime(2026, 9, 1, 10), agendaMarkdown: 'prep');
 
     await tester.pumpWidget(
       ProviderScope(

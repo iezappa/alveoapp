@@ -10,10 +10,14 @@ void main() {
     });
 
     test('rejects values outside 1..5', () {
-      expect(() => validateMoodScale(0),
-          throwsA(isA<DomainValidationException>()));
-      expect(() => validateMoodScale(6),
-          throwsA(isA<DomainValidationException>()));
+      expect(
+        () => validateMoodScale(0),
+        throwsA(isA<DomainValidationException>()),
+      );
+      expect(
+        () => validateMoodScale(6),
+        throwsA(isA<DomainValidationException>()),
+      );
     });
   });
 
@@ -25,10 +29,14 @@ void main() {
     });
 
     test('rejects values outside 1..5', () {
-      expect(() => validateIntensity(0),
-          throwsA(isA<DomainValidationException>()));
-      expect(() => validateIntensity(9),
-          throwsA(isA<DomainValidationException>()));
+      expect(
+        () => validateIntensity(0),
+        throwsA(isA<DomainValidationException>()),
+      );
+      expect(
+        () => validateIntensity(9),
+        throwsA(isA<DomainValidationException>()),
+      );
     });
   });
 
@@ -38,8 +46,10 @@ void main() {
     });
 
     test('rejects an unknown key', () {
-      expect(() => validateEmotionKey('vibes'),
-          throwsA(isA<DomainValidationException>()));
+      expect(
+        () => validateEmotionKey('vibes'),
+        throwsA(isA<DomainValidationException>()),
+      );
     });
   });
 }

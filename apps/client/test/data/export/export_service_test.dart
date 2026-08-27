@@ -45,10 +45,15 @@ void main() {
 
   test('includes tasks created or completed that day', () async {
     final tasks = TaskRepository(db);
-    await tasks.create(title: 'made today', createdAt: DateTime(2026, 8, 27, 8));
+    await tasks.create(
+      title: 'made today',
+      createdAt: DateTime(2026, 8, 27, 8),
+    );
     await tasks.create(title: 'made earlier', createdAt: DateTime(2026, 8, 1));
-    final closedId =
-        await tasks.create(title: 'closed today', createdAt: DateTime(2026, 8, 1));
+    final closedId = await tasks.create(
+      title: 'closed today',
+      createdAt: DateTime(2026, 8, 1),
+    );
     await tasks.close(
       closedId,
       closingNote: 'done',

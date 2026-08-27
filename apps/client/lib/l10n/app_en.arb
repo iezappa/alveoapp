@@ -88,6 +88,11 @@
 
   "checkInTitle": "How are you feeling?",
   "overallMood": "Overall mood",
+  "moodScale1": "Very low",
+  "moodScale2": "Low",
+  "moodScale3": "Okay",
+  "moodScale4": "Good",
+  "moodScale5": "Great",
   "emotionsSectionTitle": "Emotions",
   "intensityLabel": "Intensity",
   "noteLabel": "Note (optional)",

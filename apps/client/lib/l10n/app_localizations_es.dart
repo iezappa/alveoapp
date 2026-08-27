@@ -206,6 +206,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get overallMood => 'Estado general';
 
   @override
+  String get moodScale1 => 'Muy mal';
+
+  @override
+  String get moodScale2 => 'Mal';
+
+  @override
+  String get moodScale3 => 'Más o menos';
+
+  @override
+  String get moodScale4 => 'Bien';
+
+  @override
+  String get moodScale5 => 'Muy bien';
+
+  @override
   String get emotionsSectionTitle => 'Emociones';
 
   @override

@@ -21,8 +21,9 @@ Widget _host(TextEditingController controller, {required double width}) {
 }
 
 void main() {
-  testWidgets('wide layout renders a live preview beside the editor',
-      (tester) async {
+  testWidgets('wide layout renders a live preview beside the editor', (
+    tester,
+  ) async {
     final controller = TextEditingController();
     addTearDown(controller.dispose);
 
@@ -39,7 +40,9 @@ void main() {
     expect(find.text('some body'), findsOneWidget);
   });
 
-  testWidgets('narrow layout hides the preview behind a toggle', (tester) async {
+  testWidgets('narrow layout hides the preview behind a toggle', (
+    tester,
+  ) async {
     final controller = TextEditingController(text: '# Heading');
     addTearDown(controller.dispose);
 

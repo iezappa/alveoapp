@@ -6,8 +6,9 @@ import 'package:terapia/data/providers.dart';
 import 'package:terapia/main.dart';
 
 void main() {
-  testWidgets('language toggle in settings switches UI copy to Spanish',
-      (tester) async {
+  testWidgets('language toggle in settings switches UI copy to Spanish', (
+    tester,
+  ) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
 
@@ -25,7 +26,10 @@ void main() {
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();
 
-    expect(find.text('Spanish'), findsOneWidget); // language segment, in English
+    expect(
+      find.text('Spanish'),
+      findsOneWidget,
+    ); // language segment, in English
     await tester.tap(find.text('Spanish'));
     await tester.pumpAndSettle();
 

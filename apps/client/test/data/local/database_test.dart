@@ -37,7 +37,9 @@ void main() {
     await db.customSelect('SELECT 1').get(); // force beforeOpen (PRAGMA)
 
     expect(
-      () => db.into(db.moodEntryEmotions).insert(
+      () => db
+          .into(db.moodEntryEmotions)
+          .insert(
             MoodEntryEmotionsCompanion.insert(
               moodEntryId: 'does-not-exist',
               emotionKey: 'joy',
@@ -48,41 +50,58 @@ void main() {
     );
   });
 
-  test('mood entry keeps its emotions and tag links; delete cascades', () async {
-    await db.into(db.moodEntries).insert(
-          MoodEntriesCompanion.insert(
-            id: 'm1',
-            occurredAt: DateTime(2026, 8, 20, 9),
-            mood: 4,
-            note: const Value('felt ok'),
+  test(
+    'mood entry keeps its emotions and tag links; delete cascades',
+    () async {
+      await db
+          .into(db.moodEntries)
+          .insert(
+            MoodEntriesCompanion.insert(
+              id: 'm1',
+              occurredAt: DateTime(2026, 8, 20, 9),
+              mood: 4,
+              note: const Value('felt ok'),
+            ),
+          );
+      await db.batch((b) {
+        b.insertAll(db.moodEntryEmotions, [
+          MoodEntryEmotionsCompanion.insert(
+            moodEntryId: 'm1',
+            emotionKey: 'joy',
+            intensity: 3,
           ),
-        );
-    await db.batch((b) {
-      b.insertAll(db.moodEntryEmotions, [
-        MoodEntryEmotionsCompanion.insert(
-            moodEntryId: 'm1', emotionKey: 'joy', intensity: 3),
-        MoodEntryEmotionsCompanion.insert(
-            moodEntryId: 'm1', emotionKey: 'trust', intensity: 2),
-      ]);
-    });
-    await db.into(db.tags).insert(TagsCompanion.insert(id: 't1', name: 'work'));
-    await db.into(db.moodEntryTags).insert(
-          MoodEntryTagsCompanion.insert(moodEntryId: 'm1', tagId: 't1'),
-        );
+          MoodEntryEmotionsCompanion.insert(
+            moodEntryId: 'm1',
+            emotionKey: 'trust',
+            intensity: 2,
+          ),
+        ]);
+      });
+      await db
+          .into(db.tags)
+          .insert(TagsCompanion.insert(id: 't1', name: 'work'));
+      await db
+          .into(db.moodEntryTags)
+          .insert(
+            MoodEntryTagsCompanion.insert(moodEntryId: 'm1', tagId: 't1'),
+          );
 
-    expect(await db.select(db.moodEntryEmotions).get(), hasLength(2));
+      expect(await db.select(db.moodEntryEmotions).get(), hasLength(2));
 
-    await (db.delete(db.moodEntries)..where((t) => t.id.equals('m1'))).go();
+      await (db.delete(db.moodEntries)..where((t) => t.id.equals('m1'))).go();
 
-    expect(await db.select(db.moodEntryEmotions).get(), isEmpty);
-    expect(await db.select(db.moodEntryTags).get(), isEmpty);
-    // The tag itself is shared and must survive.
-    expect(await db.select(db.tags).get(), hasLength(1));
-  });
+      expect(await db.select(db.moodEntryEmotions).get(), isEmpty);
+      expect(await db.select(db.moodEntryTags).get(), isEmpty);
+      // The tag itself is shared and must survive.
+      expect(await db.select(db.tags).get(), hasLength(1));
+    },
+  );
 
   test('journal entry stores markdown verbatim', () async {
     const md = '# Today\n\n- talked about **boundaries**\n';
-    await db.into(db.journalEntries).insert(
+    await db
+        .into(db.journalEntries)
+        .insert(
           JournalEntriesCompanion.insert(
             id: 'j1',
             entryDate: DateTime(2026, 8, 20),
@@ -91,16 +110,18 @@ void main() {
           ),
         );
 
-    final entry = await (db.select(db.journalEntries)
-          ..where((t) => t.id.equals('j1')))
-        .getSingle();
+    final entry = await (db.select(
+      db.journalEntries,
+    )..where((t) => t.id.equals('j1'))).getSingle();
 
     expect(entry.bodyMarkdown, md);
     expect(entry.title, 'Session 3');
   });
 
   test('task status round-trips and closing records completion', () async {
-    await db.into(db.tasks).insert(
+    await db
+        .into(db.tasks)
+        .insert(
           TasksCompanion.insert(
             id: 'k1',
             title: 'Practice box breathing',
@@ -108,8 +129,9 @@ void main() {
           ),
         );
 
-    var task = await (db.select(db.tasks)..where((t) => t.id.equals('k1')))
-        .getSingle();
+    var task = await (db.select(
+      db.tasks,
+    )..where((t) => t.id.equals('k1'))).getSingle();
     expect(task.status, TaskStatus.pending);
 
     await (db.update(db.tasks)..where((t) => t.id.equals('k1'))).write(
@@ -120,8 +142,9 @@ void main() {
       ),
     );
 
-    task = await (db.select(db.tasks)..where((t) => t.id.equals('k1')))
-        .getSingle();
+    task = await (db.select(
+      db.tasks,
+    )..where((t) => t.id.equals('k1'))).getSingle();
     expect(task.status, TaskStatus.done);
     expect(task.completedAt, DateTime(2026, 8, 25));
     expect(task.closingNote, 'went well');
@@ -131,9 +154,8 @@ void main() {
     await db.into(db.tags).insert(TagsCompanion.insert(id: 't1', name: 'work'));
 
     expect(
-      () => db
-          .into(db.tags)
-          .insert(TagsCompanion.insert(id: 't2', name: 'work')),
+      () =>
+          db.into(db.tags).insert(TagsCompanion.insert(id: 't2', name: 'work')),
       throwsA(isA<SqliteException>()),
     );
   });

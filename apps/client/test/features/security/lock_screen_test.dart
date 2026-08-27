@@ -9,8 +9,9 @@ import 'package:terapia/data/security/pin_service.dart';
 import 'package:terapia/main.dart';
 
 void main() {
-  testWidgets('a configured PIN gates the app until it is entered',
-      (tester) async {
+  testWidgets('a configured PIN gates the app until it is entered', (
+    tester,
+  ) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
     await PinService(SettingsRepository(db)).setPin('1234');

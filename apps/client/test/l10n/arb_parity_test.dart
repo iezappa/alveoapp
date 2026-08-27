@@ -21,8 +21,7 @@ void main() {
     for (final path in ['lib/l10n/app_en.arb', 'lib/l10n/app_es.arb']) {
       final arb = loadArb(path);
       for (final e in plutchikPrimaryEmotions) {
-        final key =
-            'emotion${e.key[0].toUpperCase()}${e.key.substring(1)}';
+        final key = 'emotion${e.key[0].toUpperCase()}${e.key.substring(1)}';
         expect(arb.containsKey(key), isTrue, reason: '$path missing $key');
         expect((arb[key] as String).trim(), isNotEmpty);
       }

@@ -29,10 +29,7 @@ void main() {
     await tester.tap(find.text('New task')); // FAB label
     await tester.pumpAndSettle();
 
-    await tester.enterText(
-      find.byType(TextField).first,
-      'Practice grounding',
-    );
+    await tester.enterText(find.byType(TextField).first, 'Practice grounding');
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 

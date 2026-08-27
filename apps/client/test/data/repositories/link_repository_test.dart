@@ -55,18 +55,20 @@ void main() {
     expect(await links.linkedItems(s), hasLength(1));
   });
 
-  test('dangling links are skipped on read and cleaned by removeLinksTo',
-      () async {
-    final s = await sessions.create(scheduledFor: DateTime(2026, 9, 1));
-    final t = await tasks.create(title: 'Breathe');
-    await links.link(s, LinkTargetType.task, t);
+  test(
+    'dangling links are skipped on read and cleaned by removeLinksTo',
+    () async {
+      final s = await sessions.create(scheduledFor: DateTime(2026, 9, 1));
+      final t = await tasks.create(title: 'Breathe');
+      await links.link(s, LinkTargetType.task, t);
 
-    await tasks.delete(t);
-    expect(await links.linkedItems(s), isEmpty);
+      await tasks.delete(t);
+      expect(await links.linkedItems(s), isEmpty);
 
-    await links.removeLinksTo(LinkTargetType.task, t);
-    expect(await db.select(db.sessionLinks).get(), isEmpty);
-  });
+      await links.removeLinksTo(LinkTargetType.task, t);
+      expect(await db.select(db.sessionLinks).get(), isEmpty);
+    },
+  );
 
   test('linkableItems excludes already-linked records', () async {
     final s = await sessions.create(scheduledFor: DateTime(2026, 9, 1));

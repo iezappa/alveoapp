@@ -12,9 +12,9 @@ import 'package:terapia/domain/transfer/import_report.dart';
 
 Future<AppDatabase> _populatedSource() async {
   final db = AppDatabase.forTesting();
-  await db.into(db.tags).insert(
-        TagsCompanion.insert(id: 'tag-work', name: 'work'),
-      );
+  await db
+      .into(db.tags)
+      .insert(TagsCompanion.insert(id: 'tag-work', name: 'work'));
   await MoodRepository(db).add(
     mood: 4,
     occurredAt: DateTime(2026, 8, 20, 9),
@@ -43,36 +43,35 @@ void main() {
   // These tests legitimately open two in-memory databases at once.
   driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
 
-  test('export then import into a fresh database carries everything over',
-      () async {
-    final source = await _populatedSource();
-    final json = await BackupService(source).exportToJson();
-    addTearDown(source.close);
+  test(
+    'export then import into a fresh database carries everything over',
+    () async {
+      final source = await _populatedSource();
+      final json = await BackupService(source).exportToJson();
+      addTearDown(source.close);
 
-    final target = AppDatabase.forTesting();
-    addTearDown(target.close);
-    final report = await BackupService(target).importFromJson(json);
+      final target = AppDatabase.forTesting();
+      addTearDown(target.close);
+      final report = await BackupService(target).importFromJson(json);
 
-    expect(report.tables['tags']!.inserted, 1);
-    expect(report.tables['moodEntries']!.inserted, 1);
-    expect(report.tables['moodEntryEmotions']!.inserted, 1);
-    expect(report.tables['moodEntryTags']!.inserted, 1);
-    expect(report.tables['journalEntries']!.inserted, 1);
-    expect(report.tables['tasks']!.inserted, 1);
-    expect(report.tables['sessions']!.inserted, 1);
-    expect(report.tables['sessionLinks']!.inserted, 1);
+      expect(report.tables['tags']!.inserted, 1);
+      expect(report.tables['moodEntries']!.inserted, 1);
+      expect(report.tables['moodEntryEmotions']!.inserted, 1);
+      expect(report.tables['moodEntryTags']!.inserted, 1);
+      expect(report.tables['journalEntries']!.inserted, 1);
+      expect(report.tables['tasks']!.inserted, 1);
+      expect(report.tables['sessions']!.inserted, 1);
+      expect(report.tables['sessionLinks']!.inserted, 1);
 
-    expect((await MoodRepository(target).getAll()).single.note, 'ok');
-    expect(await MoodRepository(target).emotionsFor('mood-1'), hasLength(1));
-    expect(
-      (await SessionRepository(target).getAll()).single.agendaMarkdown,
-      'prep',
-    );
-    expect(
-      await LinkRepository(target).linkedItems('sess-1'),
-      hasLength(1),
-    );
-  });
+      expect((await MoodRepository(target).getAll()).single.note, 'ok');
+      expect(await MoodRepository(target).emotionsFor('mood-1'), hasLength(1));
+      expect(
+        (await SessionRepository(target).getAll()).single.agendaMarkdown,
+        'prep',
+      );
+      expect(await LinkRepository(target).linkedItems('sess-1'), hasLength(1));
+    },
+  );
 
   test('re-importing the same backup skips everything', () async {
     final source = await _populatedSource();
@@ -96,9 +95,9 @@ void main() {
 
     final target = AppDatabase.forTesting();
     addTearDown(target.close);
-    await target.into(target.tags).insert(
-          TagsCompanion.insert(id: 'local-work', name: 'work'),
-        );
+    await target
+        .into(target.tags)
+        .insert(TagsCompanion.insert(id: 'local-work', name: 'work'));
 
     final report = await BackupService(target).importFromJson(json);
 
@@ -106,8 +105,9 @@ void main() {
     expect(report.tables['tags']!.skipped, 1);
 
     // The imported mood_entry_tag now points at the local tag id.
-    final joinRows =
-        await target.customSelect('SELECT * FROM mood_entry_tags').get();
+    final joinRows = await target
+        .customSelect('SELECT * FROM mood_entry_tags')
+        .get();
     expect(joinRows, hasLength(1));
     expect(joinRows.single.data['tag_id'], 'local-work');
   });

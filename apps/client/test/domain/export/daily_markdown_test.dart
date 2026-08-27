@@ -14,21 +14,23 @@ void main() {
   });
 
   test('frontmatter summarises mood, emotions and tasks', () {
-    final md = renderDailyMarkdown(DailyExport(
-      day: day,
-      moods: [
-        DayMoodEntry(
-          occurredAt: DateTime(2026, 8, 27, 9, 5),
-          mood: 4,
-          emotions: const [DayEmotion(key: 'joy', intensity: 3)],
-        ),
-        DayMoodEntry(occurredAt: DateTime(2026, 8, 27, 20), mood: 2),
-      ],
-      tasks: const [
-        DayTask(title: 'Breathe', done: true, closingNote: 'ok'),
-        DayTask(title: 'Journal', done: false),
-      ],
-    ));
+    final md = renderDailyMarkdown(
+      DailyExport(
+        day: day,
+        moods: [
+          DayMoodEntry(
+            occurredAt: DateTime(2026, 8, 27, 9, 5),
+            mood: 4,
+            emotions: const [DayEmotion(key: 'joy', intensity: 3)],
+          ),
+          DayMoodEntry(occurredAt: DateTime(2026, 8, 27, 20), mood: 2),
+        ],
+        tasks: const [
+          DayTask(title: 'Breathe', done: true, closingNote: 'ok'),
+          DayTask(title: 'Journal', done: false),
+        ],
+      ),
+    );
 
     expect(md, contains('mood_avg: 3')); // (4 + 2) / 2
     expect(md, contains('emotions: [joy]'));
@@ -40,28 +42,32 @@ void main() {
   });
 
   test('mood_avg keeps one decimal when it is not whole', () {
-    final md = renderDailyMarkdown(DailyExport(
-      day: day,
-      moods: [
-        DayMoodEntry(occurredAt: DateTime(2026, 8, 27, 9), mood: 4),
-        DayMoodEntry(occurredAt: DateTime(2026, 8, 27, 10), mood: 3),
-      ],
-    ));
+    final md = renderDailyMarkdown(
+      DailyExport(
+        day: day,
+        moods: [
+          DayMoodEntry(occurredAt: DateTime(2026, 8, 27, 9), mood: 4),
+          DayMoodEntry(occurredAt: DateTime(2026, 8, 27, 10), mood: 3),
+        ],
+      ),
+    );
     expect(md, contains('mood_avg: 3.5'));
   });
 
   test('journal body is copied verbatim', () {
     const body = '# Notes\n\n- talked about **boundaries**\n\n> a quote\n';
-    final md = renderDailyMarkdown(DailyExport(
-      day: day,
-      journals: [
-        DayJournalEntry(
-          createdAt: DateTime(2026, 8, 27, 22, 30),
-          title: 'Session 3',
-          bodyMarkdown: body,
-        ),
-      ],
-    ));
+    final md = renderDailyMarkdown(
+      DailyExport(
+        day: day,
+        journals: [
+          DayJournalEntry(
+            createdAt: DateTime(2026, 8, 27, 22, 30),
+            title: 'Session 3',
+            bodyMarkdown: body,
+          ),
+        ],
+      ),
+    );
 
     expect(md, contains('### 22:30 — Session 3'));
     expect(md, contains('- talked about **boundaries**'));

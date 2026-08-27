@@ -70,6 +70,11 @@
 
   "checkInTitle": "¿Cómo te sentís?",
   "overallMood": "Estado general",
+  "moodScale1": "Muy mal",
+  "moodScale2": "Mal",
+  "moodScale3": "Más o menos",
+  "moodScale4": "Bien",
+  "moodScale5": "Muy bien",
   "emotionsSectionTitle": "Emociones",
   "intensityLabel": "Intensidad",
   "noteLabel": "Nota (opcional)",

@@ -51,10 +51,7 @@ void main() {
 
   test('sessions appear on the timeline at their scheduled time', () async {
     await mood.add(mood: 3, occurredAt: DateTime(2026, 8, 20, 8), id: 'm');
-    await sessions.create(
-      scheduledFor: DateTime(2026, 8, 22, 10),
-      id: 's',
-    );
+    await sessions.create(scheduledFor: DateTime(2026, 8, 22, 10), id: 's');
 
     final items = await timeline.getTimeline();
 
@@ -76,14 +73,16 @@ void main() {
     expect(items.map((i) => i.id), ['b']);
   });
 
-  test('mood.add rejects an out-of-range score before writing anything',
-      () async {
-    await expectLater(
-      mood.add(mood: 9, occurredAt: DateTime(2026, 8, 20)),
-      throwsA(isA<DomainValidationException>()),
-    );
-    expect(await mood.getAll(), isEmpty);
-  });
+  test(
+    'mood.add rejects an out-of-range score before writing anything',
+    () async {
+      await expectLater(
+        mood.add(mood: 9, occurredAt: DateTime(2026, 8, 20)),
+        throwsA(isA<DomainValidationException>()),
+      );
+      expect(await mood.getAll(), isEmpty);
+    },
+  );
 
   test('mood.add persists emotions and cascades on delete', () async {
     await mood.add(

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:terapia/data/local/database.dart';
@@ -7,8 +8,9 @@ import 'package:terapia/features/check_in/plutchik_wheel.dart';
 import 'package:terapia/main.dart';
 
 void main() {
-  testWidgets('a check-in persists the mood score and selected emotions',
-      (tester) async {
+  testWidgets('a check-in persists the mood score and selected emotions', (
+    tester,
+  ) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
 
@@ -24,8 +26,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('How are you feeling?'), findsOneWidget);
 
-    // Overall mood -> 4 (only the mood scale is on screen yet).
-    await tester.tap(find.text('4'));
+    // Overall mood -> 4.
+    await tester.tap(find.byKey(const Key('mood-4')));
     await tester.pump();
 
     // Pick "joy": the wedge centred on north.

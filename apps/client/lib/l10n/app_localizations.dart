@@ -482,6 +482,36 @@ abstract class AppLocalizations {
   /// **'Overall mood'**
   String get overallMood;
 
+  /// No description provided for @moodScale1.
+  ///
+  /// In en, this message translates to:
+  /// **'Very low'**
+  String get moodScale1;
+
+  /// No description provided for @moodScale2.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get moodScale2;
+
+  /// No description provided for @moodScale3.
+  ///
+  /// In en, this message translates to:
+  /// **'Okay'**
+  String get moodScale3;
+
+  /// No description provided for @moodScale4.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get moodScale4;
+
+  /// No description provided for @moodScale5.
+  ///
+  /// In en, this message translates to:
+  /// **'Great'**
+  String get moodScale5;
+
   /// No description provided for @emotionsSectionTitle.
   ///
   /// In en, this message translates to:

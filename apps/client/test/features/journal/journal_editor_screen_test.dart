@@ -17,8 +17,9 @@ Future<void> _pumpApp(WidgetTester tester, AppDatabase db) async {
 }
 
 void main() {
-  testWidgets('creates a journal entry from the timeline action',
-      (tester) async {
+  testWidgets('creates a journal entry from the timeline action', (
+    tester,
+  ) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
 
@@ -44,8 +45,9 @@ void main() {
     expect(entries.single.bodyMarkdown, contains('boundaries'));
   });
 
-  testWidgets('opens an existing entry from its tile and updates it',
-      (tester) async {
+  testWidgets('opens an existing entry from its tile and updates it', (
+    tester,
+  ) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
     final id = await JournalRepository(db).create(

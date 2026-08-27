@@ -19,11 +19,8 @@ void main() {
   testWidgets('lists a saved mood entry with its note', (tester) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    await MoodRepository(db).add(
-      mood: 4,
-      occurredAt: DateTime(2026, 8, 20, 9),
-      note: 'ok day',
-    );
+    await MoodRepository(db)
+        .add(mood: 4, occurredAt: DateTime(2026, 8, 20, 9), note: 'ok day');
 
     await _pumpApp(tester, db);
 
