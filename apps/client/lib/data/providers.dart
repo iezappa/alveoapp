@@ -4,6 +4,7 @@ import 'export/export_service.dart';
 import 'local/database.dart';
 import 'repositories/journal_repository.dart';
 import 'repositories/mood_repository.dart';
+import 'repositories/session_repository.dart';
 import 'repositories/settings_repository.dart';
 import 'repositories/task_repository.dart';
 import 'repositories/timeline_repository.dart';
@@ -40,11 +41,16 @@ final taskRepositoryProvider = Provider<TaskRepository>(
   (ref) => TaskRepository(ref.watch(appDatabaseProvider)),
 );
 
+final sessionRepositoryProvider = Provider<SessionRepository>(
+  (ref) => SessionRepository(ref.watch(appDatabaseProvider)),
+);
+
 final timelineRepositoryProvider = Provider<TimelineRepository>(
   (ref) => TimelineRepository(
     ref.watch(moodRepositoryProvider),
     ref.watch(journalRepositoryProvider),
     ref.watch(taskRepositoryProvider),
+    ref.watch(sessionRepositoryProvider),
   ),
 );
 

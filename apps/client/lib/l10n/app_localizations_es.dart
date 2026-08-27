@@ -73,7 +73,52 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navTasks => 'Tareas';
 
   @override
+  String get navSessions => 'Sesiones';
+
+  @override
   String get navSettings => 'Ajustes';
+
+  @override
+  String get sessionsUpcoming => 'Próximas';
+
+  @override
+  String get sessionsPast => 'Pasadas';
+
+  @override
+  String get sessionsEmpty => 'Todavía no hay sesiones';
+
+  @override
+  String get newSession => 'Nueva sesión';
+
+  @override
+  String get editSession => 'Sesión';
+
+  @override
+  String get sessionScheduledFor => 'Cuándo';
+
+  @override
+  String get sessionAgenda => 'Temas';
+
+  @override
+  String get sessionNotes => 'Notas';
+
+  @override
+  String get sessionTakeaways => 'Conclusiones';
+
+  @override
+  String get sessionAgendaHint => '¿Qué querés plantear?';
+
+  @override
+  String get sessionNotesHint => 'Notas durante la sesión…';
+
+  @override
+  String get sessionTakeawaysHint => '¿Con qué te quedaste?';
+
+  @override
+  String get sessionSaved => 'Sesión guardada';
+
+  @override
+  String get sessionTimelineLabel => 'Sesión de terapia';
 
   @override
   String get tasksEmpty => 'Todavía no hay tareas';

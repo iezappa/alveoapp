@@ -2456,6 +2456,453 @@ class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
   }
 }
 
+class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SessionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _scheduledForMeta = const VerificationMeta(
+    'scheduledFor',
+  );
+  @override
+  late final GeneratedColumn<DateTime> scheduledFor = GeneratedColumn<DateTime>(
+    'scheduled_for',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _agendaMarkdownMeta = const VerificationMeta(
+    'agendaMarkdown',
+  );
+  @override
+  late final GeneratedColumn<String> agendaMarkdown = GeneratedColumn<String>(
+    'agenda_markdown',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _notesMarkdownMeta = const VerificationMeta(
+    'notesMarkdown',
+  );
+  @override
+  late final GeneratedColumn<String> notesMarkdown = GeneratedColumn<String>(
+    'notes_markdown',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _takeawaysMarkdownMeta = const VerificationMeta(
+    'takeawaysMarkdown',
+  );
+  @override
+  late final GeneratedColumn<String> takeawaysMarkdown =
+      GeneratedColumn<String>(
+        'takeaways_markdown',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    scheduledFor,
+    createdAt,
+    agendaMarkdown,
+    notesMarkdown,
+    takeawaysMarkdown,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'sessions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Session> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('scheduled_for')) {
+      context.handle(
+        _scheduledForMeta,
+        scheduledFor.isAcceptableOrUnknown(
+          data['scheduled_for']!,
+          _scheduledForMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_scheduledForMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('agenda_markdown')) {
+      context.handle(
+        _agendaMarkdownMeta,
+        agendaMarkdown.isAcceptableOrUnknown(
+          data['agenda_markdown']!,
+          _agendaMarkdownMeta,
+        ),
+      );
+    }
+    if (data.containsKey('notes_markdown')) {
+      context.handle(
+        _notesMarkdownMeta,
+        notesMarkdown.isAcceptableOrUnknown(
+          data['notes_markdown']!,
+          _notesMarkdownMeta,
+        ),
+      );
+    }
+    if (data.containsKey('takeaways_markdown')) {
+      context.handle(
+        _takeawaysMarkdownMeta,
+        takeawaysMarkdown.isAcceptableOrUnknown(
+          data['takeaways_markdown']!,
+          _takeawaysMarkdownMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Session map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Session(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      scheduledFor: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}scheduled_for'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      agendaMarkdown: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}agenda_markdown'],
+      ),
+      notesMarkdown: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes_markdown'],
+      ),
+      takeawaysMarkdown: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}takeaways_markdown'],
+      ),
+    );
+  }
+
+  @override
+  $SessionsTable createAlias(String alias) {
+    return $SessionsTable(attachedDatabase, alias);
+  }
+}
+
+class Session extends DataClass implements Insertable<Session> {
+  final String id;
+
+  /// When the session takes (or took) place.
+  final DateTime scheduledFor;
+  final DateTime createdAt;
+  final String? agendaMarkdown;
+  final String? notesMarkdown;
+  final String? takeawaysMarkdown;
+  const Session({
+    required this.id,
+    required this.scheduledFor,
+    required this.createdAt,
+    this.agendaMarkdown,
+    this.notesMarkdown,
+    this.takeawaysMarkdown,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['scheduled_for'] = Variable<DateTime>(scheduledFor);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || agendaMarkdown != null) {
+      map['agenda_markdown'] = Variable<String>(agendaMarkdown);
+    }
+    if (!nullToAbsent || notesMarkdown != null) {
+      map['notes_markdown'] = Variable<String>(notesMarkdown);
+    }
+    if (!nullToAbsent || takeawaysMarkdown != null) {
+      map['takeaways_markdown'] = Variable<String>(takeawaysMarkdown);
+    }
+    return map;
+  }
+
+  SessionsCompanion toCompanion(bool nullToAbsent) {
+    return SessionsCompanion(
+      id: Value(id),
+      scheduledFor: Value(scheduledFor),
+      createdAt: Value(createdAt),
+      agendaMarkdown: agendaMarkdown == null && nullToAbsent
+          ? const Value.absent()
+          : Value(agendaMarkdown),
+      notesMarkdown: notesMarkdown == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notesMarkdown),
+      takeawaysMarkdown: takeawaysMarkdown == null && nullToAbsent
+          ? const Value.absent()
+          : Value(takeawaysMarkdown),
+    );
+  }
+
+  factory Session.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Session(
+      id: serializer.fromJson<String>(json['id']),
+      scheduledFor: serializer.fromJson<DateTime>(json['scheduledFor']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      agendaMarkdown: serializer.fromJson<String?>(json['agendaMarkdown']),
+      notesMarkdown: serializer.fromJson<String?>(json['notesMarkdown']),
+      takeawaysMarkdown: serializer.fromJson<String?>(
+        json['takeawaysMarkdown'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'scheduledFor': serializer.toJson<DateTime>(scheduledFor),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'agendaMarkdown': serializer.toJson<String?>(agendaMarkdown),
+      'notesMarkdown': serializer.toJson<String?>(notesMarkdown),
+      'takeawaysMarkdown': serializer.toJson<String?>(takeawaysMarkdown),
+    };
+  }
+
+  Session copyWith({
+    String? id,
+    DateTime? scheduledFor,
+    DateTime? createdAt,
+    Value<String?> agendaMarkdown = const Value.absent(),
+    Value<String?> notesMarkdown = const Value.absent(),
+    Value<String?> takeawaysMarkdown = const Value.absent(),
+  }) => Session(
+    id: id ?? this.id,
+    scheduledFor: scheduledFor ?? this.scheduledFor,
+    createdAt: createdAt ?? this.createdAt,
+    agendaMarkdown: agendaMarkdown.present
+        ? agendaMarkdown.value
+        : this.agendaMarkdown,
+    notesMarkdown: notesMarkdown.present
+        ? notesMarkdown.value
+        : this.notesMarkdown,
+    takeawaysMarkdown: takeawaysMarkdown.present
+        ? takeawaysMarkdown.value
+        : this.takeawaysMarkdown,
+  );
+  Session copyWithCompanion(SessionsCompanion data) {
+    return Session(
+      id: data.id.present ? data.id.value : this.id,
+      scheduledFor: data.scheduledFor.present
+          ? data.scheduledFor.value
+          : this.scheduledFor,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      agendaMarkdown: data.agendaMarkdown.present
+          ? data.agendaMarkdown.value
+          : this.agendaMarkdown,
+      notesMarkdown: data.notesMarkdown.present
+          ? data.notesMarkdown.value
+          : this.notesMarkdown,
+      takeawaysMarkdown: data.takeawaysMarkdown.present
+          ? data.takeawaysMarkdown.value
+          : this.takeawaysMarkdown,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Session(')
+          ..write('id: $id, ')
+          ..write('scheduledFor: $scheduledFor, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('agendaMarkdown: $agendaMarkdown, ')
+          ..write('notesMarkdown: $notesMarkdown, ')
+          ..write('takeawaysMarkdown: $takeawaysMarkdown')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    scheduledFor,
+    createdAt,
+    agendaMarkdown,
+    notesMarkdown,
+    takeawaysMarkdown,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Session &&
+          other.id == this.id &&
+          other.scheduledFor == this.scheduledFor &&
+          other.createdAt == this.createdAt &&
+          other.agendaMarkdown == this.agendaMarkdown &&
+          other.notesMarkdown == this.notesMarkdown &&
+          other.takeawaysMarkdown == this.takeawaysMarkdown);
+}
+
+class SessionsCompanion extends UpdateCompanion<Session> {
+  final Value<String> id;
+  final Value<DateTime> scheduledFor;
+  final Value<DateTime> createdAt;
+  final Value<String?> agendaMarkdown;
+  final Value<String?> notesMarkdown;
+  final Value<String?> takeawaysMarkdown;
+  final Value<int> rowid;
+  const SessionsCompanion({
+    this.id = const Value.absent(),
+    this.scheduledFor = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.agendaMarkdown = const Value.absent(),
+    this.notesMarkdown = const Value.absent(),
+    this.takeawaysMarkdown = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SessionsCompanion.insert({
+    required String id,
+    required DateTime scheduledFor,
+    this.createdAt = const Value.absent(),
+    this.agendaMarkdown = const Value.absent(),
+    this.notesMarkdown = const Value.absent(),
+    this.takeawaysMarkdown = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       scheduledFor = Value(scheduledFor);
+  static Insertable<Session> custom({
+    Expression<String>? id,
+    Expression<DateTime>? scheduledFor,
+    Expression<DateTime>? createdAt,
+    Expression<String>? agendaMarkdown,
+    Expression<String>? notesMarkdown,
+    Expression<String>? takeawaysMarkdown,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (scheduledFor != null) 'scheduled_for': scheduledFor,
+      if (createdAt != null) 'created_at': createdAt,
+      if (agendaMarkdown != null) 'agenda_markdown': agendaMarkdown,
+      if (notesMarkdown != null) 'notes_markdown': notesMarkdown,
+      if (takeawaysMarkdown != null) 'takeaways_markdown': takeawaysMarkdown,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SessionsCompanion copyWith({
+    Value<String>? id,
+    Value<DateTime>? scheduledFor,
+    Value<DateTime>? createdAt,
+    Value<String?>? agendaMarkdown,
+    Value<String?>? notesMarkdown,
+    Value<String?>? takeawaysMarkdown,
+    Value<int>? rowid,
+  }) {
+    return SessionsCompanion(
+      id: id ?? this.id,
+      scheduledFor: scheduledFor ?? this.scheduledFor,
+      createdAt: createdAt ?? this.createdAt,
+      agendaMarkdown: agendaMarkdown ?? this.agendaMarkdown,
+      notesMarkdown: notesMarkdown ?? this.notesMarkdown,
+      takeawaysMarkdown: takeawaysMarkdown ?? this.takeawaysMarkdown,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (scheduledFor.present) {
+      map['scheduled_for'] = Variable<DateTime>(scheduledFor.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (agendaMarkdown.present) {
+      map['agenda_markdown'] = Variable<String>(agendaMarkdown.value);
+    }
+    if (notesMarkdown.present) {
+      map['notes_markdown'] = Variable<String>(notesMarkdown.value);
+    }
+    if (takeawaysMarkdown.present) {
+      map['takeaways_markdown'] = Variable<String>(takeawaysMarkdown.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SessionsCompanion(')
+          ..write('id: $id, ')
+          ..write('scheduledFor: $scheduledFor, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('agendaMarkdown: $agendaMarkdown, ')
+          ..write('notesMarkdown: $notesMarkdown, ')
+          ..write('takeawaysMarkdown: $takeawaysMarkdown, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2470,6 +2917,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     this,
   );
   late final $AppSettingsTable appSettings = $AppSettingsTable(this);
+  late final $SessionsTable sessions = $SessionsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2483,6 +2931,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     moodEntryTags,
     journalEntryTags,
     appSettings,
+    sessions,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -4977,6 +5426,225 @@ typedef $$AppSettingsTableProcessedTableManager =
       AppSetting,
       PrefetchHooks Function()
     >;
+typedef $$SessionsTableCreateCompanionBuilder = SessionsCompanion Function({
+  required String id,
+  required DateTime scheduledFor,
+  Value<DateTime> createdAt,
+  Value<String?> agendaMarkdown,
+  Value<String?> notesMarkdown,
+  Value<String?> takeawaysMarkdown,
+  Value<int> rowid,
+});
+typedef $$SessionsTableUpdateCompanionBuilder = SessionsCompanion Function({
+  Value<String> id,
+  Value<DateTime> scheduledFor,
+  Value<DateTime> createdAt,
+  Value<String?> agendaMarkdown,
+  Value<String?> notesMarkdown,
+  Value<String?> takeawaysMarkdown,
+  Value<int> rowid,
+});
+
+class $$SessionsTableFilterComposer
+    extends Composer<_$AppDatabase, $SessionsTable> {
+  $$SessionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get scheduledFor => $composableBuilder(
+    column: $table.scheduledFor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get agendaMarkdown => $composableBuilder(
+    column: $table.agendaMarkdown,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notesMarkdown => $composableBuilder(
+    column: $table.notesMarkdown,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get takeawaysMarkdown => $composableBuilder(
+    column: $table.takeawaysMarkdown,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SessionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $SessionsTable> {
+  $$SessionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get scheduledFor => $composableBuilder(
+    column: $table.scheduledFor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get agendaMarkdown => $composableBuilder(
+    column: $table.agendaMarkdown,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notesMarkdown => $composableBuilder(
+    column: $table.notesMarkdown,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get takeawaysMarkdown => $composableBuilder(
+    column: $table.takeawaysMarkdown,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SessionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SessionsTable> {
+  $$SessionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get scheduledFor => $composableBuilder(
+    column: $table.scheduledFor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get agendaMarkdown => $composableBuilder(
+    column: $table.agendaMarkdown,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get notesMarkdown => $composableBuilder(
+    column: $table.notesMarkdown,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get takeawaysMarkdown => $composableBuilder(
+    column: $table.takeawaysMarkdown,
+    builder: (column) => column,
+  );
+}
+
+class $$SessionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SessionsTable,
+          Session,
+          $$SessionsTableFilterComposer,
+          $$SessionsTableOrderingComposer,
+          $$SessionsTableAnnotationComposer,
+          $$SessionsTableCreateCompanionBuilder,
+          $$SessionsTableUpdateCompanionBuilder,
+          (Session, BaseReferences<_$AppDatabase, $SessionsTable, Session>),
+          Session,
+          PrefetchHooks Function()
+        > {
+  $$SessionsTableTableManager(_$AppDatabase db, $SessionsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SessionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SessionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SessionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<DateTime> scheduledFor = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<String?> agendaMarkdown = const Value.absent(),
+                Value<String?> notesMarkdown = const Value.absent(),
+                Value<String?> takeawaysMarkdown = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SessionsCompanion(
+                id: id,
+                scheduledFor: scheduledFor,
+                createdAt: createdAt,
+                agendaMarkdown: agendaMarkdown,
+                notesMarkdown: notesMarkdown,
+                takeawaysMarkdown: takeawaysMarkdown,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required DateTime scheduledFor,
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<String?> agendaMarkdown = const Value.absent(),
+                Value<String?> notesMarkdown = const Value.absent(),
+                Value<String?> takeawaysMarkdown = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SessionsCompanion.insert(
+                id: id,
+                scheduledFor: scheduledFor,
+                createdAt: createdAt,
+                agendaMarkdown: agendaMarkdown,
+                notesMarkdown: notesMarkdown,
+                takeawaysMarkdown: takeawaysMarkdown,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SessionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SessionsTable,
+      Session,
+      $$SessionsTableFilterComposer,
+      $$SessionsTableOrderingComposer,
+      $$SessionsTableAnnotationComposer,
+      $$SessionsTableCreateCompanionBuilder,
+      $$SessionsTableUpdateCompanionBuilder,
+      (Session, BaseReferences<_$AppDatabase, $SessionsTable, Session>),
+      Session,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -4996,4 +5664,6 @@ class $AppDatabaseManager {
       $$JournalEntryTagsTableTableManager(_db, _db.journalEntryTags);
   $$AppSettingsTableTableManager get appSettings =>
       $$AppSettingsTableTableManager(_db, _db.appSettings);
+  $$SessionsTableTableManager get sessions =>
+      $$SessionsTableTableManager(_db, _db.sessions);
 }

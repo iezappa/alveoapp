@@ -132,3 +132,22 @@ class AppSettings extends Table {
   @override
   Set<Column> get primaryKey => {key};
 }
+
+/// A therapy session: the agenda prepared beforehand, notes taken during, and
+/// the takeaways drawn afterward. All three bodies are Markdown.
+class Sessions extends Table {
+  TextColumn get id => text()();
+
+  /// When the session takes (or took) place.
+  DateTimeColumn get scheduledFor => dateTime()();
+
+  DateTimeColumn get createdAt =>
+      dateTime().withDefault(currentDateAndTime)();
+
+  TextColumn get agendaMarkdown => text().nullable()();
+  TextColumn get notesMarkdown => text().nullable()();
+  TextColumn get takeawaysMarkdown => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}

@@ -1,0 +1,227 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+
+import '../../data/providers.dart';
+import '../../l10n/app_localizations.dart';
+import '../journal/markdown_editor.dart';
+import '../timeline/timeline_providers.dart';
+import 'session_providers.dart';
+
+class SessionEditorScreen extends ConsumerStatefulWidget {
+  const SessionEditorScreen({super.key, this.sessionId});
+
+  final String? sessionId;
+
+  bool get isNew => sessionId == null;
+
+  @override
+  ConsumerState<SessionEditorScreen> createState() =>
+      _SessionEditorScreenState();
+}
+
+class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
+  final _agenda = TextEditingController();
+  final _notes = TextEditingController();
+  final _takeaways = TextEditingController();
+
+  DateTime _scheduledFor = _defaultSlot();
+  bool _loading = false;
+  bool _saving = false;
+
+  static DateTime _defaultSlot() {
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day + 1, 10);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final id = widget.sessionId;
+    if (id != null) {
+      _loading = true;
+      Future.microtask(() async {
+        final session = await ref.read(sessionRepositoryProvider).getById(id);
+        if (!mounted) return;
+        setState(() {
+          if (session != null) {
+            _scheduledFor = session.scheduledFor;
+            _agenda.text = session.agendaMarkdown ?? '';
+            _notes.text = session.notesMarkdown ?? '';
+            _takeaways.text = session.takeawaysMarkdown ?? '';
+          }
+          _loading = false;
+        });
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _agenda.dispose();
+    _notes.dispose();
+    _takeaways.dispose();
+    super.dispose();
+  }
+
+  Future<void> _pickSchedule() async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: _scheduledFor,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (date == null || !mounted) return;
+
+    final time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(_scheduledFor),
+    );
+    if (!mounted) return;
+
+    setState(() {
+      _scheduledFor = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        time?.hour ?? _scheduledFor.hour,
+        time?.minute ?? _scheduledFor.minute,
+      );
+    });
+  }
+
+  Future<void> _save() async {
+    setState(() => _saving = true);
+    final repo = ref.read(sessionRepositoryProvider);
+    String? textOrNull(TextEditingController c) =>
+        c.text.trim().isEmpty ? null : c.text;
+
+    if (widget.sessionId == null) {
+      await repo.create(
+        scheduledFor: _scheduledFor,
+        agendaMarkdown: textOrNull(_agenda),
+        notesMarkdown: textOrNull(_notes),
+        takeawaysMarkdown: textOrNull(_takeaways),
+      );
+    } else {
+      await repo.update(
+        id: widget.sessionId!,
+        scheduledFor: _scheduledFor,
+        agendaMarkdown: textOrNull(_agenda),
+        notesMarkdown: textOrNull(_notes),
+        takeawaysMarkdown: textOrNull(_takeaways),
+      );
+    }
+
+    ref.invalidate(sessionListProvider);
+    ref.invalidate(timelineProvider);
+
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(AppLocalizations.of(context).sessionSaved)),
+    );
+    if (context.canPop()) {
+      context.pop();
+    } else {
+      context.go('/sessions');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toString();
+
+    if (_loading) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.isNew ? l10n.newSession : l10n.editSession),
+          actions: [
+            IconButton(
+              onPressed: _saving ? null : _save,
+              icon: const Icon(Icons.check),
+              tooltip: l10n.saveButton,
+            ),
+          ],
+          bottom: TabBar(
+            tabs: [
+              Tab(text: l10n.sessionAgenda),
+              Tab(text: l10n.sessionNotes),
+              Tab(text: l10n.sessionTakeaways),
+            ],
+          ),
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: OutlinedButton.icon(
+                  onPressed: _pickSchedule,
+                  icon: const Icon(Icons.event, size: 18),
+                  label: Text(
+                    '${l10n.sessionScheduledFor}: '
+                    '${DateFormat.yMMMd(locale).add_jm().format(_scheduledFor)}',
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  _EditorPane(
+                    controller: _agenda,
+                    hint: l10n.sessionAgendaHint,
+                    l10n: l10n,
+                  ),
+                  _EditorPane(
+                    controller: _notes,
+                    hint: l10n.sessionNotesHint,
+                    l10n: l10n,
+                  ),
+                  _EditorPane(
+                    controller: _takeaways,
+                    hint: l10n.sessionTakeawaysHint,
+                    l10n: l10n,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _EditorPane extends StatelessWidget {
+  const _EditorPane({
+    required this.controller,
+    required this.hint,
+    required this.l10n,
+  });
+
+  final TextEditingController controller;
+  final String hint;
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: MarkdownEditor(
+        controller: controller,
+        writeLabel: l10n.editorWrite,
+        previewLabel: l10n.editorPreview,
+        hintText: hint,
+      ),
+    );
+  }
+}

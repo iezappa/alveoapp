@@ -30,7 +30,23 @@
 
   "navTimeline": "Timeline",
   "navTasks": "Tasks",
+  "navSessions": "Sessions",
   "navSettings": "Settings",
+
+  "sessionsUpcoming": "Upcoming",
+  "sessionsPast": "Past",
+  "sessionsEmpty": "No sessions yet",
+  "newSession": "New session",
+  "editSession": "Session",
+  "sessionScheduledFor": "When",
+  "sessionAgenda": "Agenda",
+  "sessionNotes": "Notes",
+  "sessionTakeaways": "Takeaways",
+  "sessionAgendaHint": "What do you want to bring up?",
+  "sessionNotesHint": "Notes during the session…",
+  "sessionTakeawaysHint": "What did you take away?",
+  "sessionSaved": "Session saved",
+  "sessionTimelineLabel": "Therapy session",
 
   "tasksEmpty": "No tasks yet",
   "newTask": "New task",

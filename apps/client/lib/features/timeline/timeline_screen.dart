@@ -13,10 +13,11 @@ import 'timeline_providers.dart';
 String? _routeFor(TimelineItem item) => switch (item) {
       JournalTimelineItem(:final entry) => '/journal/${entry.id}',
       TaskTimelineItem(:final task) => '/tasks/${task.id}',
+      SessionTimelineItem(:final session) => '/sessions/${session.id}',
       _ => null,
     };
 
-enum _TimelineMenuAction { newJournal, tasks, exportDay, settings }
+enum _TimelineMenuAction { newJournal, sessions, tasks, exportDay, settings }
 
 class TimelineScreen extends ConsumerWidget {
   const TimelineScreen({super.key});
@@ -35,6 +36,8 @@ class TimelineScreen extends ConsumerWidget {
               switch (action) {
                 case _TimelineMenuAction.newJournal:
                   context.push('/journal/new');
+                case _TimelineMenuAction.sessions:
+                  context.push('/sessions');
                 case _TimelineMenuAction.tasks:
                   context.push('/tasks');
                 case _TimelineMenuAction.exportDay:
@@ -47,6 +50,10 @@ class TimelineScreen extends ConsumerWidget {
               PopupMenuItem(
                 value: _TimelineMenuAction.newJournal,
                 child: Text(l10n.journalNewTitle),
+              ),
+              PopupMenuItem(
+                value: _TimelineMenuAction.sessions,
+                child: Text(l10n.navSessions),
               ),
               PopupMenuItem(
                 value: _TimelineMenuAction.tasks,
@@ -116,6 +123,11 @@ class _TimelineTile extends StatelessWidget {
           Icons.checklist_outlined,
           task.title,
           _taskStatusLabel(l10n, task.status),
+        ),
+      SessionTimelineItem() => (
+          Icons.psychology_outlined,
+          l10n.sessionTimelineLabel,
+          null,
         ),
     };
 

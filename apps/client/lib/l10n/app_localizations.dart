@@ -224,11 +224,101 @@ abstract class AppLocalizations {
   /// **'Tasks'**
   String get navTasks;
 
+  /// No description provided for @navSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get navSessions;
+
   /// No description provided for @navSettings.
   ///
   /// In en, this message translates to:
   /// **'Settings'**
   String get navSettings;
+
+  /// No description provided for @sessionsUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get sessionsUpcoming;
+
+  /// No description provided for @sessionsPast.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get sessionsPast;
+
+  /// No description provided for @sessionsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No sessions yet'**
+  String get sessionsEmpty;
+
+  /// No description provided for @newSession.
+  ///
+  /// In en, this message translates to:
+  /// **'New session'**
+  String get newSession;
+
+  /// No description provided for @editSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Session'**
+  String get editSession;
+
+  /// No description provided for @sessionScheduledFor.
+  ///
+  /// In en, this message translates to:
+  /// **'When'**
+  String get sessionScheduledFor;
+
+  /// No description provided for @sessionAgenda.
+  ///
+  /// In en, this message translates to:
+  /// **'Agenda'**
+  String get sessionAgenda;
+
+  /// No description provided for @sessionNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get sessionNotes;
+
+  /// No description provided for @sessionTakeaways.
+  ///
+  /// In en, this message translates to:
+  /// **'Takeaways'**
+  String get sessionTakeaways;
+
+  /// No description provided for @sessionAgendaHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want to bring up?'**
+  String get sessionAgendaHint;
+
+  /// No description provided for @sessionNotesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes during the session…'**
+  String get sessionNotesHint;
+
+  /// No description provided for @sessionTakeawaysHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What did you take away?'**
+  String get sessionTakeawaysHint;
+
+  /// No description provided for @sessionSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Session saved'**
+  String get sessionSaved;
+
+  /// No description provided for @sessionTimelineLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Therapy session'**
+  String get sessionTimelineLabel;
 
   /// No description provided for @tasksEmpty.
   ///

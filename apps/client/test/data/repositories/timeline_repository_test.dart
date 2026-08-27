@@ -3,6 +3,7 @@ import 'package:terapia/data/local/database.dart';
 import 'package:terapia/data/local/tables.dart';
 import 'package:terapia/data/repositories/journal_repository.dart';
 import 'package:terapia/data/repositories/mood_repository.dart';
+import 'package:terapia/data/repositories/session_repository.dart';
 import 'package:terapia/data/repositories/task_repository.dart';
 import 'package:terapia/data/repositories/timeline_repository.dart';
 import 'package:terapia/domain/timeline/timeline_item.dart';
@@ -13,6 +14,7 @@ void main() {
   late MoodRepository mood;
   late JournalRepository journal;
   late TaskRepository tasks;
+  late SessionRepository sessions;
   late TimelineRepository timeline;
 
   setUp(() {
@@ -20,7 +22,8 @@ void main() {
     mood = MoodRepository(db);
     journal = JournalRepository(db);
     tasks = TaskRepository(db);
-    timeline = TimelineRepository(mood, journal, tasks);
+    sessions = SessionRepository(db);
+    timeline = TimelineRepository(mood, journal, tasks, sessions);
   });
   tearDown(() => db.close());
 
@@ -44,6 +47,19 @@ void main() {
     expect(items[0], isA<JournalTimelineItem>());
     expect(items[1], isA<MoodTimelineItem>());
     expect(items[2], isA<TaskTimelineItem>());
+  });
+
+  test('sessions appear on the timeline at their scheduled time', () async {
+    await mood.add(mood: 3, occurredAt: DateTime(2026, 8, 20, 8), id: 'm');
+    await sessions.create(
+      scheduledFor: DateTime(2026, 8, 22, 10),
+      id: 's',
+    );
+
+    final items = await timeline.getTimeline();
+
+    expect(items.first, isA<SessionTimelineItem>());
+    expect(items.first.id, 's');
   });
 
   test('bounds results to the half-open [from, to) range', () async {

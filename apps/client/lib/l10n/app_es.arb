@@ -23,7 +23,23 @@
 
   "navTimeline": "Línea de tiempo",
   "navTasks": "Tareas",
+  "navSessions": "Sesiones",
   "navSettings": "Ajustes",
+
+  "sessionsUpcoming": "Próximas",
+  "sessionsPast": "Pasadas",
+  "sessionsEmpty": "Todavía no hay sesiones",
+  "newSession": "Nueva sesión",
+  "editSession": "Sesión",
+  "sessionScheduledFor": "Cuándo",
+  "sessionAgenda": "Temas",
+  "sessionNotes": "Notas",
+  "sessionTakeaways": "Conclusiones",
+  "sessionAgendaHint": "¿Qué querés plantear?",
+  "sessionNotesHint": "Notas durante la sesión…",
+  "sessionTakeawaysHint": "¿Con qué te quedaste?",
+  "sessionSaved": "Sesión guardada",
+  "sessionTimelineLabel": "Sesión de terapia",
 
   "tasksEmpty": "Todavía no hay tareas",
   "newTask": "Nueva tarea",

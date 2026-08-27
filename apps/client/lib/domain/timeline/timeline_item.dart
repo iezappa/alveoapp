@@ -50,3 +50,15 @@ final class TaskTimelineItem extends TimelineItem {
   @override
   DateTime get occurredAt => task.createdAt;
 }
+
+final class SessionTimelineItem extends TimelineItem {
+  const SessionTimelineItem(this.session);
+
+  final Session session;
+
+  @override
+  String get id => session.id;
+
+  @override
+  DateTime get occurredAt => session.scheduledFor;
+}
