@@ -40,6 +40,15 @@
   "journalSaved": "Entry saved",
   "editorWrite": "Write",
   "editorPreview": "Preview",
+  "exportDayTooltip": "Export a day",
+  "exportNothing": "No records for that day",
+  "exportMarkdownType": "Markdown",
+  "exportSaved": "Saved to {path}",
+  "@exportSaved": {
+    "placeholders": {
+      "path": { "type": "String" }
+    }
+  },
 
   "taskStatusPending": "Pending",
   "taskStatusInProgress": "In progress",

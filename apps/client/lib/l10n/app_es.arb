@@ -28,6 +28,10 @@
   "journalSaved": "Entrada guardada",
   "editorWrite": "Escribir",
   "editorPreview": "Vista previa",
+  "exportDayTooltip": "Exportar un día",
+  "exportNothing": "No hay registros para ese día",
+  "exportMarkdownType": "Markdown",
+  "exportSaved": "Guardado en {path}",
 
   "taskStatusPending": "Pendiente",
   "taskStatusInProgress": "En curso",

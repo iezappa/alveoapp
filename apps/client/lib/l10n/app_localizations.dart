@@ -248,6 +248,30 @@ abstract class AppLocalizations {
   /// **'Preview'**
   String get editorPreview;
 
+  /// No description provided for @exportDayTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Export a day'**
+  String get exportDayTooltip;
+
+  /// No description provided for @exportNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'No records for that day'**
+  String get exportNothing;
+
+  /// No description provided for @exportMarkdownType.
+  ///
+  /// In en, this message translates to:
+  /// **'Markdown'**
+  String get exportMarkdownType;
+
+  /// No description provided for @exportSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to {path}'**
+  String exportSaved(String path);
+
   /// No description provided for @taskStatusPending.
   ///
   /// In en, this message translates to:

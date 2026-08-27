@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'export/export_service.dart';
 import 'local/database.dart';
 import 'repositories/journal_repository.dart';
 import 'repositories/mood_repository.dart';
@@ -40,4 +41,8 @@ final timelineRepositoryProvider = Provider<TimelineRepository>(
     ref.watch(journalRepositoryProvider),
     ref.watch(taskRepositoryProvider),
   ),
+);
+
+final exportServiceProvider = Provider<ExportService>(
+  (ref) => ExportService(ref.watch(appDatabaseProvider)),
 );

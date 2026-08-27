@@ -87,6 +87,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editorPreview => 'Preview';
 
   @override
+  String get exportDayTooltip => 'Export a day';
+
+  @override
+  String get exportNothing => 'No records for that day';
+
+  @override
+  String get exportMarkdownType => 'Markdown';
+
+  @override
+  String exportSaved(String path) {
+    return 'Saved to $path';
+  }
+
+  @override
   String get taskStatusPending => 'Pending';
 
   @override

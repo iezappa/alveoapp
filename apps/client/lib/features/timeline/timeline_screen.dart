@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../data/local/tables.dart';
 import '../../domain/timeline/timeline_item.dart';
 import '../../l10n/app_localizations.dart';
+import '../export/export_day.dart';
 import 'timeline_providers.dart';
 
 /// Route to open for a timeline item, or null if it has no detail screen yet.
@@ -30,6 +31,11 @@ class TimelineScreen extends ConsumerWidget {
             icon: const Icon(Icons.note_add_outlined),
             onPressed: () => context.push('/journal/new'),
             tooltip: l10n.journalNewTitle,
+          ),
+          IconButton(
+            icon: const Icon(Icons.ios_share),
+            onPressed: () => runDailyExport(context, ref),
+            tooltip: l10n.exportDayTooltip,
           ),
           IconButton(
             icon: const Icon(Icons.settings_outlined),
