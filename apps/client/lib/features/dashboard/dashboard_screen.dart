@@ -350,9 +350,10 @@ class _QuoteCard extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 quote.text(lang),
-                style: theme.textTheme.titleMedium?.copyWith(
+                style: theme.textTheme.titleLarge?.copyWith(
                   fontStyle: FontStyle.italic,
-                  height: 1.4,
+                  fontWeight: FontWeight.w500,
+                  height: 1.45,
                 ),
               ),
               const SizedBox(height: 8),

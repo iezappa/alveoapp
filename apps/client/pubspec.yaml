@@ -77,9 +77,15 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # Bundled fonts for PDF export (Lato, SIL OFL — see assets/fonts/Lato-OFL.txt).
+  # Bundled fonts: Lora (UI headings) and Lato (PDF export). Both SIL OFL —
+  # see assets/fonts/*-OFL.txt.
   assets:
     - assets/fonts/
+
+  fonts:
+    - family: Lora
+      fonts:
+        - asset: assets/fonts/Lora.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
