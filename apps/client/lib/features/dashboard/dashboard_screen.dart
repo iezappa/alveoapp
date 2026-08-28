@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../app/theme.dart';
 import '../../data/local/database.dart';
 import '../../domain/greeting.dart';
+import '../../domain/motivation/daily_quotes.dart';
 import '../../l10n/app_localizations.dart';
 import 'dashboard_providers.dart';
 
@@ -65,7 +66,7 @@ class DashboardScreen extends ConsumerWidget {
               const SizedBox(height: 12),
               const _CheckInCard(),
               const SizedBox(height: 12),
-              const _BreatheCard(),
+              const _QuoteCard(),
             ],
           ),
         ),
@@ -219,42 +220,58 @@ class _CheckInCard extends StatelessWidget {
   }
 }
 
-class _BreatheCard extends StatelessWidget {
-  const _BreatheCard();
+/// The quote of the day, with a shortcut into the breathing exercise. Tapping
+/// the card opens the full library.
+class _QuoteCard extends StatelessWidget {
+  const _QuoteCard();
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final quote = quoteForDay(DateTime.now());
+    final lang = Localizations.localeOf(context).languageCode;
 
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.dashboardBreatheTitle,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    l10n.dashboardBreathePrompt,
-                    style: TextStyle(color: scheme.onSurfaceVariant),
-                  ),
-                ],
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => context.push('/library'),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.format_quote,
+                color: scheme.primary.withValues(alpha: 0.5),
               ),
-            ),
-            const SizedBox(width: 12),
-            FilledButton.icon(
-              onPressed: () => context.push('/breathe'),
-              icon: const Icon(Icons.air, size: 18),
-              label: Text(l10n.breatheAction),
-            ),
-          ],
+              const SizedBox(height: 8),
+              Text(
+                quote.text(lang),
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontStyle: FontStyle.italic,
+                  height: 1.4,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                quote.attribution,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: scheme.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: FilledButton.icon(
+                  onPressed: () => context.push('/breathe'),
+                  icon: const Icon(Icons.air, size: 18),
+                  label: Text(l10n.breatheAction),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

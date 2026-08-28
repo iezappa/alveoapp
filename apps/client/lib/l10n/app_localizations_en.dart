@@ -213,10 +213,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardCheckInPrompt => 'How is your heart today?';
 
   @override
-  String get dashboardBreatheTitle => 'Take a moment';
+  String get libraryTitle => 'Library';
 
   @override
-  String get dashboardBreathePrompt => 'A minute of paced breathing.';
+  String get libraryToday => 'Today';
+
+  @override
+  String get libraryAll => 'All quotes';
 
   @override
   String get breatheAction => 'Breathe';

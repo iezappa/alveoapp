@@ -488,17 +488,23 @@ abstract class AppLocalizations {
   /// **'How is your heart today?'**
   String get dashboardCheckInPrompt;
 
-  /// No description provided for @dashboardBreatheTitle.
+  /// No description provided for @libraryTitle.
   ///
   /// In en, this message translates to:
-  /// **'Take a moment'**
-  String get dashboardBreatheTitle;
+  /// **'Library'**
+  String get libraryTitle;
 
-  /// No description provided for @dashboardBreathePrompt.
+  /// No description provided for @libraryToday.
   ///
   /// In en, this message translates to:
-  /// **'A minute of paced breathing.'**
-  String get dashboardBreathePrompt;
+  /// **'Today'**
+  String get libraryToday;
+
+  /// No description provided for @libraryAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All quotes'**
+  String get libraryAll;
 
   /// No description provided for @breatheAction.
   ///

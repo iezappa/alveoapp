@@ -213,10 +213,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dashboardCheckInPrompt => '¿Cómo está tu corazón hoy?';
 
   @override
-  String get dashboardBreatheTitle => 'Tomate un momento';
+  String get libraryTitle => 'Biblioteca';
 
   @override
-  String get dashboardBreathePrompt => 'Un minuto de respiración pausada.';
+  String get libraryToday => 'Hoy';
+
+  @override
+  String get libraryAll => 'Todas las frases';
 
   @override
   String get breatheAction => 'Respirar';

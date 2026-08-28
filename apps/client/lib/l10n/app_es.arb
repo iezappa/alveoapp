@@ -72,8 +72,9 @@
   "dashboardTomorrow": "Mañana",
   "dashboardCheckInTitle": "Check-in diario",
   "dashboardCheckInPrompt": "¿Cómo está tu corazón hoy?",
-  "dashboardBreatheTitle": "Tomate un momento",
-  "dashboardBreathePrompt": "Un minuto de respiración pausada.",
+  "libraryTitle": "Biblioteca",
+  "libraryToday": "Hoy",
+  "libraryAll": "Todas las frases",
 
   "breatheAction": "Respirar",
   "breatheTitle": "Respirar",

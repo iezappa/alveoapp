@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:alveo/data/local/database.dart';
@@ -60,5 +61,18 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Start session'), findsOneWidget);
+  });
+
+  testWidgets('tapping the quote card opens the library', (tester) async {
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+
+    await _pumpApp(tester, db);
+
+    await tester.tap(find.byIcon(Icons.format_quote));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Library'), findsOneWidget);
+    expect(find.text('TODAY'), findsOneWidget);
   });
 }

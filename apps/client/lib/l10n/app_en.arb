@@ -99,8 +99,9 @@
   "dashboardTomorrow": "Tomorrow",
   "dashboardCheckInTitle": "Daily check-in",
   "dashboardCheckInPrompt": "How is your heart today?",
-  "dashboardBreatheTitle": "Take a moment",
-  "dashboardBreathePrompt": "A minute of paced breathing.",
+  "libraryTitle": "Library",
+  "libraryToday": "Today",
+  "libraryAll": "All quotes",
 
   "breatheAction": "Breathe",
   "breatheTitle": "Breathe",

@@ -8,6 +8,7 @@ import '../features/journal/journal_editor_screen.dart';
 import '../features/journal/journal_labels.dart';
 import '../features/journal/journal_screen.dart';
 import '../features/journal/journal_section_screen.dart';
+import '../features/motivation/library_screen.dart';
 import '../features/search/search_screen.dart';
 import '../features/sessions/session_editor_screen.dart';
 import '../features/sessions/session_list_screen.dart';
@@ -85,6 +86,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/breathe',
         builder: (context, state) => const BreatheScreen(),
+      ),
+      GoRoute(
+        path: '/library',
+        builder: (context, state) => const LibraryScreen(),
       ),
       GoRoute(
         path: '/journal/section/:section',
