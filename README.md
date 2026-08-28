@@ -2,6 +2,14 @@
 
 **A calm, private, local‑first companion for personal therapy work.**
 
+<p align="center">
+  <a href="https://h4tyr3l.github.io/alveoapp/">
+    <img src="docs/preview.png" alt="Alveo — dashboard, breathing exercise and first‑run tutorial" width="820">
+  </a>
+</p>
+
+<p align="center"><a href="https://h4tyr3l.github.io/alveoapp/"><strong>Try it →</strong></a></p>
+
 Alveo is a single‑user app for keeping track of how you're doing between and around
 therapy sessions: mood check‑ins, a Markdown journal, session preparation and notes,
 homework from your therapist, CBT thought records, a breathing exercise, and simple
