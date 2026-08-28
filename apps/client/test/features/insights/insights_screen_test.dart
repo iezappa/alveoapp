@@ -6,6 +6,7 @@ import 'package:alveo/data/local/database.dart';
 import 'package:alveo/data/providers.dart';
 import 'package:alveo/data/repositories/mood_repository.dart';
 import 'package:alveo/features/insights/insights_screen.dart';
+import 'package:alveo/features/insights/mood_calendar.dart';
 import 'package:alveo/l10n/app_localizations.dart';
 
 Future<void> _pump(WidgetTester tester, AppDatabase db) async {
@@ -31,6 +32,8 @@ void main() {
 
     expect(find.text('Not enough check-ins yet'), findsOneWidget);
     expect(find.byType(LineChart), findsNothing);
+    // The calendar still renders (an all-grey month).
+    expect(find.byType(MoodCalendar), findsOneWidget);
   });
 
   testWidgets('charts the average once there is data', (tester) async {

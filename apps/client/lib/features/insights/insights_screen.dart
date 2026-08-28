@@ -7,6 +7,7 @@ import '../../app/ui.dart';
 import '../../data/providers.dart';
 import '../../domain/insights/mood_trend.dart';
 import '../../l10n/app_localizations.dart';
+import 'mood_calendar.dart';
 
 /// The mood-trend chart over a 30- or 90-day window.
 class InsightsScreen extends ConsumerStatefulWidget {
@@ -18,6 +19,11 @@ class InsightsScreen extends ConsumerStatefulWidget {
 
 class _InsightsScreenState extends ConsumerState<InsightsScreen> {
   int _days = 30;
+  late DateTime _month = DateTime(DateTime.now().year, DateTime.now().month);
+
+  void _shiftMonth(int by) => setState(
+    () => _month = DateTime(_month.year, _month.month + by),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +32,18 @@ class _InsightsScreenState extends ConsumerState<InsightsScreen> {
     final scheme = theme.colorScheme;
 
     final entries = ref.watch(moodEntriesProvider).asData?.value ?? const [];
+    final readings = entries.map(
+      (e) => (occurredAt: e.occurredAt, mood: e.mood),
+    );
     final points = dailyMoodAverages(
-      entries.map((e) => (occurredAt: e.occurredAt, mood: e.mood)),
+      readings,
       now: DateTime.now(),
       days: _days,
+    );
+    final monthly = monthlyMoodAverages(
+      readings,
+      _month.year,
+      _month.month,
     );
     final present = points.whereType<double>().toList();
     final average = present.isEmpty
@@ -75,6 +89,15 @@ class _InsightsScreenState extends ConsumerState<InsightsScreen> {
                   child: LineChart(_chartData(points, scheme)),
                 ),
               ],
+              const SizedBox(height: 32),
+              SectionLabel(l10n.insightsCalendar),
+              const SizedBox(height: 8),
+              MoodCalendar(
+                month: _month,
+                dailyAverages: monthly,
+                onPrev: () => _shiftMonth(-1),
+                onNext: () => _shiftMonth(1),
+              ),
             ],
           ),
         ),

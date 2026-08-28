@@ -518,6 +518,12 @@ abstract class AppLocalizations {
   /// **'Not enough check-ins yet'**
   String get insightsEmpty;
 
+  /// No description provided for @insightsCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get insightsCalendar;
+
   /// No description provided for @insightsAverage.
   ///
   /// In en, this message translates to:

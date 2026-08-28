@@ -104,6 +104,7 @@
   "insightsRange30": "30 days",
   "insightsRange90": "90 days",
   "insightsEmpty": "Not enough check-ins yet",
+  "insightsCalendar": "Calendar",
   "insightsAverage": "Average {value}/5",
   "@insightsAverage": {
     "placeholders": { "value": { "type": "String" } }

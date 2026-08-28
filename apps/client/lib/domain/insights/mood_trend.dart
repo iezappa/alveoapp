@@ -32,3 +32,27 @@ List<double?> dailyMoodAverages(
           : bucket.reduce((a, b) => a + b) / bucket.length,
   ];
 }
+
+/// Average mood for each day of [month] in [year], indexed `day - 1`. A day
+/// with no check-in is `null`.
+List<double?> monthlyMoodAverages(
+  Iterable<MoodReading> readings,
+  int year,
+  int month,
+) {
+  final daysInMonth = DateTime(year, month + 1, 0).day;
+  final buckets = List.generate(daysInMonth, (_) => <int>[]);
+
+  for (final r in readings) {
+    if (r.occurredAt.year == year && r.occurredAt.month == month) {
+      buckets[r.occurredAt.day - 1].add(r.mood);
+    }
+  }
+
+  return [
+    for (final bucket in buckets)
+      bucket.isEmpty
+          ? null
+          : bucket.reduce((a, b) => a + b) / bucket.length,
+  ];
+}

@@ -228,6 +228,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get insightsEmpty => 'Not enough check-ins yet';
 
   @override
+  String get insightsCalendar => 'Calendar';
+
+  @override
   String insightsAverage(String value) {
     return 'Average $value/5';
   }

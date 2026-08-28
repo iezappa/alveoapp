@@ -25,4 +25,16 @@ void main() {
 
     expect(averages.every((a) => a == null), isTrue);
   });
+
+  test('monthlyMoodAverages buckets by day of the given month', () {
+    final month = monthlyMoodAverages([
+      (occurredAt: DateTime(2026, 8, 3, 9), mood: 4),
+      (occurredAt: DateTime(2026, 8, 3, 22), mood: 2), // day 3 -> avg 3
+      (occurredAt: DateTime(2026, 7, 3), mood: 1), // other month, ignored
+    ], 2026, 8);
+
+    expect(month, hasLength(31));
+    expect(month[2], 3.0); // day 3
+    expect(month[0], isNull); // day 1
+  });
 }
