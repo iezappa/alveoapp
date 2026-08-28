@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/breathe/breathe_screen.dart';
+import '../features/cbt/thought_record_editor_screen.dart';
+import '../features/cbt/tools_screen.dart';
 import '../features/check_in/check_in_screen.dart';
 import '../features/dashboard/dashboard_screen.dart';
 import '../features/journal/journal_editor_screen.dart';
@@ -66,6 +68,14 @@ final routerProvider = Provider<GoRouter>((ref) {
               ),
             ],
           ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/tools',
+                builder: (context, state) => const ToolsScreen(),
+              ),
+            ],
+          ),
         ],
       ),
 
@@ -81,6 +91,15 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/library',
         builder: (context, state) => const LibraryScreen(),
+      ),
+      GoRoute(
+        path: '/thought-records/new',
+        builder: (context, state) => const ThoughtRecordEditorScreen(),
+      ),
+      GoRoute(
+        path: '/thought-records/:id',
+        builder: (context, state) =>
+            ThoughtRecordEditorScreen(recordId: state.pathParameters['id']),
       ),
       GoRoute(
         path: '/journal/section/:section',

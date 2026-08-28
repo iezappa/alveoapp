@@ -533,6 +533,94 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taskStatusSkipped => 'Omitida';
 
   @override
+  String get navTools => 'Herramientas';
+
+  @override
+  String get thoughtRecordsEmpty => 'Todavía no hay registros';
+
+  @override
+  String get thoughtRecordsSearchHint => 'Buscar registros';
+
+  @override
+  String get newThoughtRecord => 'Nuevo registro';
+
+  @override
+  String get editThoughtRecord => 'Registro de pensamiento';
+
+  @override
+  String get thoughtRecordSaved => 'Registro guardado';
+
+  @override
+  String get trSituation => 'Situación';
+
+  @override
+  String get trSituationHint => '¿Qué estaba pasando?';
+
+  @override
+  String get trAutomaticThought => 'Pensamiento automático';
+
+  @override
+  String get trAutomaticThoughtHint => '¿Qué te cruzó por la cabeza?';
+
+  @override
+  String get trBeliefBefore => 'Credibilidad inicial';
+
+  @override
+  String get trBeliefAfter => 'Credibilidad final';
+
+  @override
+  String get trEmotion => 'Emoción';
+
+  @override
+  String get trEmotionHint => 'Nombrá lo que sentiste';
+
+  @override
+  String get trEmotionIntensityBefore => 'Intensidad inicial';
+
+  @override
+  String get trEmotionIntensityAfter => 'Intensidad final';
+
+  @override
+  String get trDistortions => 'Distorsiones';
+
+  @override
+  String get trAlternativeThought => 'Pensamiento alternativo';
+
+  @override
+  String get trAlternativeThoughtHint =>
+      'Una forma más justa y amable de verlo';
+
+  @override
+  String get distortionAllOrNothing => 'Pensamiento todo o nada';
+
+  @override
+  String get distortionOvergeneralization => 'Sobregeneralización';
+
+  @override
+  String get distortionMentalFilter => 'Filtro mental';
+
+  @override
+  String get distortionDisqualifyingPositive => 'Descalificar lo positivo';
+
+  @override
+  String get distortionJumpingToConclusions => 'Sacar conclusiones apresuradas';
+
+  @override
+  String get distortionCatastrophizing => 'Catastrofizar';
+
+  @override
+  String get distortionEmotionalReasoning => 'Razonamiento emocional';
+
+  @override
+  String get distortionShouldStatements => 'Los \"debería\"';
+
+  @override
+  String get distortionLabeling => 'Etiquetado';
+
+  @override
+  String get distortionPersonalization => 'Personalización';
+
+  @override
   String get emotionJoy => 'Alegría';
 
   @override

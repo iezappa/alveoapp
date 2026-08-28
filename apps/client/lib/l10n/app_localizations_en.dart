@@ -532,6 +532,93 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taskStatusSkipped => 'Skipped';
 
   @override
+  String get navTools => 'Tools';
+
+  @override
+  String get thoughtRecordsEmpty => 'No thought records yet';
+
+  @override
+  String get thoughtRecordsSearchHint => 'Search thought records';
+
+  @override
+  String get newThoughtRecord => 'New thought record';
+
+  @override
+  String get editThoughtRecord => 'Thought record';
+
+  @override
+  String get thoughtRecordSaved => 'Thought record saved';
+
+  @override
+  String get trSituation => 'Situation';
+
+  @override
+  String get trSituationHint => 'What was happening?';
+
+  @override
+  String get trAutomaticThought => 'Automatic thought';
+
+  @override
+  String get trAutomaticThoughtHint => 'What went through your mind?';
+
+  @override
+  String get trBeliefBefore => 'Belief before';
+
+  @override
+  String get trBeliefAfter => 'Belief after';
+
+  @override
+  String get trEmotion => 'Emotion';
+
+  @override
+  String get trEmotionHint => 'Name the feeling';
+
+  @override
+  String get trEmotionIntensityBefore => 'Intensity before';
+
+  @override
+  String get trEmotionIntensityAfter => 'Intensity after';
+
+  @override
+  String get trDistortions => 'Distortions';
+
+  @override
+  String get trAlternativeThought => 'Alternative thought';
+
+  @override
+  String get trAlternativeThoughtHint => 'A fairer, kinder way to see it';
+
+  @override
+  String get distortionAllOrNothing => 'All-or-nothing thinking';
+
+  @override
+  String get distortionOvergeneralization => 'Overgeneralization';
+
+  @override
+  String get distortionMentalFilter => 'Mental filter';
+
+  @override
+  String get distortionDisqualifyingPositive => 'Disqualifying the positive';
+
+  @override
+  String get distortionJumpingToConclusions => 'Jumping to conclusions';
+
+  @override
+  String get distortionCatastrophizing => 'Catastrophizing';
+
+  @override
+  String get distortionEmotionalReasoning => 'Emotional reasoning';
+
+  @override
+  String get distortionShouldStatements => '\"Should\" statements';
+
+  @override
+  String get distortionLabeling => 'Labeling';
+
+  @override
+  String get distortionPersonalization => 'Personalization';
+
+  @override
   String get emotionJoy => 'Joy';
 
   @override

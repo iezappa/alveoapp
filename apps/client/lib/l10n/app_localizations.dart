@@ -1106,6 +1106,180 @@ abstract class AppLocalizations {
   /// **'Skipped'**
   String get taskStatusSkipped;
 
+  /// No description provided for @navTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get navTools;
+
+  /// No description provided for @thoughtRecordsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No thought records yet'**
+  String get thoughtRecordsEmpty;
+
+  /// No description provided for @thoughtRecordsSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search thought records'**
+  String get thoughtRecordsSearchHint;
+
+  /// No description provided for @newThoughtRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'New thought record'**
+  String get newThoughtRecord;
+
+  /// No description provided for @editThoughtRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Thought record'**
+  String get editThoughtRecord;
+
+  /// No description provided for @thoughtRecordSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Thought record saved'**
+  String get thoughtRecordSaved;
+
+  /// No description provided for @trSituation.
+  ///
+  /// In en, this message translates to:
+  /// **'Situation'**
+  String get trSituation;
+
+  /// No description provided for @trSituationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What was happening?'**
+  String get trSituationHint;
+
+  /// No description provided for @trAutomaticThought.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatic thought'**
+  String get trAutomaticThought;
+
+  /// No description provided for @trAutomaticThoughtHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What went through your mind?'**
+  String get trAutomaticThoughtHint;
+
+  /// No description provided for @trBeliefBefore.
+  ///
+  /// In en, this message translates to:
+  /// **'Belief before'**
+  String get trBeliefBefore;
+
+  /// No description provided for @trBeliefAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'Belief after'**
+  String get trBeliefAfter;
+
+  /// No description provided for @trEmotion.
+  ///
+  /// In en, this message translates to:
+  /// **'Emotion'**
+  String get trEmotion;
+
+  /// No description provided for @trEmotionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Name the feeling'**
+  String get trEmotionHint;
+
+  /// No description provided for @trEmotionIntensityBefore.
+  ///
+  /// In en, this message translates to:
+  /// **'Intensity before'**
+  String get trEmotionIntensityBefore;
+
+  /// No description provided for @trEmotionIntensityAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'Intensity after'**
+  String get trEmotionIntensityAfter;
+
+  /// No description provided for @trDistortions.
+  ///
+  /// In en, this message translates to:
+  /// **'Distortions'**
+  String get trDistortions;
+
+  /// No description provided for @trAlternativeThought.
+  ///
+  /// In en, this message translates to:
+  /// **'Alternative thought'**
+  String get trAlternativeThought;
+
+  /// No description provided for @trAlternativeThoughtHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A fairer, kinder way to see it'**
+  String get trAlternativeThoughtHint;
+
+  /// No description provided for @distortionAllOrNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'All-or-nothing thinking'**
+  String get distortionAllOrNothing;
+
+  /// No description provided for @distortionOvergeneralization.
+  ///
+  /// In en, this message translates to:
+  /// **'Overgeneralization'**
+  String get distortionOvergeneralization;
+
+  /// No description provided for @distortionMentalFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Mental filter'**
+  String get distortionMentalFilter;
+
+  /// No description provided for @distortionDisqualifyingPositive.
+  ///
+  /// In en, this message translates to:
+  /// **'Disqualifying the positive'**
+  String get distortionDisqualifyingPositive;
+
+  /// No description provided for @distortionJumpingToConclusions.
+  ///
+  /// In en, this message translates to:
+  /// **'Jumping to conclusions'**
+  String get distortionJumpingToConclusions;
+
+  /// No description provided for @distortionCatastrophizing.
+  ///
+  /// In en, this message translates to:
+  /// **'Catastrophizing'**
+  String get distortionCatastrophizing;
+
+  /// No description provided for @distortionEmotionalReasoning.
+  ///
+  /// In en, this message translates to:
+  /// **'Emotional reasoning'**
+  String get distortionEmotionalReasoning;
+
+  /// No description provided for @distortionShouldStatements.
+  ///
+  /// In en, this message translates to:
+  /// **'\"Should\" statements'**
+  String get distortionShouldStatements;
+
+  /// No description provided for @distortionLabeling.
+  ///
+  /// In en, this message translates to:
+  /// **'Labeling'**
+  String get distortionLabeling;
+
+  /// No description provided for @distortionPersonalization.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalization'**
+  String get distortionPersonalization;
+
   /// No description provided for @emotionJoy.
   ///
   /// In en, this message translates to:
