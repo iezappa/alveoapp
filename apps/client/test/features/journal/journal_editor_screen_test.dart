@@ -14,6 +14,8 @@ Future<void> _pumpApp(WidgetTester tester, AppDatabase db) async {
     ),
   );
   await tester.pumpAndSettle();
+  await tester.tap(find.text('Timeline')); // leave the dashboard start screen
+  await tester.pumpAndSettle();
 }
 
 void main() {

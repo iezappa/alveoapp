@@ -156,6 +156,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get navHome => 'Home';
+
+  @override
   String get navTimeline => 'Timeline';
 
   @override
@@ -169,6 +172,81 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get navSettings => 'Settings';
+
+  @override
+  String get dashboardGreetingMorning => 'Good morning.';
+
+  @override
+  String get dashboardGreetingAfternoon => 'Good afternoon.';
+
+  @override
+  String get dashboardGreetingEvening => 'Good evening.';
+
+  @override
+  String get dashboardGreetingNight => 'Rest well.';
+
+  @override
+  String get dashboardSafeHere => 'Take a deep breath. You\'re safe here.';
+
+  @override
+  String get dashboardNextSession => 'Next session';
+
+  @override
+  String get dashboardNextSessionNone => 'No sessions scheduled';
+
+  @override
+  String get dashboardScheduleSession => 'Schedule one';
+
+  @override
+  String get dashboardNotes => 'Notes';
+
+  @override
+  String get dashboardToday => 'Today';
+
+  @override
+  String get dashboardTomorrow => 'Tomorrow';
+
+  @override
+  String get dashboardCheckInTitle => 'Daily check-in';
+
+  @override
+  String get dashboardCheckInPrompt => 'How is your heart today?';
+
+  @override
+  String get dashboardBreatheTitle => 'Take a moment';
+
+  @override
+  String get dashboardBreathePrompt => 'A minute of paced breathing.';
+
+  @override
+  String get breatheAction => 'Breathe';
+
+  @override
+  String get breatheTitle => 'Breathe';
+
+  @override
+  String get breatheStart => 'Start';
+
+  @override
+  String get breatheStop => 'Stop';
+
+  @override
+  String get breatheReady => 'Ready when you are';
+
+  @override
+  String get breathePhaseInhale => 'Breathe in';
+
+  @override
+  String get breathePhaseHold => 'Hold';
+
+  @override
+  String get breathePhaseExhale => 'Breathe out';
+
+  @override
+  String get breathePatternBox => 'Box · 4·4·4·4';
+
+  @override
+  String get breathePatternRelaxing => 'Calm · 4·7·8';
 
   @override
   String get search => 'Search';

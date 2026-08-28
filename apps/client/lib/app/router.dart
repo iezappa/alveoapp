@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/breathe/breathe_screen.dart';
 import '../features/check_in/check_in_screen.dart';
+import '../features/dashboard/dashboard_screen.dart';
 import '../features/journal/journal_editor_screen.dart';
 import '../features/journal/journal_labels.dart';
 import '../features/journal/journal_screen.dart';
@@ -27,11 +29,19 @@ DateTime? _parseMonth(String? value) {
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
-    initialLocation: '/timeline',
+    initialLocation: '/dashboard',
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => HomeShell(shell: shell),
         branches: [
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/dashboard',
+                builder: (context, state) => const DashboardScreen(),
+              ),
+            ],
+          ),
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -71,6 +81,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/check-in',
         builder: (context, state) => const CheckInScreen(),
+      ),
+      GoRoute(
+        path: '/breathe',
+        builder: (context, state) => const BreatheScreen(),
       ),
       GoRoute(
         path: '/journal/section/:section',

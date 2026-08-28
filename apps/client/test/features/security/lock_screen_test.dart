@@ -42,6 +42,10 @@ void main() {
     await tester.enterText(find.byType(TextField), '1234');
     await tester.tap(find.text('Unlock'));
     await tester.pumpAndSettle();
-    expect(find.text('New check-in'), findsOneWidget); // timeline is visible
+    // The dashboard (the start screen) is now visible.
+    expect(
+      find.text("Take a deep breath. You're safe here."),
+      findsOneWidget,
+    );
   });
 }

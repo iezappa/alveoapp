@@ -156,6 +156,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get navHome => 'Inicio';
+
+  @override
   String get navTimeline => 'Línea de tiempo';
 
   @override
@@ -169,6 +172,81 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get navSettings => 'Ajustes';
+
+  @override
+  String get dashboardGreetingMorning => 'Buenos días.';
+
+  @override
+  String get dashboardGreetingAfternoon => 'Buenas tardes.';
+
+  @override
+  String get dashboardGreetingEvening => 'Buenas noches.';
+
+  @override
+  String get dashboardGreetingNight => 'Que descanses.';
+
+  @override
+  String get dashboardSafeHere => 'Respirá hondo. Estás en un lugar seguro.';
+
+  @override
+  String get dashboardNextSession => 'Próxima sesión';
+
+  @override
+  String get dashboardNextSessionNone => 'No tenés sesiones programadas';
+
+  @override
+  String get dashboardScheduleSession => 'Programar una';
+
+  @override
+  String get dashboardNotes => 'Notas';
+
+  @override
+  String get dashboardToday => 'Hoy';
+
+  @override
+  String get dashboardTomorrow => 'Mañana';
+
+  @override
+  String get dashboardCheckInTitle => 'Check-in diario';
+
+  @override
+  String get dashboardCheckInPrompt => '¿Cómo está tu corazón hoy?';
+
+  @override
+  String get dashboardBreatheTitle => 'Tomate un momento';
+
+  @override
+  String get dashboardBreathePrompt => 'Un minuto de respiración pausada.';
+
+  @override
+  String get breatheAction => 'Respirar';
+
+  @override
+  String get breatheTitle => 'Respirar';
+
+  @override
+  String get breatheStart => 'Empezar';
+
+  @override
+  String get breatheStop => 'Terminar';
+
+  @override
+  String get breatheReady => 'Cuando quieras';
+
+  @override
+  String get breathePhaseInhale => 'Inhalá';
+
+  @override
+  String get breathePhaseHold => 'Sostené';
+
+  @override
+  String get breathePhaseExhale => 'Exhalá';
+
+  @override
+  String get breathePatternBox => 'Cuadrada · 4·4·4·4';
+
+  @override
+  String get breathePatternRelaxing => 'Calma · 4·7·8';
 
   @override
   String get search => 'Buscar';

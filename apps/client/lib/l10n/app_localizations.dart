@@ -374,6 +374,12 @@ abstract class AppLocalizations {
   /// **'{created} added, {updated} updated'**
   String obsidianImported(int created, int updated);
 
+  /// No description provided for @navHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get navHome;
+
   /// No description provided for @navTimeline.
   ///
   /// In en, this message translates to:
@@ -403,6 +409,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get navSettings;
+
+  /// No description provided for @dashboardGreetingMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning.'**
+  String get dashboardGreetingMorning;
+
+  /// No description provided for @dashboardGreetingAfternoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Good afternoon.'**
+  String get dashboardGreetingAfternoon;
+
+  /// No description provided for @dashboardGreetingEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Good evening.'**
+  String get dashboardGreetingEvening;
+
+  /// No description provided for @dashboardGreetingNight.
+  ///
+  /// In en, this message translates to:
+  /// **'Rest well.'**
+  String get dashboardGreetingNight;
+
+  /// No description provided for @dashboardSafeHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a deep breath. You\'re safe here.'**
+  String get dashboardSafeHere;
+
+  /// No description provided for @dashboardNextSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Next session'**
+  String get dashboardNextSession;
+
+  /// No description provided for @dashboardNextSessionNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No sessions scheduled'**
+  String get dashboardNextSessionNone;
+
+  /// No description provided for @dashboardScheduleSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule one'**
+  String get dashboardScheduleSession;
+
+  /// No description provided for @dashboardNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get dashboardNotes;
+
+  /// No description provided for @dashboardToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get dashboardToday;
+
+  /// No description provided for @dashboardTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get dashboardTomorrow;
+
+  /// No description provided for @dashboardCheckInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily check-in'**
+  String get dashboardCheckInTitle;
+
+  /// No description provided for @dashboardCheckInPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'How is your heart today?'**
+  String get dashboardCheckInPrompt;
+
+  /// No description provided for @dashboardBreatheTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a moment'**
+  String get dashboardBreatheTitle;
+
+  /// No description provided for @dashboardBreathePrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'A minute of paced breathing.'**
+  String get dashboardBreathePrompt;
+
+  /// No description provided for @breatheAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Breathe'**
+  String get breatheAction;
+
+  /// No description provided for @breatheTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Breathe'**
+  String get breatheTitle;
+
+  /// No description provided for @breatheStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get breatheStart;
+
+  /// No description provided for @breatheStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get breatheStop;
+
+  /// No description provided for @breatheReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready when you are'**
+  String get breatheReady;
+
+  /// No description provided for @breathePhaseInhale.
+  ///
+  /// In en, this message translates to:
+  /// **'Breathe in'**
+  String get breathePhaseInhale;
+
+  /// No description provided for @breathePhaseHold.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold'**
+  String get breathePhaseHold;
+
+  /// No description provided for @breathePhaseExhale.
+  ///
+  /// In en, this message translates to:
+  /// **'Breathe out'**
+  String get breathePhaseExhale;
+
+  /// No description provided for @breathePatternBox.
+  ///
+  /// In en, this message translates to:
+  /// **'Box · 4·4·4·4'**
+  String get breathePatternBox;
+
+  /// No description provided for @breathePatternRelaxing.
+  ///
+  /// In en, this message translates to:
+  /// **'Calm · 4·7·8'**
+  String get breathePatternRelaxing;
 
   /// No description provided for @search.
   ///

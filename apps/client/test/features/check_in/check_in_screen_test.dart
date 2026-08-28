@@ -22,6 +22,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    await tester.tap(find.text('Timeline')); // leave the dashboard start screen
+    await tester.pumpAndSettle();
+
     await tester.tap(find.text('New check-in'));
     await tester.pumpAndSettle();
     expect(find.text('How are you feeling?'), findsOneWidget);
