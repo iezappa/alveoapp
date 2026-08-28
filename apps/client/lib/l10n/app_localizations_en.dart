@@ -470,6 +470,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timelineEmpty => 'Nothing logged yet';
 
   @override
+  String get timelineSearchHint => 'Search the timeline';
+
+  @override
+  String get timelinePreviewEmpty => 'Nothing to show for this entry';
+
+  @override
+  String get addRecord => 'Add';
+
+  @override
   String timelineMoodLabel(int score) {
     return 'Mood $score/5';
   }

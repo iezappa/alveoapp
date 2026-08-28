@@ -470,6 +470,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get timelineEmpty => 'Todavía no hay registros';
 
   @override
+  String get timelineSearchHint => 'Buscar en la línea de tiempo';
+
+  @override
+  String get timelinePreviewEmpty =>
+      'No hay nada para mostrar de este registro';
+
+  @override
+  String get addRecord => 'Agregar';
+
+  @override
   String timelineMoodLabel(int score) {
     return 'Ánimo $score/5';
   }

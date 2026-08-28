@@ -25,7 +25,9 @@ void main() {
     await tester.tap(find.text('Timeline')); // leave the dashboard start screen
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('New check-in'));
+    await tester.tap(find.byTooltip('Add')); // "+" in the list pane
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('New check-in')); // create menu
     await tester.pumpAndSettle();
     expect(find.text('How are you feeling?'), findsOneWidget);
 
@@ -45,8 +47,8 @@ void main() {
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
 
-    // Returned to the timeline.
-    expect(find.text('New check-in'), findsOneWidget); // back on the timeline
+    // Back on the timeline, now showing the new entry.
+    expect(find.text('Mood 4/5'), findsOneWidget);
 
     final repo = MoodRepository(db);
     final entries = await repo.getAll();

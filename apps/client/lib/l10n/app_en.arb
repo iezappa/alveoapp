@@ -195,6 +195,9 @@
   "addCheckIn": "New check-in",
 
   "timelineEmpty": "Nothing logged yet",
+  "timelineSearchHint": "Search the timeline",
+  "timelinePreviewEmpty": "Nothing to show for this entry",
+  "addRecord": "Add",
   "timelineMoodLabel": "Mood {score}/5",
   "@timelineMoodLabel": {
     "placeholders": {

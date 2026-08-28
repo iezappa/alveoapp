@@ -163,6 +163,9 @@
   "addCheckIn": "Nuevo registro",
 
   "timelineEmpty": "Todavía no hay registros",
+  "timelineSearchHint": "Buscar en la línea de tiempo",
+  "timelinePreviewEmpty": "No hay nada para mostrar de este registro",
+  "addRecord": "Agregar",
   "timelineMoodLabel": "Ánimo {score}/5",
   "journalUntitled": "Entrada sin título",
   "journalNewTitle": "Nueva entrada",

@@ -3,101 +3,197 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-import '../../app/theme.dart';
 import '../../app/ui.dart';
-import '../../data/local/tables.dart';
 import '../../domain/timeline/timeline_item.dart';
 import '../../l10n/app_localizations.dart';
 import '../export/export_day.dart';
+import '../shared/master_detail_shell.dart';
+import '../tasks/task_preview.dart';
+import 'timeline_item_preview.dart';
 import 'timeline_providers.dart';
 
-/// Route to open for a timeline item, or null if it has no detail screen yet.
-String? _routeFor(TimelineItem item) => switch (item) {
-  JournalTimelineItem(:final entry) => '/journal/${entry.id}',
-  TaskTimelineItem(:final task) => '/tasks/${task.id}',
-  SessionTimelineItem(:final session) => '/sessions/${session.id}',
-  _ => null,
+enum _Kind { mood, journal, task, session }
+
+String _kindLabel(AppLocalizations l10n, _Kind kind) => switch (kind) {
+  _Kind.mood => l10n.searchTypeMood,
+  _Kind.journal => l10n.searchTypeJournal,
+  _Kind.task => l10n.searchTypeTask,
+  _Kind.session => l10n.searchTypeSession,
 };
 
-class TimelineScreen extends ConsumerWidget {
+/// The unified activity feed as a master-detail screen: the merged list on the
+/// left (filterable by record kind), a read-only preview of the selected item
+/// on the right.
+class TimelineScreen extends ConsumerStatefulWidget {
   const TimelineScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TimelineScreen> createState() => _TimelineScreenState();
+}
+
+class _TimelineScreenState extends ConsumerState<TimelineScreen> {
+  final _search = TextEditingController();
+  final _kinds = <_Kind>{};
+  String? _selectedKey;
+
+  @override
+  void dispose() {
+    _search.dispose();
+    super.dispose();
+  }
+
+  String _keyOf(TimelineItem item) => '${item.runtimeType}:${item.id}';
+
+  _Kind _kindOf(TimelineItem item) => switch (item) {
+    MoodTimelineItem() => _Kind.mood,
+    JournalTimelineItem() => _Kind.journal,
+    TaskTimelineItem() => _Kind.task,
+    SessionTimelineItem() => _Kind.session,
+  };
+
+  String _searchText(TimelineItem item) => switch (item) {
+    MoodTimelineItem(:final entry) => entry.note ?? '',
+    JournalTimelineItem(:final entry) =>
+      '${entry.title ?? ''} ${entry.bodyMarkdown}',
+    TaskTimelineItem(:final task) =>
+      '${task.title} ${task.descriptionMarkdown ?? ''}',
+    SessionTimelineItem(:final session) => session.agendaMarkdown ?? '',
+  };
+
+  List<TimelineItem> _filter(List<TimelineItem> all) {
+    final query = _search.text.trim().toLowerCase();
+    return all.where((i) {
+      if (_kinds.isNotEmpty && !_kinds.contains(_kindOf(i))) return false;
+      if (query.isEmpty) return true;
+      return _searchText(i).toLowerCase().contains(query);
+    }).toList();
+  }
+
+  void _openItem(TimelineItem item) {
+    final route = timelineItemRoute(item);
+    if (MasterDetailShell.isWide(context)) {
+      setState(() => _selectedKey = _keyOf(item));
+    } else if (route != null) {
+      context.push(route);
+    }
+  }
+
+  Future<void> _add() async {
+    final choice = await showModalBottomSheet<String>(
+      context: context,
+      builder: (context) {
+        final l10n = AppLocalizations.of(context);
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.favorite_outline),
+                title: Text(l10n.addCheckIn),
+                onTap: () => Navigator.pop(context, '/check-in'),
+              ),
+              ListTile(
+                leading: const Icon(Icons.notes_outlined),
+                title: Text(l10n.journalNewTitle),
+                onTap: () => Navigator.pop(context, '/journal/new'),
+              ),
+              ListTile(
+                leading: const Icon(Icons.checklist_outlined),
+                title: Text(l10n.newTask),
+                onTap: () => Navigator.pop(context, '/tasks/new'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+    if (choice != null && mounted) context.push(choice);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final wide = MasterDetailShell.isWide(context);
     final timeline = ref.watch(timelineProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.navTimeline),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () => context.push('/search'),
-            tooltip: l10n.search,
+    final list = RecordListPane(
+      searchController: _search,
+      onSearchChanged: (_) => setState(() {}),
+      searchHint: l10n.timelineSearchHint,
+      addTooltip: l10n.addRecord,
+      onAdd: _add,
+      filters: [
+        for (final kind in _Kind.values)
+          FilterChip(
+            label: Text(_kindLabel(l10n, kind)),
+            selected: _kinds.contains(kind),
+            onSelected: (on) => setState(() {
+              on ? _kinds.add(kind) : _kinds.remove(kind);
+            }),
           ),
-          IconButton(
-            icon: const Icon(Icons.note_add_outlined),
-            onPressed: () => context.push('/journal/new'),
-            tooltip: l10n.journalNewTitle,
-          ),
-          IconButton(
-            icon: const Icon(Icons.ios_share_outlined),
-            onPressed: () => runDailyExport(context, ref),
-            tooltip: l10n.exportDayTooltip,
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () => context.push('/settings'),
-            tooltip: l10n.navSettings,
-          ),
-          const SizedBox(width: 4),
-        ],
-      ),
-      body: timeline.when(
+      ],
+      child: timeline.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('$e')),
-        data: (items) {
+        data: (all) {
+          final items = _filter(all);
           if (items.isEmpty) {
             return EmptyState(
               icon: Icons.timeline_outlined,
               message: l10n.timelineEmpty,
             );
           }
-          return RefreshIndicator(
-            onRefresh: () async => ref.invalidate(timelineProvider),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: kContentMaxWidth),
-                child: ListView.separated(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  itemCount: items.length,
-                  separatorBuilder: (_, _) => const SizedBox(height: 2),
-                  itemBuilder: (context, i) => _TimelineTile(item: items[i]),
-                ),
-              ),
-            ),
+          return ListView.separated(
+            padding: const EdgeInsets.fromLTRB(8, 4, 8, 12),
+            itemCount: items.length,
+            separatorBuilder: (_, _) => const SizedBox(height: 2),
+            itemBuilder: (context, i) => _tile(items[i], wide),
           );
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        heroTag: null,
-        onPressed: () => context.push('/check-in'),
-        icon: const Icon(Icons.add),
-        label: Text(l10n.addCheckIn),
-      ),
+    );
+
+    TimelineItem? selected;
+    for (final i in timeline.asData?.value ?? const <TimelineItem>[]) {
+      if (_keyOf(i) == _selectedKey) {
+        selected = i;
+        break;
+      }
+    }
+
+    final detail = selected == null
+        ? EmptyState(
+            icon: Icons.chevron_left,
+            message: l10n.detailNothingSelected,
+          )
+        : TimelineItemPreview(key: ValueKey(_selectedKey), item: selected);
+
+    return MasterDetailShell(
+      title: l10n.navTimeline,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: () => context.push('/search'),
+          tooltip: l10n.search,
+        ),
+        IconButton(
+          icon: const Icon(Icons.ios_share_outlined),
+          onPressed: () => runDailyExport(context, ref),
+          tooltip: l10n.exportDayTooltip,
+        ),
+        IconButton(
+          icon: const Icon(Icons.settings_outlined),
+          onPressed: () => context.push('/settings'),
+          tooltip: l10n.navSettings,
+        ),
+        const SizedBox(width: 4),
+      ],
+      list: list,
+      detail: detail,
     );
   }
-}
 
-class _TimelineTile extends StatelessWidget {
-  const _TimelineTile({required this.item});
-
-  final TimelineItem item;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _tile(TimelineItem item, bool wide) {
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     final locale = Localizations.localeOf(context).toString();
@@ -111,13 +207,15 @@ class _TimelineTile extends StatelessWidget {
       ),
       JournalTimelineItem(:final entry) => (
         Icons.notes_outlined,
-        entry.title ?? l10n.journalUntitled,
+        (entry.title ?? '').trim().isEmpty
+            ? l10n.journalUntitled
+            : entry.title!.trim(),
         null,
       ),
       TaskTimelineItem(:final task) => (
         Icons.checklist_outlined,
         task.title,
-        _taskStatusLabel(l10n, task.status),
+        TaskPreview.statusLabel(l10n, task.status),
       ),
       SessionTimelineItem() => (
         Icons.psychology_outlined,
@@ -126,36 +224,24 @@ class _TimelineTile extends StatelessWidget {
       ),
     };
 
-    final route = _routeFor(item);
     final hasDetail = detail != null && detail.isNotEmpty;
+    final tappable = wide || timelineItemRoute(item) != null;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kGutter),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: scheme.secondaryContainer,
-          foregroundColor: scheme.onSecondaryContainer,
-          child: Icon(icon, size: 20),
-        ),
-        title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
-        subtitle: Text(
-          hasDetail ? '$when  ·  $detail' : when,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-        trailing: route == null
-            ? null
-            : const Icon(Icons.chevron_right, size: 20),
-        onTap: route == null ? null : () => context.push(route),
+    return ListTile(
+      selected: wide && _keyOf(item) == _selectedKey,
+      selectedTileColor: scheme.secondaryContainer.withValues(alpha: 0.5),
+      leading: CircleAvatar(
+        backgroundColor: scheme.secondaryContainer,
+        foregroundColor: scheme.onSecondaryContainer,
+        child: Icon(icon, size: 20),
       ),
+      title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
+      subtitle: Text(
+        hasDetail ? '$when  ·  $detail' : when,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
+      onTap: tappable ? () => _openItem(item) : null,
     );
   }
-
-  String _taskStatusLabel(AppLocalizations l10n, TaskStatus status) =>
-      switch (status) {
-        TaskStatus.pending => l10n.taskStatusPending,
-        TaskStatus.inProgress => l10n.taskStatusInProgress,
-        TaskStatus.done => l10n.taskStatusDone,
-        TaskStatus.skipped => l10n.taskStatusSkipped,
-      };
 }

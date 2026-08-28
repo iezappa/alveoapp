@@ -986,6 +986,24 @@ abstract class AppLocalizations {
   /// **'Nothing logged yet'**
   String get timelineEmpty;
 
+  /// No description provided for @timelineSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search the timeline'**
+  String get timelineSearchHint;
+
+  /// No description provided for @timelinePreviewEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to show for this entry'**
+  String get timelinePreviewEmpty;
+
+  /// No description provided for @addRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get addRecord;
+
   /// No description provided for @timelineMoodLabel.
   ///
   /// In en, this message translates to:
