@@ -150,16 +150,8 @@ class _MoodScale extends StatelessWidget {
   final int value;
   final ValueChanged<int> onChanged;
 
-  static const _low = Color(0xFFC97B63); // muted terracotta
-  static const _mid = Color(0xFFBDBDB2); // warm grey
-  static const _high = Color(0xFF5E8B7E); // sage
-
-  Color _colorFor(int v) {
-    final t = (v - 1) / 4;
-    return t < 0.5
-        ? Color.lerp(_low, _mid, t * 2)!
-        : Color.lerp(_mid, _high, (t - 0.5) * 2)!;
-  }
+  /// Worst-to-best weather, one glyph per 1..5 step.
+  static const _weather = ['⛈️', '🌧️', '⛅', '🌤️', '☀️'];
 
   String _caption(AppLocalizations l10n) => switch (value) {
     1 => l10n.moodScale1,
@@ -176,41 +168,56 @@ class _MoodScale extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            for (var v = 1; v <= 5; v++)
-              GestureDetector(
-                key: Key('mood-$v'),
-                behavior: HitTestBehavior.opaque,
-                onTap: () => onChanged(v),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 150),
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: v == value
-                        ? _colorFor(v)
-                        : scheme.surfaceContainerHighest.withValues(alpha: 0.5),
-                    border: Border.all(
-                      color: v == value ? _colorFor(v) : scheme.outlineVariant,
-                      width: v == value ? 2 : 1,
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: scheme.surfaceContainerHighest.withValues(alpha: 0.4),
+            borderRadius: BorderRadius.circular(32),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              for (var v = 1; v <= 5; v++)
+                GestureDetector(
+                  key: Key('mood-$v'),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => onChanged(v),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 150),
+                    width: 52,
+                    height: 52,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: v == value ? scheme.surface : Colors.transparent,
+                      boxShadow: v == value
+                          ? [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.08),
+                                blurRadius: 8,
+                              ),
+                            ]
+                          : null,
+                    ),
+                    child: Opacity(
+                      opacity: v == value ? 1 : 0.55,
+                      child: Text(
+                        _weather[v - 1],
+                        style: const TextStyle(fontSize: 26),
+                      ),
                     ),
                   ),
-                  child: v == value
-                      ? const Icon(Icons.check, size: 20, color: Colors.white)
-                      : null,
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(height: 10),
         Center(
           child: Text(
             _caption(AppLocalizations.of(context)),
-            style: Theme.of(context).textTheme.bodyMedium
-                ?.copyWith(color: scheme.onSurfaceVariant),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: scheme.onSurfaceVariant,
+            ),
           ),
         ),
       ],
