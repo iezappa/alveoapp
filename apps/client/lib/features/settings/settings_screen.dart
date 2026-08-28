@@ -192,6 +192,16 @@ class SettingsScreen extends ConsumerWidget {
                   onTap: () => runObsidianImport(context, ref),
                 ),
               ],
+              const SizedBox(height: 28),
+              SectionLabel(l10n.settingsDisclaimerTitle),
+              Text(
+                l10n.settingsDisclaimerBody,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  height: 1.45,
+                ),
+              ),
+              const SizedBox(height: 12),
             ],
           ),
         ),

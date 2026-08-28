@@ -464,6 +464,18 @@ abstract class AppLocalizations {
   /// **'Review how the app works'**
   String get settingsTutorialSubtitle;
 
+  /// No description provided for @settingsDisclaimerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'About this app'**
+  String get settingsDisclaimerTitle;
+
+  /// No description provided for @settingsDisclaimerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Alveo is a personal tool for keeping track of how you\'re doing. It is not a medical device, it does not provide diagnosis or treatment, and it is not a substitute for professional care. In an emergency, contact your local emergency services or your care provider.'**
+  String get settingsDisclaimerBody;
+
   /// No description provided for @tutorialSkip.
   ///
   /// In en, this message translates to:

@@ -205,6 +205,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsTutorialSubtitle => 'Review how the app works';
 
   @override
+  String get settingsDisclaimerTitle => 'About this app';
+
+  @override
+  String get settingsDisclaimerBody =>
+      'Alveo is a personal tool for keeping track of how you\'re doing. It is not a medical device, it does not provide diagnosis or treatment, and it is not a substitute for professional care. In an emergency, contact your local emergency services or your care provider.';
+
+  @override
   String get tutorialSkip => 'Skip';
 
   @override
