@@ -159,9 +159,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navHome => 'Home';
 
   @override
-  String get navTimeline => 'Timeline';
-
-  @override
   String get navTasks => 'Tasks';
 
   @override
@@ -374,9 +371,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sessionSaved => 'Session saved';
 
   @override
-  String get sessionTimelineLabel => 'Therapy session';
-
-  @override
   String get sessionLinks => 'Links';
 
   @override
@@ -471,23 +465,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addCheckIn => 'New check-in';
-
-  @override
-  String get timelineEmpty => 'Nothing logged yet';
-
-  @override
-  String get timelineSearchHint => 'Search the timeline';
-
-  @override
-  String get timelinePreviewEmpty => 'Nothing to show for this entry';
-
-  @override
-  String get addRecord => 'Add';
-
-  @override
-  String timelineMoodLabel(int score) {
-    return 'Mood $score/5';
-  }
 
   @override
   String get journalUntitled => 'Untitled entry';

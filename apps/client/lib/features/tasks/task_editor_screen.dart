@@ -7,7 +7,6 @@ import '../../data/local/database.dart';
 import '../../data/local/tables.dart';
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
-import '../timeline/timeline_providers.dart';
 import 'task_providers.dart';
 
 class TaskEditorScreen extends ConsumerStatefulWidget {
@@ -122,7 +121,6 @@ class _TaskEditorScreenState extends ConsumerState<TaskEditorScreen> {
     }
 
     ref.invalidate(taskListProvider);
-    ref.invalidate(timelineProvider);
 
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(

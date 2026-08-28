@@ -80,7 +80,6 @@
   },
 
   "navHome": "Home",
-  "navTimeline": "Timeline",
   "navTasks": "Tasks",
   "navSessions": "Sessions",
   "navJournal": "Journal",
@@ -160,7 +159,6 @@
   "sessionNotesHint": "Notes during the session…",
   "sessionTakeawaysHint": "What did you take away?",
   "sessionSaved": "Session saved",
-  "sessionTimelineLabel": "Therapy session",
   "sessionLinks": "Links",
   "linkAdd": "Link an item",
   "linkRemove": "Unlink",
@@ -196,16 +194,6 @@
   "checkInSaved": "Check-in saved",
   "addCheckIn": "New check-in",
 
-  "timelineEmpty": "Nothing logged yet",
-  "timelineSearchHint": "Search the timeline",
-  "timelinePreviewEmpty": "Nothing to show for this entry",
-  "addRecord": "Add",
-  "timelineMoodLabel": "Mood {score}/5",
-  "@timelineMoodLabel": {
-    "placeholders": {
-      "score": { "type": "int" }
-    }
-  },
   "journalUntitled": "Untitled entry",
   "journalNewTitle": "New entry",
   "journalEditTitle": "Edit entry",

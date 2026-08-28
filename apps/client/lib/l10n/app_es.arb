@@ -53,7 +53,6 @@
   "obsidianImported": "{created} agregadas, {updated} actualizadas",
 
   "navHome": "Inicio",
-  "navTimeline": "Línea de tiempo",
   "navTasks": "Tareas",
   "navSessions": "Sesiones",
   "navJournal": "Diario",
@@ -128,7 +127,6 @@
   "sessionNotesHint": "Notas durante la sesión…",
   "sessionTakeawaysHint": "¿Con qué te quedaste?",
   "sessionSaved": "Sesión guardada",
-  "sessionTimelineLabel": "Sesión de terapia",
   "sessionLinks": "Vínculos",
   "linkAdd": "Vincular un elemento",
   "linkRemove": "Desvincular",
@@ -164,11 +162,6 @@
   "checkInSaved": "Registro guardado",
   "addCheckIn": "Nuevo registro",
 
-  "timelineEmpty": "Todavía no hay registros",
-  "timelineSearchHint": "Buscar en la línea de tiempo",
-  "timelinePreviewEmpty": "No hay nada para mostrar de este registro",
-  "addRecord": "Agregar",
-  "timelineMoodLabel": "Ánimo {score}/5",
   "journalUntitled": "Entrada sin título",
   "journalNewTitle": "Nueva entrada",
   "journalEditTitle": "Editar entrada",

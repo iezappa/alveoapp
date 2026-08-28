@@ -6,7 +6,6 @@ import '../../data/providers.dart';
 import '../../domain/obsidian/obsidian_report.dart';
 import '../../l10n/app_localizations.dart';
 import '../journal/journal_providers.dart';
-import '../timeline/timeline_providers.dart';
 
 /// Lets the user choose the vault folder and stores it.
 Future<void> pickObsidianVault(BuildContext context, WidgetRef ref) async {
@@ -53,7 +52,6 @@ Future<void> runObsidianImport(BuildContext context, WidgetRef ref) async {
   try {
     final report = await ref.read(obsidianServiceProvider).importJournal(vault);
     ref.invalidate(journalListProvider);
-    ref.invalidate(timelineProvider);
     messenger.showSnackBar(
       SnackBar(
         content: Text(l10n.obsidianImported(report.created, report.updated)),

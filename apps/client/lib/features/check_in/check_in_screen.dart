@@ -8,7 +8,6 @@ import '../../data/providers.dart';
 import '../../data/repositories/mood_repository.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/emotion_labels.dart';
-import '../timeline/timeline_providers.dart';
 import 'plutchik_wheel.dart';
 
 class CheckInScreen extends ConsumerStatefulWidget {
@@ -56,7 +55,6 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
               EmotionInput(emotionKey: entry.key, intensity: entry.value),
           ],
         );
-    ref.invalidate(timelineProvider);
 
     if (!mounted) return;
     final l10n = AppLocalizations.of(context);
@@ -65,7 +63,7 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
     if (context.canPop()) {
       context.pop();
     } else {
-      context.go('/timeline');
+      context.go('/dashboard');
     }
   }
 

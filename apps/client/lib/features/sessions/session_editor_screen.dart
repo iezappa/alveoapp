@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../journal/live_markdown_field.dart';
-import '../timeline/timeline_providers.dart';
 import 'session_links_tab.dart';
 import 'session_providers.dart';
 
@@ -121,7 +120,6 @@ class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
     }
 
     ref.invalidate(sessionListProvider);
-    ref.invalidate(timelineProvider);
 
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(

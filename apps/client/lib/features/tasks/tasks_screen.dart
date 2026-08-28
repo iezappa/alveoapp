@@ -10,7 +10,6 @@ import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../shared/confirm_delete.dart';
 import '../shared/master_detail_shell.dart';
-import '../timeline/timeline_providers.dart';
 import 'task_editor_screen.dart';
 import 'task_preview.dart';
 import 'task_providers.dart';
@@ -73,7 +72,6 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
     if (!await confirmDelete(context)) return;
     await ref.read(taskRepositoryProvider).delete(id);
     ref.invalidate(taskListProvider);
-    ref.invalidate(timelineProvider);
     if (mounted) setState(() => _selectedId = null);
   }
 
@@ -196,7 +194,6 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
                 (checked ?? false) ? TaskStatus.done : TaskStatus.pending,
               );
           ref.invalidate(taskListProvider);
-          ref.invalidate(timelineProvider);
         },
       ),
       title: Text(

@@ -10,7 +10,6 @@ import '../../l10n/app_localizations.dart';
 import '../journal/journal_providers.dart';
 import '../sessions/session_providers.dart';
 import '../tasks/task_providers.dart';
-import '../timeline/timeline_providers.dart';
 
 String _backupName() {
   final now = DateTime.now();
@@ -61,7 +60,6 @@ Future<void> runImportBackup(BuildContext context, WidgetRef ref) async {
     return;
   }
 
-  ref.invalidate(timelineProvider);
   ref.invalidate(journalListProvider);
   ref.invalidate(taskListProvider);
   ref.invalidate(sessionListProvider);

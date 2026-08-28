@@ -118,7 +118,7 @@ class SearchService {
             title: m.note?.trim() ?? '',
             snippet: _excerpt(m.note ?? '', q),
             when: m.occurredAt,
-            route: '/timeline',
+            route: '/dashboard',
           ),
         ),
       );

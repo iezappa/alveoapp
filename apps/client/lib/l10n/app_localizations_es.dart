@@ -159,9 +159,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navHome => 'Inicio';
 
   @override
-  String get navTimeline => 'Línea de tiempo';
-
-  @override
   String get navTasks => 'Tareas';
 
   @override
@@ -374,9 +371,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sessionSaved => 'Sesión guardada';
 
   @override
-  String get sessionTimelineLabel => 'Sesión de terapia';
-
-  @override
   String get sessionLinks => 'Vínculos';
 
   @override
@@ -471,24 +465,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get addCheckIn => 'Nuevo registro';
-
-  @override
-  String get timelineEmpty => 'Todavía no hay registros';
-
-  @override
-  String get timelineSearchHint => 'Buscar en la línea de tiempo';
-
-  @override
-  String get timelinePreviewEmpty =>
-      'No hay nada para mostrar de este registro';
-
-  @override
-  String get addRecord => 'Agregar';
-
-  @override
-  String timelineMoodLabel(int score) {
-    return 'Ánimo $score/5';
-  }
 
   @override
   String get journalUntitled => 'Entrada sin título';

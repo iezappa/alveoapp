@@ -9,7 +9,6 @@ import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../shared/confirm_delete.dart';
 import '../shared/master_detail_shell.dart';
-import '../timeline/timeline_providers.dart';
 import 'session_editor_screen.dart';
 import 'session_preview.dart';
 import 'session_providers.dart';
@@ -72,7 +71,6 @@ class _SessionsScreenState extends ConsumerState<SessionsScreen> {
     if (!await confirmDelete(context)) return;
     await ref.read(sessionRepositoryProvider).delete(id);
     ref.invalidate(sessionListProvider);
-    ref.invalidate(timelineProvider);
     if (mounted) setState(() => _selectedId = null);
   }
 

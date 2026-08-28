@@ -10,7 +10,6 @@ import '../../domain/journal/journal_section.dart';
 import '../../l10n/app_localizations.dart';
 import '../shared/confirm_delete.dart';
 import '../shared/master_detail_shell.dart';
-import '../timeline/timeline_providers.dart';
 import 'journal_editor_screen.dart';
 import 'journal_labels.dart';
 import 'journal_preview.dart';
@@ -94,7 +93,6 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
     if (!await confirmDelete(context)) return;
     await ref.read(journalRepositoryProvider).delete(id);
     ref.invalidate(journalListProvider);
-    ref.invalidate(timelineProvider);
     if (mounted) setState(() => _selectedId = null);
   }
 

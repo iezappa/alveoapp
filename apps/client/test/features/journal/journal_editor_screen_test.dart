@@ -12,7 +12,7 @@ Finder _editorField() => find.descendant(
   matching: find.byType(TextField),
 );
 
-Future<void> _openTimeline(WidgetTester tester, AppDatabase db) async {
+Future<void> _openJournal(WidgetTester tester, AppDatabase db) async {
   await tester.pumpWidget(
     ProviderScope(
       overrides: [appDatabaseProvider.overrideWithValue(db)],
@@ -20,22 +20,22 @@ Future<void> _openTimeline(WidgetTester tester, AppDatabase db) async {
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Timeline')); // leave the dashboard start screen
+  await tester.tap(find.text('Journal')); // navigation destination
   await tester.pumpAndSettle();
 }
 
 void main() {
-  testWidgets('creates a journal entry from the timeline "+" menu', (
+  testWidgets('creates a journal entry via the "+" section picker', (
     tester,
   ) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
 
-    await _openTimeline(tester, db);
+    await _openJournal(tester, db);
 
-    await tester.tap(find.byTooltip('Add'));
+    await tester.tap(find.byTooltip('New entry'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('New entry')); // create menu
+    await tester.tap(find.widgetWithText(ListTile, 'One-liners')); // section menu
     await tester.pumpAndSettle();
 
     await tester.enterText(
@@ -47,15 +47,12 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    // Back on the timeline, now showing the new entry.
-    expect(find.text('Untitled entry'), findsOneWidget);
-
     final entries = await JournalRepository(db).getAll();
     expect(entries, hasLength(1));
     expect(entries.single.bodyMarkdown, contains('boundaries'));
   });
 
-  testWidgets('opens an existing entry from its timeline tile and updates it', (
+  testWidgets('opens an existing entry from its tile and updates it', (
     tester,
   ) async {
     final db = AppDatabase.forTesting();
@@ -66,7 +63,7 @@ void main() {
       title: 'Draft',
     );
 
-    await _openTimeline(tester, db);
+    await _openJournal(tester, db);
 
     await tester.tap(find.text('Draft'));
     await tester.pumpAndSettle();

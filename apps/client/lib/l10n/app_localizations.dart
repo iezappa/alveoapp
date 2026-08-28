@@ -380,12 +380,6 @@ abstract class AppLocalizations {
   /// **'Home'**
   String get navHome;
 
-  /// No description provided for @navTimeline.
-  ///
-  /// In en, this message translates to:
-  /// **'Timeline'**
-  String get navTimeline;
-
   /// No description provided for @navTasks.
   ///
   /// In en, this message translates to:
@@ -794,12 +788,6 @@ abstract class AppLocalizations {
   /// **'Session saved'**
   String get sessionSaved;
 
-  /// No description provided for @sessionTimelineLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Therapy session'**
-  String get sessionTimelineLabel;
-
   /// No description provided for @sessionLinks.
   ///
   /// In en, this message translates to:
@@ -991,36 +979,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New check-in'**
   String get addCheckIn;
-
-  /// No description provided for @timelineEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Nothing logged yet'**
-  String get timelineEmpty;
-
-  /// No description provided for @timelineSearchHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Search the timeline'**
-  String get timelineSearchHint;
-
-  /// No description provided for @timelinePreviewEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'Nothing to show for this entry'**
-  String get timelinePreviewEmpty;
-
-  /// No description provided for @addRecord.
-  ///
-  /// In en, this message translates to:
-  /// **'Add'**
-  String get addRecord;
-
-  /// No description provided for @timelineMoodLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Mood {score}/5'**
-  String timelineMoodLabel(int score);
 
   /// No description provided for @journalUntitled.
   ///

@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import '../../data/providers.dart';
 import '../../domain/journal/journal_section.dart';
 import '../../l10n/app_localizations.dart';
-import '../timeline/timeline_providers.dart';
 import 'journal_providers.dart';
 import 'live_markdown_field.dart';
 
@@ -128,7 +127,6 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
 
     ref.invalidate(journalListProvider);
     ref.invalidate(journalSectionEntriesProvider(_section));
-    ref.invalidate(timelineProvider);
 
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(

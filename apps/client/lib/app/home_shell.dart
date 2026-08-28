@@ -6,8 +6,8 @@ import '../l10n/app_localizations.dart';
 typedef _Dest = ({IconData icon, IconData selected, String label});
 
 /// The persistent navigation frame around the primary screens (Dashboard,
-/// Timeline, Journal, Sessions, Tasks). A bottom bar on narrow windows, a rail
-/// on wide ones. Editors and Settings are pushed on top and sit outside it.
+/// Journal, Sessions, Tasks). A bottom bar on narrow windows, a rail on wide
+/// ones. Editors and Settings are pushed on top and sit outside it.
 class HomeShell extends StatelessWidget {
   const HomeShell({super.key, required this.shell});
 
@@ -24,11 +24,6 @@ class HomeShell extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final destinations = <_Dest>[
       (icon: Icons.home_outlined, selected: Icons.home, label: l10n.navHome),
-      (
-        icon: Icons.timeline_outlined,
-        selected: Icons.timeline,
-        label: l10n.navTimeline,
-      ),
       (icon: Icons.book_outlined, selected: Icons.book, label: l10n.navJournal),
       (
         icon: Icons.psychology_outlined,

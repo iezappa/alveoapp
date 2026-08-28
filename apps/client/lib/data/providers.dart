@@ -9,7 +9,6 @@ import 'repositories/mood_repository.dart';
 import 'repositories/session_repository.dart';
 import 'repositories/settings_repository.dart';
 import 'repositories/task_repository.dart';
-import 'repositories/timeline_repository.dart';
 import 'search/search_service.dart';
 import 'security/pin_service.dart';
 import 'transfer/backup_service.dart';
@@ -69,15 +68,6 @@ final sessionRepositoryProvider = Provider<SessionRepository>(
 
 final linkRepositoryProvider = Provider<LinkRepository>(
   (ref) => LinkRepository(ref.watch(appDatabaseProvider)),
-);
-
-final timelineRepositoryProvider = Provider<TimelineRepository>(
-  (ref) => TimelineRepository(
-    ref.watch(moodRepositoryProvider),
-    ref.watch(journalRepositoryProvider),
-    ref.watch(taskRepositoryProvider),
-    ref.watch(sessionRepositoryProvider),
-  ),
 );
 
 final exportServiceProvider = Provider<ExportService>(
