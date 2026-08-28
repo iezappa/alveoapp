@@ -1,4 +1,4 @@
-# Alveo
+# Alveo 🌊
 
 **A calm, private, local‑first companion for personal therapy work.**
 
