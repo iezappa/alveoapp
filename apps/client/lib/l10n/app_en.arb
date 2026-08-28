@@ -223,6 +223,7 @@
   "taskStatusSkipped": "Skipped",
 
   "navTools": "Tools",
+  "toolsAdd": "Use a tool",
   "thoughtRecordsEmpty": "No thought records yet",
   "thoughtRecordsSearchHint": "Search thought records",
   "newThoughtRecord": "New thought record",

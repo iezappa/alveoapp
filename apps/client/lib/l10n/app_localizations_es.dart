@@ -536,6 +536,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navTools => 'Herramientas';
 
   @override
+  String get toolsAdd => 'Usar una herramienta';
+
+  @override
   String get thoughtRecordsEmpty => 'Todavía no hay registros';
 
   @override

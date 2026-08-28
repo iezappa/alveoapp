@@ -186,6 +186,7 @@
   "taskStatusSkipped": "Omitida",
 
   "navTools": "Herramientas",
+  "toolsAdd": "Usar una herramienta",
   "thoughtRecordsEmpty": "Todavía no hay registros",
   "thoughtRecordsSearchHint": "Buscar registros",
   "newThoughtRecord": "Nuevo registro",

@@ -32,7 +32,9 @@ void main() {
     await _openTools(tester, db);
     expect(find.text('No thought records yet'), findsOneWidget);
 
-    await tester.tap(find.byTooltip('New thought record'));
+    await tester.tap(find.byTooltip('Use a tool'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('New thought record')); // tool menu
     await tester.pumpAndSettle();
 
     await tester.enterText(_editorFields().at(0), 'Meeting ran long');

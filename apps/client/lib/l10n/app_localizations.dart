@@ -1112,6 +1112,12 @@ abstract class AppLocalizations {
   /// **'Tools'**
   String get navTools;
 
+  /// No description provided for @toolsAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a tool'**
+  String get toolsAdd;
+
   /// No description provided for @thoughtRecordsEmpty.
   ///
   /// In en, this message translates to:

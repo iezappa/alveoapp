@@ -46,7 +46,7 @@ class _ToolsScreenState extends ConsumerState<ToolsScreen> {
     }
   }
 
-  void _add() {
+  void _newThoughtRecord() {
     if (MasterDetailShell.isWide(context)) {
       setState(() {
         _creating = true;
@@ -54,6 +54,39 @@ class _ToolsScreenState extends ConsumerState<ToolsScreen> {
       });
     } else {
       context.push('/thought-records/new');
+    }
+  }
+
+  Future<void> _add() async {
+    final l10n = AppLocalizations.of(context);
+    final choice = await showModalBottomSheet<String>(
+      context: context,
+      builder: (context) => SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.lightbulb_outline),
+                title: Text(l10n.newThoughtRecord),
+                onTap: () => Navigator.pop(context, 'thought-record'),
+              ),
+              ListTile(
+                leading: const Icon(Icons.air),
+                title: Text(l10n.breatheAction),
+                onTap: () => Navigator.pop(context, 'breathe'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (!mounted) return;
+    switch (choice) {
+      case 'thought-record':
+        _newThoughtRecord();
+      case 'breathe':
+        context.push('/breathe');
     }
   }
 
@@ -124,7 +157,7 @@ class _ToolsScreenState extends ConsumerState<ToolsScreen> {
       searchController: _search,
       onSearchChanged: (_) => setState(() {}),
       searchHint: l10n.thoughtRecordsSearchHint,
-      addTooltip: l10n.newThoughtRecord,
+      addTooltip: l10n.toolsAdd,
       onAdd: _add,
       child: records.when(
         loading: () => const Center(child: CircularProgressIndicator()),
