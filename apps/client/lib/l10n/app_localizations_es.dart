@@ -217,6 +217,34 @@ class AppLocalizationsEs extends AppLocalizations {
       'Registrá tu ánimo unos días para ver la tendencia';
 
   @override
+  String get insightsTitle => 'Progreso';
+
+  @override
+  String get insightsRange30 => '30 días';
+
+  @override
+  String get insightsRange90 => '90 días';
+
+  @override
+  String get insightsEmpty => 'Todavía no hay suficientes check-ins';
+
+  @override
+  String insightsAverage(String value) {
+    return 'Promedio $value/5';
+  }
+
+  @override
+  String insightsDaysLogged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count días registrados',
+      one: '1 día registrado',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get libraryTitle => 'Biblioteca';
 
   @override

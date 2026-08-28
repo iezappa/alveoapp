@@ -494,6 +494,42 @@ abstract class AppLocalizations {
   /// **'Check in a few days to see your trend'**
   String get dashboardMoodTrendEmpty;
 
+  /// No description provided for @insightsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Insights'**
+  String get insightsTitle;
+
+  /// No description provided for @insightsRange30.
+  ///
+  /// In en, this message translates to:
+  /// **'30 days'**
+  String get insightsRange30;
+
+  /// No description provided for @insightsRange90.
+  ///
+  /// In en, this message translates to:
+  /// **'90 days'**
+  String get insightsRange90;
+
+  /// No description provided for @insightsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough check-ins yet'**
+  String get insightsEmpty;
+
+  /// No description provided for @insightsAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Average {value}/5'**
+  String insightsAverage(String value);
+
+  /// No description provided for @insightsDaysLogged.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day logged} other{{count} days logged}}'**
+  String insightsDaysLogged(int count);
+
   /// No description provided for @libraryTitle.
   ///
   /// In en, this message translates to:

@@ -216,6 +216,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardMoodTrendEmpty => 'Check in a few days to see your trend';
 
   @override
+  String get insightsTitle => 'Insights';
+
+  @override
+  String get insightsRange30 => '30 days';
+
+  @override
+  String get insightsRange90 => '90 days';
+
+  @override
+  String get insightsEmpty => 'Not enough check-ins yet';
+
+  @override
+  String insightsAverage(String value) {
+    return 'Average $value/5';
+  }
+
+  @override
+  String insightsDaysLogged(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days logged',
+      one: '1 day logged',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get libraryTitle => 'Library';
 
   @override

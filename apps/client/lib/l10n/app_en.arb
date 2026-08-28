@@ -100,6 +100,18 @@
   "dashboardCheckInPrompt": "How is your heart today?",
   "dashboardMoodTrend": "Mood · last 14 days",
   "dashboardMoodTrendEmpty": "Check in a few days to see your trend",
+  "insightsTitle": "Insights",
+  "insightsRange30": "30 days",
+  "insightsRange90": "90 days",
+  "insightsEmpty": "Not enough check-ins yet",
+  "insightsAverage": "Average {value}/5",
+  "@insightsAverage": {
+    "placeholders": { "value": { "type": "String" } }
+  },
+  "insightsDaysLogged": "{count, plural, =1{1 day logged} other{{count} days logged}}",
+  "@insightsDaysLogged": {
+    "placeholders": { "count": { "type": "int" } }
+  },
   "libraryTitle": "Library",
   "libraryToday": "Today",
   "libraryAll": "All quotes",

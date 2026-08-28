@@ -6,6 +6,7 @@ import '../features/cbt/thought_record_editor_screen.dart';
 import '../features/cbt/tools_screen.dart';
 import '../features/check_in/check_in_screen.dart';
 import '../features/dashboard/dashboard_screen.dart';
+import '../features/insights/insights_screen.dart';
 import '../features/journal/journal_editor_screen.dart';
 import '../features/journal/journal_labels.dart';
 import '../features/journal/journal_screen.dart';
@@ -91,6 +92,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/library',
         builder: (context, state) => const LibraryScreen(),
+      ),
+      GoRoute(
+        path: '/insights',
+        builder: (context, state) => const InsightsScreen(),
       ),
       GoRoute(
         path: '/thought-records/new',

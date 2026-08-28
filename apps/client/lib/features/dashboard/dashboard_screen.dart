@@ -243,34 +243,42 @@ class _MoodTrendCard extends ConsumerWidget {
     final hasData = points != null && points.any((p) => p != null);
 
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.show_chart,
-                  size: 20,
-                  color: theme.colorScheme.primary,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  l10n.dashboardMoodTrend,
-                  style: theme.textTheme.titleMedium,
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            if (hasData)
-              Sparkline(values: points)
-            else
-              Text(
-                l10n.dashboardMoodTrendEmpty,
-                style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => context.push('/insights'),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.show_chart,
+                    size: 20,
+                    color: theme.colorScheme.primary,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    l10n.dashboardMoodTrend,
+                    style: theme.textTheme.titleMedium,
+                  ),
+                  const Spacer(),
+                  const Icon(Icons.chevron_right, size: 20),
+                ],
               ),
-          ],
+              const SizedBox(height: 12),
+              if (hasData)
+                Sparkline(values: points)
+              else
+                Text(
+                  l10n.dashboardMoodTrendEmpty,
+                  style: TextStyle(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
