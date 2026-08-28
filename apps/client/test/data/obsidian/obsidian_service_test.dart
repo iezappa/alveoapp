@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/data/local/database.dart';
-import 'package:terapia/data/obsidian/frontmatter.dart';
-import 'package:terapia/data/obsidian/obsidian_service.dart';
-import 'package:terapia/data/repositories/journal_repository.dart';
-import 'package:terapia/domain/journal/journal_section.dart';
+import 'package:alveo/data/local/database.dart';
+import 'package:alveo/data/obsidian/frontmatter.dart';
+import 'package:alveo/data/obsidian/obsidian_service.dart';
+import 'package:alveo/data/repositories/journal_repository.dart';
+import 'package:alveo/domain/journal/journal_section.dart';
 
 void main() {
   late AppDatabase db;
@@ -17,7 +17,7 @@ void main() {
     db = AppDatabase.forTesting();
     journal = JournalRepository(db);
     obsidian = ObsidianService(journal);
-    vault = await Directory.systemTemp.createTemp('terapia-vault-');
+    vault = await Directory.systemTemp.createTemp('alveo-vault-');
   });
   tearDown(() async {
     await db.close();
@@ -36,10 +36,10 @@ void main() {
     final report = await obsidian.exportJournal(vault.path);
     expect(report.exported, 1);
 
-    final file = File('${vault.path}/Terapia/creative/2026-08-20-poem.md');
+    final file = File('${vault.path}/Alveo/creative/2026-08-20-poem.md');
     expect(file.existsSync(), isTrue);
     final fm = parseFrontmatter(file.readAsStringSync());
-    expect(fm.meta['terapia-id'], 'j1');
+    expect(fm.meta['alveo-id'], 'j1');
     expect(fm.meta['section'], 'creative');
     expect(fm.body.trim(), 'a poem');
   });
@@ -53,7 +53,7 @@ void main() {
     );
     await obsidian.exportJournal(vault.path);
 
-    final file = Directory('${vault.path}/Terapia/student')
+    final file = Directory('${vault.path}/Alveo/student')
         .listSync()
         .whereType<File>()
         .first;
@@ -78,7 +78,7 @@ void main() {
       expect(first.created, 1);
       expect(await journal.getBySection(JournalSection.oneLiner), hasLength(1));
       expect(
-        parseFrontmatter(note.readAsStringSync()).meta['terapia-id'],
+        parseFrontmatter(note.readAsStringSync()).meta['alveo-id'],
         isNotNull,
       );
 

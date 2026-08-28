@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/features/check_in/plutchik_wheel.dart';
+import 'package:alveo/features/check_in/plutchik_wheel.dart';
 
 void main() {
   testWidgets('tapping the north wedge toggles "joy" on and off', (

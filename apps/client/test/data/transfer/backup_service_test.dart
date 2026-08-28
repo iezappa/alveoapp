@@ -1,14 +1,14 @@
 import 'package:drift/drift.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/data/local/database.dart';
-import 'package:terapia/data/repositories/journal_repository.dart';
-import 'package:terapia/data/repositories/link_repository.dart';
-import 'package:terapia/data/repositories/mood_repository.dart';
-import 'package:terapia/data/repositories/session_repository.dart';
-import 'package:terapia/data/repositories/task_repository.dart';
-import 'package:terapia/data/transfer/backup_service.dart';
-import 'package:terapia/domain/links/link_target_type.dart';
-import 'package:terapia/domain/transfer/import_report.dart';
+import 'package:alveo/data/local/database.dart';
+import 'package:alveo/data/repositories/journal_repository.dart';
+import 'package:alveo/data/repositories/link_repository.dart';
+import 'package:alveo/data/repositories/mood_repository.dart';
+import 'package:alveo/data/repositories/session_repository.dart';
+import 'package:alveo/data/repositories/task_repository.dart';
+import 'package:alveo/data/transfer/backup_service.dart';
+import 'package:alveo/domain/links/link_target_type.dart';
+import 'package:alveo/domain/transfer/import_report.dart';
 
 Future<AppDatabase> _populatedSource() async {
   final db = AppDatabase.forTesting();
@@ -118,7 +118,7 @@ void main() {
 
     expect(
       () => BackupService(target).importFromJson(
-        '{"format":"terapia-export","version":1,'
+        '{"format":"alveo-export","version":1,'
         '"schemaVersion":999,"data":{}}',
       ),
       throwsA(isA<ImportException>()),

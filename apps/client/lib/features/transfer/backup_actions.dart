@@ -15,7 +15,7 @@ import '../timeline/timeline_providers.dart';
 String _backupName() {
   final now = DateTime.now();
   String two(int n) => n.toString().padLeft(2, '0');
-  return 'terapia-backup-${now.year}-${two(now.month)}-${two(now.day)}.json';
+  return 'alveo-backup-${now.year}-${two(now.month)}-${two(now.day)}.json';
 }
 
 /// Writes a full-database backup to a file the user chooses.

@@ -1,6 +1,7 @@
-# terapia
+# Alveo
 
-A new Flutter project.
+A personal therapy-companion app: log conversations, emotions, and
+therapist-assigned tasks between sessions.
 
 ## Getting Started
 

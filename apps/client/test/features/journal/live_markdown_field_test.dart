@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/features/journal/live_markdown_field.dart';
+import 'package:alveo/features/journal/live_markdown_field.dart';
 
 Widget _host(MarkdownStylingController controller) => MaterialApp(
   home: Scaffold(

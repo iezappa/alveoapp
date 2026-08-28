@@ -10,7 +10,7 @@ import 'frontmatter.dart';
 /// (an Obsidian vault, or a subfolder of one).
 ///
 /// Journal entries only — sessions, tasks and mood are structured records and
-/// stay out of the vault. Matching is by a `terapia-id` frontmatter field;
+/// stay out of the vault. Matching is by a `alveo-id` frontmatter field;
 /// export writes it and import writes it back into plain notes so the next
 /// round trip updates instead of duplicating. There is no merge: export
 /// overwrites the file from the app, import overwrites the entry from the file.
@@ -19,10 +19,10 @@ class ObsidianService {
 
   final JournalRepository _journal;
 
-  static const _subfolder = 'Terapia';
+  static const _subfolder = 'Alveo';
 
-  /// Writes every journal entry into `<vaultDir>/Terapia/<section>/…md`,
-  /// reusing an existing file when its `terapia-id` matches.
+  /// Writes every journal entry into `<vaultDir>/Alveo/<section>/…md`,
+  /// reusing an existing file when its `alveo-id` matches.
   Future<ObsidianReport> exportJournal(String vaultDir) async {
     final base = Directory('$vaultDir${Platform.pathSeparator}$_subfolder');
     final existing = _indexById(base);
@@ -69,7 +69,7 @@ class ObsidianService {
         continue;
       }
 
-      final id = parsed.meta['terapia-id'];
+      final id = parsed.meta['alveo-id'];
       final title = _clean(parsed.meta['title']);
       final section = _sectionFor(parsed.meta['section'], entity, dir);
       final date = _parseDate(parsed.meta['date']) ?? entity.lastModifiedSync();
@@ -125,15 +125,15 @@ class ObsidianService {
       if (entity is! File || !entity.path.toLowerCase().endsWith('.md')) {
         continue;
       }
-      final id = parseFrontmatter(entity.readAsStringSync()).meta['terapia-id'];
+      final id = parseFrontmatter(entity.readAsStringSync()).meta['alveo-id'];
       if (id != null) map[id] = entity;
     }
     return map;
   }
 
   Map<String, String> _metaFor(JournalEntry entry) => {
-    'terapia-id': entry.id,
-    'terapia-type': 'journal',
+    'alveo-id': entry.id,
+    'alveo-type': 'journal',
     'section': entry.section.name,
     'date': _isoDate(entry.entryDate),
     if (_clean(entry.title) != null) 'title': _clean(entry.title)!,

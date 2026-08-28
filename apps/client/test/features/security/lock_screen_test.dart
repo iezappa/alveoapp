@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/app/lock_controller.dart';
-import 'package:terapia/data/local/database.dart';
-import 'package:terapia/data/providers.dart';
-import 'package:terapia/data/repositories/settings_repository.dart';
-import 'package:terapia/data/security/pin_service.dart';
-import 'package:terapia/main.dart';
+import 'package:alveo/app/lock_controller.dart';
+import 'package:alveo/data/local/database.dart';
+import 'package:alveo/data/providers.dart';
+import 'package:alveo/data/repositories/settings_repository.dart';
+import 'package:alveo/data/security/pin_service.dart';
+import 'package:alveo/main.dart';
 
 void main() {
   testWidgets('a configured PIN gates the app until it is entered', (
@@ -25,7 +25,7 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: const TerapiaApp(),
+        child: const AlveoApp(),
       ),
     );
     await tester.pumpAndSettle();

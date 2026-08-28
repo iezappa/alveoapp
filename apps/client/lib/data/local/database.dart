@@ -60,8 +60,8 @@ class AppDatabase extends _$AppDatabase {
   );
 }
 
-/// Default on-device database file: `<app documents>/terapia.sqlite`.
+/// Default on-device database file: `<app documents>/alveo.sqlite`.
 Future<File> defaultDatabaseFile() async {
   final dir = await getApplicationDocumentsDirectory();
-  return File(p.join(dir.path, 'terapia.sqlite'));
+  return File(p.join(dir.path, 'alveo.sqlite'));
 }

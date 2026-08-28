@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/data/local/database.dart';
-import 'package:terapia/data/repositories/journal_repository.dart';
-import 'package:terapia/domain/journal/journal_section.dart';
+import 'package:alveo/data/local/database.dart';
+import 'package:alveo/data/repositories/journal_repository.dart';
+import 'package:alveo/domain/journal/journal_section.dart';
 
 void main() {
   late AppDatabase db;

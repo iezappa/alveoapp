@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/data/export/export_service.dart';
-import 'package:terapia/data/local/database.dart';
-import 'package:terapia/data/repositories/journal_repository.dart';
-import 'package:terapia/data/repositories/mood_repository.dart';
-import 'package:terapia/data/repositories/task_repository.dart';
+import 'package:alveo/data/export/export_service.dart';
+import 'package:alveo/data/local/database.dart';
+import 'package:alveo/data/repositories/journal_repository.dart';
+import 'package:alveo/data/repositories/mood_repository.dart';
+import 'package:alveo/data/repositories/task_repository.dart';
 
 void main() {
   late AppDatabase db;

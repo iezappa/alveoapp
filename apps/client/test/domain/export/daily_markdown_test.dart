@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/domain/export/daily_markdown.dart';
+import 'package:alveo/domain/export/daily_markdown.dart';
 
 void main() {
   final day = DateTime(2026, 8, 27);

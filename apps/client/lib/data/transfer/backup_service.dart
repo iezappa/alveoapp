@@ -16,7 +16,7 @@ class BackupService {
 
   final AppDatabase _db;
 
-  static const _format = 'terapia-export';
+  static const _format = 'alveo-export';
   static const _formatVersion = 1;
 
   Future<String> exportToJson() async {
@@ -57,7 +57,7 @@ class BackupService {
     }
 
     if (bundle['format'] != _format) {
-      throw const ImportException('This is not a Terapia backup file.');
+      throw const ImportException('This is not an Alveo backup file.');
     }
     final fileSchema = bundle['schemaVersion'];
     if (fileSchema is int && fileSchema > _db.schemaVersion) {

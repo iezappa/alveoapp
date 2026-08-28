@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/app/theme.dart';
-import 'package:terapia/app/theme_controller.dart';
-import 'package:terapia/data/local/database.dart';
-import 'package:terapia/data/providers.dart';
-import 'package:terapia/main.dart';
+import 'package:alveo/app/theme.dart';
+import 'package:alveo/app/theme_controller.dart';
+import 'package:alveo/data/local/database.dart';
+import 'package:alveo/data/providers.dart';
+import 'package:alveo/main.dart';
 
 void main() {
   testWidgets('the appearance controls change theme mode and accent', (
@@ -21,7 +21,7 @@ void main() {
     await tester.pumpWidget(
       UncontrolledProviderScope(
         container: container,
-        child: const TerapiaApp(),
+        child: const AlveoApp(),
       ),
     );
     await tester.pumpAndSettle();

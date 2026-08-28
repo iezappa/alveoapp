@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/domain/emotions/plutchik.dart';
+import 'package:alveo/domain/emotions/plutchik.dart';
 
 void main() {
   test('catalog has the eight Plutchik primaries with unique keys', () {

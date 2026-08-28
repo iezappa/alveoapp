@@ -1,6 +1,6 @@
 {
   "@@locale": "es",
-  "appTitle": "Terapia",
+  "appTitle": "Alveo",
   "settingsLanguage": "Idioma",
   "languageEnglish": "Inglés",
   "languageSpanish": "Español",
@@ -37,7 +37,7 @@
   "dataSectionTitle": "Datos",
   "exportBackup": "Exportar copia",
   "importBackup": "Importar copia",
-  "backupFileType": "Copia de Terapia",
+  "backupFileType": "Copia de Alveo",
   "backupSaved": "Copia guardada",
   "importDone": "Importación completa",
   "importSummary": "{inserted} agregados, {skipped} ya presentes",

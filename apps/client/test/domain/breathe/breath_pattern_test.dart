@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/domain/breathe/breath_pattern.dart';
+import 'package:alveo/domain/breathe/breath_pattern.dart';
 
 void main() {
   group('box breathing', () {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/data/local/database.dart';
-import 'package:terapia/data/providers.dart';
-import 'package:terapia/main.dart';
+import 'package:alveo/data/local/database.dart';
+import 'package:alveo/data/providers.dart';
+import 'package:alveo/main.dart';
 
 void main() {
   testWidgets('language toggle in settings switches UI copy to Spanish', (
@@ -15,7 +15,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [appDatabaseProvider.overrideWithValue(db)],
-        child: const TerapiaApp(),
+        child: const AlveoApp(),
       ),
     );
     await tester.pumpAndSettle();

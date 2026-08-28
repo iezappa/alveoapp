@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appTitle": "Terapia",
+  "appTitle": "Alveo",
   "@appTitle": {
     "description": "Application name shown in the app bar and task switcher"
   },
@@ -44,7 +44,7 @@
   "dataSectionTitle": "Data",
   "exportBackup": "Export backup",
   "importBackup": "Import backup",
-  "backupFileType": "Terapia backup",
+  "backupFileType": "Alveo backup",
   "backupSaved": "Backup saved",
   "importDone": "Import complete",
   "importSummary": "{inserted} added, {skipped} already present",

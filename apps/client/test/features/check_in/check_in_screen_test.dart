@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/data/local/database.dart';
-import 'package:terapia/data/providers.dart';
-import 'package:terapia/data/repositories/mood_repository.dart';
-import 'package:terapia/features/check_in/plutchik_wheel.dart';
-import 'package:terapia/main.dart';
+import 'package:alveo/data/local/database.dart';
+import 'package:alveo/data/providers.dart';
+import 'package:alveo/data/repositories/mood_repository.dart';
+import 'package:alveo/features/check_in/plutchik_wheel.dart';
+import 'package:alveo/main.dart';
 
 void main() {
   testWidgets('a check-in persists the mood score and selected emotions', (
@@ -17,7 +17,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [appDatabaseProvider.overrideWithValue(db)],
-        child: const TerapiaApp(),
+        child: const AlveoApp(),
       ),
     );
     await tester.pumpAndSettle();

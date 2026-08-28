@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/app/theme.dart';
-import 'package:terapia/app/theme_controller.dart';
-import 'package:terapia/data/local/database.dart';
-import 'package:terapia/data/providers.dart';
+import 'package:alveo/app/theme.dart';
+import 'package:alveo/app/theme_controller.dart';
+import 'package:alveo/data/local/database.dart';
+import 'package:alveo/data/providers.dart';
 
 void main() {
   late AppDatabase db;

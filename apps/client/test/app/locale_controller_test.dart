@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/app/locale_controller.dart';
-import 'package:terapia/data/local/database.dart';
-import 'package:terapia/data/providers.dart';
+import 'package:alveo/app/locale_controller.dart';
+import 'package:alveo/data/local/database.dart';
+import 'package:alveo/data/providers.dart';
 
 void main() {
   late AppDatabase db;

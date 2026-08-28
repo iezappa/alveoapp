@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqlite3/sqlite3.dart' show SqliteException;
-import 'package:terapia/data/local/database.dart';
-import 'package:terapia/data/local/tables.dart';
+import 'package:alveo/data/local/database.dart';
+import 'package:alveo/data/local/tables.dart';
 
 void main() {
   late AppDatabase db;

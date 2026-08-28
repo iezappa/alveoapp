@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/domain/validation.dart';
+import 'package:alveo/domain/validation.dart';
 
 void main() {
   group('mood scale', () {

@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// Application name shown in the app bar and task switcher
   ///
   /// In en, this message translates to:
-  /// **'Terapia'**
+  /// **'Alveo'**
   String get appTitle;
 
   /// Label for the language toggle in settings
@@ -299,7 +299,7 @@ abstract class AppLocalizations {
   /// No description provided for @backupFileType.
   ///
   /// In en, this message translates to:
-  /// **'Terapia backup'**
+  /// **'Alveo backup'**
   String get backupFileType;
 
   /// No description provided for @backupSaved.

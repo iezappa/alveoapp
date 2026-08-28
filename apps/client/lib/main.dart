@@ -23,18 +23,18 @@ Future<void> main() async {
   await container.read(lockControllerProvider.notifier).initialize();
 
   runApp(
-    UncontrolledProviderScope(container: container, child: const TerapiaApp()),
+    UncontrolledProviderScope(container: container, child: const AlveoApp()),
   );
 }
 
-class TerapiaApp extends ConsumerStatefulWidget {
-  const TerapiaApp({super.key});
+class AlveoApp extends ConsumerStatefulWidget {
+  const AlveoApp({super.key});
 
   @override
-  ConsumerState<TerapiaApp> createState() => _TerapiaAppState();
+  ConsumerState<AlveoApp> createState() => _AlveoAppState();
 }
 
-class _TerapiaAppState extends ConsumerState<TerapiaApp>
+class _AlveoAppState extends ConsumerState<AlveoApp>
     with WidgetsBindingObserver {
   @override
   void initState() {

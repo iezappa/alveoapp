@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/features/breathe/breathe_screen.dart';
-import 'package:terapia/l10n/app_localizations.dart';
+import 'package:alveo/features/breathe/breathe_screen.dart';
+import 'package:alveo/l10n/app_localizations.dart';
 
 Future<void> _pump(WidgetTester tester) async {
   await tester.pumpWidget(

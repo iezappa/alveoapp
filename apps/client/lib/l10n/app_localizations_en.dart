@@ -10,7 +10,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Terapia';
+  String get appTitle => 'Alveo';
 
   @override
   String get settingsLanguage => 'Language';
@@ -109,7 +109,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get importBackup => 'Import backup';
 
   @override
-  String get backupFileType => 'Terapia backup';
+  String get backupFileType => 'Alveo backup';
 
   @override
   String get backupSaved => 'Backup saved';

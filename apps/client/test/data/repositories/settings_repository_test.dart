@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:terapia/data/local/database.dart';
-import 'package:terapia/data/repositories/settings_repository.dart';
+import 'package:alveo/data/local/database.dart';
+import 'package:alveo/data/repositories/settings_repository.dart';
 
 void main() {
   late AppDatabase db;
