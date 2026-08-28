@@ -107,9 +107,14 @@
   "monthlyReview": "Repaso del mes",
   "writeMonthlyReview": "Escribir el repaso del mes",
 
+  "editAction": "Editar",
+  "detailNothingSelected": "Elegí un registro para verlo acá",
+
   "sessionsUpcoming": "Próximas",
   "sessionsPast": "Pasadas",
   "sessionsEmpty": "Todavía no hay sesiones",
+  "sessionsSearchHint": "Buscar sesiones",
+  "sessionPreviewEmpty": "Esta sesión todavía no tiene notas",
   "newSession": "Nueva sesión",
   "editSession": "Sesión",
   "sessionScheduledFor": "Cuándo",

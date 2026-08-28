@@ -674,6 +674,18 @@ abstract class AppLocalizations {
   /// **'Write this month\'s review'**
   String get writeMonthlyReview;
 
+  /// No description provided for @editAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get editAction;
+
+  /// No description provided for @detailNothingSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a record to see it here'**
+  String get detailNothingSelected;
+
   /// No description provided for @sessionsUpcoming.
   ///
   /// In en, this message translates to:
@@ -691,6 +703,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No sessions yet'**
   String get sessionsEmpty;
+
+  /// No description provided for @sessionsSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search sessions'**
+  String get sessionsSearchHint;
+
+  /// No description provided for @sessionPreviewEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'This session has no notes yet'**
+  String get sessionPreviewEmpty;
 
   /// No description provided for @newSession.
   ///

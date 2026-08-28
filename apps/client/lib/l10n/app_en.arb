@@ -139,9 +139,14 @@
   "monthlyReview": "Monthly review",
   "writeMonthlyReview": "Write this month's review",
 
+  "editAction": "Edit",
+  "detailNothingSelected": "Pick a record to see it here",
+
   "sessionsUpcoming": "Upcoming",
   "sessionsPast": "Past",
   "sessionsEmpty": "No sessions yet",
+  "sessionsSearchHint": "Search sessions",
+  "sessionPreviewEmpty": "This session has no notes yet",
   "newSession": "New session",
   "editSession": "Session",
   "sessionScheduledFor": "When",

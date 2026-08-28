@@ -314,6 +314,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get writeMonthlyReview => 'Write this month\'s review';
 
   @override
+  String get editAction => 'Edit';
+
+  @override
+  String get detailNothingSelected => 'Pick a record to see it here';
+
+  @override
   String get sessionsUpcoming => 'Upcoming';
 
   @override
@@ -321,6 +327,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sessionsEmpty => 'No sessions yet';
+
+  @override
+  String get sessionsSearchHint => 'Search sessions';
+
+  @override
+  String get sessionPreviewEmpty => 'This session has no notes yet';
 
   @override
   String get newSession => 'New session';

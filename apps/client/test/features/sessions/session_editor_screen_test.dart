@@ -4,7 +4,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:alveo/data/local/database.dart';
 import 'package:alveo/data/providers.dart';
 import 'package:alveo/data/repositories/session_repository.dart';
+import 'package:alveo/features/sessions/session_editor_screen.dart';
 import 'package:alveo/main.dart';
+
+Finder _editorField() => find.descendant(
+  of: find.byType(SessionEditorScreen),
+  matching: find.byType(TextField),
+);
 
 Future<void> _openSessions(WidgetTester tester, AppDatabase db) async {
   await tester.pumpWidget(
@@ -26,14 +32,11 @@ void main() {
     await _openSessions(tester, db);
     expect(find.text('No sessions yet'), findsOneWidget);
 
-    await tester.tap(find.text('New session')); // FAB
+    await tester.tap(find.byTooltip('New session')); // "+" in the list pane
     await tester.pumpAndSettle();
 
     // The Agenda tab is selected first.
-    await tester.enterText(
-      find.byType(TextField).first,
-      '- talk about boundaries',
-    );
+    await tester.enterText(_editorField().first, '- talk about boundaries');
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
@@ -55,7 +58,7 @@ void main() {
     await tester.tap(find.byType(ListTile).first);
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField).first, 'boundaries, sleep');
+    await tester.enterText(_editorField().first, 'boundaries, sleep');
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
