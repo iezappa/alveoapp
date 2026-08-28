@@ -231,6 +231,45 @@ class AppLocalizationsEn extends AppLocalizations {
   String get insightsCalendar => 'Calendar';
 
   @override
+  String get safetyPlanTitle => 'Safety plan';
+
+  @override
+  String get safetyPlanSaved => 'Safety plan saved';
+
+  @override
+  String get dashboardSafetyPlan => 'Safety plan';
+
+  @override
+  String get safetyWarningSigns => 'Warning signs';
+
+  @override
+  String get safetyCoping => 'Things I can do on my own';
+
+  @override
+  String get safetyDistractions => 'People and places that distract me';
+
+  @override
+  String get safetyEnvironment => 'Making my space safer';
+
+  @override
+  String get safetyContacts => 'People I can reach';
+
+  @override
+  String get safetyAddContact => 'Add contact';
+
+  @override
+  String get safetyContactName => 'Name';
+
+  @override
+  String get safetyContactPhone => 'Phone';
+
+  @override
+  String get safetyContactSupport => 'Support';
+
+  @override
+  String get safetyContactProfessional => 'Professional';
+
+  @override
   String insightsAverage(String value) {
     return 'Average $value/5';
   }

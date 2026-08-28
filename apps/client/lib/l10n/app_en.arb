@@ -105,6 +105,20 @@
   "insightsRange90": "90 days",
   "insightsEmpty": "Not enough check-ins yet",
   "insightsCalendar": "Calendar",
+
+  "safetyPlanTitle": "Safety plan",
+  "safetyPlanSaved": "Safety plan saved",
+  "dashboardSafetyPlan": "Safety plan",
+  "safetyWarningSigns": "Warning signs",
+  "safetyCoping": "Things I can do on my own",
+  "safetyDistractions": "People and places that distract me",
+  "safetyEnvironment": "Making my space safer",
+  "safetyContacts": "People I can reach",
+  "safetyAddContact": "Add contact",
+  "safetyContactName": "Name",
+  "safetyContactPhone": "Phone",
+  "safetyContactSupport": "Support",
+  "safetyContactProfessional": "Professional",
   "insightsAverage": "Average {value}/5",
   "@insightsAverage": {
     "placeholders": { "value": { "type": "String" } }

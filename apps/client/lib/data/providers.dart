@@ -8,6 +8,7 @@ import 'repositories/link_repository.dart';
 import 'repositories/mood_repository.dart';
 import 'repositories/session_repository.dart';
 import 'repositories/settings_repository.dart';
+import 'repositories/safety_plan_repository.dart';
 import 'repositories/task_repository.dart';
 import 'repositories/thought_record_repository.dart';
 import 'search/search_service.dart';
@@ -31,6 +32,10 @@ final settingsRepositoryProvider = Provider<SettingsRepository>(
 
 final pinServiceProvider = Provider<PinService>(
   (ref) => PinService(ref.watch(settingsRepositoryProvider)),
+);
+
+final safetyPlanRepositoryProvider = Provider<SafetyPlanRepository>(
+  (ref) => SafetyPlanRepository(ref.watch(settingsRepositoryProvider)),
 );
 
 final backupServiceProvider = Provider<BackupService>(

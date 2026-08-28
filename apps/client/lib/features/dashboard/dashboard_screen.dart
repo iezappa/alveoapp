@@ -72,6 +72,8 @@ class DashboardScreen extends ConsumerWidget {
               const _QuoteCard(),
               const SizedBox(height: 12),
               const _MoodTrendCard(),
+              const SizedBox(height: 12),
+              const _SafetyPlanCard(),
             ],
           ),
         ),
@@ -277,6 +279,44 @@ class _MoodTrendCard extends ConsumerWidget {
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// One-tap access to the personal safety plan.
+class _SafetyPlanCard extends StatelessWidget {
+  const _SafetyPlanCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => context.push('/safety-plan'),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Icon(
+                Icons.health_and_safety_outlined,
+                size: 20,
+                color: scheme.primary,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  l10n.dashboardSafetyPlan,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              const Icon(Icons.chevron_right, size: 20),
             ],
           ),
         ),

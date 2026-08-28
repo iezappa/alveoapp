@@ -12,6 +12,7 @@ import '../features/journal/journal_labels.dart';
 import '../features/journal/journal_screen.dart';
 import '../features/journal/journal_section_screen.dart';
 import '../features/motivation/library_screen.dart';
+import '../features/safety/safety_plan_screen.dart';
 import '../features/search/search_screen.dart';
 import '../features/sessions/session_editor_screen.dart';
 import '../features/sessions/sessions_screen.dart';
@@ -96,6 +97,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/insights',
         builder: (context, state) => const InsightsScreen(),
+      ),
+      GoRoute(
+        path: '/safety-plan',
+        builder: (context, state) => const SafetyPlanScreen(),
       ),
       GoRoute(
         path: '/thought-records/new',

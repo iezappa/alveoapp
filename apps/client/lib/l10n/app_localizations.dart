@@ -524,6 +524,84 @@ abstract class AppLocalizations {
   /// **'Calendar'**
   String get insightsCalendar;
 
+  /// No description provided for @safetyPlanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety plan'**
+  String get safetyPlanTitle;
+
+  /// No description provided for @safetyPlanSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety plan saved'**
+  String get safetyPlanSaved;
+
+  /// No description provided for @dashboardSafetyPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety plan'**
+  String get dashboardSafetyPlan;
+
+  /// No description provided for @safetyWarningSigns.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning signs'**
+  String get safetyWarningSigns;
+
+  /// No description provided for @safetyCoping.
+  ///
+  /// In en, this message translates to:
+  /// **'Things I can do on my own'**
+  String get safetyCoping;
+
+  /// No description provided for @safetyDistractions.
+  ///
+  /// In en, this message translates to:
+  /// **'People and places that distract me'**
+  String get safetyDistractions;
+
+  /// No description provided for @safetyEnvironment.
+  ///
+  /// In en, this message translates to:
+  /// **'Making my space safer'**
+  String get safetyEnvironment;
+
+  /// No description provided for @safetyContacts.
+  ///
+  /// In en, this message translates to:
+  /// **'People I can reach'**
+  String get safetyContacts;
+
+  /// No description provided for @safetyAddContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Add contact'**
+  String get safetyAddContact;
+
+  /// No description provided for @safetyContactName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get safetyContactName;
+
+  /// No description provided for @safetyContactPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get safetyContactPhone;
+
+  /// No description provided for @safetyContactSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get safetyContactSupport;
+
+  /// No description provided for @safetyContactProfessional.
+  ///
+  /// In en, this message translates to:
+  /// **'Professional'**
+  String get safetyContactProfessional;
+
   /// No description provided for @insightsAverage.
   ///
   /// In en, this message translates to:
