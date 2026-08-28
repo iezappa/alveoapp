@@ -122,6 +122,8 @@
   "newSession": "Nueva sesión",
   "editSession": "Sesión",
   "sessionScheduledFor": "Cuándo",
+  "sessionPreSummary": "Resumen previo",
+  "sessionPreSummaryDone": "Agregado a los temas",
   "sessionAgenda": "Temas",
   "sessionNotes": "Notas",
   "sessionTakeaways": "Conclusiones",

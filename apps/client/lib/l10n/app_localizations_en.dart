@@ -356,6 +356,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sessionScheduledFor => 'When';
 
   @override
+  String get sessionPreSummary => 'Pre-session summary';
+
+  @override
+  String get sessionPreSummaryDone => 'Added to the agenda';
+
+  @override
   String get sessionAgenda => 'Agenda';
 
   @override

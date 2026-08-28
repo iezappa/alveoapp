@@ -758,6 +758,18 @@ abstract class AppLocalizations {
   /// **'When'**
   String get sessionScheduledFor;
 
+  /// No description provided for @sessionPreSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Pre-session summary'**
+  String get sessionPreSummary;
+
+  /// No description provided for @sessionPreSummaryDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to the agenda'**
+  String get sessionPreSummaryDone;
+
   /// No description provided for @sessionAgenda.
   ///
   /// In en, this message translates to:

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../../l10n/emotion_labels.dart';
 import '../journal/live_markdown_field.dart';
 import 'session_links_tab.dart';
 import 'session_providers.dart';
@@ -96,6 +97,33 @@ class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
     });
   }
 
+  Future<void> _insertPreSummary() async {
+    final l10n = AppLocalizations.of(context);
+    final prev = await ref
+        .read(sessionRepositoryProvider)
+        .previousBefore(_scheduledFor);
+    final from =
+        prev?.scheduledFor ??
+        _scheduledFor.subtract(const Duration(days: 14));
+    final markdown = await ref
+        .read(exportServiceProvider)
+        .buildPreSessionSummary(
+          from,
+          _scheduledFor,
+          emotionLabel: l10n.emotionLabel,
+        );
+    if (!mounted) return;
+    final existing = _agenda.text.trim();
+    setState(() {
+      _agenda.text = existing.isEmpty
+          ? markdown
+          : '$markdown\n\n---\n\n$existing';
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(l10n.sessionPreSummaryDone)),
+    );
+  }
+
   Future<void> _save() async {
     setState(() => _saving = true);
     final repo = ref.read(sessionRepositoryProvider);
@@ -179,16 +207,28 @@ class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
-              child: Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: OutlinedButton.icon(
-                  onPressed: _pickSchedule,
-                  icon: const Icon(Icons.event, size: 18),
-                  label: Text(
-                    '${l10n.sessionScheduledFor}: '
-                    '${DateFormat.yMMMd(locale).add_jm().format(_scheduledFor)}',
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: OutlinedButton.icon(
+                        onPressed: _pickSchedule,
+                        icon: const Icon(Icons.event, size: 18),
+                        label: Text(
+                          '${l10n.sessionScheduledFor}: '
+                          '${DateFormat.yMMMd(locale).add_jm().format(_scheduledFor)}',
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 8),
+                  TextButton.icon(
+                    onPressed: _insertPreSummary,
+                    icon: const Icon(Icons.auto_awesome_motion_outlined, size: 18),
+                    label: Text(l10n.sessionPreSummary),
+                  ),
+                ],
               ),
             ),
             Expanded(

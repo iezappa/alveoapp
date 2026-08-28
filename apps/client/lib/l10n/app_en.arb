@@ -154,6 +154,8 @@
   "newSession": "New session",
   "editSession": "Session",
   "sessionScheduledFor": "When",
+  "sessionPreSummary": "Pre-session summary",
+  "sessionPreSummaryDone": "Added to the agenda",
   "sessionAgenda": "Agenda",
   "sessionNotes": "Notes",
   "sessionTakeaways": "Takeaways",

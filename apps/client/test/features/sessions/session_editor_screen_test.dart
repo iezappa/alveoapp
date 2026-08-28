@@ -65,4 +65,27 @@ void main() {
     final session = await SessionRepository(db).getById(id);
     expect(session!.agendaMarkdown, 'boundaries, sleep');
   });
+
+  testWidgets('inserts a pre-session summary into the agenda', (tester) async {
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+
+    await _openSessions(tester, db);
+    await tester.tap(find.byTooltip('New session'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Pre-session summary'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.textContaining('Since the last session'),
+      findsWidgets,
+    );
+
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    final saved = (await SessionRepository(db).getAll()).single;
+    expect(saved.agendaMarkdown, contains('Since the last session'));
+  });
 }
