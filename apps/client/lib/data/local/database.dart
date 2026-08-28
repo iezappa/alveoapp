@@ -14,6 +14,7 @@ part 'database.g.dart';
     MoodEntries,
     MoodEntryEmotions,
     JournalEntries,
+    JournalEntryEmotions,
     Tasks,
     Tags,
     MoodEntryTags,
@@ -33,7 +34,7 @@ class AppDatabase extends _$AppDatabase {
   factory AppDatabase.forTesting() => AppDatabase(NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -51,6 +52,9 @@ class AppDatabase extends _$AppDatabase {
       if (from < 5) {
         await m.addColumn(journalEntries, journalEntries.section);
         await m.addColumn(journalEntries, journalEntries.isMonthlyReview);
+      }
+      if (from < 6) {
+        await m.createTable(journalEntryEmotions);
       }
     },
     beforeOpen: (details) async {

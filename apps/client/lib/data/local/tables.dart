@@ -84,6 +84,23 @@ class JournalEntries extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+/// Emotions attached to a [JournalEntries] row, each with its own intensity.
+///
+/// Mirrors [MoodEntryEmotions]: [emotionKey] references the Plutchik catalog
+/// defined in Dart, not a DB table.
+class JournalEntryEmotions extends Table {
+  TextColumn get journalEntryId =>
+      text().references(JournalEntries, #id, onDelete: KeyAction.cascade)();
+
+  TextColumn get emotionKey => text()();
+
+  /// 1..5. Validated in the domain layer.
+  IntColumn get intensity => integer()();
+
+  @override
+  Set<Column> get primaryKey => {journalEntryId, emotionKey};
+}
+
 /// A task assigned by the therapist.
 class Tasks extends Table {
   TextColumn get id => text()();

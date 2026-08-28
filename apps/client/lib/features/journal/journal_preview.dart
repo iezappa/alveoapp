@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../app/ui.dart';
 import '../../l10n/app_localizations.dart';
+import '../../l10n/emotion_labels.dart';
 import 'journal_labels.dart';
 import 'journal_providers.dart';
 
@@ -36,6 +37,9 @@ class JournalPreview extends ConsumerWidget {
     }
 
     final title = (entry.title ?? '').trim();
+    final emotions =
+        ref.watch(journalEmotionsProvider(entryId)).asData?.value ??
+        const <String>[];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -87,6 +91,20 @@ class JournalPreview extends ConsumerWidget {
                     ),
                 ],
               ),
+              if (emotions.isNotEmpty) ...[
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: [
+                    for (final key in emotions)
+                      Chip(
+                        label: Text(l10n.emotionLabel(key)),
+                        visualDensity: VisualDensity.compact,
+                      ),
+                  ],
+                ),
+              ],
               const SizedBox(height: 20),
               Text(entry.bodyMarkdown, style: theme.textTheme.bodyLarge),
             ],

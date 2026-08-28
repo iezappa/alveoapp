@@ -23,6 +23,16 @@ final journalEntryProvider = FutureProvider.family<JournalEntry?, String>((
   return ref.watch(journalRepositoryProvider).getById(id);
 });
 
+/// Emotion keys attached to a journal entry.
+final journalEmotionsProvider = FutureProvider.family<List<String>, String>((
+  ref,
+  id,
+) async {
+  ref.watch(journalListProvider); // refresh alongside the entry list
+  final rows = await ref.read(journalRepositoryProvider).emotionsFor(id);
+  return rows.map((e) => e.emotionKey).toList();
+});
+
 /// One entry by id, resolved from [journalListProvider] so it refreshes with
 /// the same invalidation. `null` while the list loads or if the id is gone.
 final journalEntryByIdProvider = Provider.family<JournalEntry?, String>((

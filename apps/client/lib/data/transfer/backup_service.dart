@@ -39,6 +39,7 @@ class BackupService {
         'journalEntries': await dump(_db.journalEntries),
         'tasks': await dump(_db.tasks),
         'moodEntryEmotions': await dump(_db.moodEntryEmotions),
+        'journalEntryEmotions': await dump(_db.journalEntryEmotions),
         'moodEntryTags': await dump(_db.moodEntryTags),
         'journalEntryTags': await dump(_db.journalEntryTags),
         'sessionLinks': await dump(_db.sessionLinks),
@@ -119,6 +120,10 @@ class BackupService {
     report['moodEntryEmotions'] = await _merge(
       _db.moodEntryEmotions,
       rows('moodEntryEmotions'),
+    );
+    report['journalEntryEmotions'] = await _merge(
+      _db.journalEntryEmotions,
+      rows('journalEntryEmotions'),
     );
     report['moodEntryTags'] = await _merge(
       _db.moodEntryTags,

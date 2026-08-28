@@ -3,9 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../app/ui.dart';
 import '../../data/providers.dart';
+import '../../data/repositories/mood_repository.dart' show EmotionInput;
 import '../../domain/journal/journal_section.dart';
 import '../../l10n/app_localizations.dart';
+import '../../l10n/emotion_labels.dart';
+import '../check_in/plutchik_wheel.dart';
 import 'journal_providers.dart';
 import 'live_markdown_field.dart';
 
@@ -37,8 +41,11 @@ class JournalEditorScreen extends ConsumerStatefulWidget {
 }
 
 class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
+  static const _defaultIntensity = 3;
+
   final _titleController = TextEditingController();
   final _bodyController = MarkdownStylingController();
+  final Set<String> _emotions = {};
 
   late JournalSection _section = widget.section;
   late bool _isReview = widget.isMonthlyReview;
@@ -60,7 +67,9 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
     if (id != null) {
       _loading = true;
       Future.microtask(() async {
-        final entry = await ref.read(journalRepositoryProvider).getById(id);
+        final repo = ref.read(journalRepositoryProvider);
+        final entry = await repo.getById(id);
+        final emotions = await repo.emotionsFor(id);
         if (!mounted) return;
         setState(() {
           if (entry != null) {
@@ -69,6 +78,9 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
             _entryDate = entry.entryDate;
             _section = entry.section;
             _isReview = entry.isMonthlyReview;
+            _emotions
+              ..clear()
+              ..addAll(emotions.map((e) => e.emotionKey));
           }
           _loading = false;
         });
@@ -84,6 +96,12 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
     _titleController.dispose();
     _bodyController.dispose();
     super.dispose();
+  }
+
+  void _toggleEmotion(String key) {
+    setState(() {
+      _emotions.contains(key) ? _emotions.remove(key) : _emotions.add(key);
+    });
   }
 
   Future<void> _pickDate() async {
@@ -108,6 +126,10 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
     final repo = ref.read(journalRepositoryProvider);
     final rawTitle = _titleController.text.trim();
     final title = rawTitle.isEmpty ? null : rawTitle;
+    final emotions = [
+      for (final key in _emotions)
+        EmotionInput(emotionKey: key, intensity: _defaultIntensity),
+    ];
 
     if (widget.entryId == null) {
       await repo.create(
@@ -116,6 +138,7 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
         title: title,
         section: _section,
         isMonthlyReview: _isReview,
+        emotions: emotions,
       );
     } else {
       await repo.updateBody(
@@ -123,6 +146,7 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
         bodyMarkdown: body,
         title: title,
       );
+      await repo.replaceEmotions(widget.entryId!, emotions);
     }
 
     ref.invalidate(journalListProvider);
@@ -173,36 +197,52 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
           ),
         ],
       ),
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: _titleController,
-              decoration: InputDecoration(hintText: l10n.journalTitleHint),
+        children: [
+          TextField(
+            controller: _titleController,
+            decoration: InputDecoration(hintText: l10n.journalTitleHint),
+          ),
+          const SizedBox(height: 12),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: OutlinedButton.icon(
+              onPressed: _pickDate,
+              icon: const Icon(Icons.calendar_today, size: 18),
+              label: Text(
+                '${l10n.journalDate}: '
+                '${DateFormat.yMMMd(locale).format(_entryDate)}',
+              ),
             ),
-            const SizedBox(height: 12),
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: OutlinedButton.icon(
-                onPressed: _pickDate,
-                icon: const Icon(Icons.calendar_today, size: 18),
-                label: Text(
-                  '${l10n.journalDate}: '
-                  '${DateFormat.yMMMd(locale).format(_entryDate)}',
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 260,
+            child: LiveMarkdownField(
+              controller: _bodyController,
+              hintText: l10n.journalBodyHint,
+            ),
+          ),
+          const SizedBox(height: 24),
+          SectionLabel(l10n.emotionsSectionTitle),
+          const SizedBox(height: 8),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 300),
+                  child: PlutchikWheel(
+                    selected: _emotions,
+                    onToggle: _toggleEmotion,
+                    labelFor: l10n.emotionLabel,
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 12),
-            Expanded(
-              child: LiveMarkdownField(
-                controller: _bodyController,
-                hintText: l10n.journalBodyHint,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
