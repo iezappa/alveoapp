@@ -13,6 +13,7 @@ import '../../l10n/app_localizations.dart';
 import '../obsidian/obsidian_actions.dart';
 import '../security/pin_dialogs.dart';
 import '../shared/name_dialog.dart';
+import '../shared/tutorial_dialog.dart';
 import '../transfer/backup_actions.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -96,6 +97,13 @@ class SettingsScreen extends ConsumerWidget {
                   ref,
                   initial: name,
                 ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.school_outlined),
+                title: Text(l10n.settingsTutorial),
+                subtitle: Text(l10n.settingsTutorialSubtitle),
+                onTap: () => showTutorial(context),
               ),
               const SizedBox(height: 28),
               SectionLabel(l10n.settingsLanguage),

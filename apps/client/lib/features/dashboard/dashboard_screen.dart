@@ -3,16 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../app/onboarding_controller.dart';
 import '../../app/theme.dart';
+import '../../app/user_profile_controller.dart';
 import '../../data/local/database.dart';
 import '../../data/providers.dart';
 import '../../domain/greeting.dart';
 import '../../domain/insights/mood_trend.dart';
 import '../../domain/motivation/daily_quotes.dart';
-import '../../app/user_profile_controller.dart';
 import '../../l10n/app_localizations.dart';
 import '../insights/sparkline.dart';
 import '../shared/name_dialog.dart';
+import '../shared/tutorial_dialog.dart';
 import 'dashboard_providers.dart';
 
 /// The welcome screen and app entry point: a greeting, the next session, a
@@ -25,9 +27,21 @@ class DashboardScreen extends ConsumerStatefulWidget {
 }
 
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
-  /// Guards the one-time first-launch name prompt so a rebuild cannot queue
-  /// a second dialog while the first is still open.
-  bool _namePromptScheduled = false;
+  /// Guards the one-time first-launch flow so a rebuild cannot queue it twice
+  /// while the first dialog is still open.
+  bool _firstRunScheduled = false;
+
+  /// Runs once on first launch: ask for a name (if none), then walk through
+  /// the tutorial and remember it was shown.
+  Future<void> _runFirstRun({required bool needsName}) async {
+    if (needsName) {
+      await promptForName(context, ref, dismissible: false);
+      if (!mounted) return;
+    }
+    await showTutorial(context);
+    if (!mounted) return;
+    await ref.read(onboardingControllerProvider.notifier).markSeen();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +50,17 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     final nextSession = ref.watch(nextSessionProvider);
     final name = ref.watch(userProfileControllerProvider).asData?.value;
     final nameLoaded = ref.watch(userProfileControllerProvider) is AsyncData;
-    final promptForNameEnabled = ref.watch(promptForNameOnFirstLaunchProvider);
+    final tutorialSeen = ref.watch(onboardingControllerProvider).asData?.value;
+    final firstRunEnabled = ref.watch(firstRunFlowEnabledProvider);
 
-    if (promptForNameEnabled &&
+    if (firstRunEnabled &&
         nameLoaded &&
-        name == null &&
-        !_namePromptScheduled) {
-      _namePromptScheduled = true;
+        tutorialSeen == false &&
+        !_firstRunScheduled) {
+      _firstRunScheduled = true;
+      final needsName = name == null;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) promptForName(context, ref, dismissible: false);
+        if (mounted) _runFirstRun(needsName: needsName);
       });
     }
 

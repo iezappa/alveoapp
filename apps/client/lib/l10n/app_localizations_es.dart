@@ -199,6 +199,59 @@ class AppLocalizationsEs extends AppLocalizations {
   String get namePromptLabel => 'Tu nombre';
 
   @override
+  String get settingsTutorial => 'Tutorial';
+
+  @override
+  String get settingsTutorialSubtitle => 'Repasá cómo funciona la app';
+
+  @override
+  String get tutorialSkip => 'Omitir';
+
+  @override
+  String get tutorialBack => 'Atrás';
+
+  @override
+  String get tutorialNext => 'Siguiente';
+
+  @override
+  String get tutorialDone => 'Listo';
+
+  @override
+  String get tutorialWelcomeTitle => 'Bienvenido a Alveo';
+
+  @override
+  String get tutorialWelcomeBody =>
+      'Un espacio tranquilo y privado para tu terapia. Todo queda en este dispositivo; nunca se sube a ningún lado.';
+
+  @override
+  String get tutorialCheckInTitle => 'Check-in diario';
+
+  @override
+  String get tutorialCheckInBody =>
+      'Desde el inicio, registrá cómo te sentís en una escala del 1 al 5, elegí las emociones que encajan y sumá una nota breve.';
+
+  @override
+  String get tutorialWriteTitle => 'Diario, sesiones y tareas';
+
+  @override
+  String get tutorialWriteBody =>
+      'Escribí libremente en los cuadernos del diario, prepará y repasá tus sesiones de terapia, y seguí las tareas que te da tu terapeuta.';
+
+  @override
+  String get tutorialToolsTitle => 'Herramientas para calmarte';
+
+  @override
+  String get tutorialToolsBody =>
+      'Trabajá un pensamiento difícil con un registro de pensamiento (TCC), o abrí Respirar para un ejercicio guiado corto.';
+
+  @override
+  String get tutorialReviewTitle => 'Todo en un solo lugar';
+
+  @override
+  String get tutorialReviewBody =>
+      '«Ver todo» en el inicio reúne todas tus notas. Configurá un PIN y exportá copias de seguridad desde Ajustes, y volvé a abrir esta guía desde ahí cuando quieras.';
+
+  @override
   String get dashboardSafeHere => 'Respirá hondo. Estás en un lugar seguro.';
 
   @override

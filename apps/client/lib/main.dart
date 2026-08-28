@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/lock_controller.dart';
 import 'app/locale_controller.dart';
+import 'app/onboarding_controller.dart';
 import 'app/router.dart';
 import 'app/theme.dart';
 import 'app/theme_controller.dart';
@@ -19,12 +20,13 @@ Future<void> main() async {
   final container = ProviderContainer(
     overrides: [
       appDatabaseProvider.overrideWithValue(database),
-      promptForNameOnFirstLaunchProvider.overrideWithValue(true),
+      firstRunFlowEnabledProvider.overrideWithValue(true),
     ],
   );
   await container.read(localeControllerProvider.notifier).load();
   await container.read(themeControllerProvider.notifier).load();
   await container.read(userProfileControllerProvider.notifier).load();
+  await container.read(onboardingControllerProvider.notifier).load();
   await container.read(lockControllerProvider.notifier).initialize();
 
   runApp(
@@ -50,6 +52,9 @@ class _AlveoAppState extends ConsumerState<AlveoApp>
     // nothing has loaded it yet.
     if (ref.read(userProfileControllerProvider) is AsyncLoading) {
       ref.read(userProfileControllerProvider.notifier).load();
+    }
+    if (ref.read(onboardingControllerProvider) is AsyncLoading) {
+      ref.read(onboardingControllerProvider.notifier).load();
     }
   }
 

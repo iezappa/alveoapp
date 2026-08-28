@@ -40,8 +40,3 @@ final userProfileControllerProvider =
     NotifierProvider<UserProfileController, AsyncValue<String?>>(
       UserProfileController.new,
     );
-
-/// Whether the dashboard shows the one-time "what's your name?" dialog on
-/// first launch. `main()` overrides this to `true`; it stays `false` by
-/// default so widget tests are not interrupted by a modal barrier.
-final promptForNameOnFirstLaunchProvider = Provider<bool>((ref) => false);

@@ -452,6 +452,102 @@ abstract class AppLocalizations {
   /// **'Your name'**
   String get namePromptLabel;
 
+  /// No description provided for @settingsTutorial.
+  ///
+  /// In en, this message translates to:
+  /// **'Tutorial'**
+  String get settingsTutorial;
+
+  /// No description provided for @settingsTutorialSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review how the app works'**
+  String get settingsTutorialSubtitle;
+
+  /// No description provided for @tutorialSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get tutorialSkip;
+
+  /// No description provided for @tutorialBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get tutorialBack;
+
+  /// No description provided for @tutorialNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get tutorialNext;
+
+  /// No description provided for @tutorialDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get tutorialDone;
+
+  /// No description provided for @tutorialWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Alveo'**
+  String get tutorialWelcomeTitle;
+
+  /// No description provided for @tutorialWelcomeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A calm, private space for your therapy work. Everything stays on this device — nothing is ever uploaded.'**
+  String get tutorialWelcomeBody;
+
+  /// No description provided for @tutorialCheckInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily check-in'**
+  String get tutorialCheckInTitle;
+
+  /// No description provided for @tutorialCheckInBody.
+  ///
+  /// In en, this message translates to:
+  /// **'From Home, log how you feel on a 1–5 scale, choose the emotions that fit, and add a short note.'**
+  String get tutorialCheckInBody;
+
+  /// No description provided for @tutorialWriteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Journal, sessions & tasks'**
+  String get tutorialWriteTitle;
+
+  /// No description provided for @tutorialWriteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Write freely in journal notebooks, prepare and review your therapy sessions, and track the tasks your therapist gives you.'**
+  String get tutorialWriteBody;
+
+  /// No description provided for @tutorialToolsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tools to steady yourself'**
+  String get tutorialToolsTitle;
+
+  /// No description provided for @tutorialToolsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Work through a hard thought with a CBT thought record, or open Breathe for a short guided exercise.'**
+  String get tutorialToolsBody;
+
+  /// No description provided for @tutorialReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything in one place'**
+  String get tutorialReviewTitle;
+
+  /// No description provided for @tutorialReviewBody.
+  ///
+  /// In en, this message translates to:
+  /// **'\"See everything\" on Home gathers all your notes. Set a PIN and export backups from Settings — and reopen this guide there anytime.'**
+  String get tutorialReviewBody;
+
   /// No description provided for @dashboardSafeHere.
   ///
   /// In en, this message translates to:

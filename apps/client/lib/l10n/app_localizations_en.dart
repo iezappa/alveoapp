@@ -199,6 +199,59 @@ class AppLocalizationsEn extends AppLocalizations {
   String get namePromptLabel => 'Your name';
 
   @override
+  String get settingsTutorial => 'Tutorial';
+
+  @override
+  String get settingsTutorialSubtitle => 'Review how the app works';
+
+  @override
+  String get tutorialSkip => 'Skip';
+
+  @override
+  String get tutorialBack => 'Back';
+
+  @override
+  String get tutorialNext => 'Next';
+
+  @override
+  String get tutorialDone => 'Done';
+
+  @override
+  String get tutorialWelcomeTitle => 'Welcome to Alveo';
+
+  @override
+  String get tutorialWelcomeBody =>
+      'A calm, private space for your therapy work. Everything stays on this device — nothing is ever uploaded.';
+
+  @override
+  String get tutorialCheckInTitle => 'Daily check-in';
+
+  @override
+  String get tutorialCheckInBody =>
+      'From Home, log how you feel on a 1–5 scale, choose the emotions that fit, and add a short note.';
+
+  @override
+  String get tutorialWriteTitle => 'Journal, sessions & tasks';
+
+  @override
+  String get tutorialWriteBody =>
+      'Write freely in journal notebooks, prepare and review your therapy sessions, and track the tasks your therapist gives you.';
+
+  @override
+  String get tutorialToolsTitle => 'Tools to steady yourself';
+
+  @override
+  String get tutorialToolsBody =>
+      'Work through a hard thought with a CBT thought record, or open Breathe for a short guided exercise.';
+
+  @override
+  String get tutorialReviewTitle => 'Everything in one place';
+
+  @override
+  String get tutorialReviewBody =>
+      '\"See everything\" on Home gathers all your notes. Set a PIN and export backups from Settings — and reopen this guide there anytime.';
+
+  @override
   String get dashboardSafeHere => 'Take a deep breath. You\'re safe here.';
 
   @override
