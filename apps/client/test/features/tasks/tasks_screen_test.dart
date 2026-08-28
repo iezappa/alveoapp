@@ -65,4 +65,27 @@ void main() {
 
     expect(find.text('No tasks yet'), findsOneWidget);
   });
+
+  testWidgets('wide layout previews the selected task in place', (tester) async {
+    tester.view.physicalSize = const Size(1400, 1000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await TaskRepository(db).create(
+      title: 'Practice grounding',
+      descriptionMarkdown: 'five senses exercise',
+    );
+
+    await _openTasks(tester, db);
+
+    expect(find.text('Pick a record to see it here'), findsOneWidget);
+
+    await tester.tap(find.widgetWithText(ListTile, 'Practice grounding'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('five senses exercise'), findsOneWidget);
+    expect(find.text('Edit'), findsOneWidget);
+  });
 }

@@ -389,6 +389,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tasksEmpty => 'No tasks yet';
 
   @override
+  String get tasksSearchHint => 'Search tasks';
+
+  @override
+  String get taskClosingNote => 'How it went';
+
+  @override
   String get newTask => 'New task';
 
   @override

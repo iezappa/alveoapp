@@ -166,6 +166,8 @@
   "linkMoodLabel": "Mood check-in",
 
   "tasksEmpty": "No tasks yet",
+  "tasksSearchHint": "Search tasks",
+  "taskClosingNote": "How it went",
   "newTask": "New task",
   "editTask": "Edit task",
   "taskTitleHint": "Task",

@@ -29,3 +29,13 @@ final taskListProvider = FutureProvider<List<Task>>((ref) async {
 
   return sorted;
 });
+
+/// One task by id, resolved from [taskListProvider] so it refreshes with the
+/// same invalidation. `null` while the list loads or if the id is gone.
+final taskByIdProvider = Provider.family<Task?, String>((ref, id) {
+  final tasks = ref.watch(taskListProvider).asData?.value ?? const <Task>[];
+  for (final task in tasks) {
+    if (task.id == id) return task;
+  }
+  return null;
+});

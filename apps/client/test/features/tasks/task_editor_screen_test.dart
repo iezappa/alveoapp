@@ -5,7 +5,11 @@ import 'package:alveo/data/local/database.dart';
 import 'package:alveo/data/local/tables.dart';
 import 'package:alveo/data/providers.dart';
 import 'package:alveo/data/repositories/task_repository.dart';
+import 'package:alveo/features/tasks/task_editor_screen.dart';
 import 'package:alveo/main.dart';
+
+Finder _inEditor(Finder matching) =>
+    find.descendant(of: find.byType(TaskEditorScreen), matching: matching);
 
 Future<void> _openTasks(WidgetTester tester, AppDatabase db) async {
   await tester.pumpWidget(
@@ -26,10 +30,13 @@ void main() {
 
     await _openTasks(tester, db);
 
-    await tester.tap(find.text('New task')); // FAB label
+    await tester.tap(find.byTooltip('New task')); // "+" in the list pane
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField).first, 'Practice grounding');
+    await tester.enterText(
+      _inEditor(find.byType(TextField)).first,
+      'Practice grounding',
+    );
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
@@ -49,8 +56,11 @@ void main() {
     await tester.tap(find.text('Draft task'));
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField).first, 'Refined task');
-    await tester.tap(find.text('Done')); // status chip
+    await tester.enterText(
+      _inEditor(find.byType(TextField)).first,
+      'Refined task',
+    );
+    await tester.tap(_inEditor(find.text('Done'))); // status chip in the editor
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();

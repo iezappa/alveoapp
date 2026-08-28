@@ -824,6 +824,18 @@ abstract class AppLocalizations {
   /// **'No tasks yet'**
   String get tasksEmpty;
 
+  /// No description provided for @tasksSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search tasks'**
+  String get tasksSearchHint;
+
+  /// No description provided for @taskClosingNote.
+  ///
+  /// In en, this message translates to:
+  /// **'How it went'**
+  String get taskClosingNote;
+
   /// No description provided for @newTask.
   ///
   /// In en, this message translates to:

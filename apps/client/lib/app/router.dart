@@ -14,7 +14,7 @@ import '../features/sessions/session_editor_screen.dart';
 import '../features/sessions/sessions_screen.dart';
 import '../features/settings/settings_screen.dart';
 import '../features/tasks/task_editor_screen.dart';
-import '../features/tasks/task_list_screen.dart';
+import '../features/tasks/tasks_screen.dart';
 import '../features/timeline/timeline_screen.dart';
 import 'home_shell.dart';
 
@@ -71,7 +71,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: '/tasks',
-                builder: (context, state) => const TaskListScreen(),
+                builder: (context, state) => const TasksScreen(),
               ),
             ],
           ),

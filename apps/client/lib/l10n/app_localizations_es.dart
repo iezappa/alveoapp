@@ -389,6 +389,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tasksEmpty => 'Todavía no hay tareas';
 
   @override
+  String get tasksSearchHint => 'Buscar tareas';
+
+  @override
+  String get taskClosingNote => 'Cómo fue';
+
+  @override
   String get newTask => 'Nueva tarea';
 
   @override

@@ -134,6 +134,8 @@
   "linkMoodLabel": "Registro de ánimo",
 
   "tasksEmpty": "Todavía no hay tareas",
+  "tasksSearchHint": "Buscar tareas",
+  "taskClosingNote": "Cómo fue",
   "newTask": "Nueva tarea",
   "editTask": "Editar tarea",
   "taskTitleHint": "Tarea",
