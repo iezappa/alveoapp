@@ -656,6 +656,12 @@ abstract class AppLocalizations {
   /// **'Nothing here yet'**
   String get journalSectionEmpty;
 
+  /// No description provided for @journalSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search the journal'**
+  String get journalSearchHint;
+
   /// No description provided for @journalEntryCount.
   ///
   /// In en, this message translates to:

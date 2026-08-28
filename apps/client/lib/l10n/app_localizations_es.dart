@@ -297,6 +297,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get journalSectionEmpty => 'Todavía no hay nada acá';
 
   @override
+  String get journalSearchHint => 'Buscar en el diario';
+
+  @override
   String journalEntryCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

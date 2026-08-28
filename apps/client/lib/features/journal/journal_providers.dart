@@ -22,3 +22,18 @@ final journalEntryProvider = FutureProvider.family<JournalEntry?, String>((
 ) {
   return ref.watch(journalRepositoryProvider).getById(id);
 });
+
+/// One entry by id, resolved from [journalListProvider] so it refreshes with
+/// the same invalidation. `null` while the list loads or if the id is gone.
+final journalEntryByIdProvider = Provider.family<JournalEntry?, String>((
+  ref,
+  id,
+) {
+  final entries =
+      ref.watch(journalListProvider).asData?.value ??
+      const <JournalEntry>[];
+  for (final entry in entries) {
+    if (entry.id == id) return entry;
+  }
+  return null;
+});

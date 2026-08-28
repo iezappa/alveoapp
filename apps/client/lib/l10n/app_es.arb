@@ -103,6 +103,7 @@
   "journalSectionTherapy": "Terapia",
   "journalSectionWinLog": "Logros y gratitud",
   "journalSectionEmpty": "Todavía no hay nada acá",
+  "journalSearchHint": "Buscar en el diario",
   "journalEntryCount": "{count, plural, =1{1 entrada} other{{count} entradas}}",
   "monthlyReview": "Repaso del mes",
   "writeMonthlyReview": "Escribir el repaso del mes",

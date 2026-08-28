@@ -297,6 +297,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get journalSectionEmpty => 'Nothing here yet';
 
   @override
+  String get journalSearchHint => 'Search the journal';
+
+  @override
   String journalEntryCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
