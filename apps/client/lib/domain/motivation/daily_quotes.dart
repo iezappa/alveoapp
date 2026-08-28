@@ -823,4 +823,658 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Marco Aurelio',
     source: 'Meditaciones',
   ),
+  DailyQuote(
+    textEs:
+        'Todo lo que oímos es una opinión, no un hecho. Todo lo que vemos es '
+        'una perspectiva, no la verdad.',
+    textEn:
+        'Everything we hear is an opinion, not a fact. Everything we see is a '
+        'perspective, not the truth.',
+    author: 'Marco Aurelio',
+    source: 'Meditaciones',
+  ),
+  DailyQuote(
+    textEs: 'El alma se tiñe del color de sus pensamientos.',
+    textEn: 'The soul becomes dyed with the color of its thoughts.',
+    author: 'Marco Aurelio',
+    source: 'Meditaciones',
+  ),
+  DailyQuote(
+    textEs:
+        'No actúes como si fueras a vivir diez mil años. Mientras vivas, '
+        'mientras puedas, sé bueno.',
+    textEn:
+        'Do not act as if you had ten thousand years to live. While you live, '
+        'while it is in your power, be good.',
+    author: 'Marco Aurelio',
+    source: 'Meditaciones',
+  ),
+  DailyQuote(
+    textEs:
+        'Cuando te cueste levantarte por la mañana, recuerda que te levantas '
+        'para hacer el trabajo de un ser humano.',
+    textEn:
+        'At dawn, when you have trouble getting out of bed, tell yourself: I '
+        'am rising to do the work of a human being.',
+    author: 'Marco Aurelio',
+    source: 'Meditaciones',
+  ),
+  DailyQuote(
+    textEs:
+        'Nada tiene tanto poder para ampliar la mente como investigar de forma '
+        'sistemática y veraz todo lo que se te presenta en la vida.',
+    textEn:
+        'Nothing has such power to broaden the mind as the ability to '
+        'investigate systematically and truly all that comes under your '
+        'observation in life.',
+    author: 'Marco Aurelio',
+    source: 'Meditaciones',
+  ),
+  DailyQuote(
+    textEs:
+        'Nada, en mi opinión, indica mejor una mente bien ordenada que la '
+        'capacidad de detenerse y pasar tiempo consigo mismo.',
+    textEn:
+        "Nothing is a surer sign of a well-ordered mind than a man's ability "
+        'to stop and spend time with himself.',
+    author: 'Séneca',
+    source: 'Cartas a Lucilio',
+  ),
+  DailyQuote(
+    textEs:
+        'Piensa mucho tiempo si debes admitir a alguien en tu amistad; pero '
+        'cuando te hayas decidido, acógelo de todo corazón.',
+    textEn:
+        'Ponder for a long time whether you shall admit a given person to '
+        'your friendship; but when you have decided, welcome him with all '
+        'your heart.',
+    author: 'Séneca',
+    source: 'Cartas a Lucilio',
+  ),
+  DailyQuote(
+    textEs: 'El tiempo descubre la verdad.',
+    textEn: 'Time discovers the truth.',
+    author: 'Séneca',
+    source: 'Sobre la ira',
+  ),
+  DailyQuote(
+    textEs:
+        'Nadie es más desdichado que quien nunca afronta la adversidad, pues '
+        'no se le permite ponerse a prueba.',
+    textEn:
+        'No man is more unhappy than he who never faces adversity, for he is '
+        'not permitted to prove himself.',
+    author: 'Séneca',
+    source: 'Sobre la providencia',
+  ),
+  DailyQuote(
+    textEs: 'No expliques tu filosofía. Encárnala.',
+    textEn: "Don't explain your philosophy. Embody it.",
+    author: 'Epicteto',
+  ),
+  DailyQuote(
+    textEs:
+        'Toda dificultad tiene dos asas: una por la que puede llevarse, y '
+        'otra por la que no.',
+    textEn:
+        'Every difficulty has two handles: one by which it can be carried, '
+        'and one by which it cannot.',
+    author: 'Epicteto',
+    source: 'Enquiridión',
+  ),
+  DailyQuote(
+    textEs:
+        'Ante cada cosa que te suceda, vuélvete hacia ti mismo y pregúntate '
+        'qué recurso tienes para afrontarla.',
+    textEn:
+        'On the occasion of everything that befalls you, turn to yourself and '
+        'ask what power you have to make use of it.',
+    author: 'Epicteto',
+    source: 'Enquiridión',
+  ),
+  DailyQuote(
+    textEs: 'Solo las personas educadas son libres.',
+    textEn: 'Only the educated are free.',
+    author: 'Epicteto',
+    source: 'Discursos',
+  ),
+  DailyQuote(
+    textEs: 'A quien se contenta con lo que tiene, nada le falta.',
+    textEn: 'He who is contented with what he has is rich.',
+    author: 'Lao Tsé',
+    source: 'Tao Te Ching',
+  ),
+  DailyQuote(
+    textEs: 'El que sabe cuándo detenerse está libre de peligro.',
+    textEn: 'He who knows when to stop is free from danger.',
+    author: 'Lao Tsé',
+    source: 'Tao Te Ching',
+  ),
+  DailyQuote(
+    textEs: 'Cede y prevalecerás; inclínate y te enderezarás.',
+    textEn: 'Yield and overcome; bend and be straight.',
+    author: 'Lao Tsé',
+    source: 'Tao Te Ching',
+  ),
+  DailyQuote(
+    textEs: 'Un árbol que llena los brazos de un hombre nació de una diminuta '
+        'semilla.',
+    textEn: "A tree as big as a man's embrace grows from a tiny sprout.",
+    author: 'Lao Tsé',
+    source: 'Tao Te Ching',
+  ),
+  DailyQuote(
+    textEs:
+        'Porque el sabio nunca se esfuerza por ser grande, alcanza la '
+        'grandeza.',
+    textEn:
+        'Because the sage never strives for greatness, he achieves greatness.',
+    author: 'Lao Tsé',
+    source: 'Tao Te Ching',
+  ),
+  DailyQuote(
+    textEs:
+        'No te preocupes por que no te conozcan; preocúpate por no conocer a '
+        'los demás.',
+    textEn:
+        'Do not be concerned that others do not know you; be concerned that '
+        'you do not know others.',
+    author: 'Confucio',
+    source: 'Analectas',
+  ),
+  DailyQuote(
+    textEs:
+        'Exígete mucho a ti mismo y espera poco de los demás: así te '
+        'ahorrarás disgustos.',
+    textEn:
+        'Demand much from yourself and expect little from others, and you '
+        'will spare yourself resentment.',
+    author: 'Confucio',
+    source: 'Analectas',
+  ),
+  DailyQuote(
+    textEs:
+        'La persona superior es modesta al hablar, pero se excede en sus '
+        'actos.',
+    textEn:
+        'The superior person is modest in speech but exceeds in action.',
+    author: 'Confucio',
+    source: 'Analectas',
+  ),
+  DailyQuote(
+    textEs:
+        'Como una roca no se mueve con el viento, el sabio permanece firme '
+        'ante el elogio y la censura.',
+    textEn:
+        'As a solid rock is not shaken by the wind, the wise are not moved by '
+        'praise or blame.',
+    author: 'Buda',
+    source: 'Dhammapada',
+  ),
+  DailyQuote(
+    textEs:
+        'No menosprecies lo pequeño del bien pensando que no te alcanzará: '
+        'gota a gota se llena el cántaro.',
+    textEn:
+        "Do not think lightly of good, saying 'It will not come to me.' Drop "
+        'by drop the water pot is filled.',
+    author: 'Buda',
+    source: 'Dhammapada',
+  ),
+  DailyQuote(
+    textEs: 'Quien vive atento no muere; los descuidados ya son como muertos.',
+    textEn:
+        'Heedfulness is the path to the deathless; heedlessness is the path '
+        'to death.',
+    author: 'Buda',
+    source: 'Dhammapada',
+  ),
+  DailyQuote(
+    textEs: 'La brisa del alba tiene secretos que contarte. No vuelvas a '
+        'dormirte.',
+    textEn:
+        "The breeze at dawn has secrets to tell you. Don't go back to sleep.",
+    author: 'Rumi',
+  ),
+  DailyQuote(
+    textEs: 'Vende tu astucia y compra desconcierto.',
+    textEn: 'Sell your cleverness and buy bewilderment.',
+    author: 'Rumi',
+  ),
+  DailyQuote(
+    textEs: 'Deja de actuar tan pequeño. Eres el universo en éxtasis.',
+    textEn: 'Stop acting so small. You are the universe in ecstatic motion.',
+    author: 'Rumi',
+  ),
+  DailyQuote(
+    textEs: 'Donde hay ruina, hay esperanza de un tesoro.',
+    textEn: 'Where there is ruin, there is hope for a treasure.',
+    author: 'Rumi',
+  ),
+  DailyQuote(
+    textEs:
+        'El amor no posee ni quiere ser poseído, porque al amor le basta el '
+        'amor.',
+    textEn:
+        'Love possesses not, nor would it be possessed; for love is '
+        'sufficient unto love.',
+    author: 'Kahlil Gibran',
+    source: 'El Profeta',
+  ),
+  DailyQuote(
+    textEs:
+        'Tu razón y tu pasión son el timón y las velas de tu alma navegante.',
+    textEn:
+        'Your reason and your passion are the rudder and the sails of your '
+        'seafaring soul.',
+    author: 'Kahlil Gibran',
+    source: 'El Profeta',
+  ),
+  DailyQuote(
+    textEs:
+        'Si no podéis trabajar con amor, sino solo con desagrado, mejor sería '
+        'que dejarais el trabajo.',
+    textEn:
+        'If you cannot work with love but only with distaste, it is better '
+        'that you should leave your work.',
+    author: 'Kahlil Gibran',
+    source: 'El Profeta',
+  ),
+  DailyQuote(
+    textEs:
+        'A tus hijos puedes darles tu amor, pero no tus pensamientos, porque '
+        'ellos tienen los suyos.',
+    textEn:
+        'You may give your children your love but not your thoughts, for they '
+        'have their own thoughts.',
+    author: 'Kahlil Gibran',
+    source: 'El Profeta',
+  ),
+  DailyQuote(
+    textEs: 'Nuestra vida se desperdicia en detalles. Simplifica, simplifica.',
+    textEn:
+        'Our life is frittered away by detail. Simplify, simplify.',
+    author: 'Henry David Thoreau',
+    source: 'Walden',
+  ),
+  DailyQuote(
+    textEs:
+        'El precio de cualquier cosa es la cantidad de vida que intercambias '
+        'por ella.',
+    textEn:
+        'The price of anything is the amount of life you exchange for it.',
+    author: 'Henry David Thoreau',
+    source: 'Walden',
+  ),
+  DailyQuote(
+    textEs:
+        'Si has construido castillos en el aire, tu trabajo no se pierde: '
+        'ahora pon los cimientos debajo.',
+    textEn:
+        'If you have built castles in the air, your work need not be lost; '
+        'now put the foundations under them.',
+    author: 'Henry David Thoreau',
+    source: 'Walden',
+  ),
+  DailyQuote(
+    textEs: 'No importa lo que miras, sino lo que ves.',
+    textEn: "It's not what you look at that matters, it's what you see.",
+    author: 'Henry David Thoreau',
+  ),
+  DailyQuote(
+    textEs: 'Confía en ti: cada corazón vibra con esa cuerda de hierro.',
+    textEn: 'Trust thyself: every heart vibrates to that iron string.',
+    author: 'Ralph Waldo Emerson',
+    source: 'Confianza en uno mismo',
+  ),
+  DailyQuote(
+    textEs: 'Haz aquello que temes, y la muerte del miedo es segura.',
+    textEn: 'Do the thing you fear, and the death of fear is certain.',
+    author: 'Ralph Waldo Emerson',
+  ),
+  DailyQuote(
+    textEs: 'El único regalo verdadero es una parte de ti mismo.',
+    textEn: 'The only gift is a portion of thyself.',
+    author: 'Ralph Waldo Emerson',
+  ),
+  DailyQuote(
+    textEs: 'Lo que eres habla tan fuerte que no me deja oír lo que dices.',
+    textEn:
+        'What you are speaks so loudly I cannot hear what you say.',
+    author: 'Ralph Waldo Emerson',
+  ),
+  DailyQuote(
+    textEs:
+        'El valor de la vida no está en la cantidad de días, sino en el uso '
+        'que hacemos de ellos.',
+    textEn:
+        'The value of life lies not in the length of days, but in the use we '
+        'make of them.',
+    author: 'Michel de Montaigne',
+    source: 'Ensayos',
+  ),
+  DailyQuote(
+    textEs: 'Mi oficio y mi arte es vivir.',
+    textEn: 'My trade and my art is to live.',
+    author: 'Michel de Montaigne',
+    source: 'Ensayos',
+  ),
+  DailyQuote(
+    textEs:
+        'Todo pasa y todo queda, pero lo nuestro es pasar, hacer caminos, '
+        'caminos sobre la mar.',
+    textEn:
+        'Everything passes and everything stays, but our fate is to pass, to '
+        'make paths, paths over the sea.',
+    author: 'Antonio Machado',
+    source: 'Proverbios y cantares',
+  ),
+  DailyQuote(
+    textEs:
+        'Se miente más de la cuenta por falta de fantasía: también la verdad '
+        'se inventa.',
+    textEn:
+        'We lie more than we need to for lack of imagination: the truth too '
+        'is invented.',
+    author: 'Antonio Machado',
+    source: 'Proverbios y cantares',
+  ),
+  DailyQuote(
+    textEs: 'No hay hechos, solo interpretaciones.',
+    textEn: 'There are no facts, only interpretations.',
+    author: 'Friedrich Nietzsche',
+  ),
+  DailyQuote(
+    textEs:
+        'Lo que se hace por amor sucede siempre más allá del bien y del mal.',
+    textEn:
+        'What is done out of love always takes place beyond good and evil.',
+    author: 'Friedrich Nietzsche',
+    source: 'Más allá del bien y del mal',
+  ),
+  DailyQuote(
+    textEs:
+        'Quien quiera aprender a volar primero debe aprender a estar de pie, '
+        'a caminar, a correr y a bailar: no se aprende a volar volando.',
+    textEn:
+        'He who would learn to fly must first learn to stand and walk and run '
+        'and dance; one cannot fly into flying.',
+    author: 'Friedrich Nietzsche',
+    source: 'Así habló Zaratustra',
+  ),
+  DailyQuote(
+    textEs:
+        'El futuro entra en nosotros mucho antes de que suceda.',
+    textEn: 'The future enters into us long before it happens.',
+    author: 'Rainer Maria Rilke',
+    source: 'Cartas a un joven poeta',
+  ),
+  DailyQuote(
+    textEs:
+        'Solo hay un camino: entrar en uno mismo. Nadie puede aconsejarte ni '
+        'ayudarte, nadie.',
+    textEn:
+        'There is only one way: go within. Nobody can counsel or help you, '
+        'nobody.',
+    author: 'Rainer Maria Rilke',
+    source: 'Cartas a un joven poeta',
+  ),
+  DailyQuote(
+    textEs:
+        'Vive ahora las preguntas. Quizá un día lejano, sin darte cuenta, '
+        'vivas la respuesta.',
+    textEn:
+        'Live the questions now. Perhaps you will then gradually, without '
+        'noticing it, live along some day into the answer.',
+    author: 'Rainer Maria Rilke',
+    source: 'Cartas a un joven poeta',
+  ),
+  DailyQuote(
+    textEs: 'La ansiedad es el vértigo de la libertad.',
+    textEn: 'Anxiety is the dizziness of freedom.',
+    author: 'Søren Kierkegaard',
+    source: 'El concepto de la angustia',
+  ),
+  DailyQuote(
+    textEs:
+        'La función de la oración no es influir en Dios, sino cambiar la '
+        'naturaleza de quien ora.',
+    textEn:
+        'The function of prayer is not to influence God, but to change the '
+        'nature of the one who prays.',
+    author: 'Søren Kierkegaard',
+  ),
+  DailyQuote(
+    textEs:
+        'Todos los problemas de la humanidad vienen de la incapacidad del '
+        'hombre de quedarse quieto y solo en una habitación.',
+    textEn:
+        "All of humanity's problems stem from man's inability to sit quietly "
+        'in a room alone.',
+    author: 'Blaise Pascal',
+    source: 'Pensamientos',
+  ),
+  DailyQuote(
+    textEs: 'El corazón tiene razones que la razón no entiende.',
+    textEn: 'The heart has its reasons of which reason knows nothing.',
+    author: 'Blaise Pascal',
+    source: 'Pensamientos',
+  ),
+  DailyQuote(
+    textEs:
+        'El hombre es una caña, la más débil de la naturaleza, pero una caña '
+        'que piensa.',
+    textEn:
+        'Man is but a reed, the weakest in nature, but he is a thinking reed.',
+    author: 'Blaise Pascal',
+    source: 'Pensamientos',
+  ),
+  DailyQuote(
+    textEs:
+        'Trata a las personas como si fueran lo que deberían ser y las '
+        'ayudarás a llegar a serlo.',
+    textEn:
+        'Treat people as if they were what they ought to be, and you help '
+        'them become what they are capable of being.',
+    author: 'Johann Wolfgang von Goethe',
+  ),
+  DailyQuote(
+    textEs: 'El talento se cultiva en la calma; el carácter, en la tempestad.',
+    textEn:
+        'Talent is nurtured in solitude; character is formed in the storms '
+        'of life.',
+    author: 'Johann Wolfgang von Goethe',
+  ),
+  DailyQuote(
+    textEs: 'Quien no avanza cada día, retrocede cada día.',
+    textEn: 'He who moves not forward, goes backward.',
+    author: 'Johann Wolfgang von Goethe',
+  ),
+  DailyQuote(
+    textEs:
+        'Todos piensan en cambiar el mundo, pero nadie piensa en cambiarse a '
+        'sí mismo.',
+    textEn:
+        'Everyone thinks of changing the world, but no one thinks of changing '
+        'himself.',
+    author: 'León Tolstói',
+  ),
+  DailyQuote(
+    textEs: 'La verdadera vida se vive cuando ocurren pequeños cambios.',
+    textEn: 'True life is lived when tiny changes occur.',
+    author: 'León Tolstói',
+  ),
+  DailyQuote(
+    textEs:
+        'El sufrimiento deja de ser sufrimiento en cuanto encuentra un '
+        'sentido.',
+    textEn:
+        'Suffering ceases to be suffering at the moment it finds a meaning.',
+    author: 'Viktor Frankl',
+    source: 'El hombre en busca de sentido',
+  ),
+  DailyQuote(
+    textEs:
+        'No se trata de qué esperamos de la vida, sino de qué espera la vida '
+        'de nosotros.',
+    textEn:
+        'It did not really matter what we expected from life, but rather what '
+        'life expected from us.',
+    author: 'Viktor Frankl',
+    source: 'El hombre en busca de sentido',
+  ),
+  DailyQuote(
+    textEs:
+        'La buena vida es un proceso, no un estado; una dirección, no un '
+        'destino.',
+    textEn:
+        'The good life is a process, not a state of being. It is a '
+        'direction, not a destination.',
+    author: 'Carl Rogers',
+    source: 'El proceso de convertirse en persona',
+  ),
+  DailyQuote(
+    textEs:
+        'Un cuarto sin libros es como un cuerpo sin alma.',
+    textEn: 'A room without books is like a body without a soul.',
+    author: 'Cicerón',
+  ),
+  DailyQuote(
+    textEs:
+        'Cualquiera puede equivocarse; solo el necio persiste en su error.',
+    textEn:
+        'Any man can make a mistake; only a fool keeps making the same one.',
+    author: 'Cicerón',
+  ),
+  DailyQuote(
+    textEs:
+        'La gratitud no solo es la mayor de las virtudes, sino la madre de '
+        'todas las demás.',
+    textEn:
+        'Gratitude is not only the greatest of virtues, but the parent of '
+        'all the others.',
+    author: 'Cicerón',
+  ),
+  DailyQuote(
+    textEs:
+        'Nadie se baña dos veces en el mismo río, porque ni el río ni la '
+        'persona son ya los mismos.',
+    textEn:
+        'No man ever steps in the same river twice, for it is not the same '
+        'river and he is not the same man.',
+    author: 'Heráclito',
+  ),
+  DailyQuote(
+    textEs: 'El carácter de una persona es su destino.',
+    textEn: "Character is destiny.",
+    author: 'Heráclito',
+  ),
+  DailyQuote(
+    textEs: 'El sol es nuevo cada día.',
+    textEn: 'The sun is new each day.',
+    author: 'Heráclito',
+  ),
+  DailyQuote(
+    textEs: 'La mente no es un recipiente para llenar, sino un fuego para '
+        'encender.',
+    textEn:
+        'The mind is not a vessel to be filled, but a fire to be kindled.',
+    author: 'Plutarco',
+  ),
+  DailyQuote(
+    textEs:
+        'Nada es miserable si no lo crees así; y toda suerte es dichosa para '
+        'quien la lleva con serenidad.',
+    textEn:
+        'Nothing is miserable unless you think it so; and every lot is happy '
+        'if borne with equanimity.',
+    author: 'Boecio',
+    source: 'La consolación de la filosofía',
+  ),
+  DailyQuote(
+    textEs:
+        'Rara vez somos tan desdichados ni tan felices como imaginamos.',
+    textEn:
+        'We are never so happy nor so unhappy as we imagine.',
+    author: 'François de La Rochefoucauld',
+    source: 'Máximas',
+  ),
+  DailyQuote(
+    textEs:
+        'La mayor revolución de nuestra generación es descubrir que, al '
+        'cambiar las actitudes de la mente, se puede cambiar la vida.',
+    textEn:
+        'The greatest discovery of my generation is that human beings can '
+        'alter their lives by altering their attitudes of mind.',
+    author: 'William James',
+  ),
+  DailyQuote(
+    textEs:
+        'La reputación es lo que otros creen de ti; el carácter, lo que en '
+        'verdad eres.',
+    textEn:
+        'Reputation is what others believe you to be; character is what you '
+        'truly are.',
+    author: 'Thomas Paine',
+  ),
+  DailyQuote(
+    textEs:
+        'Un barco está seguro en el puerto, pero no es para eso que se '
+        'construyen los barcos.',
+    textEn:
+        'A ship in harbor is safe, but that is not what ships are built for.',
+    author: 'John A. Shedd',
+  ),
+  DailyQuote(
+    textEs: 'Cuando bebas agua, acuérdate de la fuente.',
+    textEn: 'When you drink water, remember the spring.',
+    author: 'Proverbio chino',
+  ),
+  DailyQuote(
+    textEs: 'Cava el pozo antes de tener sed.',
+    textEn: 'Dig the well before you are thirsty.',
+    author: 'Proverbio chino',
+  ),
+  DailyQuote(
+    textEs: 'Es mejor encender una vela que maldecir la oscuridad.',
+    textEn: 'It is better to light a candle than to curse the darkness.',
+    author: 'Proverbio chino',
+  ),
+  DailyQuote(
+    textEs: 'Cuando el alumno está listo, aparece el maestro.',
+    textEn: 'When the student is ready, the teacher appears.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Quien tiene salud tiene esperanza, y quien tiene esperanza lo tiene '
+        'todo.',
+    textEn:
+        'He who has health has hope, and he who has hope has everything.',
+    author: 'Proverbio árabe',
+  ),
+  DailyQuote(
+    textEs: 'La paciencia es amarga, pero su fruto es dulce.',
+    textEn: 'Patience is bitter, but its fruit is sweet.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs: 'Habla poco y bien, y te tendrán por alguien.',
+    textEn: 'Speak little and well, and you will be thought someone.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs: 'La felicidad es un cómo, no un qué; un talento, no un objeto.',
+    textEn: 'Happiness is a how, not a what; a talent, not an object.',
+    author: 'Hermann Hesse',
+  ),
+  DailyQuote(
+    textEs:
+        'Cae siete veces y levántate ocho; la fuerza está en levantarse cada '
+        'vez.',
+    textEn:
+        'Fall down seven times, get up eight; the strength is in rising each '
+        'time.',
+    author: 'Proverbio japonés',
+  ),
 ];
