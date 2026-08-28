@@ -56,6 +56,8 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
           ],
         );
 
+    ref.invalidate(moodEntriesProvider);
+
     if (!mounted) return;
     final l10n = AppLocalizations.of(context);
     ScaffoldMessenger.of(context)

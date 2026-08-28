@@ -210,6 +210,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dashboardCheckInPrompt => '¿Cómo está tu corazón hoy?';
 
   @override
+  String get dashboardMoodTrend => 'Ánimo · últimos 14 días';
+
+  @override
+  String get dashboardMoodTrendEmpty =>
+      'Registrá tu ánimo unos días para ver la tendencia';
+
+  @override
   String get libraryTitle => 'Biblioteca';
 
   @override

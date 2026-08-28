@@ -5,9 +5,12 @@ import 'package:intl/intl.dart';
 
 import '../../app/theme.dart';
 import '../../data/local/database.dart';
+import '../../data/providers.dart';
 import '../../domain/greeting.dart';
+import '../../domain/insights/mood_trend.dart';
 import '../../domain/motivation/daily_quotes.dart';
 import '../../l10n/app_localizations.dart';
+import '../insights/sparkline.dart';
 import 'dashboard_providers.dart';
 
 /// The welcome screen and app entry point: a greeting, the next session, a
@@ -67,6 +70,8 @@ class DashboardScreen extends ConsumerWidget {
               const _CheckInCard(),
               const SizedBox(height: 12),
               const _QuoteCard(),
+              const SizedBox(height: 12),
+              const _MoodTrendCard(),
             ],
           ),
         ),
@@ -214,6 +219,58 @@ class _CheckInCard extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A 14-day sparkline of the daily average mood.
+class _MoodTrendCard extends ConsumerWidget {
+  const _MoodTrendCard();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final entries = ref.watch(moodEntriesProvider).asData?.value;
+    final points = entries == null
+        ? null
+        : dailyMoodAverages(
+            entries.map((e) => (occurredAt: e.occurredAt, mood: e.mood)),
+            now: DateTime.now(),
+          );
+    final hasData = points != null && points.any((p) => p != null);
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.show_chart,
+                  size: 20,
+                  color: theme.colorScheme.primary,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  l10n.dashboardMoodTrend,
+                  style: theme.textTheme.titleMedium,
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            if (hasData)
+              Sparkline(values: points)
+            else
+              Text(
+                l10n.dashboardMoodTrendEmpty,
+                style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
+              ),
+          ],
         ),
       ),
     );

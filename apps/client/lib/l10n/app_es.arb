@@ -71,6 +71,8 @@
   "dashboardTomorrow": "Mañana",
   "dashboardCheckInTitle": "Check-in diario",
   "dashboardCheckInPrompt": "¿Cómo está tu corazón hoy?",
+  "dashboardMoodTrend": "Ánimo · últimos 14 días",
+  "dashboardMoodTrendEmpty": "Registrá tu ánimo unos días para ver la tendencia",
   "libraryTitle": "Biblioteca",
   "libraryToday": "Hoy",
   "libraryAll": "Todas las frases",

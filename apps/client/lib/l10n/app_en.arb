@@ -98,6 +98,8 @@
   "dashboardTomorrow": "Tomorrow",
   "dashboardCheckInTitle": "Daily check-in",
   "dashboardCheckInPrompt": "How is your heart today?",
+  "dashboardMoodTrend": "Mood · last 14 days",
+  "dashboardMoodTrendEmpty": "Check in a few days to see your trend",
   "libraryTitle": "Library",
   "libraryToday": "Today",
   "libraryAll": "All quotes",

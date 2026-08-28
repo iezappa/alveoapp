@@ -482,6 +482,18 @@ abstract class AppLocalizations {
   /// **'How is your heart today?'**
   String get dashboardCheckInPrompt;
 
+  /// No description provided for @dashboardMoodTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Mood · last 14 days'**
+  String get dashboardMoodTrend;
+
+  /// No description provided for @dashboardMoodTrendEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Check in a few days to see your trend'**
+  String get dashboardMoodTrendEmpty;
+
   /// No description provided for @libraryTitle.
   ///
   /// In en, this message translates to:

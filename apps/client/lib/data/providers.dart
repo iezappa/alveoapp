@@ -54,6 +54,11 @@ final moodRepositoryProvider = Provider<MoodRepository>(
   (ref) => MoodRepository(ref.watch(appDatabaseProvider)),
 );
 
+/// All mood check-ins, newest first. Invalidate after a new check-in.
+final moodEntriesProvider = FutureProvider(
+  (ref) => ref.watch(moodRepositoryProvider).getAll(),
+);
+
 final journalRepositoryProvider = Provider<JournalRepository>(
   (ref) => JournalRepository(ref.watch(appDatabaseProvider)),
 );
