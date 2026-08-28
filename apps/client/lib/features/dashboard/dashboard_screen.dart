@@ -211,7 +211,12 @@ class _CheckInCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const Spacer(),
-                  const Icon(Icons.chevron_right, size: 20),
+                  IconButton(
+                    visualDensity: VisualDensity.compact,
+                    icon: const Icon(Icons.history, size: 20),
+                    onPressed: () => context.push('/mood-history'),
+                    tooltip: l10n.moodHistoryTitle,
+                  ),
                 ],
               ),
               const SizedBox(height: 6),

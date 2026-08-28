@@ -190,6 +190,9 @@
   "taskSaved": "Tarea guardada",
 
   "checkInTitle": "¿Cómo te sentís?",
+  "checkInEditTitle": "Editar check-in",
+  "moodHistoryTitle": "Historial de ánimo",
+  "moodHistoryEmpty": "Todavía no hay check-ins",
   "overallMood": "Estado general",
   "moodScale1": "Muy mal",
   "moodScale2": "Mal",

@@ -569,6 +569,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get checkInTitle => '¿Cómo te sentís?';
 
   @override
+  String get checkInEditTitle => 'Editar check-in';
+
+  @override
+  String get moodHistoryTitle => 'Historial de ánimo';
+
+  @override
+  String get moodHistoryEmpty => 'Todavía no hay check-ins';
+
+  @override
   String get overallMood => 'Estado general';
 
   @override

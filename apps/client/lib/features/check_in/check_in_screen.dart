@@ -8,10 +8,16 @@ import '../../data/providers.dart';
 import '../../data/repositories/mood_repository.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/emotion_labels.dart';
+import '../shared/confirm_delete.dart';
+import 'mood_weather.dart';
 import 'plutchik_wheel.dart';
 
 class CheckInScreen extends ConsumerStatefulWidget {
-  const CheckInScreen({super.key});
+  const CheckInScreen({super.key, this.moodEntryId});
+
+  final String? moodEntryId;
+
+  bool get isNew => moodEntryId == null;
 
   @override
   ConsumerState<CheckInScreen> createState() => _CheckInScreenState();
@@ -23,7 +29,35 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
   int _mood = 3;
   final Map<String, int> _emotions = {};
   final _noteController = TextEditingController();
+  bool _loading = false;
   bool _saving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final id = widget.moodEntryId;
+    if (id != null) {
+      _loading = true;
+      Future.microtask(() async {
+        final repo = ref.read(moodRepositoryProvider);
+        final entry = await repo.getById(id);
+        final emotions = await repo.emotionsFor(id);
+        if (!mounted) return;
+        setState(() {
+          if (entry != null) {
+            _mood = entry.mood;
+            _noteController.text = entry.note ?? '';
+            _emotions
+              ..clear()
+              ..addEntries(
+                emotions.map((e) => MapEntry(e.emotionKey, e.intensity)),
+              );
+          }
+          _loading = false;
+        });
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -44,24 +78,45 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
   Future<void> _save() async {
     setState(() => _saving = true);
     final note = _noteController.text.trim();
-    await ref
-        .read(moodRepositoryProvider)
-        .add(
-          mood: _mood,
-          occurredAt: DateTime.now(),
-          note: note.isEmpty ? null : note,
-          emotions: [
-            for (final entry in _emotions.entries)
-              EmotionInput(emotionKey: entry.key, intensity: entry.value),
-          ],
-        );
+    final emotions = [
+      for (final entry in _emotions.entries)
+        EmotionInput(emotionKey: entry.key, intensity: entry.value),
+    ];
+    final repo = ref.read(moodRepositoryProvider);
+
+    if (widget.moodEntryId == null) {
+      await repo.add(
+        mood: _mood,
+        occurredAt: DateTime.now(),
+        note: note.isEmpty ? null : note,
+        emotions: emotions,
+      );
+    } else {
+      await repo.update(
+        id: widget.moodEntryId!,
+        mood: _mood,
+        note: note.isEmpty ? null : note,
+        emotions: emotions,
+      );
+    }
 
     ref.invalidate(moodEntriesProvider);
 
     if (!mounted) return;
-    final l10n = AppLocalizations.of(context);
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(l10n.checkInSaved)));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(AppLocalizations.of(context).checkInSaved)),
+    );
+    _leave();
+  }
+
+  Future<void> _delete() async {
+    if (!await confirmDelete(context)) return;
+    await ref.read(moodRepositoryProvider).delete(widget.moodEntryId!);
+    ref.invalidate(moodEntriesProvider);
+    if (mounted) _leave();
+  }
+
+  void _leave() {
     if (context.canPop()) {
       context.pop();
     } else {
@@ -74,8 +129,22 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
 
+    if (_loading) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.checkInTitle)),
+      appBar: AppBar(
+        title: Text(widget.isNew ? l10n.checkInTitle : l10n.checkInEditTitle),
+        actions: [
+          if (!widget.isNew)
+            IconButton(
+              onPressed: _delete,
+              icon: const Icon(Icons.delete_outline),
+              tooltip: l10n.deleteAction,
+            ),
+        ],
+      ),
       body: Align(
         alignment: Alignment.topCenter,
         child: ConstrainedBox(
@@ -152,9 +221,6 @@ class _MoodScale extends StatelessWidget {
   final int value;
   final ValueChanged<int> onChanged;
 
-  /// Worst-to-best weather, one glyph per 1..5 step.
-  static const _weather = ['⛈️', '🌧️', '⛅', '🌤️', '☀️'];
-
   String _caption(AppLocalizations l10n) => switch (value) {
     1 => l10n.moodScale1,
     2 => l10n.moodScale2,
@@ -204,7 +270,7 @@ class _MoodScale extends StatelessWidget {
                     child: Opacity(
                       opacity: v == value ? 1 : 0.55,
                       child: Text(
-                        _weather[v - 1],
+                        moodWeather[v - 1],
                         style: const TextStyle(fontSize: 26),
                       ),
                     ),

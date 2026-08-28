@@ -76,11 +76,52 @@ class MoodRepository {
     return entryId;
   }
 
+  /// Rewrites the score, note and emotion set of an existing check-in.
+  Future<void> update({
+    required String id,
+    required int mood,
+    String? note,
+    List<EmotionInput> emotions = const [],
+  }) async {
+    validateMoodScale(mood);
+    for (final e in emotions) {
+      validateEmotionKey(e.emotionKey);
+      validateIntensity(e.intensity);
+    }
+
+    await _db.transaction(() async {
+      await (_db.update(_db.moodEntries)..where((t) => t.id.equals(id))).write(
+        MoodEntriesCompanion(mood: Value(mood), note: Value(note)),
+      );
+      await (_db.delete(_db.moodEntryEmotions)
+            ..where((t) => t.moodEntryId.equals(id)))
+          .go();
+      if (emotions.isNotEmpty) {
+        await _db.batch((b) {
+          b.insertAll(_db.moodEntryEmotions, [
+            for (final e in emotions)
+              MoodEntryEmotionsCompanion.insert(
+                moodEntryId: id,
+                emotionKey: e.emotionKey,
+                intensity: e.intensity,
+              ),
+          ]);
+        });
+      }
+    });
+  }
+
   /// All mood entries, newest first.
   Future<List<MoodEntry>> getAll() {
     return (_db.select(
       _db.moodEntries,
     )..orderBy([(t) => OrderingTerm.desc(t.occurredAt)])).get();
+  }
+
+  Future<MoodEntry?> getById(String id) {
+    return (_db.select(
+      _db.moodEntries,
+    )..where((t) => t.id.equals(id))).getSingleOrNull();
   }
 
   Future<List<MoodEntryEmotion>> emotionsFor(String moodEntryId) {

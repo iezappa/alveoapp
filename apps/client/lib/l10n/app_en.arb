@@ -234,6 +234,9 @@
   "taskSaved": "Task saved",
 
   "checkInTitle": "How are you feeling?",
+  "checkInEditTitle": "Edit check-in",
+  "moodHistoryTitle": "Mood history",
+  "moodHistoryEmpty": "No check-ins yet",
   "overallMood": "Overall mood",
   "moodScale1": "Very low",
   "moodScale2": "Low",

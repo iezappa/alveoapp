@@ -52,6 +52,10 @@ void main() {
   });
 
   testWidgets('the Breathe button opens the breathing screen', (tester) async {
+    tester.view.physicalSize = const Size(800, 1400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
 
@@ -64,6 +68,10 @@ void main() {
   });
 
   testWidgets('tapping the quote card opens the library', (tester) async {
+    tester.view.physicalSize = const Size(800, 1400);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
 

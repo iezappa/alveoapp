@@ -1142,6 +1142,24 @@ abstract class AppLocalizations {
   /// **'How are you feeling?'**
   String get checkInTitle;
 
+  /// No description provided for @checkInEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit check-in'**
+  String get checkInEditTitle;
+
+  /// No description provided for @moodHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Mood history'**
+  String get moodHistoryTitle;
+
+  /// No description provided for @moodHistoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No check-ins yet'**
+  String get moodHistoryEmpty;
+
   /// No description provided for @overallMood.
   ///
   /// In en, this message translates to:
