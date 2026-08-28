@@ -1,9 +1,25 @@
 import 'dart:typed_data';
 
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../local/database.dart';
+
+pw.ThemeData? _cachedTheme;
+
+/// A PDF theme backed by the bundled Lato faces, so the full range of
+/// typographic characters (em dashes, curly quotes, …) renders.
+Future<pw.ThemeData> _pdfTheme() async {
+  if (_cachedTheme != null) return _cachedTheme!;
+  final regular = pw.Font.ttf(
+    await rootBundle.load('assets/fonts/Lato-Regular.ttf'),
+  );
+  final bold = pw.Font.ttf(
+    await rootBundle.load('assets/fonts/Lato-Bold.ttf'),
+  );
+  return _cachedTheme = pw.ThemeData.withFont(base: regular, bold: bold);
+}
 
 /// Labels for the session PDF, passed in so the caller controls the language.
 class SessionPdfLabels {
@@ -22,25 +38,16 @@ class SessionPdfLabels {
   final String takeaways;
 }
 
-/// The built-in PDF fonts only cover Latin-1, so fold the few typographic
-/// characters that appear in notes down to ASCII equivalents.
-String _sanitize(String s) => s
-    .replaceAll('—', '-') // em dash
-    .replaceAll('–', '-') // en dash
-    .replaceAll('…', '...') // ellipsis
-    .replaceAll(RegExp('[‘’]'), "'")
-    .replaceAll(RegExp('[“”]'), '"');
-
 /// Renders one session to a shareable A4 PDF. Body text is written verbatim
 /// (Markdown markers included) — a real Markdown layout comes later.
 Future<Uint8List> buildSessionPdf(
   Session session,
   SessionPdfLabels labels,
 ) async {
-  final doc = pw.Document();
+  final doc = pw.Document(theme: await _pdfTheme());
 
   pw.Widget block(String label, String? body) {
-    final text = _sanitize(body?.trim() ?? '');
+    final text = body?.trim() ?? '';
     if (text.isEmpty) return pw.SizedBox();
     return pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -67,12 +74,12 @@ Future<Uint8List> buildSessionPdf(
       margin: const pw.EdgeInsets.all(48),
       build: (context) => [
         pw.Text(
-          _sanitize(labels.title),
+          labels.title,
           style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold),
         ),
         pw.SizedBox(height: 2),
         pw.Text(
-          _sanitize(labels.dateText),
+          labels.dateText,
           style: const pw.TextStyle(fontSize: 11, color: PdfColors.grey700),
         ),
         block(labels.agenda, session.agendaMarkdown),

@@ -4,6 +4,8 @@ import 'package:alveo/data/local/database.dart';
 import 'package:alveo/data/repositories/session_repository.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized(); // for rootBundle (fonts)
+
   test('builds a valid, non-trivial PDF for a session', () async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
