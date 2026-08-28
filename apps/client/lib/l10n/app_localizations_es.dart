@@ -225,13 +225,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get breatheTitle => 'Respirar';
 
   @override
-  String get breatheStart => 'Empezar';
+  String get breatheStart => 'Empezar sesión';
 
   @override
-  String get breatheStop => 'Terminar';
+  String get breatheStop => 'Terminar sesión';
 
   @override
-  String get breatheReady => 'Cuando quieras';
+  String get breatheRemaining => 'Restante';
 
   @override
   String get breathePhaseInhale => 'Inhalá';

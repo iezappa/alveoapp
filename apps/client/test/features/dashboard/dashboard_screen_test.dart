@@ -59,7 +59,6 @@ void main() {
     await tester.tap(find.text('Breathe'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Start'), findsOneWidget);
-    expect(find.text('Ready when you are'), findsOneWidget);
+    expect(find.text('Start session'), findsOneWidget);
   });
 }

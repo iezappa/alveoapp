@@ -515,20 +515,20 @@ abstract class AppLocalizations {
   /// No description provided for @breatheStart.
   ///
   /// In en, this message translates to:
-  /// **'Start'**
+  /// **'Start session'**
   String get breatheStart;
 
   /// No description provided for @breatheStop.
   ///
   /// In en, this message translates to:
-  /// **'Stop'**
+  /// **'End session'**
   String get breatheStop;
 
-  /// No description provided for @breatheReady.
+  /// No description provided for @breatheRemaining.
   ///
   /// In en, this message translates to:
-  /// **'Ready when you are'**
-  String get breatheReady;
+  /// **'Remaining'**
+  String get breatheRemaining;
 
   /// No description provided for @breathePhaseInhale.
   ///

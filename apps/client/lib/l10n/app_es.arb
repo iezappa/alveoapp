@@ -77,9 +77,9 @@
 
   "breatheAction": "Respirar",
   "breatheTitle": "Respirar",
-  "breatheStart": "Empezar",
-  "breatheStop": "Terminar",
-  "breatheReady": "Cuando quieras",
+  "breatheStart": "Empezar sesión",
+  "breatheStop": "Terminar sesión",
+  "breatheRemaining": "Restante",
   "breathePhaseInhale": "Inhalá",
   "breathePhaseHold": "Sostené",
   "breathePhaseExhale": "Exhalá",

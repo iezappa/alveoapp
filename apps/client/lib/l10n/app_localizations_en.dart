@@ -225,13 +225,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get breatheTitle => 'Breathe';
 
   @override
-  String get breatheStart => 'Start';
+  String get breatheStart => 'Start session';
 
   @override
-  String get breatheStop => 'Stop';
+  String get breatheStop => 'End session';
 
   @override
-  String get breatheReady => 'Ready when you are';
+  String get breatheRemaining => 'Remaining';
 
   @override
   String get breathePhaseInhale => 'Breathe in';

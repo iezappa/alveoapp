@@ -15,26 +15,27 @@ Future<void> _pump(WidgetTester tester) async {
 }
 
 void main() {
-  testWidgets('starts paced breathing and then stops it', (tester) async {
+  testWidgets('starts a session and then ends it', (tester) async {
     await _pump(tester);
 
-    expect(find.text('Ready when you are'), findsOneWidget);
+    expect(find.text('Start session'), findsOneWidget);
 
-    await tester.tap(find.text('Start'));
+    await tester.tap(find.text('Start session'));
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
 
     expect(find.text('Breathe in'), findsOneWidget);
-    expect(find.text('Stop'), findsOneWidget);
+    expect(find.text('End session'), findsOneWidget);
+    expect(find.text('REMAINING'), findsOneWidget);
 
-    // Stop before the test ends so the repeating animation has no live timer.
-    await tester.tap(find.text('Stop'));
+    // End it so the repeating animation leaves no live timer.
+    await tester.tap(find.text('End session'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Ready when you are'), findsOneWidget);
+    expect(find.text('Start session'), findsOneWidget);
   });
 
-  testWidgets('offers box and 4-7-8 patterns', (tester) async {
+  testWidgets('offers box and 4-7-8 patterns before starting', (tester) async {
     await _pump(tester);
 
     expect(find.text('Box · 4·4·4·4'), findsOneWidget);

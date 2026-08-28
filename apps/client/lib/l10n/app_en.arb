@@ -104,9 +104,9 @@
 
   "breatheAction": "Breathe",
   "breatheTitle": "Breathe",
-  "breatheStart": "Start",
-  "breatheStop": "Stop",
-  "breatheReady": "Ready when you are",
+  "breatheStart": "Start session",
+  "breatheStop": "End session",
+  "breatheRemaining": "Remaining",
   "breathePhaseInhale": "Breathe in",
   "breathePhaseHold": "Hold",
   "breathePhaseExhale": "Breathe out",
