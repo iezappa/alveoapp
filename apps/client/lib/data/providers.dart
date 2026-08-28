@@ -5,6 +5,7 @@ import 'local/database.dart';
 import 'obsidian/obsidian_service.dart';
 import 'repositories/journal_repository.dart';
 import 'repositories/link_repository.dart';
+import 'repositories/medication_repository.dart';
 import 'repositories/mood_repository.dart';
 import 'repositories/session_repository.dart';
 import 'repositories/settings_repository.dart';
@@ -83,6 +84,10 @@ final linkRepositoryProvider = Provider<LinkRepository>(
 
 final thoughtRecordRepositoryProvider = Provider<ThoughtRecordRepository>(
   (ref) => ThoughtRecordRepository(ref.watch(appDatabaseProvider)),
+);
+
+final medicationRepositoryProvider = Provider<MedicationRepository>(
+  (ref) => MedicationRepository(ref.watch(appDatabaseProvider)),
 );
 
 final exportServiceProvider = Provider<ExportService>(

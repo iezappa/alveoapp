@@ -270,6 +270,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String get safetyContactProfessional => 'Professional';
 
   @override
+  String get medicationsTitle => 'Medications';
+
+  @override
+  String get dashboardMedications => 'Medications';
+
+  @override
+  String get medicationsEmpty => 'No medications tracked';
+
+  @override
+  String get newMedication => 'New medication';
+
+  @override
+  String get editMedication => 'Medication';
+
+  @override
+  String get medicationName => 'Name';
+
+  @override
+  String get medicationDose => 'Dose';
+
+  @override
+  String get medicationSchedule => 'Schedule';
+
+  @override
+  String get medicationActive => 'Active';
+
+  @override
+  String get medicationTake => 'Log a dose';
+
+  @override
+  String get medicationSaved => 'Medication saved';
+
+  @override
+  String medicationTakenToday(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count doses today',
+      one: '1 dose today',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String insightsAverage(String value) {
     return 'Average $value/5';
   }

@@ -45,6 +45,8 @@ class BackupService {
         'sessionLinks': await dump(_db.sessionLinks),
         'thoughtRecords': await dump(_db.thoughtRecords),
         'thoughtRecordDistortions': await dump(_db.thoughtRecordDistortions),
+        'medications': await dump(_db.medications),
+        'medicationLogs': await dump(_db.medicationLogs),
       },
     };
 
@@ -150,6 +152,14 @@ class BackupService {
     report['thoughtRecordDistortions'] = await _merge(
       _db.thoughtRecordDistortions,
       rows('thoughtRecordDistortions'),
+    );
+    report['medications'] = await _merge(
+      _db.medications,
+      rows('medications'),
+    );
+    report['medicationLogs'] = await _merge(
+      _db.medicationLogs,
+      rows('medicationLogs'),
     );
 
     return ImportReport(report);

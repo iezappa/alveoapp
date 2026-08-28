@@ -11,6 +11,8 @@ import '../features/journal/journal_editor_screen.dart';
 import '../features/journal/journal_labels.dart';
 import '../features/journal/journal_screen.dart';
 import '../features/journal/journal_section_screen.dart';
+import '../features/medication/medication_editor_screen.dart';
+import '../features/medication/medications_screen.dart';
 import '../features/motivation/library_screen.dart';
 import '../features/safety/safety_plan_screen.dart';
 import '../features/search/search_screen.dart';
@@ -101,6 +103,19 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/safety-plan',
         builder: (context, state) => const SafetyPlanScreen(),
+      ),
+      GoRoute(
+        path: '/medications',
+        builder: (context, state) => const MedicationsScreen(),
+      ),
+      GoRoute(
+        path: '/medications/new',
+        builder: (context, state) => const MedicationEditorScreen(),
+      ),
+      GoRoute(
+        path: '/medications/:id',
+        builder: (context, state) =>
+            MedicationEditorScreen(medicationId: state.pathParameters['id']),
       ),
       GoRoute(
         path: '/thought-records/new',

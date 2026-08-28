@@ -72,8 +72,8 @@ class DashboardScreen extends ConsumerWidget {
               const _QuoteCard(),
               const SizedBox(height: 12),
               const _MoodTrendCard(),
-              const SizedBox(height: 12),
-              const _SafetyPlanCard(),
+              const SizedBox(height: 16),
+              const _QuickLinks(),
             ],
           ),
         ),
@@ -287,40 +287,31 @@ class _MoodTrendCard extends ConsumerWidget {
   }
 }
 
-/// One-tap access to the personal safety plan.
-class _SafetyPlanCard extends StatelessWidget {
-  const _SafetyPlanCard();
+/// Compact links to the safety plan and the medication log.
+class _QuickLinks extends StatelessWidget {
+  const _QuickLinks();
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final scheme = Theme.of(context).colorScheme;
-
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: () => context.push('/safety-plan'),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Icon(
-                Icons.health_and_safety_outlined,
-                size: 20,
-                color: scheme.primary,
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  l10n.dashboardSafetyPlan,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ),
-              const Icon(Icons.chevron_right, size: 20),
-            ],
+    return Row(
+      children: [
+        Expanded(
+          child: OutlinedButton.icon(
+            onPressed: () => context.push('/safety-plan'),
+            icon: const Icon(Icons.health_and_safety_outlined, size: 18),
+            label: Text(l10n.dashboardSafetyPlan),
           ),
         ),
-      ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: OutlinedButton.icon(
+            onPressed: () => context.push('/medications'),
+            icon: const Icon(Icons.medication_outlined, size: 18),
+            label: Text(l10n.dashboardMedications),
+          ),
+        ),
+      ],
     );
   }
 }

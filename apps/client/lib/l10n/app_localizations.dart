@@ -602,6 +602,78 @@ abstract class AppLocalizations {
   /// **'Professional'**
   String get safetyContactProfessional;
 
+  /// No description provided for @medicationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Medications'**
+  String get medicationsTitle;
+
+  /// No description provided for @dashboardMedications.
+  ///
+  /// In en, this message translates to:
+  /// **'Medications'**
+  String get dashboardMedications;
+
+  /// No description provided for @medicationsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No medications tracked'**
+  String get medicationsEmpty;
+
+  /// No description provided for @newMedication.
+  ///
+  /// In en, this message translates to:
+  /// **'New medication'**
+  String get newMedication;
+
+  /// No description provided for @editMedication.
+  ///
+  /// In en, this message translates to:
+  /// **'Medication'**
+  String get editMedication;
+
+  /// No description provided for @medicationName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get medicationName;
+
+  /// No description provided for @medicationDose.
+  ///
+  /// In en, this message translates to:
+  /// **'Dose'**
+  String get medicationDose;
+
+  /// No description provided for @medicationSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule'**
+  String get medicationSchedule;
+
+  /// No description provided for @medicationActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get medicationActive;
+
+  /// No description provided for @medicationTake.
+  ///
+  /// In en, this message translates to:
+  /// **'Log a dose'**
+  String get medicationTake;
+
+  /// No description provided for @medicationSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Medication saved'**
+  String get medicationSaved;
+
+  /// No description provided for @medicationTakenToday.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 dose today} other{{count} doses today}}'**
+  String medicationTakenToday(int count);
+
   /// No description provided for @insightsAverage.
   ///
   /// In en, this message translates to:

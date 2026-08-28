@@ -119,6 +119,22 @@
   "safetyContactPhone": "Phone",
   "safetyContactSupport": "Support",
   "safetyContactProfessional": "Professional",
+
+  "medicationsTitle": "Medications",
+  "dashboardMedications": "Medications",
+  "medicationsEmpty": "No medications tracked",
+  "newMedication": "New medication",
+  "editMedication": "Medication",
+  "medicationName": "Name",
+  "medicationDose": "Dose",
+  "medicationSchedule": "Schedule",
+  "medicationActive": "Active",
+  "medicationTake": "Log a dose",
+  "medicationSaved": "Medication saved",
+  "medicationTakenToday": "{count, plural, =1{1 dose today} other{{count} doses today}}",
+  "@medicationTakenToday": {
+    "placeholders": { "count": { "type": "int" } }
+  },
   "insightsAverage": "Average {value}/5",
   "@insightsAverage": {
     "placeholders": { "value": { "type": "String" } }

@@ -170,6 +170,33 @@ class ThoughtRecordDistortions extends Table {
   Set<Column> get primaryKey => {recordId, distortion};
 }
 
+/// A medication the user is tracking.
+class Medications extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  TextColumn get dose => text().nullable()();
+
+  /// Free-text schedule reminder, e.g. "morning + night".
+  TextColumn get scheduleNote => text().nullable()();
+
+  BoolColumn get active => boolean().withDefault(const Constant(true))();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// One recorded intake of a [Medications] row.
+class MedicationLogs extends Table {
+  TextColumn get id => text()();
+  TextColumn get medicationId =>
+      text().references(Medications, #id, onDelete: KeyAction.cascade)();
+  DateTimeColumn get takenAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 /// Context labels (people, places, situations) shared across entities.
 class Tags extends Table {
   TextColumn get id => text()();

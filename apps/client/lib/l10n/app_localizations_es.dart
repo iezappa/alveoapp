@@ -271,6 +271,50 @@ class AppLocalizationsEs extends AppLocalizations {
   String get safetyContactProfessional => 'Profesional';
 
   @override
+  String get medicationsTitle => 'Medicación';
+
+  @override
+  String get dashboardMedications => 'Medicación';
+
+  @override
+  String get medicationsEmpty => 'No hay medicación registrada';
+
+  @override
+  String get newMedication => 'Nueva medicación';
+
+  @override
+  String get editMedication => 'Medicación';
+
+  @override
+  String get medicationName => 'Nombre';
+
+  @override
+  String get medicationDose => 'Dosis';
+
+  @override
+  String get medicationSchedule => 'Horario';
+
+  @override
+  String get medicationActive => 'Activa';
+
+  @override
+  String get medicationTake => 'Registrar toma';
+
+  @override
+  String get medicationSaved => 'Medicación guardada';
+
+  @override
+  String medicationTakenToday(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count tomas hoy',
+      one: '1 toma hoy',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String insightsAverage(String value) {
     return 'Promedio $value/5';
   }
