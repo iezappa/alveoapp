@@ -5,9 +5,12 @@ import 'package:intl/intl.dart';
 
 import '../../app/ui.dart';
 import '../../data/local/database.dart';
+import '../../data/providers.dart';
 import '../../domain/journal/journal_section.dart';
 import '../../l10n/app_localizations.dart';
+import '../shared/confirm_delete.dart';
 import '../shared/master_detail_shell.dart';
+import '../timeline/timeline_providers.dart';
 import 'journal_labels.dart';
 import 'journal_preview.dart';
 import 'journal_providers.dart';
@@ -40,12 +43,37 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
     }
   }
 
-  void _add() {
-    // Pre-select the section when the list is filtered to exactly one.
-    final section = _sections.length == 1 ? _sections.single : null;
-    context.push(
-      section == null ? '/journal/new' : '/journal/new?section=${section.name}',
+  Future<void> _add() async {
+    final l10n = AppLocalizations.of(context);
+    final section = await showModalBottomSheet<JournalSection>(
+      context: context,
+      builder: (context) => SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (final s in JournalSection.values)
+                ListTile(
+                  leading: Icon(s.icon),
+                  title: Text(s.label(l10n)),
+                  onTap: () => Navigator.pop(context, s),
+                ),
+            ],
+          ),
+        ),
+      ),
     );
+    if (section != null && mounted) {
+      context.push('/journal/new?section=${section.name}');
+    }
+  }
+
+  Future<void> _delete(String id) async {
+    if (!await confirmDelete(context)) return;
+    await ref.read(journalRepositoryProvider).delete(id);
+    ref.invalidate(journalListProvider);
+    ref.invalidate(timelineProvider);
+    if (mounted) setState(() => _selectedId = null);
   }
 
   List<JournalEntry> _filter(List<JournalEntry> all) {
@@ -110,6 +138,7 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
             key: ValueKey(_selectedId),
             entryId: _selectedId!,
             onEdit: () => context.push('/journal/$_selectedId'),
+            onDelete: () => _delete(_selectedId!),
           );
 
     return MasterDetailShell(

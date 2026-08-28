@@ -10,10 +10,16 @@ import 'task_providers.dart';
 /// Read-only view of one task for the detail pane. "Edit" hands off to the
 /// full task editor.
 class TaskPreview extends ConsumerWidget {
-  const TaskPreview({super.key, required this.taskId, required this.onEdit});
+  const TaskPreview({
+    super.key,
+    required this.taskId,
+    required this.onEdit,
+    required this.onDelete,
+  });
 
   final String taskId;
   final VoidCallback onEdit;
+  final VoidCallback onDelete;
 
   static String statusLabel(AppLocalizations l10n, TaskStatus status) =>
       switch (status) {
@@ -57,6 +63,11 @@ class TaskPreview extends ConsumerWidget {
                 onPressed: onEdit,
                 icon: const Icon(Icons.edit_outlined, size: 18),
                 label: Text(l10n.editAction),
+              ),
+              IconButton(
+                onPressed: onDelete,
+                icon: const Icon(Icons.delete_outline),
+                tooltip: l10n.deleteAction,
               ),
             ],
           ),

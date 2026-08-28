@@ -109,6 +109,8 @@
   "writeMonthlyReview": "Escribir el repaso del mes",
 
   "editAction": "Editar",
+  "deleteAction": "Eliminar",
+  "deleteConfirmTitle": "¿Eliminar este registro?",
   "detailNothingSelected": "Elegí un registro para verlo acá",
 
   "sessionsUpcoming": "Próximas",

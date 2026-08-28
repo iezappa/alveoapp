@@ -5,8 +5,11 @@ import 'package:intl/intl.dart';
 
 import '../../app/ui.dart';
 import '../../data/local/database.dart';
+import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../shared/confirm_delete.dart';
 import '../shared/master_detail_shell.dart';
+import '../timeline/timeline_providers.dart';
 import 'session_preview.dart';
 import 'session_providers.dart';
 
@@ -35,6 +38,14 @@ class _SessionsScreenState extends ConsumerState<SessionsScreen> {
     } else {
       context.push('/sessions/$id');
     }
+  }
+
+  Future<void> _delete(String id) async {
+    if (!await confirmDelete(context)) return;
+    await ref.read(sessionRepositoryProvider).delete(id);
+    ref.invalidate(sessionListProvider);
+    ref.invalidate(timelineProvider);
+    if (mounted) setState(() => _selectedId = null);
   }
 
   List<Session> _filter(List<Session> all) {
@@ -102,6 +113,7 @@ class _SessionsScreenState extends ConsumerState<SessionsScreen> {
             key: ValueKey(_selectedId),
             sessionId: _selectedId!,
             onEdit: () => context.push('/sessions/$_selectedId'),
+            onDelete: () => _delete(_selectedId!),
           );
 
     return MasterDetailShell(

@@ -686,6 +686,18 @@ abstract class AppLocalizations {
   /// **'Edit'**
   String get editAction;
 
+  /// No description provided for @deleteAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteAction;
+
+  /// No description provided for @deleteConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this record?'**
+  String get deleteConfirmTitle;
+
   /// No description provided for @detailNothingSelected.
   ///
   /// In en, this message translates to:

@@ -8,6 +8,7 @@ import '../../data/local/database.dart';
 import '../../data/local/tables.dart';
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../shared/confirm_delete.dart';
 import '../shared/master_detail_shell.dart';
 import '../timeline/timeline_providers.dart';
 import 'task_preview.dart';
@@ -39,6 +40,14 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
     } else {
       context.push('/tasks/$id');
     }
+  }
+
+  Future<void> _delete(String id) async {
+    if (!await confirmDelete(context)) return;
+    await ref.read(taskRepositoryProvider).delete(id);
+    ref.invalidate(taskListProvider);
+    ref.invalidate(timelineProvider);
+    if (mounted) setState(() => _selectedId = null);
   }
 
   List<Task> _filter(List<Task> all) {
@@ -103,6 +112,7 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
             key: ValueKey(_selectedId),
             taskId: _selectedId!,
             onEdit: () => context.push('/tasks/$_selectedId'),
+            onDelete: () => _delete(_selectedId!),
           );
 
     return MasterDetailShell(

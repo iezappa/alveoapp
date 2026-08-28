@@ -320,6 +320,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editAction => 'Edit';
 
   @override
+  String get deleteAction => 'Delete';
+
+  @override
+  String get deleteConfirmTitle => 'Delete this record?';
+
+  @override
   String get detailNothingSelected => 'Pick a record to see it here';
 
   @override

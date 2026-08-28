@@ -10,10 +10,16 @@ import 'journal_providers.dart';
 /// Read-only view of one journal entry for the detail pane. "Edit" hands off
 /// to the full Markdown editor.
 class JournalPreview extends ConsumerWidget {
-  const JournalPreview({super.key, required this.entryId, required this.onEdit});
+  const JournalPreview({
+    super.key,
+    required this.entryId,
+    required this.onEdit,
+    required this.onDelete,
+  });
 
   final String entryId;
   final VoidCallback onEdit;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,6 +54,11 @@ class JournalPreview extends ConsumerWidget {
                 onPressed: onEdit,
                 icon: const Icon(Icons.edit_outlined, size: 18),
                 label: Text(l10n.editAction),
+              ),
+              IconButton(
+                onPressed: onDelete,
+                icon: const Icon(Icons.delete_outline),
+                tooltip: l10n.deleteAction,
               ),
             ],
           ),

@@ -13,10 +13,12 @@ class SessionPreview extends ConsumerWidget {
     super.key,
     required this.sessionId,
     required this.onEdit,
+    required this.onDelete,
   });
 
   final String sessionId;
   final VoidCallback onEdit;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,6 +58,11 @@ class SessionPreview extends ConsumerWidget {
                 onPressed: onEdit,
                 icon: const Icon(Icons.edit_outlined, size: 18),
                 label: Text(l10n.editAction),
+              ),
+              IconButton(
+                onPressed: onDelete,
+                icon: const Icon(Icons.delete_outline),
+                tooltip: l10n.deleteAction,
               ),
             ],
           ),

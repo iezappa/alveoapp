@@ -46,10 +46,9 @@ void main() {
 
     await _openJournal(tester, db);
 
-    await tester.tap(find.widgetWithText(FilterChip, 'Creative'));
-    await tester.pumpAndSettle();
-
     await tester.tap(find.byTooltip('New entry')); // "+" in the list pane
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(ListTile, 'Creative')); // section menu
     await tester.pumpAndSettle();
 
     await tester.enterText(_editorField().last, 'a poem idea');
@@ -84,5 +83,14 @@ void main() {
 
     expect(find.text('first light through the window'), findsOneWidget);
     expect(find.text('Edit'), findsOneWidget);
+
+    // Delete it from the preview, confirming the dialog.
+    await tester.tap(find.byTooltip('Delete'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
+    await tester.pumpAndSettle();
+
+    expect(await JournalRepository(db).getAll(), isEmpty);
+    expect(find.text('Pick a record to see it here'), findsOneWidget);
   });
 }

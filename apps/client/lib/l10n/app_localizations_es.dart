@@ -320,6 +320,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get editAction => 'Editar';
 
   @override
+  String get deleteAction => 'Eliminar';
+
+  @override
+  String get deleteConfirmTitle => '¿Eliminar este registro?';
+
+  @override
   String get detailNothingSelected => 'Elegí un registro para verlo acá';
 
   @override

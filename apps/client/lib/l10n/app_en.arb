@@ -141,6 +141,8 @@
   "writeMonthlyReview": "Write this month's review",
 
   "editAction": "Edit",
+  "deleteAction": "Delete",
+  "deleteConfirmTitle": "Delete this record?",
   "detailNothingSelected": "Pick a record to see it here",
 
   "sessionsUpcoming": "Upcoming",
