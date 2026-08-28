@@ -254,6 +254,12 @@ abstract class AppLocalizations {
   /// **'Wrong PIN'**
   String get pinWrong;
 
+  /// No description provided for @pinLockedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many tries. Wait {seconds}s.'**
+  String pinLockedOut(int seconds);
+
   /// No description provided for @pinTooShort.
   ///
   /// In en, this message translates to:

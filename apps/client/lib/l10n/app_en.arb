@@ -36,6 +36,10 @@
   "pinEnterTitle": "Enter your PIN",
   "pinUnlock": "Unlock",
   "pinWrong": "Wrong PIN",
+  "pinLockedOut": "Too many tries. Wait {seconds}s.",
+  "@pinLockedOut": {
+    "placeholders": { "seconds": { "type": "int" } }
+  },
   "pinTooShort": "Use at least 4 digits",
   "pinMismatch": "The PINs don't match",
   "pinUpdated": "PIN updated",

@@ -125,6 +125,28 @@ void main() {
     );
   });
 
+  test('the safety plan travels in the backup', () async {
+    final source = AppDatabase.forTesting();
+    addTearDown(source.close);
+    await source.customInsert(
+      "INSERT INTO app_settings (key, value) VALUES "
+      "('safety.plan', '{\"warningSigns\":\"shutting down\"}')",
+    );
+    final json = await BackupService(source).exportToJson();
+
+    final target = AppDatabase.forTesting();
+    addTearDown(target.close);
+    final report = await BackupService(target).importFromJson(json);
+
+    expect(report.tables['safetyPlan']!.inserted, 1);
+    final row = await target
+        .customSelect(
+          "SELECT value FROM app_settings WHERE key = 'safety.plan'",
+        )
+        .getSingle();
+    expect(row.read<String>('value'), contains('shutting down'));
+  });
+
   test('a non-backup file is refused', () async {
     final target = AppDatabase.forTesting();
     addTearDown(target.close);

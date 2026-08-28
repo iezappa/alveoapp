@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,17 +20,43 @@ class _LockScreenState extends ConsumerState<LockScreen> {
   final _focusNode = FocusNode();
   String? _error;
   bool _checking = false;
+  Duration _lockout = Duration.zero;
+  Timer? _tick;
+
+  @override
+  void initState() {
+    super.initState();
+    _syncLockout();
+  }
 
   @override
   void dispose() {
+    _tick?.cancel();
     _controller.dispose();
     _focusNode.dispose();
     super.dispose();
   }
 
+  void _syncLockout() {
+    final remaining = ref.read(lockControllerProvider.notifier).lockoutRemaining;
+    setState(() => _lockout = remaining);
+    if (remaining > Duration.zero) {
+      _tick ??= Timer.periodic(const Duration(seconds: 1), (t) {
+        final left =
+            ref.read(lockControllerProvider.notifier).lockoutRemaining;
+        if (!mounted) return;
+        setState(() => _lockout = left);
+        if (left <= Duration.zero) {
+          t.cancel();
+          _tick = null;
+        }
+      });
+    }
+  }
+
   Future<void> _submit() async {
     final pin = _controller.text;
-    if (pin.length < 4 || _checking) return;
+    if (pin.length < 4 || _checking || _lockout > Duration.zero) return;
 
     setState(() {
       _checking = true;
@@ -40,15 +68,17 @@ class _LockScreenState extends ConsumerState<LockScreen> {
 
     setState(() {
       _checking = false;
-      _error = AppLocalizations.of(context).pinWrong;
       _controller.clear();
+      _error = AppLocalizations.of(context).pinWrong;
     });
+    _syncLockout();
     _focusNode.requestFocus();
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final lockedOut = _lockout > Duration.zero;
 
     return Scaffold(
       body: Center(
@@ -71,6 +101,7 @@ class _LockScreenState extends ConsumerState<LockScreen> {
                   focusNode: _focusNode,
                   autofocus: true,
                   obscureText: true,
+                  enabled: !lockedOut,
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   maxLength: 8,
@@ -79,12 +110,14 @@ class _LockScreenState extends ConsumerState<LockScreen> {
                   decoration: InputDecoration(
                     counterText: '',
                     border: const OutlineInputBorder(),
-                    errorText: _error,
+                    errorText: lockedOut
+                        ? l10n.pinLockedOut(_lockout.inSeconds + 1)
+                        : _error,
                   ),
                 ),
                 const SizedBox(height: 12),
                 FilledButton(
-                  onPressed: _checking ? null : _submit,
+                  onPressed: (_checking || lockedOut) ? null : _submit,
                   child: Text(l10n.pinUnlock),
                 ),
               ],

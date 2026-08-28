@@ -88,6 +88,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pinWrong => 'Wrong PIN';
 
   @override
+  String pinLockedOut(int seconds) {
+    return 'Too many tries. Wait ${seconds}s.';
+  }
+
+  @override
   String get pinTooShort => 'Use at least 4 digits';
 
   @override

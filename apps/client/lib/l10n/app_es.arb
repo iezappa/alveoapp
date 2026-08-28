@@ -29,6 +29,7 @@
   "pinEnterTitle": "Ingresá tu PIN",
   "pinUnlock": "Desbloquear",
   "pinWrong": "PIN incorrecto",
+  "pinLockedOut": "Demasiados intentos. Esperá {seconds}s.",
   "pinTooShort": "Usá al menos 4 dígitos",
   "pinMismatch": "Los PIN no coinciden",
   "pinUpdated": "PIN actualizado",

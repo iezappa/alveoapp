@@ -19,6 +19,10 @@ class BackupService {
   static const _format = 'alveo-export';
   static const _formatVersion = 1;
 
+  /// The one `app_settings` key we carry in backups. The rest of app settings
+  /// (UI language, PIN) is intentionally device-local.
+  static const _safetyPlanKey = 'safety.plan';
+
   Future<String> exportToJson() async {
     Future<List<Map<String, dynamic>>> dump(TableInfo table) async {
       final rows = await _db
@@ -27,11 +31,19 @@ class BackupService {
       return rows.map((r) => r.data).toList();
     }
 
+    final safetyPlanRow = await _db
+        .customSelect(
+          'SELECT value FROM app_settings WHERE key = ?',
+          variables: [Variable(_safetyPlanKey)],
+        )
+        .getSingleOrNull();
+
     final bundle = {
       'format': _format,
       'version': _formatVersion,
       'schemaVersion': _db.schemaVersion,
       'exportedAt': DateTime.now().toIso8601String(),
+      'safetyPlan': safetyPlanRow?.read<String>('value'),
       'data': {
         'tags': await dump(_db.tags),
         'sessions': await dump(_db.sessions),
@@ -161,6 +173,26 @@ class BackupService {
       _db.medicationLogs,
       rows('medicationLogs'),
     );
+
+    // The safety plan: adopt the incoming one only when there is no local one.
+    final incomingPlan = bundle['safetyPlan'];
+    if (incomingPlan is String && incomingPlan.isNotEmpty) {
+      final existing = await _db
+          .customSelect(
+            'SELECT 1 FROM app_settings WHERE key = ?',
+            variables: [Variable(_safetyPlanKey)],
+          )
+          .getSingleOrNull();
+      if (existing == null) {
+        await _db.customInsert(
+          'INSERT INTO app_settings (key, value) VALUES (?, ?)',
+          variables: [Variable(_safetyPlanKey), Variable(incomingPlan)],
+        );
+        report['safetyPlan'] = const TableImport(inserted: 1, skipped: 0);
+      } else {
+        report['safetyPlan'] = const TableImport(inserted: 0, skipped: 1);
+      }
+    }
 
     return ImportReport(report);
   }
