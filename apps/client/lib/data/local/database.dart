@@ -22,6 +22,8 @@ part 'database.g.dart';
     AppSettings,
     Sessions,
     SessionLinks,
+    ThoughtRecords,
+    ThoughtRecordDistortions,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -34,7 +36,7 @@ class AppDatabase extends _$AppDatabase {
   factory AppDatabase.forTesting() => AppDatabase(NativeDatabase.memory());
 
   @override
-  int get schemaVersion => 6;
+  int get schemaVersion => 7;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -55,6 +57,10 @@ class AppDatabase extends _$AppDatabase {
       }
       if (from < 6) {
         await m.createTable(journalEntryEmotions);
+      }
+      if (from < 7) {
+        await m.createTable(thoughtRecords);
+        await m.createTable(thoughtRecordDistortions);
       }
     },
     beforeOpen: (details) async {

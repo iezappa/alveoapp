@@ -9,6 +9,7 @@ import 'repositories/mood_repository.dart';
 import 'repositories/session_repository.dart';
 import 'repositories/settings_repository.dart';
 import 'repositories/task_repository.dart';
+import 'repositories/thought_record_repository.dart';
 import 'search/search_service.dart';
 import 'security/pin_service.dart';
 import 'transfer/backup_service.dart';
@@ -73,6 +74,10 @@ final sessionRepositoryProvider = Provider<SessionRepository>(
 
 final linkRepositoryProvider = Provider<LinkRepository>(
   (ref) => LinkRepository(ref.watch(appDatabaseProvider)),
+);
+
+final thoughtRecordRepositoryProvider = Provider<ThoughtRecordRepository>(
+  (ref) => ThoughtRecordRepository(ref.watch(appDatabaseProvider)),
 );
 
 final exportServiceProvider = Provider<ExportService>(

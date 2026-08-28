@@ -1,8 +1,10 @@
 import 'package:drift/drift.dart';
 
+import '../../domain/cbt/cognitive_distortion.dart';
 import '../../domain/journal/journal_section.dart';
 import '../../domain/links/link_target_type.dart';
 
+export '../../domain/cbt/cognitive_distortion.dart';
 export '../../domain/journal/journal_section.dart';
 export '../../domain/links/link_target_type.dart';
 
@@ -120,6 +122,52 @@ class Tasks extends Table {
 
   @override
   Set<Column> get primaryKey => {id};
+}
+
+/// A CBT thought record: the chain from a situation to a reframed thought.
+///
+/// The emotion is captured locally as free text plus a 0..10 intensity (not
+/// linked to the Plutchik model). Belief ratings are 0..100 percent.
+class ThoughtRecords extends Table {
+  TextColumn get id => text()();
+
+  /// When the situation happened. May be backdated.
+  DateTimeColumn get occurredAt => dateTime()();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  TextColumn get situation => text()();
+  TextColumn get automaticThought => text()();
+
+  /// 0..100 — how much the automatic thought was believed at the time.
+  IntColumn get beliefBefore => integer().nullable()();
+
+  TextColumn get emotionLabel => text().nullable()();
+
+  /// 0..10.
+  IntColumn get emotionIntensityBefore => integer().nullable()();
+
+  TextColumn get alternativeThought => text().nullable()();
+
+  /// 0..100 — belief in the automatic thought after the reframe.
+  IntColumn get beliefAfter => integer().nullable()();
+
+  /// 0..10.
+  IntColumn get emotionIntensityAfter => integer().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// Distortions tagged on a [ThoughtRecords] row.
+class ThoughtRecordDistortions extends Table {
+  TextColumn get recordId =>
+      text().references(ThoughtRecords, #id, onDelete: KeyAction.cascade)();
+
+  IntColumn get distortion => intEnum<CognitiveDistortion>()();
+
+  @override
+  Set<Column> get primaryKey => {recordId, distortion};
 }
 
 /// Context labels (people, places, situations) shared across entities.

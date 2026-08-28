@@ -3583,6 +3583,978 @@ class SessionLinksCompanion extends UpdateCompanion<SessionLink> {
   }
 }
 
+class $ThoughtRecordsTable extends ThoughtRecords
+    with TableInfo<$ThoughtRecordsTable, ThoughtRecord> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ThoughtRecordsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _occurredAtMeta = const VerificationMeta(
+    'occurredAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> occurredAt = GeneratedColumn<DateTime>(
+    'occurred_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _situationMeta = const VerificationMeta(
+    'situation',
+  );
+  @override
+  late final GeneratedColumn<String> situation = GeneratedColumn<String>(
+    'situation',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _automaticThoughtMeta = const VerificationMeta(
+    'automaticThought',
+  );
+  @override
+  late final GeneratedColumn<String> automaticThought = GeneratedColumn<String>(
+    'automatic_thought',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _beliefBeforeMeta = const VerificationMeta(
+    'beliefBefore',
+  );
+  @override
+  late final GeneratedColumn<int> beliefBefore = GeneratedColumn<int>(
+    'belief_before',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _emotionLabelMeta = const VerificationMeta(
+    'emotionLabel',
+  );
+  @override
+  late final GeneratedColumn<String> emotionLabel = GeneratedColumn<String>(
+    'emotion_label',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _emotionIntensityBeforeMeta =
+      const VerificationMeta('emotionIntensityBefore');
+  @override
+  late final GeneratedColumn<int> emotionIntensityBefore = GeneratedColumn<int>(
+    'emotion_intensity_before',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _alternativeThoughtMeta =
+      const VerificationMeta('alternativeThought');
+  @override
+  late final GeneratedColumn<String> alternativeThought =
+      GeneratedColumn<String>(
+        'alternative_thought',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _beliefAfterMeta = const VerificationMeta(
+    'beliefAfter',
+  );
+  @override
+  late final GeneratedColumn<int> beliefAfter = GeneratedColumn<int>(
+    'belief_after',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _emotionIntensityAfterMeta =
+      const VerificationMeta('emotionIntensityAfter');
+  @override
+  late final GeneratedColumn<int> emotionIntensityAfter = GeneratedColumn<int>(
+    'emotion_intensity_after',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    occurredAt,
+    createdAt,
+    situation,
+    automaticThought,
+    beliefBefore,
+    emotionLabel,
+    emotionIntensityBefore,
+    alternativeThought,
+    beliefAfter,
+    emotionIntensityAfter,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'thought_records';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ThoughtRecord> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('occurred_at')) {
+      context.handle(
+        _occurredAtMeta,
+        occurredAt.isAcceptableOrUnknown(data['occurred_at']!, _occurredAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_occurredAtMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('situation')) {
+      context.handle(
+        _situationMeta,
+        situation.isAcceptableOrUnknown(data['situation']!, _situationMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_situationMeta);
+    }
+    if (data.containsKey('automatic_thought')) {
+      context.handle(
+        _automaticThoughtMeta,
+        automaticThought.isAcceptableOrUnknown(
+          data['automatic_thought']!,
+          _automaticThoughtMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_automaticThoughtMeta);
+    }
+    if (data.containsKey('belief_before')) {
+      context.handle(
+        _beliefBeforeMeta,
+        beliefBefore.isAcceptableOrUnknown(
+          data['belief_before']!,
+          _beliefBeforeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('emotion_label')) {
+      context.handle(
+        _emotionLabelMeta,
+        emotionLabel.isAcceptableOrUnknown(
+          data['emotion_label']!,
+          _emotionLabelMeta,
+        ),
+      );
+    }
+    if (data.containsKey('emotion_intensity_before')) {
+      context.handle(
+        _emotionIntensityBeforeMeta,
+        emotionIntensityBefore.isAcceptableOrUnknown(
+          data['emotion_intensity_before']!,
+          _emotionIntensityBeforeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('alternative_thought')) {
+      context.handle(
+        _alternativeThoughtMeta,
+        alternativeThought.isAcceptableOrUnknown(
+          data['alternative_thought']!,
+          _alternativeThoughtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('belief_after')) {
+      context.handle(
+        _beliefAfterMeta,
+        beliefAfter.isAcceptableOrUnknown(
+          data['belief_after']!,
+          _beliefAfterMeta,
+        ),
+      );
+    }
+    if (data.containsKey('emotion_intensity_after')) {
+      context.handle(
+        _emotionIntensityAfterMeta,
+        emotionIntensityAfter.isAcceptableOrUnknown(
+          data['emotion_intensity_after']!,
+          _emotionIntensityAfterMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ThoughtRecord map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ThoughtRecord(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      occurredAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}occurred_at'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      situation: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}situation'],
+      )!,
+      automaticThought: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}automatic_thought'],
+      )!,
+      beliefBefore: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}belief_before'],
+      ),
+      emotionLabel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}emotion_label'],
+      ),
+      emotionIntensityBefore: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}emotion_intensity_before'],
+      ),
+      alternativeThought: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}alternative_thought'],
+      ),
+      beliefAfter: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}belief_after'],
+      ),
+      emotionIntensityAfter: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}emotion_intensity_after'],
+      ),
+    );
+  }
+
+  @override
+  $ThoughtRecordsTable createAlias(String alias) {
+    return $ThoughtRecordsTable(attachedDatabase, alias);
+  }
+}
+
+class ThoughtRecord extends DataClass implements Insertable<ThoughtRecord> {
+  final String id;
+
+  /// When the situation happened. May be backdated.
+  final DateTime occurredAt;
+  final DateTime createdAt;
+  final String situation;
+  final String automaticThought;
+
+  /// 0..100 — how much the automatic thought was believed at the time.
+  final int? beliefBefore;
+  final String? emotionLabel;
+
+  /// 0..10.
+  final int? emotionIntensityBefore;
+  final String? alternativeThought;
+
+  /// 0..100 — belief in the automatic thought after the reframe.
+  final int? beliefAfter;
+
+  /// 0..10.
+  final int? emotionIntensityAfter;
+  const ThoughtRecord({
+    required this.id,
+    required this.occurredAt,
+    required this.createdAt,
+    required this.situation,
+    required this.automaticThought,
+    this.beliefBefore,
+    this.emotionLabel,
+    this.emotionIntensityBefore,
+    this.alternativeThought,
+    this.beliefAfter,
+    this.emotionIntensityAfter,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['occurred_at'] = Variable<DateTime>(occurredAt);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['situation'] = Variable<String>(situation);
+    map['automatic_thought'] = Variable<String>(automaticThought);
+    if (!nullToAbsent || beliefBefore != null) {
+      map['belief_before'] = Variable<int>(beliefBefore);
+    }
+    if (!nullToAbsent || emotionLabel != null) {
+      map['emotion_label'] = Variable<String>(emotionLabel);
+    }
+    if (!nullToAbsent || emotionIntensityBefore != null) {
+      map['emotion_intensity_before'] = Variable<int>(emotionIntensityBefore);
+    }
+    if (!nullToAbsent || alternativeThought != null) {
+      map['alternative_thought'] = Variable<String>(alternativeThought);
+    }
+    if (!nullToAbsent || beliefAfter != null) {
+      map['belief_after'] = Variable<int>(beliefAfter);
+    }
+    if (!nullToAbsent || emotionIntensityAfter != null) {
+      map['emotion_intensity_after'] = Variable<int>(emotionIntensityAfter);
+    }
+    return map;
+  }
+
+  ThoughtRecordsCompanion toCompanion(bool nullToAbsent) {
+    return ThoughtRecordsCompanion(
+      id: Value(id),
+      occurredAt: Value(occurredAt),
+      createdAt: Value(createdAt),
+      situation: Value(situation),
+      automaticThought: Value(automaticThought),
+      beliefBefore: beliefBefore == null && nullToAbsent
+          ? const Value.absent()
+          : Value(beliefBefore),
+      emotionLabel: emotionLabel == null && nullToAbsent
+          ? const Value.absent()
+          : Value(emotionLabel),
+      emotionIntensityBefore: emotionIntensityBefore == null && nullToAbsent
+          ? const Value.absent()
+          : Value(emotionIntensityBefore),
+      alternativeThought: alternativeThought == null && nullToAbsent
+          ? const Value.absent()
+          : Value(alternativeThought),
+      beliefAfter: beliefAfter == null && nullToAbsent
+          ? const Value.absent()
+          : Value(beliefAfter),
+      emotionIntensityAfter: emotionIntensityAfter == null && nullToAbsent
+          ? const Value.absent()
+          : Value(emotionIntensityAfter),
+    );
+  }
+
+  factory ThoughtRecord.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ThoughtRecord(
+      id: serializer.fromJson<String>(json['id']),
+      occurredAt: serializer.fromJson<DateTime>(json['occurredAt']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      situation: serializer.fromJson<String>(json['situation']),
+      automaticThought: serializer.fromJson<String>(json['automaticThought']),
+      beliefBefore: serializer.fromJson<int?>(json['beliefBefore']),
+      emotionLabel: serializer.fromJson<String?>(json['emotionLabel']),
+      emotionIntensityBefore: serializer.fromJson<int?>(
+        json['emotionIntensityBefore'],
+      ),
+      alternativeThought: serializer.fromJson<String?>(
+        json['alternativeThought'],
+      ),
+      beliefAfter: serializer.fromJson<int?>(json['beliefAfter']),
+      emotionIntensityAfter: serializer.fromJson<int?>(
+        json['emotionIntensityAfter'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'occurredAt': serializer.toJson<DateTime>(occurredAt),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'situation': serializer.toJson<String>(situation),
+      'automaticThought': serializer.toJson<String>(automaticThought),
+      'beliefBefore': serializer.toJson<int?>(beliefBefore),
+      'emotionLabel': serializer.toJson<String?>(emotionLabel),
+      'emotionIntensityBefore': serializer.toJson<int?>(emotionIntensityBefore),
+      'alternativeThought': serializer.toJson<String?>(alternativeThought),
+      'beliefAfter': serializer.toJson<int?>(beliefAfter),
+      'emotionIntensityAfter': serializer.toJson<int?>(emotionIntensityAfter),
+    };
+  }
+
+  ThoughtRecord copyWith({
+    String? id,
+    DateTime? occurredAt,
+    DateTime? createdAt,
+    String? situation,
+    String? automaticThought,
+    Value<int?> beliefBefore = const Value.absent(),
+    Value<String?> emotionLabel = const Value.absent(),
+    Value<int?> emotionIntensityBefore = const Value.absent(),
+    Value<String?> alternativeThought = const Value.absent(),
+    Value<int?> beliefAfter = const Value.absent(),
+    Value<int?> emotionIntensityAfter = const Value.absent(),
+  }) => ThoughtRecord(
+    id: id ?? this.id,
+    occurredAt: occurredAt ?? this.occurredAt,
+    createdAt: createdAt ?? this.createdAt,
+    situation: situation ?? this.situation,
+    automaticThought: automaticThought ?? this.automaticThought,
+    beliefBefore: beliefBefore.present ? beliefBefore.value : this.beliefBefore,
+    emotionLabel: emotionLabel.present ? emotionLabel.value : this.emotionLabel,
+    emotionIntensityBefore: emotionIntensityBefore.present
+        ? emotionIntensityBefore.value
+        : this.emotionIntensityBefore,
+    alternativeThought: alternativeThought.present
+        ? alternativeThought.value
+        : this.alternativeThought,
+    beliefAfter: beliefAfter.present ? beliefAfter.value : this.beliefAfter,
+    emotionIntensityAfter: emotionIntensityAfter.present
+        ? emotionIntensityAfter.value
+        : this.emotionIntensityAfter,
+  );
+  ThoughtRecord copyWithCompanion(ThoughtRecordsCompanion data) {
+    return ThoughtRecord(
+      id: data.id.present ? data.id.value : this.id,
+      occurredAt: data.occurredAt.present
+          ? data.occurredAt.value
+          : this.occurredAt,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      situation: data.situation.present ? data.situation.value : this.situation,
+      automaticThought: data.automaticThought.present
+          ? data.automaticThought.value
+          : this.automaticThought,
+      beliefBefore: data.beliefBefore.present
+          ? data.beliefBefore.value
+          : this.beliefBefore,
+      emotionLabel: data.emotionLabel.present
+          ? data.emotionLabel.value
+          : this.emotionLabel,
+      emotionIntensityBefore: data.emotionIntensityBefore.present
+          ? data.emotionIntensityBefore.value
+          : this.emotionIntensityBefore,
+      alternativeThought: data.alternativeThought.present
+          ? data.alternativeThought.value
+          : this.alternativeThought,
+      beliefAfter: data.beliefAfter.present
+          ? data.beliefAfter.value
+          : this.beliefAfter,
+      emotionIntensityAfter: data.emotionIntensityAfter.present
+          ? data.emotionIntensityAfter.value
+          : this.emotionIntensityAfter,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ThoughtRecord(')
+          ..write('id: $id, ')
+          ..write('occurredAt: $occurredAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('situation: $situation, ')
+          ..write('automaticThought: $automaticThought, ')
+          ..write('beliefBefore: $beliefBefore, ')
+          ..write('emotionLabel: $emotionLabel, ')
+          ..write('emotionIntensityBefore: $emotionIntensityBefore, ')
+          ..write('alternativeThought: $alternativeThought, ')
+          ..write('beliefAfter: $beliefAfter, ')
+          ..write('emotionIntensityAfter: $emotionIntensityAfter')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    occurredAt,
+    createdAt,
+    situation,
+    automaticThought,
+    beliefBefore,
+    emotionLabel,
+    emotionIntensityBefore,
+    alternativeThought,
+    beliefAfter,
+    emotionIntensityAfter,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ThoughtRecord &&
+          other.id == this.id &&
+          other.occurredAt == this.occurredAt &&
+          other.createdAt == this.createdAt &&
+          other.situation == this.situation &&
+          other.automaticThought == this.automaticThought &&
+          other.beliefBefore == this.beliefBefore &&
+          other.emotionLabel == this.emotionLabel &&
+          other.emotionIntensityBefore == this.emotionIntensityBefore &&
+          other.alternativeThought == this.alternativeThought &&
+          other.beliefAfter == this.beliefAfter &&
+          other.emotionIntensityAfter == this.emotionIntensityAfter);
+}
+
+class ThoughtRecordsCompanion extends UpdateCompanion<ThoughtRecord> {
+  final Value<String> id;
+  final Value<DateTime> occurredAt;
+  final Value<DateTime> createdAt;
+  final Value<String> situation;
+  final Value<String> automaticThought;
+  final Value<int?> beliefBefore;
+  final Value<String?> emotionLabel;
+  final Value<int?> emotionIntensityBefore;
+  final Value<String?> alternativeThought;
+  final Value<int?> beliefAfter;
+  final Value<int?> emotionIntensityAfter;
+  final Value<int> rowid;
+  const ThoughtRecordsCompanion({
+    this.id = const Value.absent(),
+    this.occurredAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.situation = const Value.absent(),
+    this.automaticThought = const Value.absent(),
+    this.beliefBefore = const Value.absent(),
+    this.emotionLabel = const Value.absent(),
+    this.emotionIntensityBefore = const Value.absent(),
+    this.alternativeThought = const Value.absent(),
+    this.beliefAfter = const Value.absent(),
+    this.emotionIntensityAfter = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ThoughtRecordsCompanion.insert({
+    required String id,
+    required DateTime occurredAt,
+    this.createdAt = const Value.absent(),
+    required String situation,
+    required String automaticThought,
+    this.beliefBefore = const Value.absent(),
+    this.emotionLabel = const Value.absent(),
+    this.emotionIntensityBefore = const Value.absent(),
+    this.alternativeThought = const Value.absent(),
+    this.beliefAfter = const Value.absent(),
+    this.emotionIntensityAfter = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       occurredAt = Value(occurredAt),
+       situation = Value(situation),
+       automaticThought = Value(automaticThought);
+  static Insertable<ThoughtRecord> custom({
+    Expression<String>? id,
+    Expression<DateTime>? occurredAt,
+    Expression<DateTime>? createdAt,
+    Expression<String>? situation,
+    Expression<String>? automaticThought,
+    Expression<int>? beliefBefore,
+    Expression<String>? emotionLabel,
+    Expression<int>? emotionIntensityBefore,
+    Expression<String>? alternativeThought,
+    Expression<int>? beliefAfter,
+    Expression<int>? emotionIntensityAfter,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (occurredAt != null) 'occurred_at': occurredAt,
+      if (createdAt != null) 'created_at': createdAt,
+      if (situation != null) 'situation': situation,
+      if (automaticThought != null) 'automatic_thought': automaticThought,
+      if (beliefBefore != null) 'belief_before': beliefBefore,
+      if (emotionLabel != null) 'emotion_label': emotionLabel,
+      if (emotionIntensityBefore != null)
+        'emotion_intensity_before': emotionIntensityBefore,
+      if (alternativeThought != null) 'alternative_thought': alternativeThought,
+      if (beliefAfter != null) 'belief_after': beliefAfter,
+      if (emotionIntensityAfter != null)
+        'emotion_intensity_after': emotionIntensityAfter,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ThoughtRecordsCompanion copyWith({
+    Value<String>? id,
+    Value<DateTime>? occurredAt,
+    Value<DateTime>? createdAt,
+    Value<String>? situation,
+    Value<String>? automaticThought,
+    Value<int?>? beliefBefore,
+    Value<String?>? emotionLabel,
+    Value<int?>? emotionIntensityBefore,
+    Value<String?>? alternativeThought,
+    Value<int?>? beliefAfter,
+    Value<int?>? emotionIntensityAfter,
+    Value<int>? rowid,
+  }) {
+    return ThoughtRecordsCompanion(
+      id: id ?? this.id,
+      occurredAt: occurredAt ?? this.occurredAt,
+      createdAt: createdAt ?? this.createdAt,
+      situation: situation ?? this.situation,
+      automaticThought: automaticThought ?? this.automaticThought,
+      beliefBefore: beliefBefore ?? this.beliefBefore,
+      emotionLabel: emotionLabel ?? this.emotionLabel,
+      emotionIntensityBefore:
+          emotionIntensityBefore ?? this.emotionIntensityBefore,
+      alternativeThought: alternativeThought ?? this.alternativeThought,
+      beliefAfter: beliefAfter ?? this.beliefAfter,
+      emotionIntensityAfter:
+          emotionIntensityAfter ?? this.emotionIntensityAfter,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (occurredAt.present) {
+      map['occurred_at'] = Variable<DateTime>(occurredAt.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (situation.present) {
+      map['situation'] = Variable<String>(situation.value);
+    }
+    if (automaticThought.present) {
+      map['automatic_thought'] = Variable<String>(automaticThought.value);
+    }
+    if (beliefBefore.present) {
+      map['belief_before'] = Variable<int>(beliefBefore.value);
+    }
+    if (emotionLabel.present) {
+      map['emotion_label'] = Variable<String>(emotionLabel.value);
+    }
+    if (emotionIntensityBefore.present) {
+      map['emotion_intensity_before'] = Variable<int>(
+        emotionIntensityBefore.value,
+      );
+    }
+    if (alternativeThought.present) {
+      map['alternative_thought'] = Variable<String>(alternativeThought.value);
+    }
+    if (beliefAfter.present) {
+      map['belief_after'] = Variable<int>(beliefAfter.value);
+    }
+    if (emotionIntensityAfter.present) {
+      map['emotion_intensity_after'] = Variable<int>(
+        emotionIntensityAfter.value,
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ThoughtRecordsCompanion(')
+          ..write('id: $id, ')
+          ..write('occurredAt: $occurredAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('situation: $situation, ')
+          ..write('automaticThought: $automaticThought, ')
+          ..write('beliefBefore: $beliefBefore, ')
+          ..write('emotionLabel: $emotionLabel, ')
+          ..write('emotionIntensityBefore: $emotionIntensityBefore, ')
+          ..write('alternativeThought: $alternativeThought, ')
+          ..write('beliefAfter: $beliefAfter, ')
+          ..write('emotionIntensityAfter: $emotionIntensityAfter, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ThoughtRecordDistortionsTable extends ThoughtRecordDistortions
+    with TableInfo<$ThoughtRecordDistortionsTable, ThoughtRecordDistortion> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ThoughtRecordDistortionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _recordIdMeta = const VerificationMeta(
+    'recordId',
+  );
+  @override
+  late final GeneratedColumn<String> recordId = GeneratedColumn<String>(
+    'record_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES thought_records (id) ON DELETE CASCADE',
+    ),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<CognitiveDistortion, int>
+  distortion =
+      GeneratedColumn<int>(
+        'distortion',
+        aliasedName,
+        false,
+        type: DriftSqlType.int,
+        requiredDuringInsert: true,
+      ).withConverter<CognitiveDistortion>(
+        $ThoughtRecordDistortionsTable.$converterdistortion,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [recordId, distortion];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'thought_record_distortions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ThoughtRecordDistortion> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('record_id')) {
+      context.handle(
+        _recordIdMeta,
+        recordId.isAcceptableOrUnknown(data['record_id']!, _recordIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_recordIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {recordId, distortion};
+  @override
+  ThoughtRecordDistortion map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ThoughtRecordDistortion(
+      recordId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}record_id'],
+      )!,
+      distortion: $ThoughtRecordDistortionsTable.$converterdistortion.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.int,
+          data['${effectivePrefix}distortion'],
+        )!,
+      ),
+    );
+  }
+
+  @override
+  $ThoughtRecordDistortionsTable createAlias(String alias) {
+    return $ThoughtRecordDistortionsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<CognitiveDistortion, int, int>
+  $converterdistortion = const EnumIndexConverter<CognitiveDistortion>(
+    CognitiveDistortion.values,
+  );
+}
+
+class ThoughtRecordDistortion extends DataClass
+    implements Insertable<ThoughtRecordDistortion> {
+  final String recordId;
+  final CognitiveDistortion distortion;
+  const ThoughtRecordDistortion({
+    required this.recordId,
+    required this.distortion,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['record_id'] = Variable<String>(recordId);
+    {
+      map['distortion'] = Variable<int>(
+        $ThoughtRecordDistortionsTable.$converterdistortion.toSql(distortion),
+      );
+    }
+    return map;
+  }
+
+  ThoughtRecordDistortionsCompanion toCompanion(bool nullToAbsent) {
+    return ThoughtRecordDistortionsCompanion(
+      recordId: Value(recordId),
+      distortion: Value(distortion),
+    );
+  }
+
+  factory ThoughtRecordDistortion.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ThoughtRecordDistortion(
+      recordId: serializer.fromJson<String>(json['recordId']),
+      distortion: $ThoughtRecordDistortionsTable.$converterdistortion.fromJson(
+        serializer.fromJson<int>(json['distortion']),
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'recordId': serializer.toJson<String>(recordId),
+      'distortion': serializer.toJson<int>(
+        $ThoughtRecordDistortionsTable.$converterdistortion.toJson(distortion),
+      ),
+    };
+  }
+
+  ThoughtRecordDistortion copyWith({
+    String? recordId,
+    CognitiveDistortion? distortion,
+  }) => ThoughtRecordDistortion(
+    recordId: recordId ?? this.recordId,
+    distortion: distortion ?? this.distortion,
+  );
+  ThoughtRecordDistortion copyWithCompanion(
+    ThoughtRecordDistortionsCompanion data,
+  ) {
+    return ThoughtRecordDistortion(
+      recordId: data.recordId.present ? data.recordId.value : this.recordId,
+      distortion: data.distortion.present
+          ? data.distortion.value
+          : this.distortion,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ThoughtRecordDistortion(')
+          ..write('recordId: $recordId, ')
+          ..write('distortion: $distortion')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(recordId, distortion);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ThoughtRecordDistortion &&
+          other.recordId == this.recordId &&
+          other.distortion == this.distortion);
+}
+
+class ThoughtRecordDistortionsCompanion
+    extends UpdateCompanion<ThoughtRecordDistortion> {
+  final Value<String> recordId;
+  final Value<CognitiveDistortion> distortion;
+  final Value<int> rowid;
+  const ThoughtRecordDistortionsCompanion({
+    this.recordId = const Value.absent(),
+    this.distortion = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ThoughtRecordDistortionsCompanion.insert({
+    required String recordId,
+    required CognitiveDistortion distortion,
+    this.rowid = const Value.absent(),
+  }) : recordId = Value(recordId),
+       distortion = Value(distortion);
+  static Insertable<ThoughtRecordDistortion> custom({
+    Expression<String>? recordId,
+    Expression<int>? distortion,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (recordId != null) 'record_id': recordId,
+      if (distortion != null) 'distortion': distortion,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ThoughtRecordDistortionsCompanion copyWith({
+    Value<String>? recordId,
+    Value<CognitiveDistortion>? distortion,
+    Value<int>? rowid,
+  }) {
+    return ThoughtRecordDistortionsCompanion(
+      recordId: recordId ?? this.recordId,
+      distortion: distortion ?? this.distortion,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (recordId.present) {
+      map['record_id'] = Variable<String>(recordId.value);
+    }
+    if (distortion.present) {
+      map['distortion'] = Variable<int>(
+        $ThoughtRecordDistortionsTable.$converterdistortion.toSql(
+          distortion.value,
+        ),
+      );
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ThoughtRecordDistortionsCompanion(')
+          ..write('recordId: $recordId, ')
+          ..write('distortion: $distortion, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -3601,6 +4573,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $AppSettingsTable appSettings = $AppSettingsTable(this);
   late final $SessionsTable sessions = $SessionsTable(this);
   late final $SessionLinksTable sessionLinks = $SessionLinksTable(this);
+  late final $ThoughtRecordsTable thoughtRecords = $ThoughtRecordsTable(this);
+  late final $ThoughtRecordDistortionsTable thoughtRecordDistortions =
+      $ThoughtRecordDistortionsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3617,6 +4592,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     appSettings,
     sessions,
     sessionLinks,
+    thoughtRecords,
+    thoughtRecordDistortions,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -3668,6 +4645,15 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [TableUpdate('session_links', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'thought_records',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('thought_record_distortions', kind: UpdateKind.delete),
+      ],
     ),
   ]);
 }
@@ -7179,6 +8165,742 @@ typedef $$SessionLinksTableProcessedTableManager =
       SessionLink,
       PrefetchHooks Function({bool sessionId})
     >;
+typedef $$ThoughtRecordsTableCreateCompanionBuilder =
+    ThoughtRecordsCompanion Function({
+      required String id,
+      required DateTime occurredAt,
+      Value<DateTime> createdAt,
+      required String situation,
+      required String automaticThought,
+      Value<int?> beliefBefore,
+      Value<String?> emotionLabel,
+      Value<int?> emotionIntensityBefore,
+      Value<String?> alternativeThought,
+      Value<int?> beliefAfter,
+      Value<int?> emotionIntensityAfter,
+      Value<int> rowid,
+    });
+typedef $$ThoughtRecordsTableUpdateCompanionBuilder =
+    ThoughtRecordsCompanion Function({
+      Value<String> id,
+      Value<DateTime> occurredAt,
+      Value<DateTime> createdAt,
+      Value<String> situation,
+      Value<String> automaticThought,
+      Value<int?> beliefBefore,
+      Value<String?> emotionLabel,
+      Value<int?> emotionIntensityBefore,
+      Value<String?> alternativeThought,
+      Value<int?> beliefAfter,
+      Value<int?> emotionIntensityAfter,
+      Value<int> rowid,
+    });
+
+final class $$ThoughtRecordsTableReferences
+    extends BaseReferences<_$AppDatabase, $ThoughtRecordsTable, ThoughtRecord> {
+  $$ThoughtRecordsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<
+    $ThoughtRecordDistortionsTable,
+    List<ThoughtRecordDistortion>
+  >
+  _thoughtRecordDistortionsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.thoughtRecordDistortions,
+        aliasName: 'thought_records__id__thought_record_distortions__record_id',
+      );
+
+  $$ThoughtRecordDistortionsTableProcessedTableManager
+  get thoughtRecordDistortionsRefs {
+    final manager = $$ThoughtRecordDistortionsTableTableManager(
+      $_db,
+      $_db.thoughtRecordDistortions,
+    ).filter((f) => f.recordId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _thoughtRecordDistortionsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$ThoughtRecordsTableFilterComposer
+    extends Composer<_$AppDatabase, $ThoughtRecordsTable> {
+  $$ThoughtRecordsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get occurredAt => $composableBuilder(
+    column: $table.occurredAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get situation => $composableBuilder(
+    column: $table.situation,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get automaticThought => $composableBuilder(
+    column: $table.automaticThought,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get beliefBefore => $composableBuilder(
+    column: $table.beliefBefore,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get emotionLabel => $composableBuilder(
+    column: $table.emotionLabel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get emotionIntensityBefore => $composableBuilder(
+    column: $table.emotionIntensityBefore,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get alternativeThought => $composableBuilder(
+    column: $table.alternativeThought,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get beliefAfter => $composableBuilder(
+    column: $table.beliefAfter,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get emotionIntensityAfter => $composableBuilder(
+    column: $table.emotionIntensityAfter,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> thoughtRecordDistortionsRefs(
+    Expression<bool> Function($$ThoughtRecordDistortionsTableFilterComposer f)
+    f,
+  ) {
+    final $$ThoughtRecordDistortionsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.thoughtRecordDistortions,
+          getReferencedColumn: (t) => t.recordId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ThoughtRecordDistortionsTableFilterComposer(
+                $db: $db,
+                $table: $db.thoughtRecordDistortions,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$ThoughtRecordsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ThoughtRecordsTable> {
+  $$ThoughtRecordsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get occurredAt => $composableBuilder(
+    column: $table.occurredAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get situation => $composableBuilder(
+    column: $table.situation,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get automaticThought => $composableBuilder(
+    column: $table.automaticThought,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get beliefBefore => $composableBuilder(
+    column: $table.beliefBefore,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get emotionLabel => $composableBuilder(
+    column: $table.emotionLabel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get emotionIntensityBefore => $composableBuilder(
+    column: $table.emotionIntensityBefore,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get alternativeThought => $composableBuilder(
+    column: $table.alternativeThought,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get beliefAfter => $composableBuilder(
+    column: $table.beliefAfter,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get emotionIntensityAfter => $composableBuilder(
+    column: $table.emotionIntensityAfter,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ThoughtRecordsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ThoughtRecordsTable> {
+  $$ThoughtRecordsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get occurredAt => $composableBuilder(
+    column: $table.occurredAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get situation =>
+      $composableBuilder(column: $table.situation, builder: (column) => column);
+
+  GeneratedColumn<String> get automaticThought => $composableBuilder(
+    column: $table.automaticThought,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get beliefBefore => $composableBuilder(
+    column: $table.beliefBefore,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get emotionLabel => $composableBuilder(
+    column: $table.emotionLabel,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get emotionIntensityBefore => $composableBuilder(
+    column: $table.emotionIntensityBefore,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get alternativeThought => $composableBuilder(
+    column: $table.alternativeThought,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get beliefAfter => $composableBuilder(
+    column: $table.beliefAfter,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get emotionIntensityAfter => $composableBuilder(
+    column: $table.emotionIntensityAfter,
+    builder: (column) => column,
+  );
+
+  Expression<T> thoughtRecordDistortionsRefs<T extends Object>(
+    Expression<T> Function($$ThoughtRecordDistortionsTableAnnotationComposer a)
+    f,
+  ) {
+    final $$ThoughtRecordDistortionsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.thoughtRecordDistortions,
+          getReferencedColumn: (t) => t.recordId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ThoughtRecordDistortionsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.thoughtRecordDistortions,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$ThoughtRecordsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ThoughtRecordsTable,
+          ThoughtRecord,
+          $$ThoughtRecordsTableFilterComposer,
+          $$ThoughtRecordsTableOrderingComposer,
+          $$ThoughtRecordsTableAnnotationComposer,
+          $$ThoughtRecordsTableCreateCompanionBuilder,
+          $$ThoughtRecordsTableUpdateCompanionBuilder,
+          (ThoughtRecord, $$ThoughtRecordsTableReferences),
+          ThoughtRecord,
+          PrefetchHooks Function({bool thoughtRecordDistortionsRefs})
+        > {
+  $$ThoughtRecordsTableTableManager(
+    _$AppDatabase db,
+    $ThoughtRecordsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ThoughtRecordsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ThoughtRecordsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ThoughtRecordsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<DateTime> occurredAt = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<String> situation = const Value.absent(),
+                Value<String> automaticThought = const Value.absent(),
+                Value<int?> beliefBefore = const Value.absent(),
+                Value<String?> emotionLabel = const Value.absent(),
+                Value<int?> emotionIntensityBefore = const Value.absent(),
+                Value<String?> alternativeThought = const Value.absent(),
+                Value<int?> beliefAfter = const Value.absent(),
+                Value<int?> emotionIntensityAfter = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ThoughtRecordsCompanion(
+                id: id,
+                occurredAt: occurredAt,
+                createdAt: createdAt,
+                situation: situation,
+                automaticThought: automaticThought,
+                beliefBefore: beliefBefore,
+                emotionLabel: emotionLabel,
+                emotionIntensityBefore: emotionIntensityBefore,
+                alternativeThought: alternativeThought,
+                beliefAfter: beliefAfter,
+                emotionIntensityAfter: emotionIntensityAfter,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required DateTime occurredAt,
+                Value<DateTime> createdAt = const Value.absent(),
+                required String situation,
+                required String automaticThought,
+                Value<int?> beliefBefore = const Value.absent(),
+                Value<String?> emotionLabel = const Value.absent(),
+                Value<int?> emotionIntensityBefore = const Value.absent(),
+                Value<String?> alternativeThought = const Value.absent(),
+                Value<int?> beliefAfter = const Value.absent(),
+                Value<int?> emotionIntensityAfter = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ThoughtRecordsCompanion.insert(
+                id: id,
+                occurredAt: occurredAt,
+                createdAt: createdAt,
+                situation: situation,
+                automaticThought: automaticThought,
+                beliefBefore: beliefBefore,
+                emotionLabel: emotionLabel,
+                emotionIntensityBefore: emotionIntensityBefore,
+                alternativeThought: alternativeThought,
+                beliefAfter: beliefAfter,
+                emotionIntensityAfter: emotionIntensityAfter,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ThoughtRecordsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({thoughtRecordDistortionsRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (thoughtRecordDistortionsRefs) db.thoughtRecordDistortions,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (thoughtRecordDistortionsRefs)
+                    await $_getPrefetchedData<
+                      ThoughtRecord,
+                      $ThoughtRecordsTable,
+                      ThoughtRecordDistortion
+                    >(
+                      currentTable: table,
+                      referencedTable: $$ThoughtRecordsTableReferences
+                          ._thoughtRecordDistortionsRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$ThoughtRecordsTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).thoughtRecordDistortionsRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.recordId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ThoughtRecordsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ThoughtRecordsTable,
+      ThoughtRecord,
+      $$ThoughtRecordsTableFilterComposer,
+      $$ThoughtRecordsTableOrderingComposer,
+      $$ThoughtRecordsTableAnnotationComposer,
+      $$ThoughtRecordsTableCreateCompanionBuilder,
+      $$ThoughtRecordsTableUpdateCompanionBuilder,
+      (ThoughtRecord, $$ThoughtRecordsTableReferences),
+      ThoughtRecord,
+      PrefetchHooks Function({bool thoughtRecordDistortionsRefs})
+    >;
+typedef $$ThoughtRecordDistortionsTableCreateCompanionBuilder =
+    ThoughtRecordDistortionsCompanion Function({
+      required String recordId,
+      required CognitiveDistortion distortion,
+      Value<int> rowid,
+    });
+typedef $$ThoughtRecordDistortionsTableUpdateCompanionBuilder =
+    ThoughtRecordDistortionsCompanion Function({
+      Value<String> recordId,
+      Value<CognitiveDistortion> distortion,
+      Value<int> rowid,
+    });
+
+final class $$ThoughtRecordDistortionsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $ThoughtRecordDistortionsTable,
+          ThoughtRecordDistortion
+        > {
+  $$ThoughtRecordDistortionsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $ThoughtRecordsTable _recordIdTable(_$AppDatabase db) =>
+      db.thoughtRecords.createAlias(
+        'thought_record_distortions__record_id__thought_records__id',
+      );
+
+  $$ThoughtRecordsTableProcessedTableManager get recordId {
+    final $_column = $_itemColumn<String>('record_id')!;
+
+    final manager = $$ThoughtRecordsTableTableManager(
+      $_db,
+      $_db.thoughtRecords,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_recordIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ThoughtRecordDistortionsTableFilterComposer
+    extends Composer<_$AppDatabase, $ThoughtRecordDistortionsTable> {
+  $$ThoughtRecordDistortionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnWithTypeConverterFilters<CognitiveDistortion, CognitiveDistortion, int>
+  get distortion => $composableBuilder(
+    column: $table.distortion,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  $$ThoughtRecordsTableFilterComposer get recordId {
+    final $$ThoughtRecordsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.recordId,
+      referencedTable: $db.thoughtRecords,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ThoughtRecordsTableFilterComposer(
+            $db: $db,
+            $table: $db.thoughtRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ThoughtRecordDistortionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ThoughtRecordDistortionsTable> {
+  $$ThoughtRecordDistortionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get distortion => $composableBuilder(
+    column: $table.distortion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$ThoughtRecordsTableOrderingComposer get recordId {
+    final $$ThoughtRecordsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.recordId,
+      referencedTable: $db.thoughtRecords,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ThoughtRecordsTableOrderingComposer(
+            $db: $db,
+            $table: $db.thoughtRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ThoughtRecordDistortionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ThoughtRecordDistortionsTable> {
+  $$ThoughtRecordDistortionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumnWithTypeConverter<CognitiveDistortion, int> get distortion =>
+      $composableBuilder(
+        column: $table.distortion,
+        builder: (column) => column,
+      );
+
+  $$ThoughtRecordsTableAnnotationComposer get recordId {
+    final $$ThoughtRecordsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.recordId,
+      referencedTable: $db.thoughtRecords,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ThoughtRecordsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.thoughtRecords,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ThoughtRecordDistortionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ThoughtRecordDistortionsTable,
+          ThoughtRecordDistortion,
+          $$ThoughtRecordDistortionsTableFilterComposer,
+          $$ThoughtRecordDistortionsTableOrderingComposer,
+          $$ThoughtRecordDistortionsTableAnnotationComposer,
+          $$ThoughtRecordDistortionsTableCreateCompanionBuilder,
+          $$ThoughtRecordDistortionsTableUpdateCompanionBuilder,
+          (ThoughtRecordDistortion, $$ThoughtRecordDistortionsTableReferences),
+          ThoughtRecordDistortion,
+          PrefetchHooks Function({bool recordId})
+        > {
+  $$ThoughtRecordDistortionsTableTableManager(
+    _$AppDatabase db,
+    $ThoughtRecordDistortionsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ThoughtRecordDistortionsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ThoughtRecordDistortionsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ThoughtRecordDistortionsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> recordId = const Value.absent(),
+                Value<CognitiveDistortion> distortion = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ThoughtRecordDistortionsCompanion(
+                recordId: recordId,
+                distortion: distortion,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String recordId,
+                required CognitiveDistortion distortion,
+                Value<int> rowid = const Value.absent(),
+              }) => ThoughtRecordDistortionsCompanion.insert(
+                recordId: recordId,
+                distortion: distortion,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ThoughtRecordDistortionsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({recordId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (recordId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.recordId,
+                        referencedTable:
+                            $$ThoughtRecordDistortionsTableReferences
+                                ._recordIdTable(db),
+                        referencedColumn:
+                            $$ThoughtRecordDistortionsTableReferences
+                                ._recordIdTable(db)
+                                .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ThoughtRecordDistortionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ThoughtRecordDistortionsTable,
+      ThoughtRecordDistortion,
+      $$ThoughtRecordDistortionsTableFilterComposer,
+      $$ThoughtRecordDistortionsTableOrderingComposer,
+      $$ThoughtRecordDistortionsTableAnnotationComposer,
+      $$ThoughtRecordDistortionsTableCreateCompanionBuilder,
+      $$ThoughtRecordDistortionsTableUpdateCompanionBuilder,
+      (ThoughtRecordDistortion, $$ThoughtRecordDistortionsTableReferences),
+      ThoughtRecordDistortion,
+      PrefetchHooks Function({bool recordId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -7204,4 +8926,11 @@ class $AppDatabaseManager {
       $$SessionsTableTableManager(_db, _db.sessions);
   $$SessionLinksTableTableManager get sessionLinks =>
       $$SessionLinksTableTableManager(_db, _db.sessionLinks);
+  $$ThoughtRecordsTableTableManager get thoughtRecords =>
+      $$ThoughtRecordsTableTableManager(_db, _db.thoughtRecords);
+  $$ThoughtRecordDistortionsTableTableManager get thoughtRecordDistortions =>
+      $$ThoughtRecordDistortionsTableTableManager(
+        _db,
+        _db.thoughtRecordDistortions,
+      );
 }
