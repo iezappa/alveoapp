@@ -770,6 +770,18 @@ abstract class AppLocalizations {
   /// **'Added to the agenda'**
   String get sessionPreSummaryDone;
 
+  /// No description provided for @sessionExportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Therapy session'**
+  String get sessionExportTitle;
+
+  /// No description provided for @sessionExportPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Export as PDF'**
+  String get sessionExportPdf;
+
   /// No description provided for @sessionAgenda.
   ///
   /// In en, this message translates to:

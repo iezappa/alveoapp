@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../app/ui.dart';
 import '../../l10n/app_localizations.dart';
+import '../export/session_pdf_export.dart';
 import 'session_providers.dart';
 
 /// Read-only view of one session for the detail pane. "Edit" hands off to the
@@ -53,6 +54,11 @@ class SessionPreview extends ConsumerWidget {
                   ).add_jm().format(session.scheduledFor),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
+              ),
+              IconButton(
+                onPressed: () => runSessionPdfExport(context, session),
+                icon: const Icon(Icons.picture_as_pdf_outlined),
+                tooltip: l10n.sessionExportPdf,
               ),
               TextButton.icon(
                 onPressed: onEdit,

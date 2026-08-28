@@ -124,6 +124,8 @@
   "sessionScheduledFor": "Cuándo",
   "sessionPreSummary": "Resumen previo",
   "sessionPreSummaryDone": "Agregado a los temas",
+  "sessionExportTitle": "Sesión de terapia",
+  "sessionExportPdf": "Exportar como PDF",
   "sessionAgenda": "Temas",
   "sessionNotes": "Notas",
   "sessionTakeaways": "Conclusiones",

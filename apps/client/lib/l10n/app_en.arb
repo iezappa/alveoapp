@@ -156,6 +156,8 @@
   "sessionScheduledFor": "When",
   "sessionPreSummary": "Pre-session summary",
   "sessionPreSummaryDone": "Added to the agenda",
+  "sessionExportTitle": "Therapy session",
+  "sessionExportPdf": "Export as PDF",
   "sessionAgenda": "Agenda",
   "sessionNotes": "Notes",
   "sessionTakeaways": "Takeaways",

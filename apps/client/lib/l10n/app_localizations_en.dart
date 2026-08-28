@@ -362,6 +362,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sessionPreSummaryDone => 'Added to the agenda';
 
   @override
+  String get sessionExportTitle => 'Therapy session';
+
+  @override
+  String get sessionExportPdf => 'Export as PDF';
+
+  @override
   String get sessionAgenda => 'Agenda';
 
   @override
