@@ -29,6 +29,8 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
   int _mood = 3;
   final Map<String, int> _emotions = {};
   final _noteController = TextEditingController();
+  final _tagController = TextEditingController();
+  final Set<String> _tags = {};
   bool _loading = false;
   bool _saving = false;
 
@@ -42,6 +44,7 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
         final repo = ref.read(moodRepositoryProvider);
         final entry = await repo.getById(id);
         final emotions = await repo.emotionsFor(id);
+        final tags = await repo.tagsFor(id);
         if (!mounted) return;
         setState(() {
           if (entry != null) {
@@ -52,6 +55,9 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
               ..addEntries(
                 emotions.map((e) => MapEntry(e.emotionKey, e.intensity)),
               );
+            _tags
+              ..clear()
+              ..addAll(tags.map((t) => t.name));
           }
           _loading = false;
         });
@@ -62,7 +68,17 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
   @override
   void dispose() {
     _noteController.dispose();
+    _tagController.dispose();
     super.dispose();
+  }
+
+  void _addTag(String raw) {
+    final name = raw.trim();
+    if (name.isEmpty) return;
+    setState(() {
+      _tags.add(name);
+      _tagController.clear();
+    });
   }
 
   void _toggleEmotion(String key) {
@@ -83,6 +99,10 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
         EmotionInput(emotionKey: entry.key, intensity: entry.value),
     ];
     final repo = ref.read(moodRepositoryProvider);
+    final tagRepo = ref.read(tagRepositoryProvider);
+    final tagIds = [
+      for (final name in _tags) await tagRepo.findOrCreate(name),
+    ];
 
     if (widget.moodEntryId == null) {
       await repo.add(
@@ -90,6 +110,7 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
         occurredAt: DateTime.now(),
         note: note.isEmpty ? null : note,
         emotions: emotions,
+        tagIds: tagIds,
       );
     } else {
       await repo.update(
@@ -97,10 +118,12 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
         mood: _mood,
         note: note.isEmpty ? null : note,
         emotions: emotions,
+        tagIds: tagIds,
       );
     }
 
     ref.invalidate(moodEntriesProvider);
+    ref.invalidate(allTagsProvider);
 
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -199,6 +222,16 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
                 decoration: InputDecoration(hintText: l10n.noteLabel),
                 style: theme.textTheme.bodyLarge,
               ),
+              const SizedBox(height: 32),
+
+              SectionLabel(l10n.tagsLabel),
+              const SizedBox(height: 8),
+              _TagEditor(
+                selected: _tags,
+                controller: _tagController,
+                onAdd: _addTag,
+                onRemove: (t) => setState(() => _tags.remove(t)),
+              ),
             ],
           ),
         ),
@@ -209,6 +242,73 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
         icon: const Icon(Icons.check),
         label: Text(l10n.saveButton),
       ),
+    );
+  }
+}
+
+/// Free-text tag input: chips for the chosen tags, a field to add one, and
+/// quick chips for tags used before.
+class _TagEditor extends ConsumerWidget {
+  const _TagEditor({
+    required this.selected,
+    required this.controller,
+    required this.onAdd,
+    required this.onRemove,
+  });
+
+  final Set<String> selected;
+  final TextEditingController controller;
+  final ValueChanged<String> onAdd;
+  final ValueChanged<String> onRemove;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final all = ref.watch(allTagsProvider).asData?.value ?? const [];
+    final lower = selected.map((s) => s.toLowerCase()).toSet();
+    final suggestions = [
+      for (final t in all)
+        if (!lower.contains(t.name.toLowerCase())) t.name,
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (selected.isNotEmpty) ...[
+          Wrap(
+            spacing: 6,
+            runSpacing: 6,
+            children: [
+              for (final t in selected)
+                InputChip(label: Text(t), onDeleted: () => onRemove(t)),
+            ],
+          ),
+          const SizedBox(height: 8),
+        ],
+        TextField(
+          controller: controller,
+          textInputAction: TextInputAction.done,
+          onSubmitted: onAdd,
+          decoration: InputDecoration(
+            hintText: l10n.tagsHint,
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () => onAdd(controller.text),
+            ),
+          ),
+        ),
+        if (suggestions.isNotEmpty) ...[
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 6,
+            runSpacing: 6,
+            children: [
+              for (final s in suggestions.take(12))
+                ActionChip(label: Text(s), onPressed: () => onAdd(s)),
+            ],
+          ),
+        ],
+      ],
     );
   }
 }

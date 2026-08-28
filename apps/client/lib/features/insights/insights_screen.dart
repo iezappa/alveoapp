@@ -19,6 +19,7 @@ class InsightsScreen extends ConsumerStatefulWidget {
 
 class _InsightsScreenState extends ConsumerState<InsightsScreen> {
   int _days = 30;
+  final _tags = <String>{};
   late DateTime _month = DateTime(DateTime.now().year, DateTime.now().month);
 
   void _shiftMonth(int by) => setState(
@@ -32,9 +33,20 @@ class _InsightsScreenState extends ConsumerState<InsightsScreen> {
     final scheme = theme.colorScheme;
 
     final entries = ref.watch(moodEntriesProvider).asData?.value ?? const [];
-    final readings = entries.map(
-      (e) => (occurredAt: e.occurredAt, mood: e.mood),
-    );
+    final allTags = ref.watch(allTagsProvider).asData?.value ?? const [];
+    final links = ref.watch(moodTagLinksProvider).asData?.value ?? const [];
+    final tagsByEntry = <String, Set<String>>{};
+    for (final l in links) {
+      tagsByEntry.putIfAbsent(l.moodEntryId, () => {}).add(l.tagId);
+    }
+
+    final readings = entries
+        .where(
+          (e) =>
+              _tags.isEmpty ||
+              (tagsByEntry[e.id] ?? const <String>{}).any(_tags.contains),
+        )
+        .map((e) => (occurredAt: e.occurredAt, mood: e.mood));
     final points = dailyMoodAverages(
       readings,
       now: DateTime.now(),
@@ -67,6 +79,23 @@ class _InsightsScreenState extends ConsumerState<InsightsScreen> {
                 selected: {_days},
                 onSelectionChanged: (s) => setState(() => _days = s.first),
               ),
+              if (allTags.isNotEmpty) ...[
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: [
+                    for (final t in allTags)
+                      FilterChip(
+                        label: Text(t.name),
+                        selected: _tags.contains(t.id),
+                        onSelected: (on) => setState(() {
+                          on ? _tags.add(t.id) : _tags.remove(t.id);
+                        }),
+                      ),
+                  ],
+                ),
+              ],
               const SizedBox(height: 24),
               if (present.isEmpty)
                 EmptyState(

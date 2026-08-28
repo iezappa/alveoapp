@@ -76,12 +76,13 @@ class MoodRepository {
     return entryId;
   }
 
-  /// Rewrites the score, note and emotion set of an existing check-in.
+  /// Rewrites the score, note, emotion set and tags of an existing check-in.
   Future<void> update({
     required String id,
     required int mood,
     String? note,
     List<EmotionInput> emotions = const [],
+    List<String> tagIds = const [],
   }) async {
     validateMoodScale(mood);
     for (final e in emotions) {
@@ -96,6 +97,9 @@ class MoodRepository {
       await (_db.delete(_db.moodEntryEmotions)
             ..where((t) => t.moodEntryId.equals(id)))
           .go();
+      await (_db.delete(_db.moodEntryTags)
+            ..where((t) => t.moodEntryId.equals(id)))
+          .go();
       if (emotions.isNotEmpty) {
         await _db.batch((b) {
           b.insertAll(_db.moodEntryEmotions, [
@@ -108,7 +112,26 @@ class MoodRepository {
           ]);
         });
       }
+      if (tagIds.isNotEmpty) {
+        await _db.batch((b) {
+          b.insertAll(_db.moodEntryTags, [
+            for (final t in tagIds)
+              MoodEntryTagsCompanion.insert(moodEntryId: id, tagId: t),
+          ]);
+        });
+      }
     });
+  }
+
+  /// Tags attached to [moodEntryId].
+  Future<List<Tag>> tagsFor(String moodEntryId) {
+    final query = _db.select(_db.tags).join([
+      innerJoin(
+        _db.moodEntryTags,
+        _db.moodEntryTags.tagId.equalsExp(_db.tags.id),
+      ),
+    ])..where(_db.moodEntryTags.moodEntryId.equals(moodEntryId));
+    return query.map((row) => row.readTable(_db.tags)).get();
   }
 
   /// All mood entries, newest first.

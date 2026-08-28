@@ -572,6 +572,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get checkInEditTitle => 'Editar check-in';
 
   @override
+  String get tagsLabel => 'Etiquetas';
+
+  @override
+  String get tagsHint => 'Agregá una etiqueta';
+
+  @override
   String get moodHistoryTitle => 'Historial de ánimo';
 
   @override

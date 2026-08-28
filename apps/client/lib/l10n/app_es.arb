@@ -191,6 +191,8 @@
 
   "checkInTitle": "¿Cómo te sentís?",
   "checkInEditTitle": "Editar check-in",
+  "tagsLabel": "Etiquetas",
+  "tagsHint": "Agregá una etiqueta",
   "moodHistoryTitle": "Historial de ánimo",
   "moodHistoryEmpty": "Todavía no hay check-ins",
   "overallMood": "Estado general",

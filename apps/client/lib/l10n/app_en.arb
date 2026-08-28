@@ -235,6 +235,8 @@
 
   "checkInTitle": "How are you feeling?",
   "checkInEditTitle": "Edit check-in",
+  "tagsLabel": "Tags",
+  "tagsHint": "Add a tag",
   "moodHistoryTitle": "Mood history",
   "moodHistoryEmpty": "No check-ins yet",
   "overallMood": "Overall mood",

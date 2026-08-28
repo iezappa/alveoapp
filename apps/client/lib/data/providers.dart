@@ -10,6 +10,7 @@ import 'repositories/mood_repository.dart';
 import 'repositories/session_repository.dart';
 import 'repositories/settings_repository.dart';
 import 'repositories/safety_plan_repository.dart';
+import 'repositories/tag_repository.dart';
 import 'repositories/task_repository.dart';
 import 'repositories/thought_record_repository.dart';
 import 'search/search_service.dart';
@@ -65,6 +66,21 @@ final moodRepositoryProvider = Provider<MoodRepository>(
 final moodEntriesProvider = FutureProvider(
   (ref) => ref.watch(moodRepositoryProvider).getAll(),
 );
+
+final tagRepositoryProvider = Provider<TagRepository>(
+  (ref) => TagRepository(ref.watch(appDatabaseProvider)),
+);
+
+/// Every tag, alphabetical.
+final allTagsProvider = FutureProvider(
+  (ref) => ref.watch(tagRepositoryProvider).all(),
+);
+
+/// All mood-entry ↔ tag links; refreshes with [moodEntriesProvider].
+final moodTagLinksProvider = FutureProvider((ref) {
+  ref.watch(moodEntriesProvider);
+  return ref.read(tagRepositoryProvider).moodTagLinks();
+});
 
 final journalRepositoryProvider = Provider<JournalRepository>(
   (ref) => JournalRepository(ref.watch(appDatabaseProvider)),

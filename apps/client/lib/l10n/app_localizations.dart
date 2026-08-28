@@ -1148,6 +1148,18 @@ abstract class AppLocalizations {
   /// **'Edit check-in'**
   String get checkInEditTitle;
 
+  /// No description provided for @tagsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get tagsLabel;
+
+  /// No description provided for @tagsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a tag'**
+  String get tagsHint;
+
   /// No description provided for @moodHistoryTitle.
   ///
   /// In en, this message translates to:
