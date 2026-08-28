@@ -518,6 +518,36 @@ abstract class AppLocalizations {
   /// **'Check in a few days to see your trend'**
   String get dashboardMoodTrendEmpty;
 
+  /// No description provided for @dashboardViewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See everything'**
+  String get dashboardViewAll;
+
+  /// No description provided for @allRecordsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything'**
+  String get allRecordsTitle;
+
+  /// No description provided for @allRecordsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing written yet'**
+  String get allRecordsEmpty;
+
+  /// No description provided for @allRecordsKindThought.
+  ///
+  /// In en, this message translates to:
+  /// **'Thought record'**
+  String get allRecordsKindThought;
+
+  /// No description provided for @allRecordsKindMood.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in note'**
+  String get allRecordsKindMood;
+
   /// No description provided for @insightsTitle.
   ///
   /// In en, this message translates to:

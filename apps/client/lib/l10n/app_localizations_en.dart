@@ -232,6 +232,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardMoodTrendEmpty => 'Check in a few days to see your trend';
 
   @override
+  String get dashboardViewAll => 'See everything';
+
+  @override
+  String get allRecordsTitle => 'Everything';
+
+  @override
+  String get allRecordsEmpty => 'Nothing written yet';
+
+  @override
+  String get allRecordsKindThought => 'Thought record';
+
+  @override
+  String get allRecordsKindMood => 'Check-in note';
+
+  @override
   String get insightsTitle => 'Insights';
 
   @override

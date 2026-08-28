@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/all_records/all_records_screen.dart';
 import '../features/breathe/breathe_screen.dart';
 import '../features/cbt/thought_record_editor_screen.dart';
 import '../features/cbt/tools_screen.dart';
@@ -101,6 +102,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/breathe',
         builder: (context, state) => const BreatheScreen(),
+      ),
+      GoRoute(
+        path: '/all-records',
+        builder: (context, state) => const AllRecordsScreen(),
       ),
       GoRoute(
         path: '/library',

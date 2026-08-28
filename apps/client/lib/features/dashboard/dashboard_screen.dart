@@ -99,6 +99,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               const _QuoteCard(),
               const SizedBox(height: 12),
               const _MoodTrendCard(),
+              const SizedBox(height: 12),
+              const _ViewAllCard(),
               const SizedBox(height: 16),
               const _QuickLinks(),
             ],
@@ -311,6 +313,45 @@ class _MoodTrendCard extends ConsumerWidget {
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A doorway into the read-only "everything" view — every text the user has
+/// written, gathered in one place.
+class _ViewAllCard extends StatelessWidget {
+  const _ViewAllCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => context.push('/all-records'),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Icon(
+                Icons.notes_outlined,
+                size: 20,
+                color: theme.colorScheme.primary,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  l10n.dashboardViewAll,
+                  style: theme.textTheme.titleMedium,
+                ),
+              ),
+              const Icon(Icons.chevron_right, size: 20),
             ],
           ),
         ),

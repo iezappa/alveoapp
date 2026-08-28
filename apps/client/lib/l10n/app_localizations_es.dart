@@ -233,6 +233,21 @@ class AppLocalizationsEs extends AppLocalizations {
       'Registrá tu ánimo unos días para ver la tendencia';
 
   @override
+  String get dashboardViewAll => 'Ver todo';
+
+  @override
+  String get allRecordsTitle => 'Todo';
+
+  @override
+  String get allRecordsEmpty => 'Todavía no escribiste nada';
+
+  @override
+  String get allRecordsKindThought => 'Registro de pensamiento';
+
+  @override
+  String get allRecordsKindMood => 'Nota del check-in';
+
+  @override
   String get insightsTitle => 'Progreso';
 
   @override
