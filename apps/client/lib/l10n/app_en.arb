@@ -89,10 +89,19 @@
   "navJournal": "Journal",
   "navSettings": "Settings",
 
-  "dashboardGreetingMorning": "Good morning.",
-  "dashboardGreetingAfternoon": "Good afternoon.",
-  "dashboardGreetingEvening": "Good evening.",
-  "dashboardGreetingNight": "Rest well.",
+  "dashboardGreetingMorning": "Good morning",
+  "dashboardGreetingAfternoon": "Good afternoon",
+  "dashboardGreetingEvening": "Good evening",
+  "dashboardGreetingNight": "Rest well",
+  "dashboardGreetingNamed": "{greeting}, {name}.",
+  "@dashboardGreetingNamed": {
+    "placeholders": {
+      "greeting": { "type": "String" },
+      "name": { "type": "String" }
+    }
+  },
+  "namePromptTitle": "What's your name?",
+  "namePromptLabel": "Your name",
   "dashboardSafeHere": "Take a deep breath. You're safe here.",
   "dashboardNextSession": "Next session",
   "dashboardNextSessionNone": "No sessions scheduled",

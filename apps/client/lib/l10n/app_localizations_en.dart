@@ -176,16 +176,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navSettings => 'Settings';
 
   @override
-  String get dashboardGreetingMorning => 'Good morning.';
+  String get dashboardGreetingMorning => 'Good morning';
 
   @override
-  String get dashboardGreetingAfternoon => 'Good afternoon.';
+  String get dashboardGreetingAfternoon => 'Good afternoon';
 
   @override
-  String get dashboardGreetingEvening => 'Good evening.';
+  String get dashboardGreetingEvening => 'Good evening';
 
   @override
-  String get dashboardGreetingNight => 'Rest well.';
+  String get dashboardGreetingNight => 'Rest well';
+
+  @override
+  String dashboardGreetingNamed(String greeting, String name) {
+    return '$greeting, $name.';
+  }
+
+  @override
+  String get namePromptTitle => 'What\'s your name?';
+
+  @override
+  String get namePromptLabel => 'Your name';
 
   @override
   String get dashboardSafeHere => 'Take a deep breath. You\'re safe here.';

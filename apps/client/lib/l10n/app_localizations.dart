@@ -413,26 +413,44 @@ abstract class AppLocalizations {
   /// No description provided for @dashboardGreetingMorning.
   ///
   /// In en, this message translates to:
-  /// **'Good morning.'**
+  /// **'Good morning'**
   String get dashboardGreetingMorning;
 
   /// No description provided for @dashboardGreetingAfternoon.
   ///
   /// In en, this message translates to:
-  /// **'Good afternoon.'**
+  /// **'Good afternoon'**
   String get dashboardGreetingAfternoon;
 
   /// No description provided for @dashboardGreetingEvening.
   ///
   /// In en, this message translates to:
-  /// **'Good evening.'**
+  /// **'Good evening'**
   String get dashboardGreetingEvening;
 
   /// No description provided for @dashboardGreetingNight.
   ///
   /// In en, this message translates to:
-  /// **'Rest well.'**
+  /// **'Rest well'**
   String get dashboardGreetingNight;
+
+  /// No description provided for @dashboardGreetingNamed.
+  ///
+  /// In en, this message translates to:
+  /// **'{greeting}, {name}.'**
+  String dashboardGreetingNamed(String greeting, String name);
+
+  /// No description provided for @namePromptTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s your name?'**
+  String get namePromptTitle;
+
+  /// No description provided for @namePromptLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get namePromptLabel;
 
   /// No description provided for @dashboardSafeHere.
   ///

@@ -7,10 +7,12 @@ import '../../app/locale_controller.dart';
 import '../../app/theme.dart';
 import '../../app/theme_controller.dart';
 import '../../app/ui.dart';
+import '../../app/user_profile_controller.dart';
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../obsidian/obsidian_actions.dart';
 import '../security/pin_dialogs.dart';
+import '../shared/name_dialog.dart';
 import '../transfer/backup_actions.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -25,6 +27,7 @@ class SettingsScreen extends ConsumerWidget {
     final hasPin = ref.watch(hasPinProvider);
     final theme = ref.watch(themeControllerProvider);
     final vault = ref.watch(obsidianVaultProvider);
+    final name = ref.watch(userProfileControllerProvider).asData?.value;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.navSettings)),
@@ -78,6 +81,21 @@ class SettingsScreen extends ConsumerWidget {
                           .setAccent(accent),
                     ),
                 ],
+              ),
+              const SizedBox(height: 28),
+              SectionLabel(l10n.namePromptLabel),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.person_outline),
+                title: Text(l10n.namePromptLabel),
+                subtitle: (name != null && name.isNotEmpty)
+                    ? Text(name)
+                    : null,
+                onTap: () => promptForName(
+                  context,
+                  ref,
+                  initial: name,
+                ),
               ),
               const SizedBox(height: 28),
               SectionLabel(l10n.settingsLanguage),

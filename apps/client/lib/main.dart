@@ -6,6 +6,7 @@ import 'app/locale_controller.dart';
 import 'app/router.dart';
 import 'app/theme.dart';
 import 'app/theme_controller.dart';
+import 'app/user_profile_controller.dart';
 import 'data/local/database.dart';
 import 'data/providers.dart';
 import 'features/security/lock_screen.dart';
@@ -16,10 +17,14 @@ Future<void> main() async {
 
   final database = AppDatabase.connect();
   final container = ProviderContainer(
-    overrides: [appDatabaseProvider.overrideWithValue(database)],
+    overrides: [
+      appDatabaseProvider.overrideWithValue(database),
+      promptForNameOnFirstLaunchProvider.overrideWithValue(true),
+    ],
   );
   await container.read(localeControllerProvider.notifier).load();
   await container.read(themeControllerProvider.notifier).load();
+  await container.read(userProfileControllerProvider.notifier).load();
   await container.read(lockControllerProvider.notifier).initialize();
 
   runApp(
@@ -40,6 +45,12 @@ class _AlveoAppState extends ConsumerState<AlveoApp>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    // `main()` normally loads this before the first frame; a widget test that
+    // pumps AlveoApp directly skips that bootstrap, so kick it off here when
+    // nothing has loaded it yet.
+    if (ref.read(userProfileControllerProvider) is AsyncLoading) {
+      ref.read(userProfileControllerProvider.notifier).load();
+    }
   }
 
   @override

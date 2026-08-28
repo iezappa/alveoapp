@@ -9,27 +9,54 @@ import '../../data/providers.dart';
 import '../../domain/greeting.dart';
 import '../../domain/insights/mood_trend.dart';
 import '../../domain/motivation/daily_quotes.dart';
+import '../../app/user_profile_controller.dart';
 import '../../l10n/app_localizations.dart';
 import '../insights/sparkline.dart';
+import '../shared/name_dialog.dart';
 import 'dashboard_providers.dart';
 
 /// The welcome screen and app entry point: a greeting, the next session, a
 /// shortcut to the daily check-in, and a way into the breathing exercise.
-class DashboardScreen extends ConsumerWidget {
+class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends ConsumerState<DashboardScreen> {
+  /// Guards the one-time first-launch name prompt so a rebuild cannot queue
+  /// a second dialog while the first is still open.
+  bool _namePromptScheduled = false;
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final nextSession = ref.watch(nextSessionProvider);
+    final name = ref.watch(userProfileControllerProvider).asData?.value;
+    final nameLoaded = ref.watch(userProfileControllerProvider) is AsyncData;
+    final promptForNameEnabled = ref.watch(promptForNameOnFirstLaunchProvider);
 
-    final greeting = switch (dayPartFor(DateTime.now())) {
+    if (promptForNameEnabled &&
+        nameLoaded &&
+        name == null &&
+        !_namePromptScheduled) {
+      _namePromptScheduled = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) promptForName(context, ref, dismissible: false);
+      });
+    }
+
+    final greetingBase = switch (dayPartFor(DateTime.now())) {
       DayPart.morning => l10n.dashboardGreetingMorning,
       DayPart.afternoon => l10n.dashboardGreetingAfternoon,
       DayPart.evening => l10n.dashboardGreetingEvening,
       DayPart.night => l10n.dashboardGreetingNight,
     };
+    final greeting = name == null || name.isEmpty
+        ? '$greetingBase.'
+        : l10n.dashboardGreetingNamed(greetingBase, name);
 
     return Scaffold(
       appBar: AppBar(
