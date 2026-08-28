@@ -14,7 +14,7 @@ import 'l10n/app_localizations.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final database = AppDatabase.file(await defaultDatabaseFile());
+  final database = AppDatabase.connect();
   final container = ProviderContainer(
     overrides: [appDatabaseProvider.overrideWithValue(database)],
   );

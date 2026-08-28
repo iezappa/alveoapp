@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -135,33 +136,36 @@ class SettingsScreen extends ConsumerWidget {
                 title: Text(l10n.importBackup),
                 onTap: () => runImportBackup(context, ref),
               ),
-              const SizedBox(height: 28),
-              SectionLabel(l10n.obsidianSection),
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.folder_open_outlined),
-                title: Text(l10n.obsidianVaultFolder),
-                subtitle: Text(
-                  vault.asData?.value ?? l10n.obsidianNotSet,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+              // Obsidian sync needs local filesystem access — desktop only.
+              if (!kIsWeb) ...[
+                const SizedBox(height: 28),
+                SectionLabel(l10n.obsidianSection),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.folder_open_outlined),
+                  title: Text(l10n.obsidianVaultFolder),
+                  subtitle: Text(
+                    vault.asData?.value ?? l10n.obsidianNotSet,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  onTap: () => pickObsidianVault(context, ref),
                 ),
-                onTap: () => pickObsidianVault(context, ref),
-              ),
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.arrow_upward),
-                enabled: vault.asData?.value != null,
-                title: Text(l10n.obsidianExport),
-                onTap: () => runObsidianExport(context, ref),
-              ),
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.arrow_downward),
-                enabled: vault.asData?.value != null,
-                title: Text(l10n.obsidianImport),
-                onTap: () => runObsidianImport(context, ref),
-              ),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.arrow_upward),
+                  enabled: vault.asData?.value != null,
+                  title: Text(l10n.obsidianExport),
+                  onTap: () => runObsidianExport(context, ref),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.arrow_downward),
+                  enabled: vault.asData?.value != null,
+                  title: Text(l10n.obsidianImport),
+                  onTap: () => runObsidianImport(context, ref),
+                ),
+              ],
             ],
           ),
         ),

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/providers.dart';
 import '../../domain/transfer/import_report.dart';
 import '../../l10n/app_localizations.dart';
+import '../export/file_saver.dart';
 import '../journal/journal_providers.dart';
 import '../sessions/session_providers.dart';
 import '../tasks/task_providers.dart';
@@ -24,15 +23,14 @@ Future<void> runExportBackup(BuildContext context, WidgetRef ref) async {
 
   final json = await ref.read(backupServiceProvider).exportToJson();
 
-  final location = await getSaveLocation(
+  final saved = await saveTextFile(
     suggestedName: _backupName(),
-    acceptedTypeGroups: [
-      XTypeGroup(label: l10n.backupFileType, extensions: const ['json']),
-    ],
+    contents: json,
+    typeLabel: l10n.backupFileType,
+    extensions: const ['json'],
   );
-  if (location == null) return;
+  if (saved == null) return;
 
-  await File(location.path).writeAsString(json);
   messenger.showSnackBar(SnackBar(content: Text(l10n.backupSaved)));
 }
 

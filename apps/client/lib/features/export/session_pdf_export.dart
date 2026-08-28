@@ -1,12 +1,10 @@
-import 'dart:io';
-
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../data/export/pdf_export.dart';
 import '../../data/local/database.dart';
 import '../../l10n/app_localizations.dart';
+import 'file_saver.dart';
 
 String _fileName(DateTime when) =>
     'session-'
@@ -37,16 +35,15 @@ Future<void> runSessionPdfExport(
     ),
   );
 
-  final location = await getSaveLocation(
+  final saved = await saveBytesFile(
     suggestedName: _fileName(session.scheduledFor),
-    acceptedTypeGroups: [
-      const XTypeGroup(label: 'PDF', extensions: ['pdf']),
-    ],
+    bytes: bytes,
+    typeLabel: 'PDF',
+    extensions: const ['pdf'],
   );
-  if (location == null) return;
+  if (saved == null) return;
 
-  await File(location.path).writeAsBytes(bytes);
   messenger.showSnackBar(
-    SnackBar(content: Text(l10n.exportSaved(location.path))),
+    SnackBar(content: Text(l10n.exportSaved(saved))),
   );
 }

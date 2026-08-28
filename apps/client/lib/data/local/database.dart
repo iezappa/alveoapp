@@ -1,10 +1,6 @@
-import 'dart:io';
-
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
-import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 
+import 'connection/connection.dart';
 import 'tables.dart';
 
 part 'database.g.dart';
@@ -31,11 +27,11 @@ part 'database.g.dart';
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
-  /// File-backed database for the running app.
-  AppDatabase.file(File file) : super(NativeDatabase.createInBackground(file));
+  /// The running app's persistent database (file on native, WASM on web).
+  AppDatabase.connect() : super(openConnection());
 
   /// In-memory database for tests. Each instance is isolated.
-  factory AppDatabase.forTesting() => AppDatabase(NativeDatabase.memory());
+  factory AppDatabase.forTesting() => AppDatabase(openInMemory());
 
   @override
   int get schemaVersion => 8;
@@ -74,10 +70,4 @@ class AppDatabase extends _$AppDatabase {
       await customStatement('PRAGMA foreign_keys = ON');
     },
   );
-}
-
-/// Default on-device database file: `<app documents>/alveo.sqlite`.
-Future<File> defaultDatabaseFile() async {
-  final dir = await getApplicationDocumentsDirectory();
-  return File(p.join(dir.path, 'alveo.sqlite'));
 }
