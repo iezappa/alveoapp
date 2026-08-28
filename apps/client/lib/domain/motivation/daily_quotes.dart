@@ -1477,4 +1477,1359 @@ const List<DailyQuote> dailyQuotes = [
         'time.',
     author: 'Proverbio japonés',
   ),
+  DailyQuote(
+    textEs:
+        'Somos lo que hacemos repetidamente. La excelencia, entonces, no es '
+        'un acto, sino un hábito.',
+    textEn:
+        'We are what we repeatedly do. Excellence, then, is not an act but a '
+        'habit.',
+    author: 'Aristóteles',
+    source: 'Ética a Nicómaco',
+  ),
+  DailyQuote(
+    textEs: 'Conocerse a uno mismo es el principio de toda sabiduría.',
+    textEn: 'Knowing yourself is the beginning of all wisdom.',
+    author: 'Aristóteles',
+  ),
+  DailyQuote(
+    textEs:
+        'La esperanza es el sueño del hombre despierto.',
+    textEn: 'Hope is a waking dream.',
+    author: 'Aristóteles',
+  ),
+  DailyQuote(
+    textEs:
+        'Educar la mente sin educar el corazón no es educar en absoluto.',
+    textEn:
+        'Educating the mind without educating the heart is no education at '
+        'all.',
+    author: 'Aristóteles',
+  ),
+  DailyQuote(
+    textEs: 'La felicidad depende de nosotros mismos.',
+    textEn: 'Happiness depends upon ourselves.',
+    author: 'Aristóteles',
+  ),
+  DailyQuote(
+    textEs: 'Una vida sin examen no merece ser vivida.',
+    textEn: 'The unexamined life is not worth living.',
+    author: 'Sócrates',
+  ),
+  DailyQuote(
+    textEs:
+        'El secreto del cambio está en concentrar toda la energía no en '
+        'combatir lo viejo, sino en construir lo nuevo.',
+    textEn:
+        'The secret of change is to focus all your energy not on fighting the '
+        'old, but on building the new.',
+    author: 'Sócrates',
+  ),
+  DailyQuote(
+    textEs:
+        'La riqueza no trae la bondad, pero la bondad hace de todo lo demás '
+        'algo bueno.',
+    textEn:
+        'Wealth does not bring goodness, but goodness makes everything else '
+        'good.',
+    author: 'Sócrates',
+  ),
+  DailyQuote(
+    textEs: 'Nadie tropieza dos veces con la misma piedra a propósito.',
+    textEn:
+        'To fall over the same stone twice is a proverbial disgrace.',
+    author: 'Cicerón',
+  ),
+  DailyQuote(
+    textEs: 'Mientras hay vida, hay esperanza.',
+    textEn: 'While there is life, there is hope.',
+    author: 'Cicerón',
+  ),
+  DailyQuote(
+    textEs:
+        'La libertad es el poder de vivir como uno quiere.',
+    textEn: 'Freedom is the power to live as you wish.',
+    author: 'Cicerón',
+  ),
+  DailyQuote(
+    textEs:
+        'Nada es a la vez tan valioso y tan frágil como el tiempo que se te '
+        'ha dado.',
+    textEn:
+        'Nothing is at once so valuable and so fragile as the time you have '
+        'been given.',
+    author: 'Séneca',
+    source: 'Cartas a Lucilio',
+  ),
+  DailyQuote(
+    textEs:
+        'Que cada noche, antes de dormir, te preguntes: ¿qué defecto he '
+        'curado hoy? ¿A qué falta me he resistido?',
+    textEn:
+        'Every night before sleep, ask yourself: what fault have I cured '
+        'today? What weakness have I resisted?',
+    author: 'Séneca',
+    source: 'Sobre la ira',
+  ),
+  DailyQuote(
+    textEs:
+        'Elegimos nuestras alegrías y nuestras penas mucho antes de '
+        'experimentarlas.',
+    textEn:
+        'We choose our joys and our sorrows long before we experience them.',
+    author: 'Kahlil Gibran',
+    source: 'El loco',
+  ),
+  DailyQuote(
+    textEs:
+        'La duda es un dolor demasiado solitario para saber que la fe es su '
+        'hermano gemelo.',
+    textEn:
+        'Doubt is a pain too lonely to know that faith is his twin brother.',
+    author: 'Kahlil Gibran',
+    source: 'Arena y espuma',
+  ),
+  DailyQuote(
+    textEs:
+        'Si el otro te hace sufrir, es porque en el fondo de ti algo sigue '
+        'sin sanar.',
+    textEn:
+        'If someone makes you suffer, it is because deep inside something in '
+        'you is still unhealed.',
+    author: 'Buda',
+  ),
+  DailyQuote(
+    textEs:
+        'El agua turbia se aclara si la dejas quieta.',
+    textEn: 'Muddy water becomes clear if you only let it be still.',
+    author: 'Lao Tsé',
+    source: 'Tao Te Ching',
+  ),
+  DailyQuote(
+    textEs:
+        'Manéjate en tus asuntos como manejarías un carro cargado por un '
+        'camino de montaña: con atención y sin prisa.',
+    textEn:
+        'Handle your affairs as you would drive a loaded cart down a mountain '
+        'road: with attention and without haste.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs: 'El bambú que se dobla es más fuerte que el roble que resiste.',
+    textEn:
+        'The bamboo that bends is stronger than the oak that resists.',
+    author: 'Proverbio japonés',
+  ),
+  DailyQuote(
+    textEs: 'La visión sin acción es un sueño; la acción sin visión, una '
+        'pesadilla.',
+    textEn:
+        'Vision without action is a daydream; action without vision is a '
+        'nightmare.',
+    author: 'Proverbio japonés',
+  ),
+  DailyQuote(
+    textEs:
+        'El río corta la roca no por su fuerza, sino por su constancia.',
+    textEn:
+        'A river cuts through rock not because of its power, but its '
+        'persistence.',
+    author: 'James N. Watkins',
+  ),
+  DailyQuote(
+    textEs:
+        'No cuentes los días; haz que los días cuenten.',
+    textEn: 'Do not count the days; make the days count.',
+    author: 'Muhammad Ali',
+  ),
+  DailyQuote(
+    textEs:
+        'Lo esencial es invisible a los ojos; solo se ve bien con el corazón.',
+    textEn:
+        'What is essential is invisible to the eye; one sees clearly only '
+        'with the heart.',
+    author: 'Antoine de Saint-Exupéry',
+    source: 'El principito',
+  ),
+  DailyQuote(
+    textEs:
+        'Eres responsable para siempre de lo que has domesticado.',
+    textEn: 'You become responsible, forever, for what you have tamed.',
+    author: 'Antoine de Saint-Exupéry',
+    source: 'El principito',
+  ),
+  DailyQuote(
+    textEs:
+        'Amar no es mirarse el uno al otro; es mirar juntos en la misma '
+        'dirección.',
+    textEn:
+        'Love does not consist of gazing at each other, but in looking '
+        'together in the same direction.',
+    author: 'Antoine de Saint-Exupéry',
+  ),
+  DailyQuote(
+    textEs: 'Cada pájaro que canta no está afirmando nada: está viviendo.',
+    textEn: 'A bird does not sing because it has an answer; it sings because '
+        'it has a song.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Concédeme serenidad para aceptar lo que no puedo cambiar, valor '
+        'para cambiar lo que sí puedo, y sabiduría para conocer la '
+        'diferencia.',
+    textEn:
+        'Grant me the serenity to accept the things I cannot change, courage '
+        'to change the things I can, and wisdom to know the difference.',
+    author: 'Reinhold Niebuhr',
+  ),
+  DailyQuote(
+    textEs: 'La cicatriz es la prueba de que la herida cerró.',
+    textEn: 'A scar is proof that the wound has healed.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'El coraje no siempre ruge. A veces es la voz callada al final del '
+        'día que dice: mañana lo intento de nuevo.',
+    textEn:
+        'Courage does not always roar. Sometimes it is the quiet voice at the '
+        "end of the day saying: I will try again tomorrow.",
+    author: 'Mary Anne Radmacher',
+  ),
+  DailyQuote(
+    textEs:
+        'La cometa se eleva más alto contra el viento, no a favor de él.',
+    textEn: 'A kite rises highest against the wind, not with it.',
+    author: 'Winston Churchill',
+  ),
+  DailyQuote(
+    textEs:
+        'Si estás atravesando un infierno, sigue caminando.',
+    textEn: 'If you are going through hell, keep going.',
+    author: 'Winston Churchill',
+  ),
+  DailyQuote(
+    textEs:
+        'Nuestras heridas suelen ser aberturas hacia lo mejor y más hermoso '
+        'de nosotros.',
+    textEn:
+        'Our wounds are often the openings into the best and most beautiful '
+        'part of us.',
+    author: 'David Richo',
+  ),
+  DailyQuote(
+    textEs:
+        'La calma es un superpoder: quien no se apura llega igual, y entero.',
+    textEn:
+        'Calm is a superpower: the one who does not hurry still arrives, and '
+        'arrives whole.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs: 'El que planta un árbol sabiendo que no se sentará a su sombra ha '
+        'entendido el sentido de la vida.',
+    textEn:
+        'One who plants a tree knowing they will never sit in its shade has '
+        'begun to understand the meaning of life.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Ningún copo de nieve se siente responsable de la avalancha, y sin '
+        'embargo, cada pequeña acción cuenta.',
+    textEn:
+        'No single raindrop believes it is to blame for the flood — and yet '
+        'each small act counts.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Regá lo que quieras que crezca.',
+    textEn: 'Water what you want to grow.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Los pájaros vuelven a cantar después de la tormenta. ¿Por qué no '
+        'habrías de hacerlo tú?',
+    textEn:
+        'Birds sing again after the storm. Why would you not?',
+    author: 'Rose Kennedy',
+  ),
+  DailyQuote(
+    textEs: 'Descansar también es parte del trabajo.',
+    textEn: 'Rest is part of the work, too.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'No tenés que verlo todo el camino. Solo dar el próximo paso.',
+    textEn:
+        "You don't have to see the whole staircase. Just take the first "
+        'step.',
+    author: 'Martin Luther King Jr.',
+  ),
+  DailyQuote(
+    textEs:
+        'La oscuridad no puede expulsar a la oscuridad; solo la luz puede '
+        'hacerlo.',
+    textEn:
+        'Darkness cannot drive out darkness; only light can do that.',
+    author: 'Martin Luther King Jr.',
+  ),
+  DailyQuote(
+    textEs:
+        'La sanación no consiste en volver a como eras antes, sino en '
+        'aprender a estar entero de un modo nuevo.',
+    textEn:
+        'Healing is not about returning to who you were; it is learning to '
+        'be whole in a new way.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs: 'Cada mañana nacemos de nuevo. Lo que hacemos hoy es lo que más '
+        'importa.',
+    textEn:
+        'Every morning we are born again. What we do today matters most.',
+    author: 'Buda',
+  ),
+  DailyQuote(
+    textEs:
+        'Tres cosas no pueden ocultarse por mucho tiempo: el sol, la luna y '
+        'la verdad.',
+    textEn:
+        'Three things cannot be long hidden: the sun, the moon, and the '
+        'truth.',
+    author: 'Buda',
+  ),
+  DailyQuote(
+    textEs:
+        'Alegría radical: agradecer no cuando todo va bien, sino porque '
+        'seguís acá para intentarlo.',
+    textEn:
+        'Radical joy: to give thanks not because all is well, but because you '
+        'are still here to try.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Recuerda apagar la luz de la mente cuando dejas la habitación: no '
+        'todo merece que sigas pensándolo.',
+    textEn:
+        'Remember to switch off the light in your mind when you leave the '
+        'room: not everything deserves your continued attention.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Lo que no se expresa se imprime; y lo que se imprime, se enferma.',
+    textEn:
+        'What is not expressed gets impressed — and what gets impressed can '
+        'make you ill.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Sé amable, porque cada persona que te cruzás está librando una '
+        'batalla de la que no sabés nada.',
+    textEn:
+        'Be kind, for everyone you meet is fighting a battle you know nothing '
+        'about.',
+    author: 'Ian Maclaren',
+  ),
+  DailyQuote(
+    textEs:
+        'Tenemos dos vidas, y la segunda empieza cuando nos damos cuenta de '
+        'que solo tenemos una.',
+    textEn:
+        'We have two lives, and the second begins when we realize we only '
+        'have one.',
+    author: 'Confucio',
+  ),
+  DailyQuote(
+    textEs:
+        'La vida es realmente simple, pero insistimos en complicarla.',
+    textEn:
+        'Life is really simple, but we insist on making it complicated.',
+    author: 'Confucio',
+  ),
+  DailyQuote(
+    textEs:
+        'Todo tiene belleza, pero no todos la ven.',
+    textEn: 'Everything has beauty, but not everyone sees it.',
+    author: 'Confucio',
+  ),
+  DailyQuote(
+    textEs:
+        'El que dice que algo es imposible no debería interrumpir al que lo '
+        'está haciendo.',
+    textEn:
+        'The person who says it cannot be done should not interrupt the one '
+        'doing it.',
+    author: 'Proverbio chino',
+  ),
+  DailyQuote(
+    textEs:
+        'Un poco de fragancia siempre queda en la mano que regala flores.',
+    textEn:
+        'A bit of fragrance always clings to the hand that gives flowers.',
+    author: 'Proverbio chino',
+  ),
+  DailyQuote(
+    textEs:
+        'La perla se forma alrededor de un grano de arena que molestaba a la '
+        'ostra.',
+    textEn:
+        'The pearl forms around the grain of sand that was troubling the '
+        'oyster.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La montaña más alta se sube igual: paso a paso.',
+    textEn: 'The highest mountain is climbed the same way: step by step.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'No hay noche tan larga que no termine en amanecer.',
+    textEn: 'There is no night so long that it does not end in dawn.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Quien mira hacia afuera, sueña; quien mira hacia adentro, despierta.',
+    textEn:
+        'Who looks outside, dreams; who looks inside, awakes.',
+    author: 'Carl Jung',
+  ),
+  DailyQuote(
+    textEs:
+        'No estoy hecho por lo que me pasó; estoy hecho por lo que elijo '
+        'llegar a ser.',
+    textEn:
+        'I am not what happened to me; I am what I choose to become.',
+    author: 'Carl Jung',
+  ),
+  DailyQuote(
+    textEs:
+        'Tu visión se aclara solo cuando puedes mirar dentro de tu propio '
+        'corazón.',
+    textEn:
+        'Your vision will become clear only when you can look into your own '
+        'heart.',
+    author: 'Carl Jung',
+  ),
+  DailyQuote(
+    textEs:
+        'Todo lo que nos irrita de los demás puede llevarnos a entendernos a '
+        'nosotros mismos.',
+    textEn:
+        'Everything that irritates us about others can lead us to an '
+        'understanding of ourselves.',
+    author: 'Carl Jung',
+  ),
+  DailyQuote(
+    textEs:
+        'Conocer tu propia oscuridad es el mejor método para lidiar con la '
+        'oscuridad de los demás.',
+    textEn:
+        'Knowing your own darkness is the best method for dealing with the '
+        'darknesses of other people.',
+    author: 'Carl Jung',
+  ),
+  DailyQuote(
+    textEs:
+        'No hay despertar de la conciencia sin dolor.',
+    textEn: 'There is no coming to consciousness without pain.',
+    author: 'Carl Jung',
+  ),
+  DailyQuote(
+    textEs:
+        'La emoción que no expreso con palabras la llorará algún otro órgano '
+        'del cuerpo.',
+    textEn:
+        'The emotion I do not put into words, some other part of the body '
+        'will weep.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Aquello a lo que te resistes, persiste; aquello que mirás de frente, '
+        'se ablanda.',
+    textEn:
+        'What you resist persists; what you face begins to soften.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Entre lo que te pasó y lo que hacés con eso, ahí vivís.',
+    textEn:
+        'Between what happened to you and what you do with it — that is where '
+        'you live.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'El único modo de salir es a través.',
+    textEn: 'The only way out is through.',
+    author: 'Robert Frost',
+  ),
+  DailyQuote(
+    textEs:
+        'En tres palabras puedo resumir todo lo que he aprendido sobre la '
+        'vida: sigue adelante.',
+    textEn:
+        'In three words I can sum up everything I have learned about life: '
+        'it goes on.',
+    author: 'Robert Frost',
+  ),
+  DailyQuote(
+    textEs:
+        'Dos caminos se abrían en el bosque, y yo tomé el menos transitado; '
+        'eso lo cambió todo.',
+    textEn:
+        'Two roads diverged in a wood, and I took the one less traveled by, '
+        'and that has made all the difference.',
+    author: 'Robert Frost',
+    source: 'El camino no elegido',
+  ),
+  DailyQuote(
+    textEs:
+        'Sé el cambio que querés ver en el mundo.',
+    textEn: 'Be the change you wish to see in the world.',
+    author: 'Mahatma Gandhi',
+  ),
+  DailyQuote(
+    textEs:
+        'La fuerza no viene de la capacidad física, sino de una voluntad '
+        'indomable.',
+    textEn:
+        'Strength does not come from physical capacity. It comes from an '
+        'indomitable will.',
+    author: 'Mahatma Gandhi',
+  ),
+  DailyQuote(
+    textEs:
+        'Vive como si fueras a morir mañana; aprende como si fueras a vivir '
+        'para siempre.',
+    textEn:
+        'Live as if you were to die tomorrow; learn as if you were to live '
+        'forever.',
+    author: 'Mahatma Gandhi',
+  ),
+  DailyQuote(
+    textEs:
+        'La libertad no vale nada si no incluye la libertad de equivocarse.',
+    textEn:
+        'Freedom is not worth having if it does not include the freedom to '
+        'make mistakes.',
+    author: 'Mahatma Gandhi',
+  ),
+  DailyQuote(
+    textEs:
+        'Nadie puede hacerte sentir inferior sin tu consentimiento.',
+    textEn:
+        'No one can make you feel inferior without your consent.',
+    author: 'Eleanor Roosevelt',
+  ),
+  DailyQuote(
+    textEs:
+        'Hacé una cosa cada día que te dé miedo.',
+    textEn: 'Do one thing every day that scares you.',
+    author: 'Eleanor Roosevelt',
+  ),
+  DailyQuote(
+    textEs:
+        'El futuro pertenece a quienes creen en la belleza de sus sueños.',
+    textEn:
+        'The future belongs to those who believe in the beauty of their '
+        'dreams.',
+    author: 'Eleanor Roosevelt',
+  ),
+  DailyQuote(
+    textEs:
+        'Con el nuevo día llegan nuevas fuerzas y nuevos pensamientos.',
+    textEn: 'With the new day comes new strength and new thoughts.',
+    author: 'Eleanor Roosevelt',
+  ),
+  DailyQuote(
+    textEs:
+        'La vida se encoge o se expande en proporción al coraje de cada uno.',
+    textEn:
+        "Life shrinks or expands in proportion to one's courage.",
+    author: 'Anaïs Nin',
+  ),
+  DailyQuote(
+    textEs:
+        'No vemos las cosas como son; las vemos como somos.',
+    textEn: 'We do not see things as they are; we see them as we are.',
+    author: 'Anaïs Nin',
+  ),
+  DailyQuote(
+    textEs:
+        'La ansiedad es amor buscando su forma. Empieza como un dolor sordo y '
+        'se convierte en pánico.',
+    textEn:
+        'Anxiety is love seeking its form. It begins as a dull ache and '
+        'becomes panic.',
+    author: 'Anaïs Nin',
+  ),
+  DailyQuote(
+    textEs:
+        'Empieza donde estás. Usa lo que tienes. Haz lo que puedas.',
+    textEn: 'Start where you are. Use what you have. Do what you can.',
+    author: 'Arthur Ashe',
+  ),
+  DailyQuote(
+    textEs:
+        'El éxito es un viaje, no un destino. La acción muchas veces importa '
+        'más que el resultado.',
+    textEn:
+        'Success is a journey, not a destination. The doing is often more '
+        'important than the outcome.',
+    author: 'Arthur Ashe',
+  ),
+  DailyQuote(
+    textEs:
+        'La gente olvidará lo que dijiste, olvidará lo que hiciste, pero '
+        'nunca olvidará cómo la hiciste sentir.',
+    textEn:
+        'People will forget what you said, people will forget what you did, '
+        'but people will never forget how you made them feel.',
+    author: 'Maya Angelou',
+  ),
+  DailyQuote(
+    textEs:
+        'No podés controlar todo lo que te pasa, pero sí podés decidir no '
+        'quedar reducido por ello.',
+    textEn:
+        'You may not control all the events that happen to you, but you can '
+        'decide not to be reduced by them.',
+    author: 'Maya Angelou',
+  ),
+  DailyQuote(
+    textEs:
+        'Hacé lo mejor que puedas hasta que sepas más. Cuando sepas más, '
+        'hacelo mejor.',
+    textEn:
+        'Do the best you can until you know better. Then when you know '
+        'better, do better.',
+    author: 'Maya Angelou',
+  ),
+  DailyQuote(
+    textEs:
+        'Un pájaro posado en un árbol nunca teme que la rama se rompa, '
+        'porque su confianza no está en la rama, sino en sus alas.',
+    textEn:
+        'A bird sitting on a tree is never afraid of the branch breaking, '
+        'because its trust is not in the branch but in its own wings.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La paciencia y la perseverancia tienen un efecto mágico ante el que '
+        'las dificultades desaparecen.',
+    textEn:
+        'Patience and perseverance have a magical effect before which '
+        'difficulties disappear.',
+    author: 'John Quincy Adams',
+  ),
+  DailyQuote(
+    textEs:
+        'La quietud no es la ausencia de tormenta, sino la paz en medio de '
+        'ella.',
+    textEn:
+        'Stillness is not the absence of the storm, but peace in the midst '
+        'of it.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Nunca es demasiado tarde para ser lo que podrías haber sido.',
+    textEn: 'It is never too late to be what you might have been.',
+    author: 'George Eliot',
+  ),
+  DailyQuote(
+    textEs:
+        'Sólo en la aventura algunas personas logran conocerse a sí mismas.',
+    textEn:
+        'Only in adventure do some people succeed in knowing themselves.',
+    author: 'André Gide',
+  ),
+  DailyQuote(
+    textEs:
+        'El hombre no puede descubrir nuevos océanos si no tiene el valor de '
+        'perder de vista la costa.',
+    textEn:
+        'One does not discover new lands without consenting to lose sight of '
+        'the shore for a very long time.',
+    author: 'André Gide',
+  ),
+  DailyQuote(
+    textEs:
+        'Confía en quienes buscan la verdad; duda de quienes dicen haberla '
+        'encontrado.',
+    textEn:
+        'Trust those who seek the truth; doubt those who say they have found '
+        'it.',
+    author: 'André Gide',
+  ),
+  DailyQuote(
+    textEs:
+        'El que tiene salud, tiene esperanza; y el que tiene esperanza, lo '
+        'tiene todo.',
+    textEn:
+        'He who has health has hope; and he who has hope has everything.',
+    author: 'Thomas Carlyle',
+  ),
+  DailyQuote(
+    textEs:
+        'Nuestra principal tarea no es ver lo que se vislumbra a lo lejos, '
+        'sino hacer lo que tenemos claramente a mano.',
+    textEn:
+        'Our main business is not to see what lies dimly at a distance, but '
+        'to do what lies clearly at hand.',
+    author: 'Thomas Carlyle',
+  ),
+  DailyQuote(
+    textEs:
+        'Toda gran obra fue al principio imposible.',
+    textEn: 'Every noble work is at first impossible.',
+    author: 'Thomas Carlyle',
+  ),
+  DailyQuote(
+    textEs:
+        'La adversidad tiene el efecto de despertar talentos que en la '
+        'prosperidad hubieran dormido.',
+    textEn:
+        'Adversity has the effect of eliciting talents which in prosperous '
+        'circumstances would have lain dormant.',
+    author: 'Horacio',
+  ),
+  DailyQuote(
+    textEs:
+        'Atrévete a ser sabio; empieza.',
+    textEn: 'Dare to be wise; begin.',
+    author: 'Horacio',
+    source: 'Epístolas',
+  ),
+  DailyQuote(
+    textEs:
+        'Aprovecha el día, y confía lo menos posible en el mañana.',
+    textEn: 'Seize the day, and put as little trust as you can in tomorrow.',
+    author: 'Horacio',
+    source: 'Odas',
+  ),
+  DailyQuote(
+    textEs:
+        'Mientras hablamos, el tiempo envidioso habrá huido: aprovecha el '
+        'hoy.',
+    textEn:
+        'While we speak, envious time will have fled: seize the day.',
+    author: 'Horacio',
+    source: 'Odas',
+  ),
+  DailyQuote(
+    textEs:
+        'La verdadera nobleza está en ser superior a tu yo anterior.',
+    textEn:
+        'True nobility is being superior to your former self.',
+    author: 'Ernest Hemingway',
+  ),
+  DailyQuote(
+    textEs:
+        'El mundo rompe a todos, y después muchos se hacen fuertes en las '
+        'partes rotas.',
+    textEn:
+        'The world breaks everyone, and afterward many are strong at the '
+        'broken places.',
+    author: 'Ernest Hemingway',
+    source: 'Adiós a las armas',
+  ),
+  DailyQuote(
+    textEs:
+        'Escribir es fácil: solo hay que sentarse frente a la máquina y '
+        'sangrar. Vivir con honestidad, también.',
+    textEn:
+        'There is nothing to writing. All you do is sit down and bleed. The '
+        'same is true of living honestly.',
+    author: 'Ernest Hemingway',
+  ),
+  DailyQuote(
+    textEs:
+        'La forma más simple de gratitud: notar que hoy respiraste sin '
+        'pensarlo miles de veces.',
+    textEn:
+        'The simplest gratitude: to notice that today you breathed thousands '
+        'of times without trying.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La compasión hacia uno mismo no es debilidad: es la base desde la '
+        'que se puede cambiar.',
+    textEn:
+        'Self-compassion is not weakness: it is the ground from which change '
+        'becomes possible.',
+    author: 'Kristin Neff',
+  ),
+  DailyQuote(
+    textEs:
+        'Hablate a vos mismo como le hablarías a alguien a quien querés y '
+        'estás tratando de ayudar.',
+    textEn:
+        'Talk to yourself the way you would talk to someone you love and are '
+        'trying to help.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La mente es como el agua: cuando se agita, es difícil ver; cuando se '
+        'calma, todo se aclara.',
+    textEn:
+        'The mind is like water. When it is turbulent, it is difficult to '
+        'see. When it is calm, everything becomes clear.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Regla para los días difíciles: bebé agua, salí al aire, moveté un '
+        'poco, y sé amable con vos.',
+    textEn:
+        'Rule for hard days: drink water, get some air, move a little, and be '
+        'gentle with yourself.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La ansiedad es pensar mil veces algo que quizá nunca ocurra. El '
+        'presente casi siempre es soportable.',
+    textEn:
+        'Anxiety is thinking a thousand times about something that may never '
+        'happen. The present moment is almost always bearable.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'No podés parar las olas, pero podés aprender a surfearlas.',
+    textEn: 'You cannot stop the waves, but you can learn to surf.',
+    author: 'Jon Kabat-Zinn',
+  ),
+  DailyQuote(
+    textEs:
+        'Donde sea que vayas, ahí estás.',
+    textEn: 'Wherever you go, there you are.',
+    author: 'Jon Kabat-Zinn',
+  ),
+  DailyQuote(
+    textEs:
+        'La atención plena consiste en prestar atención de una manera '
+        'particular: a propósito, en el presente y sin juzgar.',
+    textEn:
+        'Mindfulness means paying attention in a particular way: on purpose, '
+        'in the present moment, and non-judgmentally.',
+    author: 'Jon Kabat-Zinn',
+  ),
+  DailyQuote(
+    textEs:
+        'Sentir lo que sentís no es un problema a resolver, es información '
+        'para escuchar.',
+    textEn:
+        'What you feel is not a problem to be solved; it is information to be '
+        'listened to.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La primera flecha es el dolor; la segunda, la que te clavás vos con '
+        'lo que te decís sobre el dolor.',
+    textEn:
+        'The first arrow is the pain itself; the second is the one you fire '
+        'at yourself with what you say about the pain.',
+    author: 'Buda',
+  ),
+  DailyQuote(
+    textEs:
+        'Nombrar lo que sentís le quita la mitad de su fuerza.',
+    textEn: 'Naming a feeling takes half its power away.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Progreso, no perfección.',
+    textEn: 'Progress, not perfection.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Hoy alcanza con hacer lo que hoy se puede.',
+    textEn: 'For today, it is enough to do what today allows.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'El que tiene paciencia obtiene lo que desea.',
+    textEn: 'He that can have patience can have what he will.',
+    author: 'Benjamin Franklin',
+  ),
+  DailyQuote(
+    textEs:
+        'No dejes para mañana lo que puedas hacer hoy… salvo el preocuparte, '
+        'que puede esperar siempre.',
+    textEn:
+        "Never leave that till tomorrow which you can do today — except "
+        'worrying, which can always wait.',
+    author: 'Benjamin Franklin',
+  ),
+  DailyQuote(
+    textEs:
+        'Dime y lo olvido; enséñame y lo recuerdo; involúcrame y lo aprendo.',
+    textEn:
+        'Tell me and I forget. Teach me and I remember. Involve me and I '
+        'learn.',
+    author: 'Benjamin Franklin',
+  ),
+  DailyQuote(
+    textEs:
+        'La energía y la persistencia conquistan todas las cosas.',
+    textEn: 'Energy and persistence conquer all things.',
+    author: 'Benjamin Franklin',
+  ),
+  DailyQuote(
+    textEs:
+        'El que quiere mover el mundo, primero debe moverse a sí mismo.',
+    textEn: 'Let him who would move the world first move himself.',
+    author: 'Sócrates',
+  ),
+  DailyQuote(
+    textEs:
+        'La mente lo es todo: en lo que pensás, en eso te convertís.',
+    textEn: 'The mind is everything. What you think you become.',
+    author: 'Buda',
+  ),
+  DailyQuote(
+    textEs:
+        'Una jarra se llena gota a gota.',
+    textEn: 'A jug fills drop by drop.',
+    author: 'Buda',
+  ),
+  DailyQuote(
+    textEs:
+        'Que tu apego a lo que se va no te impida ver lo que llega.',
+    textEn:
+        'Do not let your grip on what is leaving blind you to what is '
+        'arriving.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La montaña se ve enorme desde abajo y pequeña desde la cima. Seguí '
+        'subiendo.',
+    textEn:
+        'The mountain looks huge from below and small from the summit. Keep '
+        'climbing.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La calma es fuerza en reposo.',
+    textEn: 'Calm is strength at rest.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Cuando no sepas qué hacer, hacé la próxima cosa pequeña y correcta.',
+    textEn:
+        'When you do not know what to do, do the next small right thing.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'No hay que tenerlo todo resuelto para dar el primer paso; hay que '
+        'dar el primer paso para empezar a resolverlo.',
+    textEn:
+        'You do not need it all figured out to take the first step; you take '
+        'the first step to begin figuring it out.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La gratitud convierte lo que tenemos en suficiente.',
+    textEn: 'Gratitude turns what we have into enough.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Un día a la vez sigue siendo un buen plan.',
+    textEn: 'One day at a time is still a good plan.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Regresar a la respiración es regresar a casa.',
+    textEn: 'Returning to the breath is returning home.',
+    author: 'Thich Nhat Hanh',
+  ),
+  DailyQuote(
+    textEs:
+        'Sonreír es tu propio amor por ti mismo hecho visible.',
+    textEn: 'Smiling is your own love for yourself made visible.',
+    author: 'Thich Nhat Hanh',
+  ),
+  DailyQuote(
+    textEs:
+        'Caminá como si estuvieras besando la tierra con los pies.',
+    textEn: 'Walk as if you are kissing the earth with your feet.',
+    author: 'Thich Nhat Hanh',
+  ),
+  DailyQuote(
+    textEs:
+        'Sentir emociones difíciles no es fallar; es ser humano.',
+    textEn:
+        'Feeling difficult emotions is not failing; it is being human.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'El descanso no es un premio por terminar; es parte del hacer.',
+    textEn: 'Rest is not a reward for finishing; it is part of the doing.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Pedir ayuda es un acto de coraje, no de debilidad.',
+    textEn: 'Asking for help is an act of courage, not weakness.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La vida no es esperar a que pase la tormenta, sino aprender a '
+        'bailar bajo la lluvia.',
+    textEn:
+        'Life is not about waiting for the storm to pass; it is about '
+        'learning to dance in the rain.',
+    author: 'Vivian Greene',
+  ),
+  DailyQuote(
+    textEs:
+        'A veces el paso más valiente es descansar.',
+    textEn: 'Sometimes the bravest move is to rest.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La constancia vence lo que la dicha no alcanza.',
+    textEn: 'Perseverance achieves what good fortune cannot reach.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Cada vez que elegís no repetir un viejo patrón, te estás '
+        'reescribiendo.',
+    textEn:
+        'Every time you choose not to repeat an old pattern, you are '
+        'rewriting yourself.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'El coraje es el miedo que ya rezó sus oraciones.',
+    textEn: 'Courage is fear that has said its prayers.',
+    author: 'Karle Wilson Baker',
+  ),
+  DailyQuote(
+    textEs:
+        'No podés volver atrás y cambiar el comienzo, pero podés empezar '
+        'donde estás y cambiar el final.',
+    textEn:
+        'You cannot go back and change the beginning, but you can start '
+        'where you are and change the ending.',
+    author: 'C. S. Lewis',
+  ),
+  DailyQuote(
+    textEs:
+        'Las dificultades preparan a las personas comunes para destinos '
+        'extraordinarios.',
+    textEn:
+        'Hardships often prepare ordinary people for an extraordinary '
+        'destiny.',
+    author: 'C. S. Lewis',
+  ),
+  DailyQuote(
+    textEs:
+        'No tenés un alma. Sos un alma. Tenés un cuerpo.',
+    textEn: 'You do not have a soul. You are a soul. You have a body.',
+    author: 'C. S. Lewis',
+  ),
+  DailyQuote(
+    textEs:
+        'La cima de una montaña es para el escalador que ha atravesado los '
+        'valles de abajo.',
+    textEn:
+        'The summit belongs to the climber who has crossed the valleys '
+        'below.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Lo opuesto a la depresión no es la felicidad; es la vitalidad.',
+    textEn:
+        'The opposite of depression is not happiness; it is vitality.',
+    author: 'Andrew Solomon',
+  ),
+  DailyQuote(
+    textEs:
+        'Todo lo que siempre quisiste está del otro lado del miedo.',
+    textEn: 'Everything you want is on the other side of fear.',
+    author: 'George Addair',
+  ),
+  DailyQuote(
+    textEs:
+        'La herida es donde la luz entra, y también por donde tu fuerza '
+        'sale.',
+    textEn:
+        'The wound is where the light enters — and also where your strength '
+        'comes out.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Lo que no te mata te da una historia que contar y algo de '
+        'compasión para regalar.',
+    textEn:
+        'What does not kill you gives you a story to tell and some '
+        'compassion to give away.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La paz no es la ausencia de conflicto, sino la capacidad de '
+        'manejarlo.',
+    textEn:
+        'Peace is not the absence of conflict, but the ability to cope with '
+        'it.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La lentitud con la que vas no importa mientras no te detengas.',
+    textEn: 'It does not matter how slowly you go, so long as you do not '
+        'stop.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'No dejes que lo perfecto sea enemigo de lo suficientemente bueno.',
+    textEn: 'Do not let the perfect be the enemy of the good.',
+    author: 'Voltaire',
+  ),
+  DailyQuote(
+    textEs:
+        'El jardín se cultiva; la vida también. Cuidá el tuyo.',
+    textEn: 'We must cultivate our garden — and our life along with it.',
+    author: 'Voltaire',
+    source: 'Cándido',
+  ),
+  DailyQuote(
+    textEs:
+        'Juzgá a una persona por sus preguntas más que por sus respuestas.',
+    textEn:
+        'Judge a person by their questions rather than by their answers.',
+    author: 'Voltaire',
+  ),
+  DailyQuote(
+    textEs:
+        'La duda es incómoda, pero la certeza es absurda.',
+    textEn: 'Doubt is not a pleasant condition, but certainty is absurd.',
+    author: 'Voltaire',
+  ),
+  DailyQuote(
+    textEs:
+        'Todo el mundo quiere vivir en la cima de la montaña, pero la '
+        'felicidad y el crecimiento ocurren mientras la escalás.',
+    textEn:
+        'Everybody wants to live on top of the mountain, but all the '
+        'happiness and growth occurs while you are climbing it.',
+    author: 'Andy Rooney',
+  ),
+  DailyQuote(
+    textEs:
+        'Tené paciencia con vos mismo. El crecimiento no es lineal.',
+    textEn: 'Be patient with yourself. Growth is not linear.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La marea baja siempre vuelve a subir.',
+    textEn: 'The tide always comes back in.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'El único día imposible de vivir es mañana.',
+    textEn: 'The only impossible day to live is tomorrow.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Un pequeño progreso cada día suma grandes resultados.',
+    textEn: 'Little progress each day adds up to big results.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Cuando sientas que no podés más, mirá cuánto ya soportaste.',
+    textEn:
+        'When you feel you cannot take any more, look at how much you have '
+        'already carried.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Todo lo que amás corre riesgo de perderse; amalo igual.',
+    textEn: 'Everything you love is at risk of being lost; love it anyway.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Las raíces crecen fuertes en la tormenta.',
+    textEn: 'Roots grow strong in the storm.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Comparate con quien fuiste ayer, no con quien otro es hoy.',
+    textEn:
+        'Compare yourself to who you were yesterday, not to who someone else '
+        'is today.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'A veces ganar es simplemente no rendirse hoy.',
+    textEn: 'Sometimes winning is simply not giving up today.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La primavera siempre llega después del invierno más largo.',
+    textEn: 'Spring always follows the longest winter.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Respirá. Estás vivo. Eso ya es empezar bien el día.',
+    textEn: 'Breathe. You are alive. That is already a good start to the '
+        'day.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Tratá tu mente como a un jardín: no todo lo que crece hay que '
+        'dejarlo crecer.',
+    textEn:
+        'Tend your mind like a garden: not everything that grows should be '
+        'left to grow.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'El pasado es una lección, no una cadena.',
+    textEn: 'The past is a lesson, not a life sentence.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'La valentía no es no tener miedo; es actuar aun con miedo.',
+    textEn: 'Courage is not the absence of fear; it is acting despite it.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Elegí un pensamiento mejor. Es tu mayor arma contra el estrés.',
+    textEn:
+        'Choose a better thought. It is your greatest weapon against '
+        'stress.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Nadie puede volver atrás y hacer un nuevo comienzo, pero cualquiera '
+        'puede empezar hoy y hacer un nuevo final.',
+    textEn:
+        'No one can go back and make a brand-new start, but anyone can start '
+        'today and make a brand-new ending.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'El cielo entero pertenece a quien mira hacia arriba.',
+    textEn: 'The whole sky belongs to the one who looks up.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Contá tus bendiciones, no tus problemas.',
+    textEn: 'Count your blessings, not your troubles.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'El coraje se construye cruzando pequeños miedos, uno por día.',
+    textEn: 'Courage is built by crossing small fears, one a day.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Aun la noche más oscura terminará y el sol saldrá.',
+    textEn: 'Even the darkest night will end and the sun will rise.',
+    author: 'Victor Hugo',
+    source: 'Los miserables',
+  ),
+  DailyQuote(
+    textEs:
+        'El futuro tiene muchos nombres: para los débiles es lo inalcanzable; '
+        'para los valientes, la oportunidad.',
+    textEn:
+        'The future has many names: for the weak it is the unattainable; for '
+        'the brave it is opportunity.',
+    author: 'Victor Hugo',
+  ),
+  DailyQuote(
+    textEs:
+        'Cambiar de opinión sobre uno mismo es un acto de libertad.',
+    textEn: 'To change your mind about yourself is an act of freedom.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Lo que hoy te cuesta, mañana será tu piso.',
+    textEn: 'What costs you effort today will be your floor tomorrow.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Regá tus vínculos como riegas las plantas: un poco, seguido.',
+    textEn: 'Tend your relationships as you water plants: a little, often.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Que el hecho de no poder hacerlo todo no te impida hacer algo.',
+    textEn:
+        'Do not let the fact that you cannot do everything keep you from '
+        'doing something.',
+    author: 'Proverbio',
+  ),
+  DailyQuote(
+    textEs:
+        'Hoy es un día que se repite una vez cada cuatro años: dale un uso '
+        'que valga la espera.',
+    textEn:
+        'Today comes around only once every four years — make it worth the '
+        'wait.',
+    author: 'Proverbio',
+  ),
 ];

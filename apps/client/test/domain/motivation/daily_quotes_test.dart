@@ -27,8 +27,14 @@ void main() {
       quoteForDay(jan1.add(const Duration(days: 1))),
       same(dailyQuotes[1]),
     );
-    final wrapDay = jan1.add(Duration(days: dailyQuotes.length));
-    expect(quoteForDay(wrapDay), same(dailyQuotes[0]));
+    // Feb 29 in a leap year is day-of-year 59 and still maps into the list.
+    expect(quoteForDay(DateTime(2028, 2, 29)), same(dailyQuotes[59]));
+    // The modulo keeps the lookup safe if the list is ever shorter than 366.
+    final idx = (dailyQuotes.length + 3) % dailyQuotes.length;
+    expect(
+      quoteForDay(DateTime(2026).add(Duration(days: idx))),
+      same(dailyQuotes[idx]),
+    );
   });
 
   test('text() switches language and falls back to Spanish', () {
