@@ -17,12 +17,18 @@ class JournalEditorScreen extends ConsumerStatefulWidget {
     this.section = JournalSection.oneLiner,
     this.isMonthlyReview = false,
     this.reviewMonth,
+    this.onDone,
   });
 
   final String? entryId;
   final JournalSection section;
   final bool isMonthlyReview;
   final DateTime? reviewMonth;
+
+  /// When set, the editor is embedded in a pane rather than pushed as a route:
+  /// this is called to leave it (after a save, or via the close button) instead
+  /// of popping the navigator.
+  final VoidCallback? onDone;
 
   bool get isNew => entryId == null;
 
@@ -128,7 +134,9 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(AppLocalizations.of(context).journalSaved)),
     );
-    if (context.canPop()) {
+    if (widget.onDone != null) {
+      widget.onDone!();
+    } else if (context.canPop()) {
       context.pop();
     } else {
       context.go('/journal');
@@ -150,6 +158,14 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: widget.onDone == null,
+        leading: widget.onDone == null
+            ? null
+            : IconButton(
+                onPressed: widget.onDone,
+                icon: const Icon(Icons.close),
+                tooltip: l10n.cancel,
+              ),
         title: Text(title),
         actions: [
           IconButton(

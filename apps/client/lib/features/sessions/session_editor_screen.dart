@@ -11,9 +11,14 @@ import 'session_links_tab.dart';
 import 'session_providers.dart';
 
 class SessionEditorScreen extends ConsumerStatefulWidget {
-  const SessionEditorScreen({super.key, this.sessionId});
+  const SessionEditorScreen({super.key, this.sessionId, this.onDone});
 
   final String? sessionId;
+
+  /// When set, the editor is embedded in a pane rather than pushed as a route:
+  /// this is called to leave it (after a save, or via the close button) instead
+  /// of popping the navigator.
+  final VoidCallback? onDone;
 
   bool get isNew => sessionId == null;
 
@@ -122,7 +127,9 @@ class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(AppLocalizations.of(context).sessionSaved)),
     );
-    if (context.canPop()) {
+    if (widget.onDone != null) {
+      widget.onDone!();
+    } else if (context.canPop()) {
       context.pop();
     } else {
       context.go('/sessions');
@@ -144,6 +151,14 @@ class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
       length: showLinks ? 4 : 3,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: widget.onDone == null,
+          leading: widget.onDone == null
+              ? null
+              : IconButton(
+                  onPressed: widget.onDone,
+                  icon: const Icon(Icons.close),
+                  tooltip: l10n.cancel,
+                ),
           title: Text(widget.isNew ? l10n.newSession : l10n.editSession),
           actions: [
             IconButton(

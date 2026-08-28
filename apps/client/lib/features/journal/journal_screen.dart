@@ -11,6 +11,7 @@ import '../../l10n/app_localizations.dart';
 import '../shared/confirm_delete.dart';
 import '../shared/master_detail_shell.dart';
 import '../timeline/timeline_providers.dart';
+import 'journal_editor_screen.dart';
 import 'journal_labels.dart';
 import 'journal_preview.dart';
 import 'journal_providers.dart';
@@ -28,6 +29,8 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
   final _search = TextEditingController();
   final _sections = <JournalSection>{};
   String? _selectedId;
+  bool _editingSelected = false;
+  JournalSection? _creatingSection;
 
   @override
   void dispose() {
@@ -37,7 +40,11 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
 
   void _open(String id) {
     if (MasterDetailShell.isWide(context)) {
-      setState(() => _selectedId = id);
+      setState(() {
+        _selectedId = id;
+        _creatingSection = null;
+        _editingSelected = false;
+      });
     } else {
       context.push('/journal/$id');
     }
@@ -63,8 +70,23 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
         ),
       ),
     );
-    if (section != null && mounted) {
+    if (section == null || !mounted) return;
+    if (MasterDetailShell.isWide(context)) {
+      setState(() {
+        _creatingSection = section;
+        _editingSelected = false;
+      });
+    } else {
       context.push('/journal/new?section=${section.name}');
+    }
+  }
+
+  void _exitEditor() {
+    if (mounted) {
+      setState(() {
+        _creatingSection = null;
+        _editingSelected = false;
+      });
     }
   }
 
@@ -129,17 +151,32 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
       ),
     );
 
-    final detail = _selectedId == null
-        ? EmptyState(
-            icon: Icons.chevron_left,
-            message: l10n.detailNothingSelected,
-          )
-        : JournalPreview(
-            key: ValueKey(_selectedId),
-            entryId: _selectedId!,
-            onEdit: () => context.push('/journal/$_selectedId'),
-            onDelete: () => _delete(_selectedId!),
-          );
+    final Widget detail;
+    if (_creatingSection != null) {
+      detail = JournalEditorScreen(
+        key: ValueKey('journal-editor-new-${_creatingSection!.name}'),
+        section: _creatingSection!,
+        onDone: _exitEditor,
+      );
+    } else if (_editingSelected && _selectedId != null) {
+      detail = JournalEditorScreen(
+        key: ValueKey('journal-editor-$_selectedId'),
+        entryId: _selectedId,
+        onDone: _exitEditor,
+      );
+    } else if (_selectedId != null) {
+      detail = JournalPreview(
+        key: ValueKey(_selectedId),
+        entryId: _selectedId!,
+        onEdit: () => setState(() => _editingSelected = true),
+        onDelete: () => _delete(_selectedId!),
+      );
+    } else {
+      detail = EmptyState(
+        icon: Icons.chevron_left,
+        message: l10n.detailNothingSelected,
+      );
+    }
 
     return MasterDetailShell(
       title: l10n.navJournal,

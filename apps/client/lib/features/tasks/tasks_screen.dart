@@ -11,6 +11,7 @@ import '../../l10n/app_localizations.dart';
 import '../shared/confirm_delete.dart';
 import '../shared/master_detail_shell.dart';
 import '../timeline/timeline_providers.dart';
+import 'task_editor_screen.dart';
 import 'task_preview.dart';
 import 'task_providers.dart';
 
@@ -27,6 +28,8 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
   final _search = TextEditingController();
   final _statuses = <TaskStatus>{};
   String? _selectedId;
+  bool _creating = false;
+  bool _editingSelected = false;
 
   @override
   void dispose() {
@@ -36,9 +39,33 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
 
   void _open(String id) {
     if (MasterDetailShell.isWide(context)) {
-      setState(() => _selectedId = id);
+      setState(() {
+        _selectedId = id;
+        _creating = false;
+        _editingSelected = false;
+      });
     } else {
       context.push('/tasks/$id');
+    }
+  }
+
+  void _add() {
+    if (MasterDetailShell.isWide(context)) {
+      setState(() {
+        _creating = true;
+        _editingSelected = false;
+      });
+    } else {
+      context.push('/tasks/new');
+    }
+  }
+
+  void _exitEditor() {
+    if (mounted) {
+      setState(() {
+        _creating = false;
+        _editingSelected = false;
+      });
     }
   }
 
@@ -71,7 +98,7 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
       onSearchChanged: (_) => setState(() {}),
       searchHint: l10n.tasksSearchHint,
       addTooltip: l10n.newTask,
-      onAdd: () => context.push('/tasks/new'),
+      onAdd: _add,
       filters: [
         for (final status in TaskStatus.values)
           FilterChip(
@@ -103,17 +130,31 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
       ),
     );
 
-    final detail = _selectedId == null
-        ? EmptyState(
-            icon: Icons.chevron_left,
-            message: l10n.detailNothingSelected,
-          )
-        : TaskPreview(
-            key: ValueKey(_selectedId),
-            taskId: _selectedId!,
-            onEdit: () => context.push('/tasks/$_selectedId'),
-            onDelete: () => _delete(_selectedId!),
-          );
+    final Widget detail;
+    if (_creating) {
+      detail = TaskEditorScreen(
+        key: const ValueKey('task-editor-new'),
+        onDone: _exitEditor,
+      );
+    } else if (_editingSelected && _selectedId != null) {
+      detail = TaskEditorScreen(
+        key: ValueKey('task-editor-$_selectedId'),
+        taskId: _selectedId,
+        onDone: _exitEditor,
+      );
+    } else if (_selectedId != null) {
+      detail = TaskPreview(
+        key: ValueKey(_selectedId),
+        taskId: _selectedId!,
+        onEdit: () => setState(() => _editingSelected = true),
+        onDelete: () => _delete(_selectedId!),
+      );
+    } else {
+      detail = EmptyState(
+        icon: Icons.chevron_left,
+        message: l10n.detailNothingSelected,
+      );
+    }
 
     return MasterDetailShell(
       title: l10n.navTasks,

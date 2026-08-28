@@ -10,11 +10,13 @@ import '../../l10n/app_localizations.dart';
 import '../shared/confirm_delete.dart';
 import '../shared/master_detail_shell.dart';
 import '../timeline/timeline_providers.dart';
+import 'session_editor_screen.dart';
 import 'session_preview.dart';
 import 'session_providers.dart';
 
-/// Sessions as a master-detail screen: the list of sessions on the left, a
-/// read-only preview of the selected one on the right (wide windows only).
+/// Sessions as a master-detail screen: the list on the left, and on wide
+/// windows a preview — or the editor itself — of the selected session on the
+/// right.
 class SessionsScreen extends ConsumerStatefulWidget {
   const SessionsScreen({super.key});
 
@@ -25,6 +27,8 @@ class SessionsScreen extends ConsumerStatefulWidget {
 class _SessionsScreenState extends ConsumerState<SessionsScreen> {
   final _search = TextEditingController();
   String? _selectedId;
+  bool _creating = false;
+  bool _editingSelected = false;
 
   @override
   void dispose() {
@@ -34,9 +38,33 @@ class _SessionsScreenState extends ConsumerState<SessionsScreen> {
 
   void _open(String id) {
     if (MasterDetailShell.isWide(context)) {
-      setState(() => _selectedId = id);
+      setState(() {
+        _selectedId = id;
+        _creating = false;
+        _editingSelected = false;
+      });
     } else {
       context.push('/sessions/$id');
+    }
+  }
+
+  void _add() {
+    if (MasterDetailShell.isWide(context)) {
+      setState(() {
+        _creating = true;
+        _editingSelected = false;
+      });
+    } else {
+      context.push('/sessions/new');
+    }
+  }
+
+  void _exitEditor() {
+    if (mounted) {
+      setState(() {
+        _creating = false;
+        _editingSelected = false;
+      });
     }
   }
 
@@ -62,6 +90,34 @@ class _SessionsScreenState extends ConsumerState<SessionsScreen> {
         .toList();
   }
 
+  Widget _buildDetail(AppLocalizations l10n) {
+    if (_creating) {
+      return SessionEditorScreen(
+        key: const ValueKey('session-editor-new'),
+        onDone: _exitEditor,
+      );
+    }
+    if (_editingSelected && _selectedId != null) {
+      return SessionEditorScreen(
+        key: ValueKey('session-editor-$_selectedId'),
+        sessionId: _selectedId,
+        onDone: _exitEditor,
+      );
+    }
+    if (_selectedId != null) {
+      return SessionPreview(
+        key: ValueKey(_selectedId),
+        sessionId: _selectedId!,
+        onEdit: () => setState(() => _editingSelected = true),
+        onDelete: () => _delete(_selectedId!),
+      );
+    }
+    return EmptyState(
+      icon: Icons.chevron_left,
+      message: l10n.detailNothingSelected,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -73,7 +129,7 @@ class _SessionsScreenState extends ConsumerState<SessionsScreen> {
       onSearchChanged: (_) => setState(() {}),
       searchHint: l10n.sessionsSearchHint,
       addTooltip: l10n.newSession,
-      onAdd: () => context.push('/sessions/new'),
+      onAdd: _add,
       child: sessions.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('$e')),
@@ -104,18 +160,6 @@ class _SessionsScreenState extends ConsumerState<SessionsScreen> {
       ),
     );
 
-    final detail = _selectedId == null
-        ? EmptyState(
-            icon: Icons.chevron_left,
-            message: l10n.detailNothingSelected,
-          )
-        : SessionPreview(
-            key: ValueKey(_selectedId),
-            sessionId: _selectedId!,
-            onEdit: () => context.push('/sessions/$_selectedId'),
-            onDelete: () => _delete(_selectedId!),
-          );
-
     return MasterDetailShell(
       title: l10n.navSessions,
       actions: [
@@ -127,7 +171,7 @@ class _SessionsScreenState extends ConsumerState<SessionsScreen> {
         const SizedBox(width: 4),
       ],
       list: list,
-      detail: detail,
+      detail: _buildDetail(l10n),
     );
   }
 
