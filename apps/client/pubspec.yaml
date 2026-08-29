@@ -49,6 +49,7 @@ dependencies:
   pdf: ^3.13.0
   fl_chart: ^1.2.0
   web: ^1.1.1
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:

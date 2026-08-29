@@ -122,6 +122,42 @@ abstract class AppLocalizations {
   /// **'Spanish'**
   String get languageSpanish;
 
+  /// No description provided for @supportSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get supportSection;
+
+  /// No description provided for @supportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Support my projects'**
+  String get supportTitle;
+
+  /// No description provided for @supportBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Alveo is free and works fully offline. If it helps you, you can chip in to help me keep my projects going.'**
+  String get supportBody;
+
+  /// No description provided for @supportCafecito.
+  ///
+  /// In en, this message translates to:
+  /// **'Cafecito (Argentina)'**
+  String get supportCafecito;
+
+  /// No description provided for @supportPatreon.
+  ///
+  /// In en, this message translates to:
+  /// **'Patreon (rest of the world)'**
+  String get supportPatreon;
+
+  /// No description provided for @supportLinkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the link'**
+  String get supportLinkError;
+
   /// No description provided for @cancel.
   ///
   /// In en, this message translates to:

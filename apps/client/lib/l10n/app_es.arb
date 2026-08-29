@@ -5,6 +5,13 @@
   "languageEnglish": "Inglés",
   "languageSpanish": "Español",
 
+  "supportSection": "Apoyo",
+  "supportTitle": "Apoyá mis proyectos",
+  "supportBody": "Alveo es gratis y funciona sin conexión. Si te sirve, podés colaborar para que pueda seguir manteniendo mis proyectos.",
+  "supportCafecito": "Cafecito (Argentina)",
+  "supportPatreon": "Patreon (resto del mundo)",
+  "supportLinkError": "No se pudo abrir el enlace",
+
   "cancel": "Cancelar",
 
   "appearanceSection": "Apariencia",

@@ -12,6 +12,13 @@
   "languageEnglish": "English",
   "languageSpanish": "Spanish",
 
+  "supportSection": "Support",
+  "supportTitle": "Support my projects",
+  "supportBody": "Alveo is free and works fully offline. If it helps you, you can chip in to help me keep my projects going.",
+  "supportCafecito": "Cafecito (Argentina)",
+  "supportPatreon": "Patreon (rest of the world)",
+  "supportLinkError": "Couldn't open the link",
+
   "cancel": "Cancel",
 
   "appearanceSection": "Appearance",

@@ -22,6 +22,25 @@ class AppLocalizationsEs extends AppLocalizations {
   String get languageSpanish => 'Español';
 
   @override
+  String get supportSection => 'Apoyo';
+
+  @override
+  String get supportTitle => 'Apoyá mis proyectos';
+
+  @override
+  String get supportBody =>
+      'Alveo es gratis y funciona sin conexión. Si te sirve, podés colaborar para que pueda seguir manteniendo mis proyectos.';
+
+  @override
+  String get supportCafecito => 'Cafecito (Argentina)';
+
+  @override
+  String get supportPatreon => 'Patreon (resto del mundo)';
+
+  @override
+  String get supportLinkError => 'No se pudo abrir el enlace';
+
+  @override
   String get cancel => 'Cancelar';
 
   @override

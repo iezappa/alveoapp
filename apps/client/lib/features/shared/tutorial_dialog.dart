@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../app/locale_controller.dart';
 import '../../l10n/app_localizations.dart';
+import 'support_actions.dart';
 
 /// Opens the usage walkthrough as a pop-up. Shown once on first launch and
 /// re-openable from Settings. The caller decides whether to mark it as seen.
@@ -19,14 +22,14 @@ class _TutorialStep {
   final String body;
 }
 
-class _TutorialDialog extends StatefulWidget {
+class _TutorialDialog extends ConsumerStatefulWidget {
   const _TutorialDialog();
 
   @override
-  State<_TutorialDialog> createState() => _TutorialDialogState();
+  ConsumerState<_TutorialDialog> createState() => _TutorialDialogState();
 }
 
-class _TutorialDialogState extends State<_TutorialDialog> {
+class _TutorialDialogState extends ConsumerState<_TutorialDialog> {
   final _controller = PageController();
   int _page = 0;
 
@@ -64,6 +67,97 @@ class _TutorialDialogState extends State<_TutorialDialog> {
     ),
   ];
 
+  /// The first slide carries the language switch and the support links on top
+  /// of the welcome copy, so a new user meets both before anything else.
+  Widget _welcomeSlide(_TutorialStep step) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final chosen = ref.watch(localeControllerProvider);
+    final active =
+        chosen?.languageCode ?? Localizations.localeOf(context).languageCode;
+
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(step.icon, size: 44, color: theme.colorScheme.primary),
+          const SizedBox(height: 20),
+          Text(
+            step.title,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.titleLarge,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            step.body,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+              height: 1.45,
+            ),
+          ),
+          const SizedBox(height: 24),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              l10n.settingsLanguage,
+              style: theme.textTheme.labelMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          SegmentedButton<String>(
+            segments: [
+              ButtonSegment(value: 'es', label: Text(l10n.languageSpanish)),
+              ButtonSegment(value: 'en', label: Text(l10n.languageEnglish)),
+            ],
+            selected: {active == 'es' ? 'es' : 'en'},
+            showSelectedIcon: false,
+            onSelectionChanged: (selection) {
+              ref
+                  .read(localeControllerProvider.notifier)
+                  .setLocale(Locale(selection.first));
+            },
+          ),
+          const SizedBox(height: 24),
+          const Divider(height: 1),
+          const SizedBox(height: 20),
+          const SupportProjectsCard(),
+        ],
+      ),
+    );
+  }
+
+  Widget _plainSlide(_TutorialStep step) {
+    final theme = Theme.of(context);
+    return Center(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(step.icon, size: 44, color: theme.colorScheme.primary),
+            const SizedBox(height: 20),
+            Text(
+              step.title,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.titleLarge,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              step.body,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+                height: 1.45,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -75,7 +169,7 @@ class _TutorialDialogState extends State<_TutorialDialog> {
       contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
       content: SizedBox(
         width: 320,
-        height: 340,
+        height: 360,
         child: Column(
           children: [
             Align(
@@ -90,38 +184,9 @@ class _TutorialDialogState extends State<_TutorialDialog> {
                 controller: _controller,
                 itemCount: steps.length,
                 onPageChanged: (i) => setState(() => _page = i),
-                itemBuilder: (context, i) {
-                  final step = steps[i];
-                  return Center(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            step.icon,
-                            size: 44,
-                            color: theme.colorScheme.primary,
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            step.title,
-                            textAlign: TextAlign.center,
-                            style: theme.textTheme.titleLarge,
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            step.body,
-                            textAlign: TextAlign.center,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: theme.colorScheme.onSurfaceVariant,
-                              height: 1.45,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+                itemBuilder: (context, i) => i == 0
+                    ? _welcomeSlide(steps[i])
+                    : _plainSlide(steps[i]),
               ),
             ),
             const SizedBox(height: 12),

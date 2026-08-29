@@ -13,6 +13,7 @@ import '../../l10n/app_localizations.dart';
 import '../obsidian/obsidian_actions.dart';
 import '../security/pin_dialogs.dart';
 import '../shared/name_dialog.dart';
+import '../shared/support_actions.dart';
 import '../shared/tutorial_dialog.dart';
 import '../transfer/backup_actions.dart';
 
@@ -192,6 +193,9 @@ class SettingsScreen extends ConsumerWidget {
                   onTap: () => runObsidianImport(context, ref),
                 ),
               ],
+              const SizedBox(height: 28),
+              SectionLabel(l10n.supportSection),
+              const SupportProjectsCard(),
               const SizedBox(height: 28),
               SectionLabel(l10n.settingsDisclaimerTitle),
               Text(
