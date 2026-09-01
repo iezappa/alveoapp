@@ -16,3 +16,6 @@ build/
 
 # Internal org standards — not part of the app
 /Estandarizador/
+
+# Windows metadata streams, from copying through the mount.
+*:Zone.Identifier
