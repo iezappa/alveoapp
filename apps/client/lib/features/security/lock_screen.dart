@@ -38,12 +38,13 @@ class _LockScreenState extends ConsumerState<LockScreen> {
   }
 
   void _syncLockout() {
-    final remaining = ref.read(lockControllerProvider.notifier).lockoutRemaining;
+    final remaining = ref
+        .read(lockControllerProvider.notifier)
+        .lockoutRemaining;
     setState(() => _lockout = remaining);
     if (remaining > Duration.zero) {
       _tick ??= Timer.periodic(const Duration(seconds: 1), (t) {
-        final left =
-            ref.read(lockControllerProvider.notifier).lockoutRemaining;
+        final left = ref.read(lockControllerProvider.notifier).lockoutRemaining;
         if (!mounted) return;
         setState(() => _lockout = left);
         if (left <= Duration.zero) {

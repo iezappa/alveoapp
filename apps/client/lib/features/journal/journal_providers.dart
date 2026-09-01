@@ -40,8 +40,7 @@ final journalEntryByIdProvider = Provider.family<JournalEntry?, String>((
   id,
 ) {
   final entries =
-      ref.watch(journalListProvider).asData?.value ??
-      const <JournalEntry>[];
+      ref.watch(journalListProvider).asData?.value ?? const <JournalEntry>[];
   for (final entry in entries) {
     if (entry.id == id) return entry;
   }

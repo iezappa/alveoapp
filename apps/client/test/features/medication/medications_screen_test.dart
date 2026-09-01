@@ -35,10 +35,12 @@ void main() {
     await tester.tap(find.text('New medication')); // FAB
     await tester.pumpAndSettle();
     await tester.enterText(
-      find.descendant(
-        of: find.byType(MedicationEditorScreen),
-        matching: find.byType(TextField),
-      ).first,
+      find
+          .descendant(
+            of: find.byType(MedicationEditorScreen),
+            matching: find.byType(TextField),
+          )
+          .first,
       'Melatonin',
     );
     await tester.tap(find.byTooltip('Save'));
@@ -49,8 +51,10 @@ void main() {
     await tester.tap(find.byTooltip('Log a dose'));
     await tester.pumpAndSettle();
 
-    final doses = await MedicationRepository(db)
-        .dosesOn((await MedicationRepository(db).getAll()).single.id, DateTime.now());
+    final doses = await MedicationRepository(db).dosesOn(
+      (await MedicationRepository(db).getAll()).single.id,
+      DateTime.now(),
+    );
     expect(doses, hasLength(1));
     expect(find.text('1 dose today'), findsOneWidget);
   });

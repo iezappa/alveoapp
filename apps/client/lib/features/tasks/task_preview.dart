@@ -54,10 +54,7 @@ class TaskPreview extends ConsumerWidget {
           child: Row(
             children: [
               Expanded(
-                child: Text(
-                  task.title,
-                  style: theme.textTheme.titleMedium,
-                ),
+                child: Text(task.title, style: theme.textTheme.titleMedium),
               ),
               TextButton.icon(
                 onPressed: onEdit,
@@ -87,7 +84,9 @@ class TaskPreview extends ConsumerWidget {
                     Text(
                       '${l10n.taskDueDate}: '
                       '${DateFormat.yMMMd(locale).format(task.dueDate!)}',
-                      style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
+                      style: TextStyle(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
                     ),
                 ],
               ),

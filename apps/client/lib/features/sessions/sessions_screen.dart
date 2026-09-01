@@ -143,9 +143,8 @@ class _SessionsScreenState extends ConsumerState<SessionsScreen> {
           final upcoming = items
               .where((s) => !s.scheduledFor.isBefore(now))
               .toList();
-          final past =
-              items.where((s) => s.scheduledFor.isBefore(now)).toList()
-                ..sort((a, b) => b.scheduledFor.compareTo(a.scheduledFor));
+          final past = items.where((s) => s.scheduledFor.isBefore(now)).toList()
+            ..sort((a, b) => b.scheduledFor.compareTo(a.scheduledFor));
 
           return ListView(
             padding: const EdgeInsets.only(bottom: 12),

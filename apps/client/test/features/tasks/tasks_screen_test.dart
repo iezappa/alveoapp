@@ -66,7 +66,9 @@ void main() {
     expect(find.text('No tasks yet'), findsOneWidget);
   });
 
-  testWidgets('wide layout previews the selected task in place', (tester) async {
+  testWidgets('wide layout previews the selected task in place', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(1400, 1000);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);

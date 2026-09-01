@@ -20,9 +20,10 @@ class TagRepository {
   /// creating it if it does not exist yet.
   Future<String> findOrCreate(String name) async {
     final trimmed = name.trim();
-    final existing = await (_db.select(
-      _db.tags,
-    )..where((t) => t.name.lower().equals(trimmed.toLowerCase()))).getSingleOrNull();
+    final existing =
+        await (_db.select(_db.tags)
+              ..where((t) => t.name.lower().equals(trimmed.toLowerCase())))
+            .getSingleOrNull();
     if (existing != null) return existing.id;
 
     final id = _uuid.v4();
@@ -33,5 +34,6 @@ class TagRepository {
   }
 
   /// All mood-entry ↔ tag links, for filtering by tag.
-  Future<List<MoodEntryTag>> moodTagLinks() => _db.select(_db.moodEntryTags).get();
+  Future<List<MoodEntryTag>> moodTagLinks() =>
+      _db.select(_db.moodEntryTags).get();
 }

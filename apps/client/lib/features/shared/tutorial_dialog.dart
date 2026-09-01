@@ -184,9 +184,8 @@ class _TutorialDialogState extends ConsumerState<_TutorialDialog> {
                 controller: _controller,
                 itemCount: steps.length,
                 onPageChanged: (i) => setState(() => _page = i),
-                itemBuilder: (context, i) => i == 0
-                    ? _welcomeSlide(steps[i])
-                    : _plainSlide(steps[i]),
+                itemBuilder: (context, i) =>
+                    i == 0 ? _welcomeSlide(steps[i]) : _plainSlide(steps[i]),
               ),
             ),
             const SizedBox(height: 12),

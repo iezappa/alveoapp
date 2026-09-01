@@ -103,8 +103,7 @@ class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
         .read(sessionRepositoryProvider)
         .previousBefore(_scheduledFor);
     final from =
-        prev?.scheduledFor ??
-        _scheduledFor.subtract(const Duration(days: 14));
+        prev?.scheduledFor ?? _scheduledFor.subtract(const Duration(days: 14));
     final markdown = await ref
         .read(exportServiceProvider)
         .buildPreSessionSummary(
@@ -119,9 +118,8 @@ class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
           ? markdown
           : '$markdown\n\n---\n\n$existing';
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(l10n.sessionPreSummaryDone)),
-    );
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(l10n.sessionPreSummaryDone)));
   }
 
   Future<void> _save() async {
@@ -225,7 +223,10 @@ class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
                   const SizedBox(width: 8),
                   TextButton.icon(
                     onPressed: _insertPreSummary,
-                    icon: const Icon(Icons.auto_awesome_motion_outlined, size: 18),
+                    icon: const Icon(
+                      Icons.auto_awesome_motion_outlined,
+                      size: 18,
+                    ),
                     label: Text(l10n.sessionPreSummary),
                   ),
                 ],

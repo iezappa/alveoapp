@@ -21,10 +21,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // The dashboard is the start screen.
-    expect(
-      find.text("Take a deep breath. You're safe here."),
-      findsOneWidget,
-    );
+    expect(find.text("Take a deep breath. You're safe here."), findsOneWidget);
 
     await tester.tap(find.byIcon(Icons.settings_outlined));
     await tester.pumpAndSettle();

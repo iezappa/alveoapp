@@ -9,10 +9,14 @@ class ObsidianService {
   final JournalRepository _journal;
 
   Future<ObsidianReport> exportJournal(String vaultDir) =>
-      throw const ObsidianException('Obsidian sync is only available on the '
-          'desktop app.');
+      throw const ObsidianException(
+        'Obsidian sync is only available on the '
+        'desktop app.',
+      );
 
   Future<ObsidianReport> importJournal(String dir) =>
-      throw const ObsidianException('Obsidian sync is only available on the '
-          'desktop app.');
+      throw const ObsidianException(
+        'Obsidian sync is only available on the '
+        'desktop app.',
+      );
 }

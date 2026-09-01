@@ -29,9 +29,7 @@ class UserProfileController extends Notifier<AsyncValue<String?>> {
   /// was asked but chose not to give a name.
   Future<void> setName(String name) async {
     final trimmed = name.trim();
-    await ref
-        .read(settingsRepositoryProvider)
-        .set(userNameSettingKey, trimmed);
+    await ref.read(settingsRepositoryProvider).set(userNameSettingKey, trimmed);
     state = AsyncValue.data(trimmed);
   }
 }

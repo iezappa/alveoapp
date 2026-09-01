@@ -74,10 +74,7 @@ void main() {
     await tester.tap(find.widgetWithText(ListTile, 'Ran into an old friend'));
     await tester.pumpAndSettle();
 
-    expect(
-      find.text('They must think I have not changed'),
-      findsOneWidget,
-    );
+    expect(find.text('They must think I have not changed'), findsOneWidget);
     expect(find.text('Edit'), findsOneWidget);
   });
 }

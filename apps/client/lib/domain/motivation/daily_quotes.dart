@@ -27,7 +27,8 @@ const List<DailyQuote> dailyQuotes = [
     source: 'Meditaciones',
   ),
   DailyQuote(
-    textEs: 'La felicidad de tu vida depende de la calidad de tus pensamientos.',
+    textEs:
+        'La felicidad de tu vida depende de la calidad de tus pensamientos.',
     textEn:
         'The happiness of your life depends upon the quality of your thoughts.',
     author: 'Marco Aurelio',
@@ -76,8 +77,7 @@ const List<DailyQuote> dailyQuotes = [
   ),
   DailyQuote(
     textEs: 'El mejor modo de vengarte de tu enemigo es no parecerte a él.',
-    textEn:
-        'The best revenge is to be unlike him who performed the injury.',
+    textEn: 'The best revenge is to be unlike him who performed the injury.',
     author: 'Marco Aurelio',
     source: 'Meditaciones',
   ),
@@ -85,8 +85,7 @@ const List<DailyQuote> dailyQuotes = [
     textEs:
         'La pérdida no es otra cosa que un cambio, y el cambio es el deleite '
         'de la naturaleza.',
-    textEn:
-        "Loss is nothing else but change, and change is Nature's delight.",
+    textEn: "Loss is nothing else but change, and change is Nature's delight.",
     author: 'Marco Aurelio',
     source: 'Meditaciones',
   ),
@@ -120,8 +119,7 @@ const List<DailyQuote> dailyQuotes = [
     source: 'Meditaciones',
   ),
   DailyQuote(
-    textEs:
-        'No es que tengamos poco tiempo de vida, sino que perdemos mucho.',
+    textEs: 'No es que tengamos poco tiempo de vida, sino que perdemos mucho.',
     textEn:
         'It is not that we have a short time to live, but that we waste a lot '
         'of it.',
@@ -152,8 +150,7 @@ const List<DailyQuote> dailyQuotes = [
   DailyQuote(
     textEs:
         'No hay viento favorable para quien no sabe a qué puerto se dirige.',
-    textEn:
-        'If a man knows not to which port he sails, no wind is favorable.',
+    textEn: 'If a man knows not to which port he sails, no wind is favorable.',
     author: 'Séneca',
     source: 'Cartas a Lucilio',
   ),
@@ -240,8 +237,7 @@ const List<DailyQuote> dailyQuotes = [
     source: 'Discursos',
   ),
   DailyQuote(
-    textEs:
-        'Si quieres mejorar, conténtate con que te crean necio y estúpido.',
+    textEs: 'Si quieres mejorar, conténtate con que te crean necio y estúpido.',
     textEn:
         'If you want to improve, be content to be thought foolish and stupid.',
     author: 'Epicteto',
@@ -257,8 +253,7 @@ const List<DailyQuote> dailyQuotes = [
     textEs:
         'Quien conoce a los demás es sabio; quien se conoce a sí mismo está '
         'iluminado.',
-    textEn:
-        'Knowing others is wisdom; knowing yourself is enlightenment.',
+    textEn: 'Knowing others is wisdom; knowing yourself is enlightenment.',
     author: 'Lao Tsé',
     source: 'Tao Te Ching',
   ),
@@ -316,22 +311,20 @@ const List<DailyQuote> dailyQuotes = [
   ),
   DailyQuote(
     textEs: 'El sabio no acumula: cuanto más da a los demás, más tiene.',
-    textEn: 'The sage does not hoard: the more he does for others, the more he '
+    textEn:
+        'The sage does not hoard: the more he does for others, the more he '
         'has.',
     author: 'Lao Tsé',
     source: 'Tao Te Ching',
   ),
   DailyQuote(
-    textEs:
-        'No importa lo despacio que vayas mientras no te detengas.',
-    textEn:
-        'It does not matter how slowly you go as long as you do not stop.',
+    textEs: 'No importa lo despacio que vayas mientras no te detengas.',
+    textEn: 'It does not matter how slowly you go as long as you do not stop.',
     author: 'Confucio',
     source: 'Analectas',
   ),
   DailyQuote(
-    textEs:
-        'El hombre que mueve montañas comienza apartando piedras pequeñas.',
+    textEs: 'El hombre que mueve montañas comienza apartando piedras pequeñas.',
     textEn:
         'The man who moves a mountain begins by carrying away small stones.',
     author: 'Confucio',
@@ -527,8 +520,7 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Ralph Waldo Emerson',
   ),
   DailyQuote(
-    textEs:
-        'Escribe en tu corazón que cada día es el mejor día del año.',
+    textEs: 'Escribe en tu corazón que cada día es el mejor día del año.',
     textEn:
         'Write it on your heart that every day is the best day in the year.',
     author: 'Ralph Waldo Emerson',
@@ -558,8 +550,7 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Michel de Montaigne',
   ),
   DailyQuote(
-    textEs:
-        'La cosa más grande del mundo es saber pertenecerse a uno mismo.',
+    textEs: 'La cosa más grande del mundo es saber pertenecerse a uno mismo.',
     textEn:
         'The greatest thing in the world is to know how to belong to oneself.',
     author: 'Michel de Montaigne',
@@ -616,7 +607,8 @@ const List<DailyQuote> dailyQuotes = [
     source: 'El hombre en busca de sentido',
   ),
   DailyQuote(
-    textEs: 'Quien tiene un porqué para vivir puede soportar casi cualquier '
+    textEs:
+        'Quien tiene un porqué para vivir puede soportar casi cualquier '
         'cómo.',
     textEn: 'He who has a why to live for can bear almost any how.',
     author: 'Friedrich Nietzsche',
@@ -957,7 +949,8 @@ const List<DailyQuote> dailyQuotes = [
     source: 'Tao Te Ching',
   ),
   DailyQuote(
-    textEs: 'Un árbol que llena los brazos de un hombre nació de una diminuta '
+    textEs:
+        'Un árbol que llena los brazos de un hombre nació de una diminuta '
         'semilla.',
     textEn: "A tree as big as a man's embrace grows from a tiny sprout.",
     author: 'Lao Tsé',
@@ -996,8 +989,7 @@ const List<DailyQuote> dailyQuotes = [
     textEs:
         'La persona superior es modesta al hablar, pero se excede en sus '
         'actos.',
-    textEn:
-        'The superior person is modest in speech but exceeds in action.',
+    textEn: 'The superior person is modest in speech but exceeds in action.',
     author: 'Confucio',
     source: 'Analectas',
   ),
@@ -1030,7 +1022,8 @@ const List<DailyQuote> dailyQuotes = [
     source: 'Dhammapada',
   ),
   DailyQuote(
-    textEs: 'La brisa del alba tiene secretos que contarte. No vuelvas a '
+    textEs:
+        'La brisa del alba tiene secretos que contarte. No vuelvas a '
         'dormirte.',
     textEn:
         "The breeze at dawn has secrets to tell you. Don't go back to sleep.",
@@ -1092,8 +1085,7 @@ const List<DailyQuote> dailyQuotes = [
   ),
   DailyQuote(
     textEs: 'Nuestra vida se desperdicia en detalles. Simplifica, simplifica.',
-    textEn:
-        'Our life is frittered away by detail. Simplify, simplify.',
+    textEn: 'Our life is frittered away by detail. Simplify, simplify.',
     author: 'Henry David Thoreau',
     source: 'Walden',
   ),
@@ -1101,8 +1093,7 @@ const List<DailyQuote> dailyQuotes = [
     textEs:
         'El precio de cualquier cosa es la cantidad de vida que intercambias '
         'por ella.',
-    textEn:
-        'The price of anything is the amount of life you exchange for it.',
+    textEn: 'The price of anything is the amount of life you exchange for it.',
     author: 'Henry David Thoreau',
     source: 'Walden',
   ),
@@ -1139,8 +1130,7 @@ const List<DailyQuote> dailyQuotes = [
   ),
   DailyQuote(
     textEs: 'Lo que eres habla tan fuerte que no me deja oír lo que dices.',
-    textEn:
-        'What you are speaks so loudly I cannot hear what you say.',
+    textEn: 'What you are speaks so loudly I cannot hear what you say.',
     author: 'Ralph Waldo Emerson',
   ),
   DailyQuote(
@@ -1187,8 +1177,7 @@ const List<DailyQuote> dailyQuotes = [
   DailyQuote(
     textEs:
         'Lo que se hace por amor sucede siempre más allá del bien y del mal.',
-    textEn:
-        'What is done out of love always takes place beyond good and evil.',
+    textEn: 'What is done out of love always takes place beyond good and evil.',
     author: 'Friedrich Nietzsche',
     source: 'Más allá del bien y del mal',
   ),
@@ -1203,8 +1192,7 @@ const List<DailyQuote> dailyQuotes = [
     source: 'Así habló Zaratustra',
   ),
   DailyQuote(
-    textEs:
-        'El futuro entra en nosotros mucho antes de que suceda.',
+    textEs: 'El futuro entra en nosotros mucho antes de que suceda.',
     textEn: 'The future enters into us long before it happens.',
     author: 'Rainer Maria Rilke',
     source: 'Cartas a un joven poeta',
@@ -1334,14 +1322,12 @@ const List<DailyQuote> dailyQuotes = [
     source: 'El proceso de convertirse en persona',
   ),
   DailyQuote(
-    textEs:
-        'Un cuarto sin libros es como un cuerpo sin alma.',
+    textEs: 'Un cuarto sin libros es como un cuerpo sin alma.',
     textEn: 'A room without books is like a body without a soul.',
     author: 'Cicerón',
   ),
   DailyQuote(
-    textEs:
-        'Cualquiera puede equivocarse; solo el necio persiste en su error.',
+    textEs: 'Cualquiera puede equivocarse; solo el necio persiste en su error.',
     textEn:
         'Any man can make a mistake; only a fool keeps making the same one.',
     author: 'Cicerón',
@@ -1375,10 +1361,10 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Heráclito',
   ),
   DailyQuote(
-    textEs: 'La mente no es un recipiente para llenar, sino un fuego para '
+    textEs:
+        'La mente no es un recipiente para llenar, sino un fuego para '
         'encender.',
-    textEn:
-        'The mind is not a vessel to be filled, but a fire to be kindled.',
+    textEn: 'The mind is not a vessel to be filled, but a fire to be kindled.',
     author: 'Plutarco',
   ),
   DailyQuote(
@@ -1392,10 +1378,8 @@ const List<DailyQuote> dailyQuotes = [
     source: 'La consolación de la filosofía',
   ),
   DailyQuote(
-    textEs:
-        'Rara vez somos tan desdichados ni tan felices como imaginamos.',
-    textEn:
-        'We are never so happy nor so unhappy as we imagine.',
+    textEs: 'Rara vez somos tan desdichados ni tan felices como imaginamos.',
+    textEn: 'We are never so happy nor so unhappy as we imagine.',
     author: 'François de La Rochefoucauld',
     source: 'Máximas',
   ),
@@ -1449,8 +1433,7 @@ const List<DailyQuote> dailyQuotes = [
     textEs:
         'Quien tiene salud tiene esperanza, y quien tiene esperanza lo tiene '
         'todo.',
-    textEn:
-        'He who has health has hope, and he who has hope has everything.',
+    textEn: 'He who has health has hope, and he who has hope has everything.',
     author: 'Proverbio árabe',
   ),
   DailyQuote(
@@ -1493,14 +1476,12 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Aristóteles',
   ),
   DailyQuote(
-    textEs:
-        'La esperanza es el sueño del hombre despierto.',
+    textEs: 'La esperanza es el sueño del hombre despierto.',
     textEn: 'Hope is a waking dream.',
     author: 'Aristóteles',
   ),
   DailyQuote(
-    textEs:
-        'Educar la mente sin educar el corazón no es educar en absoluto.',
+    textEs: 'Educar la mente sin educar el corazón no es educar en absoluto.',
     textEn:
         'Educating the mind without educating the heart is no education at '
         'all.',
@@ -1536,8 +1517,7 @@ const List<DailyQuote> dailyQuotes = [
   ),
   DailyQuote(
     textEs: 'Nadie tropieza dos veces con la misma piedra a propósito.',
-    textEn:
-        'To fall over the same stone twice is a proverbial disgrace.',
+    textEn: 'To fall over the same stone twice is a proverbial disgrace.',
     author: 'Cicerón',
   ),
   DailyQuote(
@@ -1546,8 +1526,7 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Cicerón',
   ),
   DailyQuote(
-    textEs:
-        'La libertad es el poder de vivir como uno quiere.',
+    textEs: 'La libertad es el poder de vivir como uno quiere.',
     textEn: 'Freedom is the power to live as you wish.',
     author: 'Cicerón',
   ),
@@ -1599,8 +1578,7 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Buda',
   ),
   DailyQuote(
-    textEs:
-        'El agua turbia se aclara si la dejas quieta.',
+    textEs: 'El agua turbia se aclara si la dejas quieta.',
     textEn: 'Muddy water becomes clear if you only let it be still.',
     author: 'Lao Tsé',
     source: 'Tao Te Ching',
@@ -1616,12 +1594,12 @@ const List<DailyQuote> dailyQuotes = [
   ),
   DailyQuote(
     textEs: 'El bambú que se dobla es más fuerte que el roble que resiste.',
-    textEn:
-        'The bamboo that bends is stronger than the oak that resists.',
+    textEn: 'The bamboo that bends is stronger than the oak that resists.',
     author: 'Proverbio japonés',
   ),
   DailyQuote(
-    textEs: 'La visión sin acción es un sueño; la acción sin visión, una '
+    textEs:
+        'La visión sin acción es un sueño; la acción sin visión, una '
         'pesadilla.',
     textEn:
         'Vision without action is a daydream; action without vision is a '
@@ -1629,16 +1607,14 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio japonés',
   ),
   DailyQuote(
-    textEs:
-        'El río corta la roca no por su fuerza, sino por su constancia.',
+    textEs: 'El río corta la roca no por su fuerza, sino por su constancia.',
     textEn:
         'A river cuts through rock not because of its power, but its '
         'persistence.',
     author: 'James N. Watkins',
   ),
   DailyQuote(
-    textEs:
-        'No cuentes los días; haz que los días cuenten.',
+    textEs: 'No cuentes los días; haz que los días cuenten.',
     textEn: 'Do not count the days; make the days count.',
     author: 'Muhammad Ali',
   ),
@@ -1652,8 +1628,7 @@ const List<DailyQuote> dailyQuotes = [
     source: 'El principito',
   ),
   DailyQuote(
-    textEs:
-        'Eres responsable para siempre de lo que has domesticado.',
+    textEs: 'Eres responsable para siempre de lo que has domesticado.',
     textEn: 'You become responsible, forever, for what you have tamed.',
     author: 'Antoine de Saint-Exupéry',
     source: 'El principito',
@@ -1669,7 +1644,8 @@ const List<DailyQuote> dailyQuotes = [
   ),
   DailyQuote(
     textEs: 'Cada pájaro que canta no está afirmando nada: está viviendo.',
-    textEn: 'A bird does not sing because it has an answer; it sings because '
+    textEn:
+        'A bird does not sing because it has an answer; it sings because '
         'it has a song.',
     author: 'Proverbio',
   ),
@@ -1698,14 +1674,12 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Mary Anne Radmacher',
   ),
   DailyQuote(
-    textEs:
-        'La cometa se eleva más alto contra el viento, no a favor de él.',
+    textEs: 'La cometa se eleva más alto contra el viento, no a favor de él.',
     textEn: 'A kite rises highest against the wind, not with it.',
     author: 'Winston Churchill',
   ),
   DailyQuote(
-    textEs:
-        'Si estás atravesando un infierno, sigue caminando.',
+    textEs: 'Si estás atravesando un infierno, sigue caminando.',
     textEn: 'If you are going through hell, keep going.',
     author: 'Winston Churchill',
   ),
@@ -1727,7 +1701,8 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs: 'El que planta un árbol sabiendo que no se sentará a su sombra ha '
+    textEs:
+        'El que planta un árbol sabiendo que no se sentará a su sombra ha '
         'entendido el sentido de la vida.',
     textEn:
         'One who plants a tree knowing they will never sit in its shade has '
@@ -1744,8 +1719,7 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Regá lo que quieras que crezca.',
+    textEs: 'Regá lo que quieras que crezca.',
     textEn: 'Water what you want to grow.',
     author: 'Proverbio',
   ),
@@ -1753,8 +1727,7 @@ const List<DailyQuote> dailyQuotes = [
     textEs:
         'Los pájaros vuelven a cantar después de la tormenta. ¿Por qué no '
         'habrías de hacerlo tú?',
-    textEn:
-        'Birds sing again after the storm. Why would you not?',
+    textEn: 'Birds sing again after the storm. Why would you not?',
     author: 'Rose Kennedy',
   ),
   DailyQuote(
@@ -1763,8 +1736,7 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'No tenés que verlo todo el camino. Solo dar el próximo paso.',
+    textEs: 'No tenés que verlo todo el camino. Solo dar el próximo paso.',
     textEn:
         "You don't have to see the whole staircase. Just take the first "
         'step.',
@@ -1774,8 +1746,7 @@ const List<DailyQuote> dailyQuotes = [
     textEs:
         'La oscuridad no puede expulsar a la oscuridad; solo la luz puede '
         'hacerlo.',
-    textEn:
-        'Darkness cannot drive out darkness; only light can do that.',
+    textEn: 'Darkness cannot drive out darkness; only light can do that.',
     author: 'Martin Luther King Jr.',
   ),
   DailyQuote(
@@ -1788,10 +1759,10 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs: 'Cada mañana nacemos de nuevo. Lo que hacemos hoy es lo que más '
+    textEs:
+        'Cada mañana nacemos de nuevo. Lo que hacemos hoy es lo que más '
         'importa.',
-    textEn:
-        'Every morning we are born again. What we do today matters most.',
+    textEn: 'Every morning we are born again. What we do today matters most.',
     author: 'Buda',
   ),
   DailyQuote(
@@ -1822,8 +1793,7 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Lo que no se expresa se imprime; y lo que se imprime, se enferma.',
+    textEs: 'Lo que no se expresa se imprime; y lo que se imprime, se enferma.',
     textEn:
         'What is not expressed gets impressed — and what gets impressed can '
         'make you ill.',
@@ -1848,15 +1818,12 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Confucio',
   ),
   DailyQuote(
-    textEs:
-        'La vida es realmente simple, pero insistimos en complicarla.',
-    textEn:
-        'Life is really simple, but we insist on making it complicated.',
+    textEs: 'La vida es realmente simple, pero insistimos en complicarla.',
+    textEn: 'Life is really simple, but we insist on making it complicated.',
     author: 'Confucio',
   ),
   DailyQuote(
-    textEs:
-        'Todo tiene belleza, pero no todos la ven.',
+    textEs: 'Todo tiene belleza, pero no todos la ven.',
     textEn: 'Everything has beauty, but not everyone sees it.',
     author: 'Confucio',
   ),
@@ -1870,10 +1837,8 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio chino',
   ),
   DailyQuote(
-    textEs:
-        'Un poco de fragancia siempre queda en la mano que regala flores.',
-    textEn:
-        'A bit of fragrance always clings to the hand that gives flowers.',
+    textEs: 'Un poco de fragancia siempre queda en la mano que regala flores.',
+    textEn: 'A bit of fragrance always clings to the hand that gives flowers.',
     author: 'Proverbio chino',
   ),
   DailyQuote(
@@ -1886,30 +1851,26 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'La montaña más alta se sube igual: paso a paso.',
+    textEs: 'La montaña más alta se sube igual: paso a paso.',
     textEn: 'The highest mountain is climbed the same way: step by step.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'No hay noche tan larga que no termine en amanecer.',
+    textEs: 'No hay noche tan larga que no termine en amanecer.',
     textEn: 'There is no night so long that it does not end in dawn.',
     author: 'Proverbio',
   ),
   DailyQuote(
     textEs:
         'Quien mira hacia afuera, sueña; quien mira hacia adentro, despierta.',
-    textEn:
-        'Who looks outside, dreams; who looks inside, awakes.',
+    textEn: 'Who looks outside, dreams; who looks inside, awakes.',
     author: 'Carl Jung',
   ),
   DailyQuote(
     textEs:
         'No estoy hecho por lo que me pasó; estoy hecho por lo que elijo '
         'llegar a ser.',
-    textEn:
-        'I am not what happened to me; I am what I choose to become.',
+    textEn: 'I am not what happened to me; I am what I choose to become.',
     author: 'Carl Jung',
   ),
   DailyQuote(
@@ -1940,8 +1901,7 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Carl Jung',
   ),
   DailyQuote(
-    textEs:
-        'No hay despertar de la conciencia sin dolor.',
+    textEs: 'No hay despertar de la conciencia sin dolor.',
     textEn: 'There is no coming to consciousness without pain.',
     author: 'Carl Jung',
   ),
@@ -1958,21 +1918,18 @@ const List<DailyQuote> dailyQuotes = [
     textEs:
         'Aquello a lo que te resistes, persiste; aquello que mirás de frente, '
         'se ablanda.',
-    textEn:
-        'What you resist persists; what you face begins to soften.',
+    textEn: 'What you resist persists; what you face begins to soften.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Entre lo que te pasó y lo que hacés con eso, ahí vivís.',
+    textEs: 'Entre lo que te pasó y lo que hacés con eso, ahí vivís.',
     textEn:
         'Between what happened to you and what you do with it — that is where '
         'you live.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'El único modo de salir es a través.',
+    textEs: 'El único modo de salir es a través.',
     textEn: 'The only way out is through.',
     author: 'Robert Frost',
   ),
@@ -1996,8 +1953,7 @@ const List<DailyQuote> dailyQuotes = [
     source: 'El camino no elegido',
   ),
   DailyQuote(
-    textEs:
-        'Sé el cambio que querés ver en el mundo.',
+    textEs: 'Sé el cambio que querés ver en el mundo.',
     textEn: 'Be the change you wish to see in the world.',
     author: 'Mahatma Gandhi',
   ),
@@ -2028,42 +1984,35 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Mahatma Gandhi',
   ),
   DailyQuote(
-    textEs:
-        'Nadie puede hacerte sentir inferior sin tu consentimiento.',
-    textEn:
-        'No one can make you feel inferior without your consent.',
+    textEs: 'Nadie puede hacerte sentir inferior sin tu consentimiento.',
+    textEn: 'No one can make you feel inferior without your consent.',
     author: 'Eleanor Roosevelt',
   ),
   DailyQuote(
-    textEs:
-        'Hacé una cosa cada día que te dé miedo.',
+    textEs: 'Hacé una cosa cada día que te dé miedo.',
     textEn: 'Do one thing every day that scares you.',
     author: 'Eleanor Roosevelt',
   ),
   DailyQuote(
-    textEs:
-        'El futuro pertenece a quienes creen en la belleza de sus sueños.',
+    textEs: 'El futuro pertenece a quienes creen en la belleza de sus sueños.',
     textEn:
         'The future belongs to those who believe in the beauty of their '
         'dreams.',
     author: 'Eleanor Roosevelt',
   ),
   DailyQuote(
-    textEs:
-        'Con el nuevo día llegan nuevas fuerzas y nuevos pensamientos.',
+    textEs: 'Con el nuevo día llegan nuevas fuerzas y nuevos pensamientos.',
     textEn: 'With the new day comes new strength and new thoughts.',
     author: 'Eleanor Roosevelt',
   ),
   DailyQuote(
     textEs:
         'La vida se encoge o se expande en proporción al coraje de cada uno.',
-    textEn:
-        "Life shrinks or expands in proportion to one's courage.",
+    textEn: "Life shrinks or expands in proportion to one's courage.",
     author: 'Anaïs Nin',
   ),
   DailyQuote(
-    textEs:
-        'No vemos las cosas como son; las vemos como somos.',
+    textEs: 'No vemos las cosas como son; las vemos como somos.',
     textEn: 'We do not see things as they are; we see them as we are.',
     author: 'Anaïs Nin',
   ),
@@ -2077,8 +2026,7 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Anaïs Nin',
   ),
   DailyQuote(
-    textEs:
-        'Empieza donde estás. Usa lo que tienes. Haz lo que puedas.',
+    textEs: 'Empieza donde estás. Usa lo que tienes. Haz lo que puedas.',
     textEn: 'Start where you are. Use what you have. Do what you can.',
     author: 'Arthur Ashe',
   ),
@@ -2146,16 +2094,14 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Nunca es demasiado tarde para ser lo que podrías haber sido.',
+    textEs: 'Nunca es demasiado tarde para ser lo que podrías haber sido.',
     textEn: 'It is never too late to be what you might have been.',
     author: 'George Eliot',
   ),
   DailyQuote(
     textEs:
         'Sólo en la aventura algunas personas logran conocerse a sí mismas.',
-    textEn:
-        'Only in adventure do some people succeed in knowing themselves.',
+    textEn: 'Only in adventure do some people succeed in knowing themselves.',
     author: 'André Gide',
   ),
   DailyQuote(
@@ -2180,8 +2126,7 @@ const List<DailyQuote> dailyQuotes = [
     textEs:
         'El que tiene salud, tiene esperanza; y el que tiene esperanza, lo '
         'tiene todo.',
-    textEn:
-        'He who has health has hope; and he who has hope has everything.',
+    textEn: 'He who has health has hope; and he who has hope has everything.',
     author: 'Thomas Carlyle',
   ),
   DailyQuote(
@@ -2194,8 +2139,7 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Thomas Carlyle',
   ),
   DailyQuote(
-    textEs:
-        'Toda gran obra fue al principio imposible.',
+    textEs: 'Toda gran obra fue al principio imposible.',
     textEn: 'Every noble work is at first impossible.',
     author: 'Thomas Carlyle',
   ),
@@ -2209,15 +2153,13 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Horacio',
   ),
   DailyQuote(
-    textEs:
-        'Atrévete a ser sabio; empieza.',
+    textEs: 'Atrévete a ser sabio; empieza.',
     textEn: 'Dare to be wise; begin.',
     author: 'Horacio',
     source: 'Epístolas',
   ),
   DailyQuote(
-    textEs:
-        'Aprovecha el día, y confía lo menos posible en el mañana.',
+    textEs: 'Aprovecha el día, y confía lo menos posible en el mañana.',
     textEn: 'Seize the day, and put as little trust as you can in tomorrow.',
     author: 'Horacio',
     source: 'Odas',
@@ -2226,16 +2168,13 @@ const List<DailyQuote> dailyQuotes = [
     textEs:
         'Mientras hablamos, el tiempo envidioso habrá huido: aprovecha el '
         'hoy.',
-    textEn:
-        'While we speak, envious time will have fled: seize the day.',
+    textEn: 'While we speak, envious time will have fled: seize the day.',
     author: 'Horacio',
     source: 'Odas',
   ),
   DailyQuote(
-    textEs:
-        'La verdadera nobleza está en ser superior a tu yo anterior.',
-    textEn:
-        'True nobility is being superior to your former self.',
+    textEs: 'La verdadera nobleza está en ser superior a tu yo anterior.',
+    textEn: 'True nobility is being superior to your former self.',
     author: 'Ernest Hemingway',
   ),
   DailyQuote(
@@ -2312,14 +2251,12 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'No podés parar las olas, pero podés aprender a surfearlas.',
+    textEs: 'No podés parar las olas, pero podés aprender a surfearlas.',
     textEn: 'You cannot stop the waves, but you can learn to surf.',
     author: 'Jon Kabat-Zinn',
   ),
   DailyQuote(
-    textEs:
-        'Donde sea que vayas, ahí estás.',
+    textEs: 'Donde sea que vayas, ahí estás.',
     textEn: 'Wherever you go, there you are.',
     author: 'Jon Kabat-Zinn',
   ),
@@ -2351,26 +2288,22 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Buda',
   ),
   DailyQuote(
-    textEs:
-        'Nombrar lo que sentís le quita la mitad de su fuerza.',
+    textEs: 'Nombrar lo que sentís le quita la mitad de su fuerza.',
     textEn: 'Naming a feeling takes half its power away.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Progreso, no perfección.',
+    textEs: 'Progreso, no perfección.',
     textEn: 'Progress, not perfection.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Hoy alcanza con hacer lo que hoy se puede.',
+    textEs: 'Hoy alcanza con hacer lo que hoy se puede.',
     textEn: 'For today, it is enough to do what today allows.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'El que tiene paciencia obtiene lo que desea.',
+    textEs: 'El que tiene paciencia obtiene lo que desea.',
     textEn: 'He that can have patience can have what he will.',
     author: 'Benjamin Franklin',
   ),
@@ -2392,32 +2325,27 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Benjamin Franklin',
   ),
   DailyQuote(
-    textEs:
-        'La energía y la persistencia conquistan todas las cosas.',
+    textEs: 'La energía y la persistencia conquistan todas las cosas.',
     textEn: 'Energy and persistence conquer all things.',
     author: 'Benjamin Franklin',
   ),
   DailyQuote(
-    textEs:
-        'El que quiere mover el mundo, primero debe moverse a sí mismo.',
+    textEs: 'El que quiere mover el mundo, primero debe moverse a sí mismo.',
     textEn: 'Let him who would move the world first move himself.',
     author: 'Sócrates',
   ),
   DailyQuote(
-    textEs:
-        'La mente lo es todo: en lo que pensás, en eso te convertís.',
+    textEs: 'La mente lo es todo: en lo que pensás, en eso te convertís.',
     textEn: 'The mind is everything. What you think you become.',
     author: 'Buda',
   ),
   DailyQuote(
-    textEs:
-        'Una jarra se llena gota a gota.',
+    textEs: 'Una jarra se llena gota a gota.',
     textEn: 'A jug fills drop by drop.',
     author: 'Buda',
   ),
   DailyQuote(
-    textEs:
-        'Que tu apego a lo que se va no te impida ver lo que llega.',
+    textEs: 'Que tu apego a lo que se va no te impida ver lo que llega.',
     textEn:
         'Do not let your grip on what is leaving blind you to what is '
         'arriving.',
@@ -2433,16 +2361,14 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'La calma es fuerza en reposo.',
+    textEs: 'La calma es fuerza en reposo.',
     textEn: 'Calm is strength at rest.',
     author: 'Proverbio',
   ),
   DailyQuote(
     textEs:
         'Cuando no sepas qué hacer, hacé la próxima cosa pequeña y correcta.',
-    textEn:
-        'When you do not know what to do, do the next small right thing.',
+    textEn: 'When you do not know what to do, do the next small right thing.',
     author: 'Proverbio',
   ),
   DailyQuote(
@@ -2455,51 +2381,42 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'La gratitud convierte lo que tenemos en suficiente.',
+    textEs: 'La gratitud convierte lo que tenemos en suficiente.',
     textEn: 'Gratitude turns what we have into enough.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Un día a la vez sigue siendo un buen plan.',
+    textEs: 'Un día a la vez sigue siendo un buen plan.',
     textEn: 'One day at a time is still a good plan.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Regresar a la respiración es regresar a casa.',
+    textEs: 'Regresar a la respiración es regresar a casa.',
     textEn: 'Returning to the breath is returning home.',
     author: 'Thich Nhat Hanh',
   ),
   DailyQuote(
-    textEs:
-        'Sonreír es tu propio amor por ti mismo hecho visible.',
+    textEs: 'Sonreír es tu propio amor por ti mismo hecho visible.',
     textEn: 'Smiling is your own love for yourself made visible.',
     author: 'Thich Nhat Hanh',
   ),
   DailyQuote(
-    textEs:
-        'Caminá como si estuvieras besando la tierra con los pies.',
+    textEs: 'Caminá como si estuvieras besando la tierra con los pies.',
     textEn: 'Walk as if you are kissing the earth with your feet.',
     author: 'Thich Nhat Hanh',
   ),
   DailyQuote(
-    textEs:
-        'Sentir emociones difíciles no es fallar; es ser humano.',
-    textEn:
-        'Feeling difficult emotions is not failing; it is being human.',
+    textEs: 'Sentir emociones difíciles no es fallar; es ser humano.',
+    textEn: 'Feeling difficult emotions is not failing; it is being human.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'El descanso no es un premio por terminar; es parte del hacer.',
+    textEs: 'El descanso no es un premio por terminar; es parte del hacer.',
     textEn: 'Rest is not a reward for finishing; it is part of the doing.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Pedir ayuda es un acto de coraje, no de debilidad.',
+    textEs: 'Pedir ayuda es un acto de coraje, no de debilidad.',
     textEn: 'Asking for help is an act of courage, not weakness.',
     author: 'Proverbio',
   ),
@@ -2513,14 +2430,12 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Vivian Greene',
   ),
   DailyQuote(
-    textEs:
-        'A veces el paso más valiente es descansar.',
+    textEs: 'A veces el paso más valiente es descansar.',
     textEn: 'Sometimes the bravest move is to rest.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'La constancia vence lo que la dicha no alcanza.',
+    textEs: 'La constancia vence lo que la dicha no alcanza.',
     textEn: 'Perseverance achieves what good fortune cannot reach.',
     author: 'Proverbio',
   ),
@@ -2534,8 +2449,7 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'El coraje es el miedo que ya rezó sus oraciones.',
+    textEs: 'El coraje es el miedo que ya rezó sus oraciones.',
     textEn: 'Courage is fear that has said its prayers.',
     author: 'Karle Wilson Baker',
   ),
@@ -2558,8 +2472,7 @@ const List<DailyQuote> dailyQuotes = [
     author: 'C. S. Lewis',
   ),
   DailyQuote(
-    textEs:
-        'No tenés un alma. Sos un alma. Tenés un cuerpo.',
+    textEs: 'No tenés un alma. Sos un alma. Tenés un cuerpo.',
     textEn: 'You do not have a soul. You are a soul. You have a body.',
     author: 'C. S. Lewis',
   ),
@@ -2573,15 +2486,12 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Lo opuesto a la depresión no es la felicidad; es la vitalidad.',
-    textEn:
-        'The opposite of depression is not happiness; it is vitality.',
+    textEs: 'Lo opuesto a la depresión no es la felicidad; es la vitalidad.',
+    textEn: 'The opposite of depression is not happiness; it is vitality.',
     author: 'Andrew Solomon',
   ),
   DailyQuote(
-    textEs:
-        'Todo lo que siempre quisiste está del otro lado del miedo.',
+    textEs: 'Todo lo que siempre quisiste está del otro lado del miedo.',
     textEn: 'Everything you want is on the other side of fear.',
     author: 'George Addair',
   ),
@@ -2613,35 +2523,30 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'La lentitud con la que vas no importa mientras no te detengas.',
-    textEn: 'It does not matter how slowly you go, so long as you do not '
+    textEs: 'La lentitud con la que vas no importa mientras no te detengas.',
+    textEn:
+        'It does not matter how slowly you go, so long as you do not '
         'stop.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'No dejes que lo perfecto sea enemigo de lo suficientemente bueno.',
+    textEs: 'No dejes que lo perfecto sea enemigo de lo suficientemente bueno.',
     textEn: 'Do not let the perfect be the enemy of the good.',
     author: 'Voltaire',
   ),
   DailyQuote(
-    textEs:
-        'El jardín se cultiva; la vida también. Cuidá el tuyo.',
+    textEs: 'El jardín se cultiva; la vida también. Cuidá el tuyo.',
     textEn: 'We must cultivate our garden — and our life along with it.',
     author: 'Voltaire',
     source: 'Cándido',
   ),
   DailyQuote(
-    textEs:
-        'Juzgá a una persona por sus preguntas más que por sus respuestas.',
-    textEn:
-        'Judge a person by their questions rather than by their answers.',
+    textEs: 'Juzgá a una persona por sus preguntas más que por sus respuestas.',
+    textEn: 'Judge a person by their questions rather than by their answers.',
     author: 'Voltaire',
   ),
   DailyQuote(
-    textEs:
-        'La duda es incómoda, pero la certeza es absurda.',
+    textEs: 'La duda es incómoda, pero la certeza es absurda.',
     textEn: 'Doubt is not a pleasant condition, but certainty is absurd.',
     author: 'Voltaire',
   ),
@@ -2655,73 +2560,63 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Andy Rooney',
   ),
   DailyQuote(
-    textEs:
-        'Tené paciencia con vos mismo. El crecimiento no es lineal.',
+    textEs: 'Tené paciencia con vos mismo. El crecimiento no es lineal.',
     textEn: 'Be patient with yourself. Growth is not linear.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'La marea baja siempre vuelve a subir.',
+    textEs: 'La marea baja siempre vuelve a subir.',
     textEn: 'The tide always comes back in.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'El único día imposible de vivir es mañana.',
+    textEs: 'El único día imposible de vivir es mañana.',
     textEn: 'The only impossible day to live is tomorrow.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Un pequeño progreso cada día suma grandes resultados.',
+    textEs: 'Un pequeño progreso cada día suma grandes resultados.',
     textEn: 'Little progress each day adds up to big results.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Cuando sientas que no podés más, mirá cuánto ya soportaste.',
+    textEs: 'Cuando sientas que no podés más, mirá cuánto ya soportaste.',
     textEn:
         'When you feel you cannot take any more, look at how much you have '
         'already carried.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Todo lo que amás corre riesgo de perderse; amalo igual.',
+    textEs: 'Todo lo que amás corre riesgo de perderse; amalo igual.',
     textEn: 'Everything you love is at risk of being lost; love it anyway.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Las raíces crecen fuertes en la tormenta.',
+    textEs: 'Las raíces crecen fuertes en la tormenta.',
     textEn: 'Roots grow strong in the storm.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Comparate con quien fuiste ayer, no con quien otro es hoy.',
+    textEs: 'Comparate con quien fuiste ayer, no con quien otro es hoy.',
     textEn:
         'Compare yourself to who you were yesterday, not to who someone else '
         'is today.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'A veces ganar es simplemente no rendirse hoy.',
+    textEs: 'A veces ganar es simplemente no rendirse hoy.',
     textEn: 'Sometimes winning is simply not giving up today.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'La primavera siempre llega después del invierno más largo.',
+    textEs: 'La primavera siempre llega después del invierno más largo.',
     textEn: 'Spring always follows the longest winter.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Respirá. Estás vivo. Eso ya es empezar bien el día.',
-    textEn: 'Breathe. You are alive. That is already a good start to the '
+    textEs: 'Respirá. Estás vivo. Eso ya es empezar bien el día.',
+    textEn:
+        'Breathe. You are alive. That is already a good start to the '
         'day.',
     author: 'Proverbio',
   ),
@@ -2735,20 +2630,17 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'El pasado es una lección, no una cadena.',
+    textEs: 'El pasado es una lección, no una cadena.',
     textEn: 'The past is a lesson, not a life sentence.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'La valentía no es no tener miedo; es actuar aun con miedo.',
+    textEs: 'La valentía no es no tener miedo; es actuar aun con miedo.',
     textEn: 'Courage is not the absence of fear; it is acting despite it.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Elegí un pensamiento mejor. Es tu mayor arma contra el estrés.',
+    textEs: 'Elegí un pensamiento mejor. Es tu mayor arma contra el estrés.',
     textEn:
         'Choose a better thought. It is your greatest weapon against '
         'stress.',
@@ -2764,26 +2656,22 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'El cielo entero pertenece a quien mira hacia arriba.',
+    textEs: 'El cielo entero pertenece a quien mira hacia arriba.',
     textEn: 'The whole sky belongs to the one who looks up.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Contá tus bendiciones, no tus problemas.',
+    textEs: 'Contá tus bendiciones, no tus problemas.',
     textEn: 'Count your blessings, not your troubles.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'El coraje se construye cruzando pequeños miedos, uno por día.',
+    textEs: 'El coraje se construye cruzando pequeños miedos, uno por día.',
     textEn: 'Courage is built by crossing small fears, one a day.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Aun la noche más oscura terminará y el sol saldrá.',
+    textEs: 'Aun la noche más oscura terminará y el sol saldrá.',
     textEn: 'Even the darkest night will end and the sun will rise.',
     author: 'Victor Hugo',
     source: 'Los miserables',
@@ -2798,26 +2686,22 @@ const List<DailyQuote> dailyQuotes = [
     author: 'Victor Hugo',
   ),
   DailyQuote(
-    textEs:
-        'Cambiar de opinión sobre uno mismo es un acto de libertad.',
+    textEs: 'Cambiar de opinión sobre uno mismo es un acto de libertad.',
     textEn: 'To change your mind about yourself is an act of freedom.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Lo que hoy te cuesta, mañana será tu piso.',
+    textEs: 'Lo que hoy te cuesta, mañana será tu piso.',
     textEn: 'What costs you effort today will be your floor tomorrow.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Regá tus vínculos como riegas las plantas: un poco, seguido.',
+    textEs: 'Regá tus vínculos como riegas las plantas: un poco, seguido.',
     textEn: 'Tend your relationships as you water plants: a little, often.',
     author: 'Proverbio',
   ),
   DailyQuote(
-    textEs:
-        'Que el hecho de no poder hacerlo todo no te impida hacer algo.',
+    textEs: 'Que el hecho de no poder hacerlo todo no te impida hacer algo.',
     textEn:
         'Do not let the fact that you cannot do everything keep you from '
         'doing something.',

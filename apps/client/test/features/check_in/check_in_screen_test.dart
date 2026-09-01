@@ -44,10 +44,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Back on the dashboard.
-    expect(
-      find.text("Take a deep breath. You're safe here."),
-      findsOneWidget,
-    );
+    expect(find.text("Take a deep breath. You're safe here."), findsOneWidget);
 
     final repo = MoodRepository(db);
     final entries = await repo.getAll();

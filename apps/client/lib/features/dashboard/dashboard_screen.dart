@@ -132,9 +132,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 String _relativeSuffix(BuildContext context, DateTime when) {
   final l10n = AppLocalizations.of(context);
   final now = DateTime.now();
-  final days = DateTime(when.year, when.month, when.day)
-      .difference(DateTime(now.year, now.month, now.day))
-      .inDays;
+  final days = DateTime(
+    when.year,
+    when.month,
+    when.day,
+  ).difference(DateTime(now.year, now.month, now.day)).inDays;
   return switch (days) {
     0 => '  ·  ${l10n.dashboardToday}',
     1 => '  ·  ${l10n.dashboardTomorrow}',
@@ -245,11 +247,7 @@ class _CheckInCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(
-                    Icons.favorite_outline,
-                    size: 20,
-                    color: scheme.primary,
-                  ),
+                  Icon(Icons.favorite_outline, size: 20, color: scheme.primary),
                   const SizedBox(width: 8),
                   Text(
                     l10n.dashboardCheckInTitle,
@@ -325,9 +323,7 @@ class _MoodTrendCard extends ConsumerWidget {
               else
                 Text(
                   l10n.dashboardMoodTrendEmpty,
-                  style: TextStyle(
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
+                  style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
                 ),
             ],
           ),

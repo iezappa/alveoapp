@@ -27,9 +27,7 @@ List<double?> dailyMoodAverages(
 
   return [
     for (final bucket in buckets)
-      bucket.isEmpty
-          ? null
-          : bucket.reduce((a, b) => a + b) / bucket.length,
+      bucket.isEmpty ? null : bucket.reduce((a, b) => a + b) / bucket.length,
   ];
 }
 
@@ -51,8 +49,6 @@ List<double?> monthlyMoodAverages(
 
   return [
     for (final bucket in buckets)
-      bucket.isEmpty
-          ? null
-          : bucket.reduce((a, b) => a + b) / bucket.length,
+      bucket.isEmpty ? null : bucket.reduce((a, b) => a + b) / bucket.length,
   ];
 }

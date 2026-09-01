@@ -39,8 +39,7 @@ class BreathPattern {
   );
 
   /// Length of one full cycle.
-  Duration get cycle =>
-      Duration(seconds: inhale + holdIn + exhale + holdOut);
+  Duration get cycle => Duration(seconds: inhale + holdIn + exhale + holdOut);
 
   List<(BreathPhase, int)> get _segments => [
     (BreathPhase.inhale, inhale),
@@ -53,7 +52,8 @@ class BreathPattern {
   /// looping over the cycle.
   BreathTick tickAt(Duration elapsed) {
     final cycleSeconds = cycle.inSeconds;
-    final t = (elapsed.inMicroseconds / Duration.microsecondsPerSecond) %
+    final t =
+        (elapsed.inMicroseconds / Duration.microsecondsPerSecond) %
         cycleSeconds;
 
     var start = 0.0;

@@ -90,14 +90,8 @@ class SettingsScreen extends ConsumerWidget {
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.person_outline),
                 title: Text(l10n.namePromptLabel),
-                subtitle: (name != null && name.isNotEmpty)
-                    ? Text(name)
-                    : null,
-                onTap: () => promptForName(
-                  context,
-                  ref,
-                  initial: name,
-                ),
+                subtitle: (name != null && name.isNotEmpty) ? Text(name) : null,
+                onTap: () => promptForName(context, ref, initial: name),
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,

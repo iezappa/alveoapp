@@ -121,10 +121,7 @@ class ThoughtRecordPreview extends ConsumerWidget {
                 ),
                 const SizedBox(height: 20),
               ],
-              block(
-                l10n.trAlternativeThought,
-                record.alternativeThought ?? '',
-              ),
+              block(l10n.trAlternativeThought, record.alternativeThought ?? ''),
               block(
                 l10n.trBeliefAfter,
                 belief(record.beliefBefore, record.beliefAfter),

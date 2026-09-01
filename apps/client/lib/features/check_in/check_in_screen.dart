@@ -100,9 +100,7 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
     ];
     final repo = ref.read(moodRepositoryProvider);
     final tagRepo = ref.read(tagRepositoryProvider);
-    final tagIds = [
-      for (final name in _tags) await tagRepo.findOrCreate(name),
-    ];
+    final tagIds = [for (final name in _tags) await tagRepo.findOrCreate(name)];
 
     if (widget.moodEntryId == null) {
       await repo.add(
@@ -383,9 +381,8 @@ class _MoodScale extends StatelessWidget {
         Center(
           child: Text(
             _caption(AppLocalizations.of(context)),
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: scheme.onSurfaceVariant,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium
+                ?.copyWith(color: scheme.onSurfaceVariant),
           ),
         ),
       ],

@@ -35,7 +35,9 @@ void main() {
 
     await tester.tap(find.byTooltip('New entry'));
     await tester.pumpAndSettle();
-    await tester.tap(find.widgetWithText(ListTile, 'One-liners')); // section menu
+    await tester.tap(
+      find.widgetWithText(ListTile, 'One-liners'),
+    ); // section menu
     await tester.pumpAndSettle();
 
     await tester.enterText(

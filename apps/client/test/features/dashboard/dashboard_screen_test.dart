@@ -31,10 +31,7 @@ void main() {
 
     await _pumpApp(tester, db);
 
-    expect(
-      find.text("Take a deep breath. You're safe here."),
-      findsOneWidget,
-    );
+    expect(find.text("Take a deep breath. You're safe here."), findsOneWidget);
     expect(find.text('No sessions scheduled'), findsOneWidget);
   });
 
@@ -44,9 +41,8 @@ void main() {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
     final now = DateTime.now();
-    await SessionRepository(db).create(
-      scheduledFor: DateTime(now.year, now.month, now.day + 1, 10),
-    );
+    await SessionRepository(db)
+        .create(scheduledFor: DateTime(now.year, now.month, now.day + 1, 10));
 
     await _pumpApp(tester, db);
 

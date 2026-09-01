@@ -42,20 +42,23 @@ void main() {
     expect(container.read(lockControllerProvider), isFalse);
   });
 
-  test('five wrong PINs trigger a cooldown that refuses further tries', () async {
-    await container.read(pinServiceProvider).setPin('1234');
-    final notifier = container.read(lockControllerProvider.notifier);
-    await notifier.initialize();
+  test(
+    'five wrong PINs trigger a cooldown that refuses further tries',
+    () async {
+      await container.read(pinServiceProvider).setPin('1234');
+      final notifier = container.read(lockControllerProvider.notifier);
+      await notifier.initialize();
 
-    for (var i = 0; i < 5; i++) {
-      expect(await notifier.tryUnlock('0000'), isFalse);
-    }
-    expect(notifier.lockoutRemaining, greaterThan(Duration.zero));
+      for (var i = 0; i < 5; i++) {
+        expect(await notifier.tryUnlock('0000'), isFalse);
+      }
+      expect(notifier.lockoutRemaining, greaterThan(Duration.zero));
 
-    // Even the correct PIN is refused while the cooldown runs.
-    expect(await notifier.tryUnlock('1234'), isFalse);
-    expect(container.read(lockControllerProvider), isTrue);
-  });
+      // Even the correct PIN is refused while the cooldown runs.
+      expect(await notifier.tryUnlock('1234'), isFalse);
+      expect(container.read(lockControllerProvider), isTrue);
+    },
+  );
 
   test('lockIfProtected only locks when a PIN is set', () async {
     final notifier = container.read(lockControllerProvider.notifier);

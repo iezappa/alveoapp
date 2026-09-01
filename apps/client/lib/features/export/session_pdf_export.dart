@@ -14,10 +14,7 @@ String _fileName(DateTime when) =>
 
 /// Builds a PDF for [session] and writes it to a file the user chooses.
 /// A no-op if they cancel the save dialog.
-Future<void> runSessionPdfExport(
-  BuildContext context,
-  Session session,
-) async {
+Future<void> runSessionPdfExport(BuildContext context, Session session) async {
   final l10n = AppLocalizations.of(context);
   final messenger = ScaffoldMessenger.of(context);
   final locale = Localizations.localeOf(context).toString();
@@ -26,9 +23,9 @@ Future<void> runSessionPdfExport(
     session,
     SessionPdfLabels(
       title: l10n.sessionExportTitle,
-      dateText: DateFormat.yMMMMEEEEd(
-        locale,
-      ).add_jm().format(session.scheduledFor),
+      dateText: DateFormat.yMMMMEEEEd(locale)
+          .add_jm()
+          .format(session.scheduledFor),
       agenda: l10n.sessionAgenda,
       notes: l10n.sessionNotes,
       takeaways: l10n.sessionTakeaways,
@@ -43,7 +40,5 @@ Future<void> runSessionPdfExport(
   );
   if (saved == null) return;
 
-  messenger.showSnackBar(
-    SnackBar(content: Text(l10n.exportSaved(saved))),
-  );
+  messenger.showSnackBar(SnackBar(content: Text(l10n.exportSaved(saved))));
 }

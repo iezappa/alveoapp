@@ -108,10 +108,10 @@ class _BreatheScreenState extends State<BreatheScreen>
                               builder: (context, _) {
                                 final remaining =
                                     _sessionLength - _stopwatch.elapsed;
-                                if (_running &&
-                                    remaining <= Duration.zero) {
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((_) => _stop());
+                                if (_running && remaining <= Duration.zero) {
+                                  WidgetsBinding.instance.addPostFrameCallback(
+                                    (_) => _stop(),
+                                  );
                                 }
                                 final tick = _pattern.tickAt(
                                   _running
@@ -120,9 +120,7 @@ class _BreatheScreenState extends State<BreatheScreen>
                                 );
                                 return _FocalCircle(
                                   label: _phaseLabel(l10n, tick.phase),
-                                  scale: _running
-                                      ? _scaleFor(tick)
-                                      : 0.9,
+                                  scale: _running ? _scaleFor(tick) : 0.9,
                                 );
                               },
                             ),
@@ -142,15 +140,12 @@ class _BreatheScreenState extends State<BreatheScreen>
                                   ),
                                   ButtonSegment(
                                     value: BreathPattern.relaxing,
-                                    label: Text(
-                                      l10n.breathePatternRelaxing,
-                                    ),
+                                    label: Text(l10n.breathePatternRelaxing),
                                   ),
                                 ],
                                 selected: {_pattern},
-                                onSelectionChanged: (selection) => setState(
-                                  () => _pattern = selection.first,
-                                ),
+                                onSelectionChanged: (selection) =>
+                                    setState(() => _pattern = selection.first),
                               ),
                           ],
                         ),
@@ -239,9 +234,7 @@ class _FocalCircle extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: light ? Colors.white : scheme.surfaceContainerHigh,
-        border: Border.all(
-          color: scheme.outlineVariant.withValues(alpha: 0.6),
-        ),
+        border: Border.all(color: scheme.outlineVariant.withValues(alpha: 0.6)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: light ? 0.05 : 0.22),

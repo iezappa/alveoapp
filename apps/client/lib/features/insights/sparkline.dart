@@ -43,8 +43,7 @@ class _SparklinePainter extends CustomPainter {
 
     final dx = size.width / (values.length - 1);
     double y(double v) =>
-        size.height -
-        ((v - min) / (max - min)).clamp(0.0, 1.0) * size.height;
+        size.height - ((v - min) / (max - min)).clamp(0.0, 1.0) * size.height;
 
     final stroke = Paint()
       ..color = color

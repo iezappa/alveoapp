@@ -150,9 +150,9 @@ class JournalRepository {
 
   /// Emotions attached to [journalEntryId].
   Future<List<JournalEntryEmotion>> emotionsFor(String journalEntryId) {
-    return (_db.select(_db.journalEntryEmotions)
-          ..where((t) => t.journalEntryId.equals(journalEntryId)))
-        .get();
+    return (_db.select(
+      _db.journalEntryEmotions,
+    )..where((t) => t.journalEntryId.equals(journalEntryId))).get();
   }
 
   /// Replaces the whole emotion set of [id] with [emotions].
@@ -162,9 +162,9 @@ class JournalRepository {
       validateIntensity(e.intensity);
     }
     await _db.transaction(() async {
-      await (_db.delete(_db.journalEntryEmotions)
-            ..where((t) => t.journalEntryId.equals(id)))
-          .go();
+      await (_db.delete(
+        _db.journalEntryEmotions,
+      )..where((t) => t.journalEntryId.equals(id))).go();
       if (emotions.isNotEmpty) {
         await _db.batch((b) {
           b.insertAll(_db.journalEntryEmotions, [

@@ -59,31 +59,33 @@ void main() {
     expect(await repo.getMonthlyReview(DateTime(2026, 9, 1)), isNull);
   });
 
-  test('emotions are stored on create and swapped by replaceEmotions', () async {
-    final id = await repo.create(
-      bodyMarkdown: 'grateful today',
-      entryDate: DateTime(2026, 8, 20),
-      emotions: const [
-        EmotionInput(emotionKey: 'joy', intensity: 3),
-        EmotionInput(emotionKey: 'trust', intensity: 2),
-      ],
-    );
-    expect(
-      (await repo.emotionsFor(id)).map((e) => e.emotionKey).toSet(),
-      {'joy', 'trust'},
-    );
+  test(
+    'emotions are stored on create and swapped by replaceEmotions',
+    () async {
+      final id = await repo.create(
+        bodyMarkdown: 'grateful today',
+        entryDate: DateTime(2026, 8, 20),
+        emotions: const [
+          EmotionInput(emotionKey: 'joy', intensity: 3),
+          EmotionInput(emotionKey: 'trust', intensity: 2),
+        ],
+      );
+      expect((await repo.emotionsFor(id)).map((e) => e.emotionKey).toSet(), {
+        'joy',
+        'trust',
+      });
 
-    await repo.replaceEmotions(id, const [
-      EmotionInput(emotionKey: 'anticipation', intensity: 4),
-    ]);
-    expect(
-      (await repo.emotionsFor(id)).map((e) => e.emotionKey),
-      ['anticipation'],
-    );
+      await repo.replaceEmotions(id, const [
+        EmotionInput(emotionKey: 'anticipation', intensity: 4),
+      ]);
+      expect((await repo.emotionsFor(id)).map((e) => e.emotionKey), [
+        'anticipation',
+      ]);
 
-    await repo.delete(id);
-    expect(await repo.emotionsFor(id), isEmpty); // cascade
-  });
+      await repo.delete(id);
+      expect(await repo.emotionsFor(id), isEmpty); // cascade
+    },
+  );
 
   test('create rejects an unknown emotion key', () async {
     expect(

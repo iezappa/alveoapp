@@ -60,8 +60,8 @@ String renderPreSessionSummary(
   // --- One-line roll-up ---------------------------------------------------
   final summary = <String>[];
   if (a.moods.isNotEmpty) {
-    final avg = a.moods.map((m) => m.mood).reduce((x, y) => x + y) /
-        a.moods.length;
+    final avg =
+        a.moods.map((m) => m.mood).reduce((x, y) => x + y) / a.moods.length;
     summary.add('mood ${_trimNumber(avg)}/5 across ${a.moods.length}');
   }
   final emotionCounts = <String, int>{};
@@ -73,9 +73,7 @@ String renderPreSessionSummary(
   if (emotionCounts.isNotEmpty) {
     final top = emotionCounts.entries.toList()
       ..sort((x, y) => y.value.compareTo(x.value));
-    summary.add(
-      'emotions: ${top.take(3).map((e) => label(e.key)).join(', ')}',
-    );
+    summary.add('emotions: ${top.take(3).map((e) => label(e.key)).join(', ')}');
   }
   if (a.tasks.isNotEmpty) {
     final done = a.tasks.where((t) => t.done).length;

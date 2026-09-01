@@ -26,10 +26,7 @@ Future<String?> saveBytesFile({
 
 void _download(String name, List<int> bytes, String mimeType) {
   final data = Uint8List.fromList(bytes);
-  final blob = web.Blob(
-    [data.toJS].toJS,
-    web.BlobPropertyBag(type: mimeType),
-  );
+  final blob = web.Blob([data.toJS].toJS, web.BlobPropertyBag(type: mimeType));
   final url = web.URL.createObjectURL(blob);
   final anchor = web.HTMLAnchorElement()
     ..href = url

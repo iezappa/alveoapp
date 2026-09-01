@@ -12,11 +12,9 @@ void main() {
   ) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    final id = await MoodRepository(db).add(
-      mood: 2,
-      occurredAt: DateTime(2026, 8, 20, 9),
-      note: 'rough morning',
-    );
+    final id = await MoodRepository(
+      db,
+    ).add(mood: 2, occurredAt: DateTime(2026, 8, 20, 9), note: 'rough morning');
 
     await tester.pumpWidget(
       ProviderScope(

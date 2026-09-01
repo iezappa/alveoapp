@@ -46,7 +46,10 @@ void main() {
 
   test('attribution appends the source when there is one', () {
     final withSource = dailyQuotes.firstWhere((q) => q.source != null);
-    expect(withSource.attribution, '${withSource.author} · ${withSource.source}');
+    expect(
+      withSource.attribution,
+      '${withSource.author} · ${withSource.source}',
+    );
     final noSource = dailyQuotes.firstWhere((q) => q.source == null);
     expect(noSource.attribution, noSource.author);
   });

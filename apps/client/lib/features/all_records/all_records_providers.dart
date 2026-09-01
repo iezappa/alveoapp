@@ -36,11 +36,7 @@ final allTextRecordsProvider = FutureProvider<List<TextRecord>>((ref) async {
       TextRecord(
         kind: TextRecordKind.session,
         when: s.scheduledFor,
-        body: _join([
-          s.agendaMarkdown,
-          s.notesMarkdown,
-          s.takeawaysMarkdown,
-        ]),
+        body: _join([s.agendaMarkdown, s.notesMarkdown, s.takeawaysMarkdown]),
       ),
     for (final t in tasks)
       TextRecord(

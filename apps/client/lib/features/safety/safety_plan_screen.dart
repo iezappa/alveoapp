@@ -138,8 +138,7 @@ class _SafetyPlanScreenState extends ConsumerState<SafetyPlanScreen> {
               const SizedBox(height: 8),
               SectionLabel(l10n.safetyContacts),
               const SizedBox(height: 8),
-              for (var i = 0; i < _contacts.length; i++)
-                _contactRow(l10n, i),
+              for (var i = 0; i < _contacts.length; i++) _contactRow(l10n, i),
               const SizedBox(height: 4),
               Align(
                 alignment: AlignmentDirectional.centerStart,
@@ -225,8 +224,7 @@ class _SafetyPlanScreenState extends ConsumerState<SafetyPlanScreen> {
                   ),
                 ],
                 selected: {draft.kind},
-                onSelectionChanged: (s) =>
-                    setState(() => draft.kind = s.first),
+                onSelectionChanged: (s) => setState(() => draft.kind = s.first),
               ),
             ],
           ),

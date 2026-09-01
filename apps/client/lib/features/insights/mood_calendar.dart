@@ -44,10 +44,7 @@ class MoodCalendar extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            IconButton(
-              onPressed: onPrev,
-              icon: const Icon(Icons.chevron_left),
-            ),
+            IconButton(onPressed: onPrev, icon: const Icon(Icons.chevron_left)),
             Text(
               DateFormat.yMMMM(locale).format(firstOfMonth),
               style: Theme.of(context).textTheme.titleMedium,
@@ -120,9 +117,7 @@ class _DayCell extends StatelessWidget {
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(8),
-        border: isToday
-            ? Border.all(color: scheme.primary, width: 2)
-            : null,
+        border: isToday ? Border.all(color: scheme.primary, width: 2) : null,
       ),
       child: Center(
         child: Text(

@@ -121,8 +121,5 @@ class _RecordCard extends StatelessWidget {
         Icons.psychology_outlined,
         l10n.allRecordsKindThought,
       ),
-      TextRecordKind.mood => (
-        Icons.favorite_outline,
-        l10n.allRecordsKindMood,
-      ),
+      TextRecordKind.mood => (Icons.favorite_outline, l10n.allRecordsKindMood),
     };

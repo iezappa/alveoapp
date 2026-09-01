@@ -77,10 +77,7 @@ void main() {
     await tester.tap(find.text('Pre-session summary'));
     await tester.pumpAndSettle();
 
-    expect(
-      find.textContaining('Since the last session'),
-      findsWidgets,
-    );
+    expect(find.textContaining('Since the last session'), findsWidgets);
 
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();

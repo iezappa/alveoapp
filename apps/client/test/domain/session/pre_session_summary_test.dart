@@ -10,10 +10,7 @@ void main() {
         to: DateTime(2026, 8, 28),
       ),
     );
-    expect(
-      md,
-      contains('Since the last session (2026-08-14 – 2026-08-28)'),
-    );
+    expect(md, contains('Since the last session (2026-08-14 – 2026-08-28)'));
     expect(md, contains('Nothing was logged'));
   });
 

@@ -165,10 +165,7 @@ class BackupService {
       _db.thoughtRecordDistortions,
       rows('thoughtRecordDistortions'),
     );
-    report['medications'] = await _merge(
-      _db.medications,
-      rows('medications'),
-    );
+    report['medications'] = await _merge(_db.medications, rows('medications'));
     report['medicationLogs'] = await _merge(
       _db.medicationLogs,
       rows('medicationLogs'),

@@ -10,8 +10,7 @@ final medicationListProvider = FutureProvider<List<Medication>>((ref) {
 
 final medicationByIdProvider = Provider.family<Medication?, String>((ref, id) {
   final meds =
-      ref.watch(medicationListProvider).asData?.value ??
-      const <Medication>[];
+      ref.watch(medicationListProvider).asData?.value ?? const <Medication>[];
   for (final m in meds) {
     if (m.id == id) return m;
   }

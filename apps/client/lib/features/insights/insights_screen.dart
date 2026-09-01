@@ -22,9 +22,8 @@ class _InsightsScreenState extends ConsumerState<InsightsScreen> {
   final _tags = <String>{};
   late DateTime _month = DateTime(DateTime.now().year, DateTime.now().month);
 
-  void _shiftMonth(int by) => setState(
-    () => _month = DateTime(_month.year, _month.month + by),
-  );
+  void _shiftMonth(int by) =>
+      setState(() => _month = DateTime(_month.year, _month.month + by));
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +51,7 @@ class _InsightsScreenState extends ConsumerState<InsightsScreen> {
       now: DateTime.now(),
       days: _days,
     );
-    final monthly = monthlyMoodAverages(
-      readings,
-      _month.year,
-      _month.month,
-    );
+    final monthly = monthlyMoodAverages(readings, _month.year, _month.month);
     final present = points.whereType<double>().toList();
     final average = present.isEmpty
         ? null
@@ -98,10 +93,7 @@ class _InsightsScreenState extends ConsumerState<InsightsScreen> {
               ],
               const SizedBox(height: 24),
               if (present.isEmpty)
-                EmptyState(
-                  icon: Icons.show_chart,
-                  message: l10n.insightsEmpty,
-                )
+                EmptyState(icon: Icons.show_chart, message: l10n.insightsEmpty)
               else ...[
                 Text(
                   l10n.insightsAverage(average!.toStringAsFixed(1)),
@@ -158,9 +150,7 @@ class _InsightsScreenState extends ConsumerState<InsightsScreen> {
         rightTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
         ),
-        topTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
-        ),
+        topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
         leftTitles: const AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,

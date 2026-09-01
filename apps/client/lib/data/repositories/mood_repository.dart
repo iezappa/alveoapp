@@ -94,12 +94,12 @@ class MoodRepository {
       await (_db.update(_db.moodEntries)..where((t) => t.id.equals(id))).write(
         MoodEntriesCompanion(mood: Value(mood), note: Value(note)),
       );
-      await (_db.delete(_db.moodEntryEmotions)
-            ..where((t) => t.moodEntryId.equals(id)))
-          .go();
-      await (_db.delete(_db.moodEntryTags)
-            ..where((t) => t.moodEntryId.equals(id)))
-          .go();
+      await (_db.delete(
+        _db.moodEntryEmotions,
+      )..where((t) => t.moodEntryId.equals(id))).go();
+      await (_db.delete(
+        _db.moodEntryTags,
+      )..where((t) => t.moodEntryId.equals(id))).go();
       if (emotions.isNotEmpty) {
         await _db.batch((b) {
           b.insertAll(_db.moodEntryEmotions, [

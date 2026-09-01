@@ -61,10 +61,7 @@ class LockController extends Notifier<bool> {
       _lockedOutUntil = DateTime.now().add(Duration(seconds: seconds));
       await ref
           .read(settingsRepositoryProvider)
-          .set(
-            _lockoutKey,
-            _lockedOutUntil!.millisecondsSinceEpoch.toString(),
-          );
+          .set(_lockoutKey, _lockedOutUntil!.millisecondsSinceEpoch.toString());
     }
     return false;
   }

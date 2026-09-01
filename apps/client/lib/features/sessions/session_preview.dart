@@ -49,9 +49,9 @@ class SessionPreview extends ConsumerWidget {
             children: [
               Expanded(
                 child: Text(
-                  DateFormat.yMMMMEEEEd(
-                    locale,
-                  ).add_jm().format(session.scheduledFor),
+                  DateFormat.yMMMMEEEEd(locale)
+                      .add_jm()
+                      .format(session.scheduledFor),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),

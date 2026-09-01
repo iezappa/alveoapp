@@ -17,10 +17,7 @@ void main() {
     addTearDown(container.dispose);
 
     await tester.pumpWidget(
-      UncontrolledProviderScope(
-        container: container,
-        child: const AlveoApp(),
-      ),
+      UncontrolledProviderScope(container: container, child: const AlveoApp()),
     );
     await tester.pumpAndSettle();
 

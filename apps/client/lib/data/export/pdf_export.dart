@@ -15,9 +15,7 @@ Future<pw.ThemeData> _pdfTheme() async {
   final regular = pw.Font.ttf(
     await rootBundle.load('assets/fonts/Lato-Regular.ttf'),
   );
-  final bold = pw.Font.ttf(
-    await rootBundle.load('assets/fonts/Lato-Bold.ttf'),
-  );
+  final bold = pw.Font.ttf(await rootBundle.load('assets/fonts/Lato-Bold.ttf'));
   return _cachedTheme = pw.ThemeData.withFont(base: regular, bold: bold);
 }
 

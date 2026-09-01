@@ -305,10 +305,7 @@ class _ThoughtRecordEditorScreenState
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SectionLabel(label),
-            Text('${value.round()}$suffix'),
-          ],
+          children: [SectionLabel(label), Text('${value.round()}$suffix')],
         ),
         Slider(
           value: value,

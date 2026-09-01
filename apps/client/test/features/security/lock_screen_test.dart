@@ -23,10 +23,7 @@ void main() {
     await container.read(lockControllerProvider.notifier).initialize();
 
     await tester.pumpWidget(
-      UncontrolledProviderScope(
-        container: container,
-        child: const AlveoApp(),
-      ),
+      UncontrolledProviderScope(container: container, child: const AlveoApp()),
     );
     await tester.pumpAndSettle();
 
@@ -43,9 +40,6 @@ void main() {
     await tester.tap(find.text('Unlock'));
     await tester.pumpAndSettle();
     // The dashboard (the start screen) is now visible.
-    expect(
-      find.text("Take a deep breath. You're safe here."),
-      findsOneWidget,
-    );
+    expect(find.text("Take a deep breath. You're safe here."), findsOneWidget);
   });
 }

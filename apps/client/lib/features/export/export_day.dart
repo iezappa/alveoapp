@@ -46,7 +46,5 @@ Future<void> runDailyExport(BuildContext context, WidgetRef ref) async {
   );
   if (saved == null) return;
 
-  messenger.showSnackBar(
-    SnackBar(content: Text(l10n.exportSaved(saved))),
-  );
+  messenger.showSnackBar(SnackBar(content: Text(l10n.exportSaved(saved))));
 }

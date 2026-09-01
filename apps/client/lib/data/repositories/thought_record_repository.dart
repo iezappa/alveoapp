@@ -72,27 +72,26 @@ class ThoughtRecordRepository {
     int? emotionIntensityAfter,
   }) async {
     await _db.transaction(() async {
-      await (_db.update(_db.thoughtRecords)..where((t) => t.id.equals(id)))
-          .write(
-            ThoughtRecordsCompanion(
-              occurredAt: Value(occurredAt),
-              situation: Value(situation),
-              automaticThought: Value(automaticThought),
-              beliefBefore: Value(_clampPercent(beliefBefore)),
-              emotionLabel: Value(emotionLabel),
-              emotionIntensityBefore: Value(
-                _clampIntensity(emotionIntensityBefore),
-              ),
-              alternativeThought: Value(alternativeThought),
-              beliefAfter: Value(_clampPercent(beliefAfter)),
-              emotionIntensityAfter: Value(
-                _clampIntensity(emotionIntensityAfter),
-              ),
-            ),
-          );
-      await (_db.delete(_db.thoughtRecordDistortions)
-            ..where((t) => t.recordId.equals(id)))
-          .go();
+      await (_db.update(
+        _db.thoughtRecords,
+      )..where((t) => t.id.equals(id))).write(
+        ThoughtRecordsCompanion(
+          occurredAt: Value(occurredAt),
+          situation: Value(situation),
+          automaticThought: Value(automaticThought),
+          beliefBefore: Value(_clampPercent(beliefBefore)),
+          emotionLabel: Value(emotionLabel),
+          emotionIntensityBefore: Value(
+            _clampIntensity(emotionIntensityBefore),
+          ),
+          alternativeThought: Value(alternativeThought),
+          beliefAfter: Value(_clampPercent(beliefAfter)),
+          emotionIntensityAfter: Value(_clampIntensity(emotionIntensityAfter)),
+        ),
+      );
+      await (_db.delete(
+        _db.thoughtRecordDistortions,
+      )..where((t) => t.recordId.equals(id))).go();
       await _writeDistortions(id, distortions);
     });
   }
@@ -127,15 +126,13 @@ class ThoughtRecordRepository {
   }
 
   Future<Set<CognitiveDistortion>> distortionsFor(String recordId) async {
-    final rows = await (_db.select(_db.thoughtRecordDistortions)
-          ..where((t) => t.recordId.equals(recordId)))
-        .get();
+    final rows = await (_db.select(
+      _db.thoughtRecordDistortions,
+    )..where((t) => t.recordId.equals(recordId))).get();
     return rows.map((r) => r.distortion).toSet();
   }
 
   Future<void> delete(String id) {
-    return (_db.delete(
-      _db.thoughtRecords,
-    )..where((t) => t.id.equals(id))).go();
+    return (_db.delete(_db.thoughtRecords)..where((t) => t.id.equals(id))).go();
   }
 }
