@@ -43,6 +43,15 @@ jobs:
 
       - run: flutter pub get
 
+      # Nothing ships without passing first. This job used to build and
+      # publish whatever was on the branch, so a red suite reached the
+      # people using the app.
+      - name: Analyse
+        run: dart analyze lib test
+
+      - name: Test
+        run: flutter test
+
       - run: flutter build web --release --base-href "${{ steps.base.outputs.value }}"
 
       - name: SPA + Pages tweaks

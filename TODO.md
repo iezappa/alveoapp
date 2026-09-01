@@ -17,14 +17,11 @@ Last checked against it: **2026-09-01**.
 
 ## Open
 
-- [ ] CI only deploys. `deploy-web.yml` resolves dependencies and builds the
-      web release; nothing runs `dart analyze` or `flutter test` before it
-      publishes, so a red suite ships. Memini's `ci.yml` runs format, analyse,
-      test and build, and is the shape to copy.
-- [ ] No `integration_test/`. §7 of the standard asks for critical flows end
-      to end on at least one platform; the widget tests do not start the app.
 - [ ] The working copy under `Estandarizador/` is stale — it predates §2.2.
       Refresh it from the canonical repository, or read the standard there.
+- [ ] The integration test walks the bottom bar and asserts no section throws.
+      The flows worth adding next are the ones with something at stake: a
+      check-in written and read back, and the PIN lock.
 
 ---
 
