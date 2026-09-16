@@ -17,7 +17,9 @@ import 'repositories/task_repository.dart';
 import 'repositories/thought_record_repository.dart';
 import 'search/search_service.dart';
 import 'security/pin_service.dart';
+import 'transfer/backup_history.dart';
 import 'transfer/backup_service.dart';
+import 'transfer/data_eraser.dart';
 
 /// Holds the opened [AppDatabase].
 ///
@@ -44,6 +46,14 @@ final safetyPlanRepositoryProvider = Provider<SafetyPlanRepository>(
 
 final backupServiceProvider = Provider<BackupService>(
   (ref) => BackupService(ref.watch(appDatabaseProvider)),
+);
+
+final backupHistoryProvider = Provider<BackupHistory>(
+  (ref) => BackupHistory(ref.watch(appDatabaseProvider)),
+);
+
+final dataEraserProvider = Provider<DataEraser>(
+  (ref) => DataEraser(ref.watch(appDatabaseProvider)),
 );
 
 final searchServiceProvider = Provider<SearchService>(

@@ -2,6 +2,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../app/clock.dart';
 import '../../data/providers.dart';
 import '../../domain/transfer/import_report.dart';
 import '../../l10n/app_localizations.dart';
@@ -9,6 +10,7 @@ import '../export/file_saver_provider.dart';
 import '../journal/journal_providers.dart';
 import '../sessions/session_providers.dart';
 import '../tasks/task_providers.dart';
+import 'backup_reminder_banner.dart';
 
 String _backupName() {
   final now = DateTime.now();
@@ -31,11 +33,17 @@ Future<void> runExportBackup(BuildContext context, WidgetRef ref) async {
   );
   if (saved == null) return;
 
+  await ref.read(backupHistoryProvider).recordExport(ref.read(clockProvider)());
+  ref.invalidate(backupReminderProvider);
+
   messenger.showSnackBar(SnackBar(content: Text(l10n.backupSaved)));
 }
 
 /// Reads a backup file and merges it into the local database, skipping
 /// records that are already present.
+///
+/// Nothing local is ever replaced or deleted, so there is nothing to export
+/// first: an import can only add.
 Future<void> runImportBackup(BuildContext context, WidgetRef ref) async {
   final l10n = AppLocalizations.of(context);
   final messenger = ScaffoldMessenger.of(context);

@@ -39,3 +39,36 @@ final onboardingControllerProvider =
 /// on its own. `main()` overrides this to `true`; it stays `false` by default
 /// so widget tests are not interrupted by a modal barrier.
 final firstRunFlowEnabledProvider = Provider<bool>((ref) => false);
+
+/// Settings key recording that the user accepted the backup notice.
+const backupNoticeAcceptedSettingKey = 'onboarding.backup_notice_accepted';
+
+/// Whether a one-time notice has been accepted, persisted under [settingKey].
+///
+/// Kept apart from the tutorial flag on purpose: everyone onboarded before a
+/// notice existed has seen the tutorial and not accepted the notice, which is
+/// exactly what makes the app show it to them once.
+class AcknowledgementController extends Notifier<AsyncValue<bool>> {
+  AcknowledgementController(this.settingKey);
+
+  final String settingKey;
+
+  @override
+  AsyncValue<bool> build() => const AsyncValue.loading();
+
+  Future<void> load() async {
+    final stored = await ref.read(settingsRepositoryProvider).get(settingKey);
+    state = AsyncValue.data(stored == 'true');
+  }
+
+  Future<void> accept() async {
+    await ref.read(settingsRepositoryProvider).set(settingKey, 'true');
+    state = const AsyncValue.data(true);
+  }
+}
+
+/// Whether the user accepted that their data lives only on this device.
+final backupNoticeAcceptedProvider =
+    NotifierProvider<AcknowledgementController, AsyncValue<bool>>(
+      () => AcknowledgementController(backupNoticeAcceptedSettingKey),
+    );

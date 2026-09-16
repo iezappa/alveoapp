@@ -15,6 +15,7 @@ import '../../l10n/app_localizations.dart';
 import '../insights/sparkline.dart';
 import '../shared/name_dialog.dart';
 import '../shared/tutorial_dialog.dart';
+import '../transfer/backup_notice_dialog.dart';
 import 'dashboard_providers.dart';
 
 /// The welcome screen and app entry point: a greeting, the next session, a
@@ -27,20 +28,32 @@ class DashboardScreen extends ConsumerStatefulWidget {
 }
 
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
-  /// Guards the one-time first-launch flow so a rebuild cannot queue it twice
-  /// while the first dialog is still open.
-  bool _firstRunScheduled = false;
+  /// Guards the launch flow so a rebuild cannot queue it twice while a
+  /// dialog is still open.
+  bool _launchFlowScheduled = false;
 
-  /// Runs once on first launch: ask for a name (if none), then walk through
-  /// the tutorial and remember it was shown.
-  Future<void> _runFirstRun({required bool needsName}) async {
-    if (needsName) {
-      await promptForName(context, ref, dismissible: false);
+  /// Runs once per launch when something is still owed: on first launch ask
+  /// for a name (if none) and walk through the tutorial; then, for everyone,
+  /// any notice not yet accepted — which is how people onboarded before a
+  /// notice existed see it exactly once.
+  Future<void> _runLaunchFlow({
+    required bool firstRun,
+    required bool needsName,
+    required bool needsBackupNotice,
+  }) async {
+    if (firstRun) {
+      if (needsName) {
+        await promptForName(context, ref, dismissible: false);
+        if (!mounted) return;
+      }
+      await showTutorial(context);
+      if (!mounted) return;
+      await ref.read(onboardingControllerProvider.notifier).markSeen();
       if (!mounted) return;
     }
-    await showTutorial(context);
-    if (!mounted) return;
-    await ref.read(onboardingControllerProvider.notifier).markSeen();
+    if (needsBackupNotice) {
+      await showBackupNoticeDialog(context);
+    }
   }
 
   @override
@@ -51,16 +64,29 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     final name = ref.watch(userProfileControllerProvider).asData?.value;
     final nameLoaded = ref.watch(userProfileControllerProvider) is AsyncData;
     final tutorialSeen = ref.watch(onboardingControllerProvider).asData?.value;
+    final backupNoticeAccepted = ref
+        .watch(backupNoticeAcceptedProvider)
+        .asData
+        ?.value;
     final firstRunEnabled = ref.watch(firstRunFlowEnabledProvider);
 
     if (firstRunEnabled &&
         nameLoaded &&
-        tutorialSeen == false &&
-        !_firstRunScheduled) {
-      _firstRunScheduled = true;
+        tutorialSeen != null &&
+        backupNoticeAccepted != null &&
+        (!tutorialSeen || !backupNoticeAccepted) &&
+        !_launchFlowScheduled) {
+      _launchFlowScheduled = true;
+      final firstRun = !tutorialSeen;
       final needsName = name == null;
+      final needsBackupNotice = !backupNoticeAccepted;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) _runFirstRun(needsName: needsName);
+        if (!mounted) return;
+        _runLaunchFlow(
+          firstRun: firstRun,
+          needsName: needsName,
+          needsBackupNotice: needsBackupNotice,
+        );
       });
     }
 

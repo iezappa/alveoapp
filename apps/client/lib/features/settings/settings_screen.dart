@@ -16,6 +16,7 @@ import '../shared/name_dialog.dart';
 import '../shared/support_actions.dart';
 import '../shared/tutorial_dialog.dart';
 import '../transfer/backup_actions.dart';
+import '../transfer/erase_all_data.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -145,6 +146,30 @@ class SettingsScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 28),
               SectionLabel(l10n.dataSectionTitle),
+              // The backup notice, always on screen and above the export:
+              // someone should learn that no server has a copy before they
+              // need one, not after.
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.cloud_off_outlined,
+                    size: 18,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      l10n.backupNoticeSettings,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        height: 1.45,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.upload_file_outlined),
@@ -157,6 +182,7 @@ class SettingsScreen extends ConsumerWidget {
                 title: Text(l10n.importBackup),
                 onTap: () => runImportBackup(context, ref),
               ),
+              const EraseAllDataTile(),
               // Obsidian sync needs local filesystem access — desktop only.
               if (!kIsWeb) ...[
                 const SizedBox(height: 28),

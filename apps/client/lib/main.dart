@@ -72,6 +72,7 @@ Future<ProviderContainer> bootstrapApp(RestartApp restart) async {
     await container.read(themeControllerProvider.notifier).load();
     await container.read(userProfileControllerProvider.notifier).load();
     await container.read(onboardingControllerProvider.notifier).load();
+    await container.read(backupNoticeAcceptedProvider.notifier).load();
     await container.read(lockControllerProvider.notifier).initialize();
   }
   return container;
@@ -100,6 +101,9 @@ class _AlveoAppState extends ConsumerState<AlveoApp>
       }
       if (ref.read(onboardingControllerProvider) is AsyncLoading) {
         ref.read(onboardingControllerProvider.notifier).load();
+      }
+      if (ref.read(backupNoticeAcceptedProvider) is AsyncLoading) {
+        ref.read(backupNoticeAcceptedProvider.notifier).load();
       }
     });
   }

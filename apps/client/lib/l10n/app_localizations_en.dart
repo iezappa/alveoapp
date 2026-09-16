@@ -937,4 +937,56 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recoveryResetConfirmAction => 'Reset';
+
+  @override
+  String get backupNoticeTitle => 'Your data lives only on this device';
+
+  @override
+  String get backupNoticeOnboarding =>
+      'We don\'t store your data on our servers. If you uninstall the app, lose or reset your device, or clear your browser data, it will be lost. Export regularly from Settings → Data → Export backup and keep the file somewhere safe.';
+
+  @override
+  String get backupNoticeAccept => 'Got it, I\'ll back up';
+
+  @override
+  String get backupNoticeSettings =>
+      'Your data isn\'t stored on our servers. Export regularly and keep the file off this device.';
+
+  @override
+  String get backupReminderNever => 'You haven\'t backed up your data yet.';
+
+  @override
+  String backupReminderOverdue(int days) {
+    return 'Your last backup was $days days ago.';
+  }
+
+  @override
+  String get backupReminderAction => 'Export';
+
+  @override
+  String get backupReminderDismiss => 'Not now';
+
+  @override
+  String get eraseAllData => 'Delete all my data';
+
+  @override
+  String get eraseAllTitle => 'Delete all your data?';
+
+  @override
+  String get eraseAllBody =>
+      'Every record on this device is deleted, along with your PIN, profile, safety plan and settings; only the language and the appearance are kept. The app then starts over from the welcome screens. It cannot be undone, and no copy exists anywhere else: export first if you might want any of it back.';
+
+  @override
+  String get eraseAllConfirmWord => 'DELETE';
+
+  @override
+  String eraseAllTypeToConfirm(String word) {
+    return 'Type $word to confirm';
+  }
+
+  @override
+  String get eraseAllExportFirst => 'Export first';
+
+  @override
+  String get eraseAllAction => 'Delete everything';
 }

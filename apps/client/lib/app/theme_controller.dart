@@ -17,8 +17,8 @@ class ThemeSettings {
 /// Holds the user's theme mode (system/light/dark) and accent colour, both
 /// persisted in [AppSettings]. Loaded once at startup.
 class ThemeController extends Notifier<ThemeSettings> {
-  static const _modeKey = 'ui.theme_mode';
-  static const _accentKey = 'ui.accent';
+  static const modeKey = 'ui.theme_mode';
+  static const accentKey = 'ui.accent';
 
   @override
   ThemeSettings build() =>
@@ -26,12 +26,12 @@ class ThemeController extends Notifier<ThemeSettings> {
 
   Future<void> load() async {
     final settings = ref.read(settingsRepositoryProvider);
-    final mode = switch (await settings.get(_modeKey)) {
+    final mode = switch (await settings.get(modeKey)) {
       'light' => ThemeMode.light,
       'dark' => ThemeMode.dark,
       _ => ThemeMode.system,
     };
-    final accentName = await settings.get(_accentKey);
+    final accentName = await settings.get(accentKey);
     final accent = AppAccent.values.firstWhere(
       (a) => a.name == accentName,
       orElse: () => AppAccent.green,
@@ -40,12 +40,12 @@ class ThemeController extends Notifier<ThemeSettings> {
   }
 
   Future<void> setMode(ThemeMode mode) async {
-    await ref.read(settingsRepositoryProvider).set(_modeKey, mode.name);
+    await ref.read(settingsRepositoryProvider).set(modeKey, mode.name);
     state = state.copyWith(mode: mode);
   }
 
   Future<void> setAccent(AppAccent accent) async {
-    await ref.read(settingsRepositoryProvider).set(_accentKey, accent.name);
+    await ref.read(settingsRepositoryProvider).set(accentKey, accent.name);
     state = state.copyWith(accent: accent);
   }
 }

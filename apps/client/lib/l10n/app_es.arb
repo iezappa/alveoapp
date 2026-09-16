@@ -312,5 +312,22 @@
   "recoveryImportFailed": "No se pudo restaurar la copia. La base local quedó vacía; probá con otro archivo de copia.",
   "recoveryResetConfirmTitle": "¿Restablecer la base de datos local?",
   "recoveryResetConfirmBody": "Todo lo guardado en este dispositivo se borra para siempre y la app arranca vacía. No se puede deshacer.",
-  "recoveryResetConfirmAction": "Restablecer"
+  "recoveryResetConfirmAction": "Restablecer",
+  "backupNoticeTitle": "Tus datos viven solo en este dispositivo",
+  "backupNoticeOnboarding": "No guardamos tus datos en nuestros servidores. Si desinstalás la app, perdés o reseteás el dispositivo o borrás los datos del navegador, se pierden. Exportá seguido desde Ajustes → Datos → Exportar copia y guardá el archivo en un lugar seguro.",
+  "backupNoticeAccept": "Entendido, voy a hacer copias",
+  "backupNoticeSettings": "Tus datos no se guardan en nuestros servidores. Exportá seguido y guardá el archivo fuera de este dispositivo.",
+  "backupReminderNever": "Todavía no hiciste una copia de tus datos.",
+  "backupReminderOverdue": "Tu última copia fue hace {days} días.",
+  "@backupReminderOverdue": {"placeholders": {"days": {"type": "int"}}},
+  "backupReminderAction": "Exportar",
+  "backupReminderDismiss": "Ahora no",
+  "eraseAllData": "Borrar todos mis datos",
+  "eraseAllTitle": "¿Borrar todos tus datos?",
+  "eraseAllBody": "Se borra todo lo registrado en este dispositivo, junto con tu PIN, tu perfil, tu plan de seguridad y tus ajustes; solo se conservan el idioma y la apariencia. Después la app vuelve a empezar desde la bienvenida. No se puede deshacer y no existe ninguna copia en otro lado: exportá antes si podrías querer algo de vuelta.",
+  "eraseAllConfirmWord": "BORRAR",
+  "eraseAllTypeToConfirm": "Escribí {word} para confirmar",
+  "@eraseAllTypeToConfirm": {"placeholders": {"word": {"type": "String"}}},
+  "eraseAllExportFirst": "Exportar antes",
+  "eraseAllAction": "Borrar todo"
 }
