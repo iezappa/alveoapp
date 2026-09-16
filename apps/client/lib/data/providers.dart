@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'export/export_service.dart';
 import 'local/database.dart';
+import 'local/database_health.dart';
+import 'local/storage_durability.dart';
 import 'obsidian/obsidian_service.dart';
 import 'repositories/journal_repository.dart';
 import 'repositories/link_repository.dart';
@@ -108,4 +110,25 @@ final medicationRepositoryProvider = Provider<MedicationRepository>(
 
 final exportServiceProvider = Provider<ExportService>(
   (ref) => ExportService(ref.watch(appDatabaseProvider)),
+);
+
+/// What the storage underneath the database can be trusted with.
+///
+/// Durable until told otherwise: native platforms never report, and a web
+/// build that has not opened yet has nothing to warn about.
+class StorageDurabilityController extends Notifier<StorageDurability> {
+  @override
+  StorageDurability build() => StorageDurability.durable;
+
+  void report(StorageDurability durability) => state = durability;
+}
+
+final storageDurabilityProvider =
+    NotifierProvider<StorageDurabilityController, StorageDurability>(
+      StorageDurabilityController.new,
+    );
+
+/// Whether the database opened, checked once per app start.
+final databaseHealthProvider = FutureProvider<DatabaseHealth>(
+  (ref) => probeDatabase(ref.watch(appDatabaseProvider)),
 );

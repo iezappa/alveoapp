@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/providers.dart';
 import '../../domain/transfer/import_report.dart';
 import '../../l10n/app_localizations.dart';
-import '../export/file_saver.dart';
+import '../export/file_saver_provider.dart';
 import '../journal/journal_providers.dart';
 import '../sessions/session_providers.dart';
 import '../tasks/task_providers.dart';
@@ -23,7 +23,7 @@ Future<void> runExportBackup(BuildContext context, WidgetRef ref) async {
 
   final json = await ref.read(backupServiceProvider).exportToJson();
 
-  final saved = await saveTextFile(
+  final saved = await ref.read(textFileSaverProvider)(
     suggestedName: _backupName(),
     contents: json,
     typeLabel: l10n.backupFileType,

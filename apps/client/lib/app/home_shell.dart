@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/recovery/storage_warning_banner.dart';
 import '../l10n/app_localizations.dart';
 
 typedef _Dest = ({IconData icon, IconData selected, String label});
@@ -61,14 +62,14 @@ class HomeShell extends StatelessWidget {
               ],
             ),
             const VerticalDivider(width: 1),
-            Expanded(child: shell),
+            Expanded(child: _WithNotices(child: shell)),
           ],
         ),
       );
     }
 
     return Scaffold(
-      body: shell,
+      body: _WithNotices(child: shell),
       bottomNavigationBar: NavigationBar(
         selectedIndex: shell.currentIndex,
         onDestinationSelected: _select,
@@ -83,4 +84,23 @@ class HomeShell extends StatelessWidget {
       ),
     );
   }
+}
+
+/// The open tab, with any data-safety notice docked under it.
+///
+/// At the bottom rather than the top: the tabs bring their own app bars, and
+/// a banner pushed above them would sit between the status bar and the
+/// title. Down here it covers nothing and blocks nothing.
+class _WithNotices extends StatelessWidget {
+  const _WithNotices({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    children: [
+      Expanded(child: child),
+      const StorageWarningBanner(),
+    ],
+  );
 }

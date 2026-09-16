@@ -65,7 +65,15 @@ class BackupService {
     return const JsonEncoder.withIndent('  ').convert(bundle);
   }
 
-  Future<ImportReport> importFromJson(String source) async {
+  /// Parses [source] and checks it is a backup this build can read, without
+  /// touching any database. Throws [ImportException] otherwise.
+  ///
+  /// Recovery runs this before deleting a broken store, so picking the wrong
+  /// file leaves the device exactly as it was.
+  static Map<String, dynamic> checkBackup(
+    String source, {
+    int supportedSchemaVersion = AppDatabase.currentSchemaVersion,
+  }) {
     final Map<String, dynamic> bundle;
     try {
       bundle = jsonDecode(source) as Map<String, dynamic>;
@@ -77,11 +85,19 @@ class BackupService {
       throw const ImportException('This is not an Alveo backup file.');
     }
     final fileSchema = bundle['schemaVersion'];
-    if (fileSchema is int && fileSchema > _db.schemaVersion) {
+    if (fileSchema is int && fileSchema > supportedSchemaVersion) {
       throw const ImportException(
         'This backup was made by a newer version of the app.',
       );
     }
+    return bundle;
+  }
+
+  Future<ImportReport> importFromJson(String source) async {
+    final bundle = checkBackup(
+      source,
+      supportedSchemaVersion: _db.schemaVersion,
+    );
 
     final data = ((bundle['data'] as Map?) ?? const {}).cast<String, dynamic>();
     List<Map<String, dynamic>> rows(String key) =>
