@@ -79,6 +79,9 @@ void main() {
     await tester.tap(find.text('Export now'));
     await tester.runAsync(() => Future<void>.delayed(Duration.zero));
     await tester.pumpAndSettle();
+    await tester.tap(find.text('Continue')); // the unencrypted-file warning
+    await tester.runAsync(() => Future<void>.delayed(Duration.zero));
+    await tester.pumpAndSettle();
 
     expect(savedContents, contains('alveo-export'));
   });

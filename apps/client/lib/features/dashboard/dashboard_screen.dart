@@ -15,6 +15,7 @@ import '../../l10n/app_localizations.dart';
 import '../insights/sparkline.dart';
 import '../shared/name_dialog.dart';
 import '../shared/tutorial_dialog.dart';
+import '../safety/disclaimer_dialog.dart';
 import '../transfer/backup_notice_dialog.dart';
 import 'dashboard_providers.dart';
 
@@ -32,15 +33,21 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   /// dialog is still open.
   bool _launchFlowScheduled = false;
 
-  /// Runs once per launch when something is still owed: on first launch ask
+  /// Runs once per launch when something is still owed: the care disclaimer
+  /// comes before anything else; on first launch ask
   /// for a name (if none) and walk through the tutorial; then, for everyone,
   /// any notice not yet accepted — which is how people onboarded before a
   /// notice existed see it exactly once.
   Future<void> _runLaunchFlow({
+    required bool needsDisclaimer,
     required bool firstRun,
     required bool needsName,
     required bool needsBackupNotice,
   }) async {
+    if (needsDisclaimer) {
+      await showDisclaimerDialog(context);
+      if (!mounted) return;
+    }
     if (firstRun) {
       if (needsName) {
         await promptForName(context, ref, dismissible: false);
@@ -68,21 +75,28 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         .watch(backupNoticeAcceptedProvider)
         .asData
         ?.value;
+    final disclaimerAccepted = ref
+        .watch(disclaimerAcceptedProvider)
+        .asData
+        ?.value;
     final firstRunEnabled = ref.watch(firstRunFlowEnabledProvider);
 
     if (firstRunEnabled &&
         nameLoaded &&
         tutorialSeen != null &&
         backupNoticeAccepted != null &&
-        (!tutorialSeen || !backupNoticeAccepted) &&
+        disclaimerAccepted != null &&
+        (!tutorialSeen || !backupNoticeAccepted || !disclaimerAccepted) &&
         !_launchFlowScheduled) {
       _launchFlowScheduled = true;
       final firstRun = !tutorialSeen;
       final needsName = name == null;
       final needsBackupNotice = !backupNoticeAccepted;
+      final needsDisclaimer = !disclaimerAccepted;
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
         _runLaunchFlow(
+          needsDisclaimer: needsDisclaimer,
           firstRun: firstRun,
           needsName: needsName,
           needsBackupNotice: needsBackupNotice,

@@ -5,6 +5,7 @@ import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/emotion_labels.dart';
 import 'file_saver.dart';
+import 'sensitive_export_warning.dart';
 
 String _fileName(DateTime day) =>
     '${day.year.toString().padLeft(4, '0')}-'
@@ -32,6 +33,8 @@ Future<void> runDailyExport(BuildContext context, WidgetRef ref) async {
     messenger.showSnackBar(SnackBar(content: Text(l10n.exportNothing)));
     return;
   }
+
+  if (!context.mounted || !await confirmSensitiveExport(context, ref)) return;
 
   final markdown = await service.buildDailyMarkdown(
     day,

@@ -102,6 +102,8 @@ void main() {
 
     await tester.tap(find.text('Export'));
     await settle(tester);
+    await tester.tap(find.text('Continue')); // the unencrypted-file warning
+    await settle(tester);
 
     expect(saves, 1);
     expect(await BackupHistory(db).lastExportAt(), now);

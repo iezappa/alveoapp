@@ -56,7 +56,7 @@ class SessionPreview extends ConsumerWidget {
                 ),
               ),
               IconButton(
-                onPressed: () => runSessionPdfExport(context, session),
+                onPressed: () => runSessionPdfExport(context, ref, session),
                 icon: const Icon(Icons.picture_as_pdf_outlined),
                 tooltip: l10n.sessionExportPdf,
               ),

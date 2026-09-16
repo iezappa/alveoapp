@@ -993,4 +993,51 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eraseAllAction => 'Borrar todo';
+
+  @override
+  String get disclaimerAcceptTitle => 'Antes de empezar';
+
+  @override
+  String get disclaimerAcceptBody =>
+      'Alveo es una herramienta personal, no un dispositivo médico. No diagnostica ni trata, y no reemplaza la atención profesional. En una emergencia, llamá al 911.';
+
+  @override
+  String get disclaimerAcceptAction => 'Entiendo';
+
+  @override
+  String get crisisTitle => 'Si estás en crisis';
+
+  @override
+  String get crisisIntro =>
+      'No tenés que atravesarlo sin ayuda. En Argentina, el Centro de Asistencia al Suicida atiende estas líneas:';
+
+  @override
+  String get crisisLine135 => 'Línea 135 (gratuita desde CABA y GBA)';
+
+  @override
+  String get crisisLineNational => '(011) 5275-1135 (desde todo el país)';
+
+  @override
+  String get crisisEmergency => '911 — emergencias';
+
+  @override
+  String get crisisCallError =>
+      'No se pudo iniciar la llamada. Marcá el número vos.';
+
+  @override
+  String get sensitiveExportTitle => 'Guardá este archivo en privado';
+
+  @override
+  String get sensitiveExportBody =>
+      'Este archivo contiene tus notas de terapia sin cifrar. Guardalo en un lugar privado.';
+
+  @override
+  String get sensitiveExportMute => 'No volver a mostrar en esta sesión';
+
+  @override
+  String get sensitiveExportContinue => 'Continuar';
+
+  @override
+  String get pinWebCaveat =>
+      'En la versión web, el PIN disuade el acceso casual pero no protege frente a alguien con acceso a este navegador o dispositivo.';
 }

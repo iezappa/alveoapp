@@ -384,5 +384,19 @@
   "eraseAllTypeToConfirm": "Type {word} to confirm",
   "@eraseAllTypeToConfirm": {"placeholders": {"word": {"type": "String"}}},
   "eraseAllExportFirst": "Export first",
-  "eraseAllAction": "Delete everything"
+  "eraseAllAction": "Delete everything",
+  "disclaimerAcceptTitle": "Before you start",
+  "disclaimerAcceptBody": "Alveo is a personal tool, not a medical device. It does not diagnose or treat, and it is not a substitute for professional care. In an emergency, call 911.",
+  "disclaimerAcceptAction": "I understand",
+  "crisisTitle": "If you are in crisis",
+  "crisisIntro": "You don't have to go through it without help. In Argentina, the Centro de Asistencia al Suicida answers these lines:",
+  "crisisLine135": "Línea 135 (free from Buenos Aires City and Greater Buenos Aires)",
+  "crisisLineNational": "(011) 5275-1135 (from anywhere in Argentina)",
+  "crisisEmergency": "911 — emergencies",
+  "crisisCallError": "Couldn't start a call. Dial the number yourself.",
+  "sensitiveExportTitle": "Keep this file private",
+  "sensitiveExportBody": "This file contains your therapy notes unencrypted. Store it somewhere private.",
+  "sensitiveExportMute": "Don't show again this session",
+  "sensitiveExportContinue": "Continue",
+  "pinWebCaveat": "On the web version, the PIN deters casual access but does not protect against someone with access to this browser or device."
 }

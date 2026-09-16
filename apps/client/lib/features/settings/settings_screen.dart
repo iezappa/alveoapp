@@ -1,8 +1,8 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/lock_controller.dart';
+import '../../app/platform.dart';
 import '../../app/locale_controller.dart';
 import '../../app/theme.dart';
 import '../../app/theme_controller.dart';
@@ -11,6 +11,7 @@ import '../../app/user_profile_controller.dart';
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../obsidian/obsidian_actions.dart';
+import '../safety/crisis_resources.dart';
 import '../security/pin_dialogs.dart';
 import '../shared/name_dialog.dart';
 import '../shared/support_actions.dart';
@@ -31,6 +32,7 @@ class SettingsScreen extends ConsumerWidget {
     final theme = ref.watch(themeControllerProvider);
     final vault = ref.watch(obsidianVaultProvider);
     final name = ref.watch(userProfileControllerProvider).asData?.value;
+    final isWeb = ref.watch(isWebProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.navSettings)),
@@ -117,6 +119,18 @@ class SettingsScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 28),
               SectionLabel(l10n.pinSectionTitle),
+              // On the web the PIN is a deterrent, not protection: say so
+              // where it is set, not in a document nobody opens.
+              if (isWeb) ...[
+                Text(
+                  l10n.pinWebCaveat,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    height: 1.45,
+                  ),
+                ),
+                const SizedBox(height: 4),
+              ],
               hasPin.when(
                 loading: () => const LinearProgressIndicator(),
                 error: (e, _) => Text('$e'),
@@ -184,7 +198,7 @@ class SettingsScreen extends ConsumerWidget {
               ),
               const EraseAllDataTile(),
               // Obsidian sync needs local filesystem access — desktop only.
-              if (!kIsWeb) ...[
+              if (!isWeb) ...[
                 const SizedBox(height: 28),
                 SectionLabel(l10n.obsidianSection),
                 ListTile(
@@ -225,6 +239,8 @@ class SettingsScreen extends ConsumerWidget {
                   height: 1.45,
                 ),
               ),
+              const SizedBox(height: 16),
+              const CrisisResourcesCard(),
               const SizedBox(height: 12),
             ],
           ),
@@ -236,7 +252,11 @@ class SettingsScreen extends ConsumerWidget {
   Future<void> _setPin(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
-    final pin = await promptNewPin(context, l10n.pinSet);
+    final pin = await promptNewPin(
+      context,
+      l10n.pinSet,
+      note: ref.read(isWebProvider) ? l10n.pinWebCaveat : null,
+    );
     if (pin == null) return;
 
     await ref.read(pinServiceProvider).setPin(pin);
@@ -257,7 +277,11 @@ class SettingsScreen extends ConsumerWidget {
     }
     if (!context.mounted) return;
 
-    final next = await promptNewPin(context, l10n.pinChange);
+    final next = await promptNewPin(
+      context,
+      l10n.pinChange,
+      note: ref.read(isWebProvider) ? l10n.pinWebCaveat : null,
+    );
     if (next == null) return;
 
     await pinService.setPin(next);

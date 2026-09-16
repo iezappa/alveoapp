@@ -7,6 +7,7 @@ import '../../data/providers.dart';
 import '../../domain/transfer/import_report.dart';
 import '../../l10n/app_localizations.dart';
 import '../export/file_saver_provider.dart';
+import '../export/sensitive_export_warning.dart';
 import '../journal/journal_providers.dart';
 import '../sessions/session_providers.dart';
 import '../tasks/task_providers.dart';
@@ -22,6 +23,8 @@ String _backupName() {
 Future<void> runExportBackup(BuildContext context, WidgetRef ref) async {
   final l10n = AppLocalizations.of(context);
   final messenger = ScaffoldMessenger.of(context);
+
+  if (!await confirmSensitiveExport(context, ref)) return;
 
   final json = await ref.read(backupServiceProvider).exportToJson();
 

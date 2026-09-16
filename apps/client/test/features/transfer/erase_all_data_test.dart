@@ -103,6 +103,8 @@ void main() {
 
     await tester.tap(find.text('Export first'));
     await settle(tester);
+    await tester.tap(find.text('Continue')); // the unencrypted-file warning
+    await settle(tester);
 
     expect(saves, 1);
   });

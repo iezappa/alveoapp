@@ -11,7 +11,11 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   late AppDatabase db;
 
-  setUp(() => db = AppDatabase.forTesting());
+  setUp(() async {
+    db = AppDatabase.forTesting();
+    // The care disclaimer comes first; these tests are about what follows.
+    await SettingsRepository(db).set(disclaimerAcceptedSettingKey, 'true');
+  });
   tearDown(() => db.close());
 
   Future<void> pumpApp(WidgetTester tester) async {

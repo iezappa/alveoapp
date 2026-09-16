@@ -67,6 +67,16 @@ class AcknowledgementController extends Notifier<AsyncValue<bool>> {
   }
 }
 
+/// Settings key recording that the user accepted the care disclaimer.
+const disclaimerAcceptedSettingKey = 'onboarding.disclaimer_accepted';
+
+/// Whether the user accepted that the app is no substitute for professional
+/// care.
+final disclaimerAcceptedProvider =
+    NotifierProvider<AcknowledgementController, AsyncValue<bool>>(
+      () => AcknowledgementController(disclaimerAcceptedSettingKey),
+    );
+
 /// Whether the user accepted that their data lives only on this device.
 final backupNoticeAcceptedProvider =
     NotifierProvider<AcknowledgementController, AsyncValue<bool>>(

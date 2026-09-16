@@ -15,11 +15,16 @@ Future<String?> promptExistingPin(BuildContext context, String title) {
 }
 
 /// Prompts for a new PIN plus confirmation, validating length and match.
-/// Returns the new PIN, or null if cancelled.
-Future<String?> promptNewPin(BuildContext context, String title) {
+/// Returns the new PIN, or null if cancelled. [note] is shown under the
+/// fields (the web caveat).
+Future<String?> promptNewPin(
+  BuildContext context,
+  String title, {
+  String? note,
+}) {
   return showDialog<String>(
     context: context,
-    builder: (_) => _NewPinDialog(title: title),
+    builder: (_) => _NewPinDialog(title: title, note: note),
   );
 }
 
@@ -74,9 +79,10 @@ class _SinglePinDialogState extends State<_SinglePinDialog> {
 }
 
 class _NewPinDialog extends StatefulWidget {
-  const _NewPinDialog({required this.title});
+  const _NewPinDialog({required this.title, this.note});
 
   final String title;
+  final String? note;
 
   @override
   State<_NewPinDialog> createState() => _NewPinDialogState();
@@ -140,6 +146,15 @@ class _NewPinDialogState extends State<_NewPinDialog> {
             ),
             onSubmitted: (_) => _submit(),
           ),
+          if (widget.note case final note?) ...[
+            const SizedBox(height: 16),
+            Text(
+              note,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ],
         ],
       ),
       actions: [

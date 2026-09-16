@@ -7,6 +7,7 @@ import '../../app/ui.dart';
 import '../../data/providers.dart';
 import '../../domain/safety/safety_plan.dart';
 import '../../l10n/app_localizations.dart';
+import 'crisis_resources.dart';
 import 'safety_plan_providers.dart';
 
 class SafetyPlanScreen extends ConsumerStatefulWidget {
@@ -131,6 +132,10 @@ class _SafetyPlanScreenState extends ConsumerState<SafetyPlanScreen> {
           child: ListView(
             padding: const EdgeInsets.all(kGutter),
             children: [
+              // Who to call comes before the plan: whoever opens this screen
+              // in a bad moment should not have to scroll to find it.
+              const CrisisResourcesCard(),
+              const SizedBox(height: 20),
               _section(l10n.safetyWarningSigns, _warningSigns),
               _section(l10n.safetyCoping, _coping),
               _section(l10n.safetyDistractions, _distractions),

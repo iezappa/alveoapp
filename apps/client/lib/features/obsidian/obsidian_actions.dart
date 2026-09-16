@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/providers.dart';
 import '../../domain/obsidian/obsidian_report.dart';
 import '../../l10n/app_localizations.dart';
+import '../export/sensitive_export_warning.dart';
 import '../journal/journal_providers.dart';
 
 /// Lets the user choose the vault folder and stores it.
@@ -26,6 +27,8 @@ Future<void> runObsidianExport(BuildContext context, WidgetRef ref) async {
     messenger.showSnackBar(SnackBar(content: Text(l10n.obsidianNoVault)));
     return;
   }
+
+  if (!context.mounted || !await confirmSensitiveExport(context, ref)) return;
 
   try {
     final report = await ref.read(obsidianServiceProvider).exportJournal(vault);

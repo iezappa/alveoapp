@@ -24,6 +24,13 @@ Future<void> _pumpApp(
   await tester.pumpAndSettle();
 }
 
+/// The care disclaimer opens the first launch, before the name prompt.
+Future<void> _acceptDisclaimer(WidgetTester tester) async {
+  await tester.tap(find.text('I understand'));
+  await tester.runAsync(() => Future<void>.delayed(Duration.zero));
+  await tester.pumpAndSettle();
+}
+
 void main() {
   testWidgets('is the start screen and invites a breath', (tester) async {
     final db = AppDatabase.forTesting();
@@ -99,6 +106,7 @@ void main() {
     addTearDown(db.close);
 
     await _pumpApp(tester, db, firstRun: true);
+    await _acceptDisclaimer(tester);
 
     expect(find.text("What's your name?"), findsOneWidget);
 
@@ -127,6 +135,7 @@ void main() {
     addTearDown(db.close);
 
     await _pumpApp(tester, db, firstRun: true);
+    await _acceptDisclaimer(tester);
     await tester.enterText(find.byType(TextField), 'Alex');
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();

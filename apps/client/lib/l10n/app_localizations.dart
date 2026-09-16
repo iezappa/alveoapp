@@ -1939,6 +1939,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete everything'**
   String get eraseAllAction;
+
+  /// No description provided for @disclaimerAcceptTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Before you start'**
+  String get disclaimerAcceptTitle;
+
+  /// No description provided for @disclaimerAcceptBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Alveo is a personal tool, not a medical device. It does not diagnose or treat, and it is not a substitute for professional care. In an emergency, call 911.'**
+  String get disclaimerAcceptBody;
+
+  /// No description provided for @disclaimerAcceptAction.
+  ///
+  /// In en, this message translates to:
+  /// **'I understand'**
+  String get disclaimerAcceptAction;
+
+  /// No description provided for @crisisTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'If you are in crisis'**
+  String get crisisTitle;
+
+  /// No description provided for @crisisIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have to go through it without help. In Argentina, the Centro de Asistencia al Suicida answers these lines:'**
+  String get crisisIntro;
+
+  /// No description provided for @crisisLine135.
+  ///
+  /// In en, this message translates to:
+  /// **'Línea 135 (free from Buenos Aires City and Greater Buenos Aires)'**
+  String get crisisLine135;
+
+  /// No description provided for @crisisLineNational.
+  ///
+  /// In en, this message translates to:
+  /// **'(011) 5275-1135 (from anywhere in Argentina)'**
+  String get crisisLineNational;
+
+  /// No description provided for @crisisEmergency.
+  ///
+  /// In en, this message translates to:
+  /// **'911 — emergencies'**
+  String get crisisEmergency;
+
+  /// No description provided for @crisisCallError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t start a call. Dial the number yourself.'**
+  String get crisisCallError;
+
+  /// No description provided for @sensitiveExportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep this file private'**
+  String get sensitiveExportTitle;
+
+  /// No description provided for @sensitiveExportBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This file contains your therapy notes unencrypted. Store it somewhere private.'**
+  String get sensitiveExportBody;
+
+  /// No description provided for @sensitiveExportMute.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t show again this session'**
+  String get sensitiveExportMute;
+
+  /// No description provided for @sensitiveExportContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get sensitiveExportContinue;
+
+  /// No description provided for @pinWebCaveat.
+  ///
+  /// In en, this message translates to:
+  /// **'On the web version, the PIN deters casual access but does not protect against someone with access to this browser or device.'**
+  String get pinWebCaveat;
 }
 
 class _AppLocalizationsDelegate

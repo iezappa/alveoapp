@@ -22,12 +22,15 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   setUp(() async {
-    // The tutorial is stored in the database rather than in preferences, so
-    // it is marked seen there before the app boots. Otherwise the first-run
-    // flow opens over the dashboard and this drives the wizard instead of
-    // the app.
+    // The tutorial and the one-time notices are stored in the database rather
+    // than in preferences, so they are marked done there before the app
+    // boots. Otherwise the launch flow opens over the dashboard and this
+    // drives the dialogs instead of the app.
     final database = AppDatabase.connect();
-    await SettingsRepository(database).set(tutorialSeenSettingKey, 'true');
+    final settings = SettingsRepository(database);
+    await settings.set(tutorialSeenSettingKey, 'true');
+    await settings.set(disclaimerAcceptedSettingKey, 'true');
+    await settings.set(backupNoticeAcceptedSettingKey, 'true');
     await database.close();
   });
 
@@ -42,13 +45,20 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    // Awaited: main() loads the database and every controller before it
-    // calls runApp, so without this the first pump finds an empty tree.
+    // main() hands the loading to AppRestartHost, which opens the database
+    // and loads every controller before it builds the app. That is real I/O,
+    // which pumping frames alone does not wait for.
     await app.main();
-    await tester.pumpAndSettle();
+    for (var i = 0; i < 100; i++) {
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 50)),
+      );
+      await tester.pumpAndSettle();
+      if (find.byType(NavigationDestination).evaluate().isNotEmpty) break;
+    }
 
     // Getting this far already covers what a widget test cannot: the database
-    // opened, every controller loaded before the first frame, and the router
+    // opened, every controller loaded before the app was built, and the router
     // resolved its initial route.
     expect(find.byType(Scaffold), findsWidgets);
 

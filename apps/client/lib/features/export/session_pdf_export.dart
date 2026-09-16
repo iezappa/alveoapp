@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../data/export/pdf_export.dart';
 import '../../data/local/database.dart';
 import '../../l10n/app_localizations.dart';
 import 'file_saver.dart';
+import 'sensitive_export_warning.dart';
 
 String _fileName(DateTime when) =>
     'session-'
@@ -14,10 +16,16 @@ String _fileName(DateTime when) =>
 
 /// Builds a PDF for [session] and writes it to a file the user chooses.
 /// A no-op if they cancel the save dialog.
-Future<void> runSessionPdfExport(BuildContext context, Session session) async {
+Future<void> runSessionPdfExport(
+  BuildContext context,
+  WidgetRef ref,
+  Session session,
+) async {
   final l10n = AppLocalizations.of(context);
   final messenger = ScaffoldMessenger.of(context);
   final locale = Localizations.localeOf(context).toString();
+
+  if (!await confirmSensitiveExport(context, ref)) return;
 
   final bytes = await buildSessionPdf(
     session,

@@ -989,4 +989,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eraseAllAction => 'Delete everything';
+
+  @override
+  String get disclaimerAcceptTitle => 'Before you start';
+
+  @override
+  String get disclaimerAcceptBody =>
+      'Alveo is a personal tool, not a medical device. It does not diagnose or treat, and it is not a substitute for professional care. In an emergency, call 911.';
+
+  @override
+  String get disclaimerAcceptAction => 'I understand';
+
+  @override
+  String get crisisTitle => 'If you are in crisis';
+
+  @override
+  String get crisisIntro =>
+      'You don\'t have to go through it without help. In Argentina, the Centro de Asistencia al Suicida answers these lines:';
+
+  @override
+  String get crisisLine135 =>
+      'Línea 135 (free from Buenos Aires City and Greater Buenos Aires)';
+
+  @override
+  String get crisisLineNational =>
+      '(011) 5275-1135 (from anywhere in Argentina)';
+
+  @override
+  String get crisisEmergency => '911 — emergencies';
+
+  @override
+  String get crisisCallError =>
+      'Couldn\'t start a call. Dial the number yourself.';
+
+  @override
+  String get sensitiveExportTitle => 'Keep this file private';
+
+  @override
+  String get sensitiveExportBody =>
+      'This file contains your therapy notes unencrypted. Store it somewhere private.';
+
+  @override
+  String get sensitiveExportMute => 'Don\'t show again this session';
+
+  @override
+  String get sensitiveExportContinue => 'Continue';
+
+  @override
+  String get pinWebCaveat =>
+      'On the web version, the PIN deters casual access but does not protect against someone with access to this browser or device.';
 }
