@@ -405,5 +405,9 @@
   "openSourceLicenses": "Licenses",
   "profileSection": "Profile",
   "securitySection": "Security",
-  "aboutSection": "About"
+  "aboutSection": "About",
+  "exportCsv": "Export as spreadsheet (CSV)",
+  "exportCsvSubtitle": "For reading. It cannot be imported back — use the backup for that.",
+  "csvFileType": "CSV spreadsheet",
+  "csvSaved": "Spreadsheet saved"
 }

@@ -216,6 +216,13 @@ class SettingsScreen extends ConsumerWidget {
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.table_chart_outlined),
+                title: Text(l10n.exportCsv),
+                subtitle: Text(l10n.exportCsvSubtitle),
+                onTap: () => runExportCsv(context, ref),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.download_outlined),
                 title: Text(l10n.importBackup),
                 onTap: () => runImportBackup(context, ref),

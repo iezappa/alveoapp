@@ -2065,6 +2065,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'About'**
   String get aboutSection;
+
+  /// No description provided for @exportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export as spreadsheet (CSV)'**
+  String get exportCsv;
+
+  /// No description provided for @exportCsvSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'For reading. It cannot be imported back — use the backup for that.'**
+  String get exportCsvSubtitle;
+
+  /// No description provided for @csvFileType.
+  ///
+  /// In en, this message translates to:
+  /// **'CSV spreadsheet'**
+  String get csvFileType;
+
+  /// No description provided for @csvSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Spreadsheet saved'**
+  String get csvSaved;
 }
 
 class _AppLocalizationsDelegate

@@ -1059,4 +1059,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get aboutSection => 'About';
+
+  @override
+  String get exportCsv => 'Export as spreadsheet (CSV)';
+
+  @override
+  String get exportCsvSubtitle =>
+      'For reading. It cannot be imported back — use the backup for that.';
+
+  @override
+  String get csvFileType => 'CSV spreadsheet';
+
+  @override
+  String get csvSaved => 'Spreadsheet saved';
 }

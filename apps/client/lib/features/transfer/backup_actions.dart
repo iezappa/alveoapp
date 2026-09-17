@@ -19,6 +19,28 @@ String _backupName() {
   return 'alveo-backup-${now.year}-${two(now.month)}-${two(now.day)}.json';
 }
 
+/// Writes a spreadsheet-readable CSV of every record. Not a backup: it
+/// cannot be imported, so it does not count towards the backup reminder.
+Future<void> runExportCsv(BuildContext context, WidgetRef ref) async {
+  final l10n = AppLocalizations.of(context);
+  final messenger = ScaffoldMessenger.of(context);
+
+  if (!await confirmSensitiveExport(context, ref)) return;
+
+  final csv = await ref.read(csvExportServiceProvider).exportToCsv();
+  final now = DateTime.now();
+  String two(int n) => n.toString().padLeft(2, '0');
+  final saved = await ref.read(textFileSaverProvider)(
+    suggestedName:
+        'alveo-export-${now.year}-${two(now.month)}-${two(now.day)}.csv',
+    contents: csv,
+    typeLabel: l10n.csvFileType,
+    extensions: const ['csv'],
+  );
+  if (saved == null) return;
+  messenger.showSnackBar(SnackBar(content: Text(l10n.csvSaved)));
+}
+
 /// Writes a full-database backup to a file the user chooses.
 Future<void> runExportBackup(BuildContext context, WidgetRef ref) async {
   final l10n = AppLocalizations.of(context);

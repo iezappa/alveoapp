@@ -1061,4 +1061,17 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get aboutSection => 'Acerca de';
+
+  @override
+  String get exportCsv => 'Exportar como planilla (CSV)';
+
+  @override
+  String get exportCsvSubtitle =>
+      'Para leer. No se puede volver a importar: para eso está la copia.';
+
+  @override
+  String get csvFileType => 'Planilla CSV';
+
+  @override
+  String get csvSaved => 'Planilla guardada';
 }
