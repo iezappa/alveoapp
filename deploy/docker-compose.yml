@@ -1,0 +1,62 @@
+# docker-compose for ZimaOS / CasaOS ("App Store" -> "+" -> "Install a
+# customized app" -> Import). Filled in for Alveo: the image is
+# ghcr.io/iezappa/alveoapp and the app is published on port 8083. Change the
+# port if something else on the server already uses it.
+#
+# Field names of the x-casaos blocks follow the apps published in
+# IceWhaleTech/CasaOS-AppStore (e.g. Apps/Syncthing/docker-compose.yml).
+#
+# No volumes on purpose: this container only SERVES the app files. Local-first
+# data lives in each user's browser/device storage (OPFS/IndexedDB), never on
+# this server. Recreating or updating the container loses nothing.
+
+name: alveo
+services:
+  alveo:
+    image: ghcr.io/iezappa/alveoapp:latest
+    container_name: alveo
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 8080
+        published: "8083"
+        protocol: tcp
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web UI port
+            es_ES: Puerto de la interfaz web
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: alveo
+  author: Zeke Zappa Developments (iezappa)
+  developer: Zeke Zappa Developments (iezappa)
+  category: Health
+  icon: https://raw.githubusercontent.com/iezappa/alveoapp/master/apps/client/web/icons/Icon-512.png
+  tagline:
+    en_US: Personal therapy companion, kept on your own device
+    es_ES: Compañera personal de terapia, guardada en tu propio dispositivo
+  description:
+    en_US: |
+      Serves the web/PWA build of Alveo. This server only delivers the app:
+      check-ins, journal entries and session notes stay in each person's own
+      browser storage and never reach it. Two people using this server share
+      nothing. Back up from Settings -> Your data -> Export.
+    es_ES: |
+      Sirve la versión web/PWA de Alveo. Este servidor solo entrega la app:
+      los registros, el diario y las notas de sesión quedan en el navegador de
+      cada persona y nunca llegan hasta él. Dos personas que usen este servidor
+      no comparten nada. Respaldá desde Ajustes -> Tus datos -> Exportar.
+  title:
+    en_US: Alveo
+  index: /
+  port_map: "8083"
+  scheme: http
