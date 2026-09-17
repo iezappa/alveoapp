@@ -62,6 +62,13 @@ jobs:
           cp build/web/index.html build/web/404.html
           touch build/web/.nojekyll
 
+      # Our own service worker (§8.2): Flutter's only unregisters itself, so
+      # without this the PWA would not open offline. Last step that touches
+      # build/web — the manifest hashes every file that is there, and sw.js
+      # is registered relative to the base href, so its scope is /<repo>/.
+      - name: Generate the service worker
+        run: sh tool/generate_sw.sh build/web pubspec.yaml
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: apps/client/build/web
