@@ -19,3 +19,8 @@ build/
 
 # Windows metadata streams, from copying through the mount.
 *:Zone.Identifier
+
+# Android release signing. Never committed: see docs/SIGNING.md.
+key.properties
+*.jks
+*.keystore

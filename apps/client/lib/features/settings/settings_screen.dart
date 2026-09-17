@@ -34,6 +34,7 @@ class SettingsScreen extends ConsumerWidget {
     final vault = ref.watch(obsidianVaultProvider);
     final name = ref.watch(userProfileControllerProvider).asData?.value;
     final isWeb = ref.watch(isWebProvider);
+    final supportsObsidian = ref.watch(supportsObsidianProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.navSettings)),
@@ -153,8 +154,8 @@ class SettingsScreen extends ConsumerWidget {
                       ),
               ),
               Gap.vSection,
-              // Obsidian sync needs local filesystem access — desktop only.
-              if (!isWeb) ...[
+              // Obsidian sync needs a vault folder on the filesystem — desktop only.
+              if (supportsObsidian) ...[
                 SectionLabel(l10n.obsidianSection),
                 ListTile(
                   contentPadding: EdgeInsets.zero,

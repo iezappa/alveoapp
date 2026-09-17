@@ -61,7 +61,7 @@ void main() {
       'SUPPORT',
       'ABOUT',
     ]);
-  });
+  }, variant: TargetPlatformVariant.only(TargetPlatform.linux));
 
   testWidgets('omits the desktop-only Obsidian section on the web', (
     tester,
@@ -77,6 +77,13 @@ void main() {
       'ABOUT',
     ]);
   });
+
+  testWidgets('omits Obsidian on Android, where there is no vault folder', (
+    tester,
+  ) async {
+    await pumpSettings(tester);
+    expect(_labels(tester), isNot(contains('OBSIDIAN')));
+  }, variant: TargetPlatformVariant.only(TargetPlatform.android));
 
   testWidgets('keeps sections flat and every row against the gutter', (
     tester,
