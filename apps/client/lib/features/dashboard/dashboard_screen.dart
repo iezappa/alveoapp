@@ -15,6 +15,7 @@ import '../../l10n/app_localizations.dart';
 import '../insights/sparkline.dart';
 import '../shared/name_dialog.dart';
 import '../shared/tutorial_dialog.dart';
+import '../release_notes/release_notes_providers.dart';
 import '../safety/disclaimer_dialog.dart';
 import '../transfer/backup_notice_dialog.dart';
 import 'dashboard_providers.dart';
@@ -37,7 +38,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   /// comes before anything else; on first launch ask
   /// for a name (if none) and walk through the tutorial; then, for everyone,
   /// any notice not yet accepted — which is how people onboarded before a
-  /// notice existed see it exactly once.
+  /// notice existed see it exactly once; and finally what changed since the
+  /// version last opened.
   Future<void> _runLaunchFlow({
     required bool needsDisclaimer,
     required bool firstRun,
@@ -60,7 +62,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     }
     if (needsBackupNotice) {
       await showBackupNoticeDialog(context);
+      if (!mounted) return;
     }
+    // Last: someone owed a notice hears about that before what changed.
+    await announceReleaseNotes(context, ref);
   }
 
   @override
@@ -86,7 +91,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         tutorialSeen != null &&
         backupNoticeAccepted != null &&
         disclaimerAccepted != null &&
-        (!tutorialSeen || !backupNoticeAccepted || !disclaimerAccepted) &&
         !_launchFlowScheduled) {
       _launchFlowScheduled = true;
       final firstRun = !tutorialSeen;

@@ -90,6 +90,7 @@ flutter:
   assets:
     - assets/fonts/
     - assets/legal/
+    - assets/release_notes/
 
   fonts:
     - family: Lora

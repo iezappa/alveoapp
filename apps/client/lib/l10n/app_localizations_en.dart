@@ -1072,4 +1072,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get csvSaved => 'Spreadsheet saved';
+
+  @override
+  String whatsNewTitle(String version) {
+    return 'What\'s new in $version';
+  }
+
+  @override
+  String get whatsNewClose => 'Got it';
 }

@@ -2089,6 +2089,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Spreadsheet saved'**
   String get csvSaved;
+
+  /// No description provided for @whatsNewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s new in {version}'**
+  String whatsNewTitle(String version);
+
+  /// No description provided for @whatsNewClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get whatsNewClose;
 }
 
 class _AppLocalizationsDelegate

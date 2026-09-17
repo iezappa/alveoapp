@@ -354,5 +354,7 @@
   "exportCsv": "Exportar como planilla (CSV)",
   "exportCsvSubtitle": "Para leer. No se puede volver a importar: para eso está la copia.",
   "csvFileType": "Planilla CSV",
-  "csvSaved": "Planilla guardada"
+  "csvSaved": "Planilla guardada",
+  "whatsNewTitle": "Novedades en {version}",
+  "whatsNewClose": "Entendido"
 }

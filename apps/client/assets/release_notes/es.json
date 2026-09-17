@@ -1,0 +1,15 @@
+{
+  "releases": [
+    {
+      "version": "1.0.0",
+      "date": "2026-09-17",
+      "highlights": [
+        "Registros de ánimo, cuadernos de diario, sesiones, tareas, registros de pensamientos, medicación y plan de seguridad, guardados solo en este dispositivo.",
+        "Líneas de crisis en Acerca de y al principio del plan de seguridad.",
+        "Política de privacidad y términos de uso, legibles sin conexión.",
+        "Exportar una copia JSON o una planilla (CSV), e importar una copia.",
+        "Versión para Android, firmada con una clave de release fija."
+      ]
+    }
+  ]
+}

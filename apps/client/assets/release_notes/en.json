@@ -1,0 +1,15 @@
+{
+  "releases": [
+    {
+      "version": "1.0.0",
+      "date": "2026-09-17",
+      "highlights": [
+        "Check-ins, journal notebooks, sessions, tasks, thought records, medication and a safety plan — all kept only on this device.",
+        "Crisis lines in About and at the top of the safety plan.",
+        "Privacy policy and terms of use, readable without a connection.",
+        "Export a JSON backup or a spreadsheet (CSV), and import a backup back.",
+        "Android build, signed with a fixed release key."
+      ]
+    }
+  ]
+}

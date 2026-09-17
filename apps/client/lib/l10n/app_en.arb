@@ -409,5 +409,8 @@
   "exportCsv": "Export as spreadsheet (CSV)",
   "exportCsvSubtitle": "For reading. It cannot be imported back — use the backup for that.",
   "csvFileType": "CSV spreadsheet",
-  "csvSaved": "Spreadsheet saved"
+  "csvSaved": "Spreadsheet saved",
+  "whatsNewTitle": "What's new in {version}",
+  "@whatsNewTitle": {"placeholders": {"version": {"type": "String"}}},
+  "whatsNewClose": "Got it"
 }

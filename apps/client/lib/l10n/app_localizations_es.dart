@@ -1074,4 +1074,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get csvSaved => 'Planilla guardada';
+
+  @override
+  String whatsNewTitle(String version) {
+    return 'Novedades en $version';
+  }
+
+  @override
+  String get whatsNewClose => 'Entendido';
 }
