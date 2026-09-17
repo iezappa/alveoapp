@@ -9,7 +9,6 @@ import 'package:alveo/domain/release_notes/app_version.dart';
 import 'package:alveo/domain/update/update_info.dart';
 import 'package:alveo/features/update/update_providers.dart';
 import 'package:alveo/main.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 

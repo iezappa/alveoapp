@@ -11,6 +11,7 @@ class DriftMedicationRepository implements MedicationRepository {
   final AppDatabase _db;
   final Uuid _uuid;
 
+  @override
   Future<String> create({
     required String name,
     String? dose,
@@ -31,6 +32,7 @@ class DriftMedicationRepository implements MedicationRepository {
     return medId;
   }
 
+  @override
   Future<void> update({
     required String id,
     required String name,
@@ -50,6 +52,7 @@ class DriftMedicationRepository implements MedicationRepository {
   }
 
   /// Active meds first, then by name.
+  @override
   Future<List<Medication>> getAll() {
     return (_db.select(_db.medications)..orderBy([
           (t) => OrderingTerm.desc(t.active),
@@ -58,16 +61,19 @@ class DriftMedicationRepository implements MedicationRepository {
         .get();
   }
 
+  @override
   Future<Medication?> getById(String id) {
     return (_db.select(
       _db.medications,
     )..where((t) => t.id.equals(id))).getSingleOrNull();
   }
 
+  @override
   Future<void> delete(String id) {
     return (_db.delete(_db.medications)..where((t) => t.id.equals(id))).go();
   }
 
+  @override
   Future<void> logDose(String medicationId, {DateTime? takenAt}) {
     return _db
         .into(_db.medicationLogs)
@@ -81,6 +87,7 @@ class DriftMedicationRepository implements MedicationRepository {
   }
 
   /// Doses of [medicationId] recorded on [day] (date part only), newest first.
+  @override
   Future<List<MedicationLog>> dosesOn(String medicationId, DateTime day) {
     final start = DateTime(day.year, day.month, day.day);
     final end = start.add(const Duration(days: 1));
@@ -95,6 +102,7 @@ class DriftMedicationRepository implements MedicationRepository {
         .get();
   }
 
+  @override
   Future<void> deleteDose(String doseId) {
     return (_db.delete(
       _db.medicationLogs,

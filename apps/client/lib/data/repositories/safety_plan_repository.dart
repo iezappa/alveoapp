@@ -10,8 +10,10 @@ class DriftSafetyPlanRepository implements SafetyPlanRepository {
 
   static const _key = 'safety.plan';
 
+  @override
   Future<SafetyPlan> load() async =>
       SafetyPlan.decode(await _settings.get(_key));
 
+  @override
   Future<void> save(SafetyPlan plan) => _settings.set(_key, plan.encode());
 }

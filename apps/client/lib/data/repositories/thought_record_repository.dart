@@ -15,6 +15,7 @@ class DriftThoughtRecordRepository implements ThoughtRecordRepository {
   int? _clampPercent(int? v) => v?.clamp(0, 100);
   int? _clampIntensity(int? v) => v?.clamp(0, 10);
 
+  @override
   Future<String> create({
     required DateTime occurredAt,
     required String situation,
@@ -59,6 +60,7 @@ class DriftThoughtRecordRepository implements ThoughtRecordRepository {
     return recordId;
   }
 
+  @override
   Future<void> update({
     required String id,
     required DateTime occurredAt,
@@ -115,18 +117,21 @@ class DriftThoughtRecordRepository implements ThoughtRecordRepository {
   }
 
   /// All records, most recent situation first.
+  @override
   Future<List<ThoughtRecord>> getAll() {
     return (_db.select(
       _db.thoughtRecords,
     )..orderBy([(t) => OrderingTerm.desc(t.occurredAt)])).get();
   }
 
+  @override
   Future<ThoughtRecord?> getById(String id) {
     return (_db.select(
       _db.thoughtRecords,
     )..where((t) => t.id.equals(id))).getSingleOrNull();
   }
 
+  @override
   Future<Set<CognitiveDistortion>> distortionsFor(String recordId) async {
     final rows = await (_db.select(
       _db.thoughtRecordDistortions,
@@ -134,6 +139,7 @@ class DriftThoughtRecordRepository implements ThoughtRecordRepository {
     return rows.map((r) => r.distortion).toSet();
   }
 
+  @override
   Future<void> delete(String id) {
     return (_db.delete(_db.thoughtRecords)..where((t) => t.id.equals(id))).go();
   }

@@ -17,6 +17,7 @@ class DriftMoodRepository implements MoodRepository {
   ///
   /// Domain rules (mood/intensity range, known emotion keys) are enforced
   /// here before anything is written.
+  @override
   Future<String> add({
     required int mood,
     required DateTime occurredAt,
@@ -72,6 +73,7 @@ class DriftMoodRepository implements MoodRepository {
   }
 
   /// Rewrites the score, note, emotion set and tags of an existing check-in.
+  @override
   Future<void> update({
     required String id,
     required int mood,
@@ -123,6 +125,7 @@ class DriftMoodRepository implements MoodRepository {
   }
 
   /// Tags attached to [moodEntryId].
+  @override
   Future<List<Tag>> tagsFor(String moodEntryId) {
     final query = _db.select(_db.tags).join([
       innerJoin(
@@ -134,18 +137,21 @@ class DriftMoodRepository implements MoodRepository {
   }
 
   /// All mood entries, newest first.
+  @override
   Future<List<MoodEntry>> getAll() {
     return (_db.select(
       _db.moodEntries,
     )..orderBy([(t) => OrderingTerm.desc(t.occurredAt)])).get();
   }
 
+  @override
   Future<MoodEntry?> getById(String id) {
     return (_db.select(
       _db.moodEntries,
     )..where((t) => t.id.equals(id))).getSingleOrNull();
   }
 
+  @override
   Future<List<MoodEntryEmotion>> emotionsFor(String moodEntryId) {
     return (_db.select(
       _db.moodEntryEmotions,
@@ -153,6 +159,7 @@ class DriftMoodRepository implements MoodRepository {
   }
 
   /// Removes the entry and, by cascade, its emotions and tag links.
+  @override
   Future<void> delete(String id) {
     return (_db.delete(_db.moodEntries)..where((t) => t.id.equals(id))).go();
   }

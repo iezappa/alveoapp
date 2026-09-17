@@ -12,6 +12,7 @@ class DriftTaskRepository implements TaskRepository {
   final Uuid _uuid;
 
   /// Creates a task in [TaskStatus.pending] and returns its id.
+  @override
   Future<String> create({
     required String title,
     String? descriptionMarkdown,
@@ -39,6 +40,7 @@ class DriftTaskRepository implements TaskRepository {
 
   /// Changes only the status, keeping `completedAt` consistent (set when the
   /// task becomes done, cleared otherwise).
+  @override
   Future<void> setStatus(String id, TaskStatus status) {
     return (_db.update(_db.tasks)..where((t) => t.id.equals(id))).write(
       TasksCompanion(
@@ -50,6 +52,7 @@ class DriftTaskRepository implements TaskRepository {
   }
 
   /// Overwrites the editable fields of an existing task.
+  @override
   Future<void> update({
     required String id,
     required String title,
@@ -74,6 +77,7 @@ class DriftTaskRepository implements TaskRepository {
     );
   }
 
+  @override
   Future<Task?> getById(String id) {
     return (_db.select(
       _db.tasks,
@@ -81,6 +85,7 @@ class DriftTaskRepository implements TaskRepository {
   }
 
   /// Marks the task done and records how it went.
+  @override
   Future<void> close(
     String id, {
     required String closingNote,
@@ -97,12 +102,14 @@ class DriftTaskRepository implements TaskRepository {
   }
 
   /// All tasks, newest first.
+  @override
   Future<List<Task>> getAll() {
     return (_db.select(
       _db.tasks,
     )..orderBy([(t) => OrderingTerm.desc(t.createdAt)])).get();
   }
 
+  @override
   Future<void> delete(String id) {
     return (_db.delete(_db.tasks)..where((t) => t.id.equals(id))).go();
   }

@@ -11,6 +11,7 @@ class DriftTagRepository implements TagRepository {
   final AppDatabase _db;
   final Uuid _uuid;
 
+  @override
   Future<List<Tag>> all() {
     return (_db.select(
       _db.tags,
@@ -19,6 +20,7 @@ class DriftTagRepository implements TagRepository {
 
   /// The id of the tag named [name] (trimmed, case-insensitive match),
   /// creating it if it does not exist yet.
+  @override
   Future<String> findOrCreate(String name) async {
     final trimmed = name.trim();
     final existing =
@@ -35,6 +37,7 @@ class DriftTagRepository implements TagRepository {
   }
 
   /// All mood-entry ↔ tag links, for filtering by tag.
+  @override
   Future<List<MoodEntryTag>> moodTagLinks() =>
       _db.select(_db.moodEntryTags).get();
 }

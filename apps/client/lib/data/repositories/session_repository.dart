@@ -10,6 +10,7 @@ class DriftSessionRepository implements SessionRepository {
   final AppDatabase _db;
   final Uuid _uuid;
 
+  @override
   Future<String> create({
     required DateTime scheduledFor,
     String? agendaMarkdown,
@@ -34,6 +35,7 @@ class DriftSessionRepository implements SessionRepository {
     return sessionId;
   }
 
+  @override
   Future<void> update({
     required String id,
     required DateTime scheduledFor,
@@ -53,12 +55,14 @@ class DriftSessionRepository implements SessionRepository {
   }
 
   /// All sessions, soonest-scheduled last (chronological).
+  @override
   Future<List<Session>> getAll() {
     return (_db.select(
       _db.sessions,
     )..orderBy([(t) => OrderingTerm.asc(t.scheduledFor)])).get();
   }
 
+  @override
   Future<Session?> getById(String id) {
     return (_db.select(
       _db.sessions,
@@ -67,6 +71,7 @@ class DriftSessionRepository implements SessionRepository {
 
   /// The most recent session scheduled strictly before [when] — i.e. the one
   /// the next pre-session summary should cover activity since.
+  @override
   Future<Session?> previousBefore(DateTime when) {
     return (_db.select(_db.sessions)
           ..where((t) => t.scheduledFor.isSmallerThanValue(when))
@@ -76,6 +81,7 @@ class DriftSessionRepository implements SessionRepository {
   }
 
   /// The next session scheduled at or after [when].
+  @override
   Future<Session?> nextFrom(DateTime when) {
     return (_db.select(_db.sessions)
           ..where((t) => t.scheduledFor.isBiggerOrEqualValue(when))
@@ -84,6 +90,7 @@ class DriftSessionRepository implements SessionRepository {
         .getSingleOrNull();
   }
 
+  @override
   Future<void> delete(String id) {
     return (_db.delete(_db.sessions)..where((t) => t.id.equals(id))).go();
   }

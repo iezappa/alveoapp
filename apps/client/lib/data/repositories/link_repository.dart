@@ -12,6 +12,7 @@ class DriftLinkRepository implements LinkRepository {
 
   final AppDatabase _db;
 
+  @override
   Future<void> link(String sessionId, LinkTargetType type, String targetId) {
     return _db
         .into(_db.sessionLinks)
@@ -25,6 +26,7 @@ class DriftLinkRepository implements LinkRepository {
         );
   }
 
+  @override
   Future<void> unlink(String sessionId, LinkTargetType type, String targetId) {
     return (_db.delete(_db.sessionLinks)..where(
           (t) =>
@@ -37,6 +39,7 @@ class DriftLinkRepository implements LinkRepository {
 
   /// Drops every link that points at [targetId] of [type]. Call this when the
   /// target record itself is deleted.
+  @override
   Future<void> removeLinksTo(LinkTargetType type, String targetId) {
     return (_db.delete(_db.sessionLinks)..where(
           (t) => t.targetType.equalsValue(type) & t.targetId.equals(targetId),
@@ -46,6 +49,7 @@ class DriftLinkRepository implements LinkRepository {
 
   /// Items linked to [sessionId], resolved against live rows (dangling links
   /// skipped), newest first.
+  @override
   Future<List<LinkedItem>> linkedItems(String sessionId) async {
     final links = await (_db.select(
       _db.sessionLinks,
@@ -63,6 +67,7 @@ class DriftLinkRepository implements LinkRepository {
 
   /// Every task / journal / mood record not yet linked to [sessionId],
   /// newest first — the candidates for a new link.
+  @override
   Future<List<LinkedItem>> linkableItems(String sessionId) async {
     final links = await (_db.select(
       _db.sessionLinks,

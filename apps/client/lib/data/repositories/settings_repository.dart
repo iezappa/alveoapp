@@ -9,6 +9,7 @@ class DriftSettingsRepository implements SettingsRepository {
 
   final AppDatabase _db;
 
+  @override
   Future<String?> get(String key) async {
     final row = await (_db.select(
       _db.appSettings,
@@ -16,6 +17,7 @@ class DriftSettingsRepository implements SettingsRepository {
     return row?.value;
   }
 
+  @override
   Future<void> set(String key, String value) {
     return _db
         .into(_db.appSettings)
@@ -28,6 +30,7 @@ class DriftSettingsRepository implements SettingsRepository {
         );
   }
 
+  @override
   Future<void> remove(String key) {
     return (_db.delete(_db.appSettings)..where((t) => t.key.equals(key))).go();
   }

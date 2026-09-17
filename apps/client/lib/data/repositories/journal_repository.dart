@@ -15,6 +15,7 @@ class DriftJournalRepository implements JournalRepository {
 
   /// Creates a journal entry and returns its id. [bodyMarkdown] is stored
   /// verbatim — it is the source of truth for the daily `.md` export.
+  @override
   Future<String> create({
     required String bodyMarkdown,
     required DateTime entryDate,
@@ -81,6 +82,7 @@ class DriftJournalRepository implements JournalRepository {
 
   /// Rewrites the body and title and bumps `updatedAt`. A null [title]
   /// clears it.
+  @override
   Future<void> updateBody({
     required String id,
     required String bodyMarkdown,
@@ -99,12 +101,14 @@ class DriftJournalRepository implements JournalRepository {
   }
 
   /// All journal entries, newest first.
+  @override
   Future<List<JournalEntry>> getAll() {
     return (_db.select(
       _db.journalEntries,
     )..orderBy([(t) => OrderingTerm.desc(t.createdAt)])).get();
   }
 
+  @override
   Future<JournalEntry?> getById(String id) {
     return (_db.select(
       _db.journalEntries,
@@ -112,6 +116,7 @@ class DriftJournalRepository implements JournalRepository {
   }
 
   /// Entries in [section], newest first.
+  @override
   Future<List<JournalEntry>> getBySection(JournalSection section) {
     return (_db.select(_db.journalEntries)
           ..where((t) => t.section.equalsValue(section))
@@ -121,6 +126,7 @@ class DriftJournalRepository implements JournalRepository {
 
   /// The monthly-review entry filed under the month containing [month], if one
   /// exists. Only meaningful for [JournalSection.oneLiner].
+  @override
   Future<JournalEntry?> getMonthlyReview(DateTime month) {
     final start = DateTime(month.year, month.month);
     final end = DateTime(month.year, month.month + 1);
@@ -136,6 +142,7 @@ class DriftJournalRepository implements JournalRepository {
   }
 
   /// Entries filed under [day] (compared on the date part only).
+  @override
   Future<List<JournalEntry>> getForDay(DateTime day) {
     final start = DateTime(day.year, day.month, day.day);
     final end = start.add(const Duration(days: 1));
@@ -150,6 +157,7 @@ class DriftJournalRepository implements JournalRepository {
   }
 
   /// Emotions attached to [journalEntryId].
+  @override
   Future<List<JournalEntryEmotion>> emotionsFor(String journalEntryId) {
     return (_db.select(
       _db.journalEntryEmotions,
@@ -157,6 +165,7 @@ class DriftJournalRepository implements JournalRepository {
   }
 
   /// Replaces the whole emotion set of [id] with [emotions].
+  @override
   Future<void> replaceEmotions(String id, List<EmotionInput> emotions) async {
     for (final e in emotions) {
       validateEmotionKey(e.emotionKey);
@@ -181,6 +190,7 @@ class DriftJournalRepository implements JournalRepository {
     });
   }
 
+  @override
   Future<void> delete(String id) {
     return (_db.delete(_db.journalEntries)..where((t) => t.id.equals(id))).go();
   }
