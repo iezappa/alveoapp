@@ -4,6 +4,7 @@ import 'package:alveo/data/local/database.dart';
 import 'package:alveo/data/repositories/journal_repository.dart';
 import 'package:alveo/data/repositories/mood_repository.dart';
 import 'package:alveo/data/repositories/task_repository.dart';
+import 'package:alveo/domain/emotions/emotion_input.dart';
 
 void main() {
   late AppDatabase db;
@@ -16,8 +17,8 @@ void main() {
   tearDown(() => db.close());
 
   test('gathers only the requested day and renders it', () async {
-    final mood = MoodRepository(db);
-    final journal = JournalRepository(db);
+    final mood = DriftMoodRepository(db);
+    final journal = DriftJournalRepository(db);
 
     await mood.add(
       mood: 4,
@@ -44,7 +45,7 @@ void main() {
   });
 
   test('includes tasks created or completed that day', () async {
-    final tasks = TaskRepository(db);
+    final tasks = DriftTaskRepository(db);
     await tasks.create(
       title: 'made today',
       createdAt: DateTime(2026, 8, 27, 8),

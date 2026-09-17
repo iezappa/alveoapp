@@ -46,7 +46,7 @@ void main() {
     // Back on the dashboard.
     expect(find.text("Take a deep breath. You're safe here."), findsOneWidget);
 
-    final repo = MoodRepository(db);
+    final repo = DriftMoodRepository(db);
     final entries = await repo.getAll();
     expect(entries, hasLength(1));
     expect(entries.single.mood, 4);

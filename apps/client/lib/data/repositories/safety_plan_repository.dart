@@ -1,9 +1,10 @@
 import '../../domain/safety/safety_plan.dart';
-import 'settings_repository.dart';
+import '../../domain/repositories/safety_plan_repository.dart';
+import '../../domain/repositories/settings_repository.dart';
 
 /// Persists the single [SafetyPlan] as a JSON blob in app settings.
-class SafetyPlanRepository {
-  SafetyPlanRepository(this._settings);
+class DriftSafetyPlanRepository implements SafetyPlanRepository {
+  DriftSafetyPlanRepository(this._settings);
 
   final SettingsRepository _settings;
 

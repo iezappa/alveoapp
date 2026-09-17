@@ -9,12 +9,12 @@ void main() {
   test('builds a valid, non-trivial PDF for a session', () async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    final id = await SessionRepository(db).create(
+    final id = await DriftSessionRepository(db).create(
       scheduledFor: DateTime(2026, 9, 1, 10),
       agendaMarkdown: 'boundaries — sleep',
       takeawaysMarkdown: 'try the breathing exercise',
     );
-    final session = (await SessionRepository(db).getById(id))!;
+    final session = (await DriftSessionRepository(db).getById(id))!;
 
     final bytes = await buildSessionPdf(
       session,

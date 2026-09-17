@@ -38,12 +38,12 @@ void main() {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
 
-    await JournalRepository(db).create(
+    await DriftJournalRepository(db).create(
       bodyMarkdown: 'A quiet morning walk.',
       entryDate: DateTime(2026, 2, 10),
       title: 'Morning',
     );
-    await SessionRepository(db).create(
+    await DriftSessionRepository(db).create(
       scheduledFor: DateTime(2026, 3, 5),
       notesMarkdown: 'Talked about sleep.',
     );
@@ -64,7 +64,7 @@ void main() {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
 
-    await SessionRepository(db).create(scheduledFor: DateTime(2026, 1, 1));
+    await DriftSessionRepository(db).create(scheduledFor: DateTime(2026, 1, 1));
 
     await _pump(tester, db);
 

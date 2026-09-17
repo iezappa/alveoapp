@@ -13,11 +13,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   late AppDatabase db;
-  late SettingsRepository settings;
+  late DriftSettingsRepository settings;
 
   setUp(() async {
     db = AppDatabase.forTesting();
-    settings = SettingsRepository(db);
+    settings = DriftSettingsRepository(db);
     for (final key in [
       disclaimerAcceptedSettingKey,
       backupNoticeAcceptedSettingKey,

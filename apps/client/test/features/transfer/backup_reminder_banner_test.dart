@@ -68,7 +68,7 @@ void main() {
   });
 
   testWidgets('reminds when data was never exported', (tester) async {
-    await TaskRepository(db).create(title: 'Breathe');
+    await DriftTaskRepository(db).create(title: 'Breathe');
     await pump(tester);
 
     expect(find.text("You haven't backed up your data yet."), findsOneWidget);
@@ -77,7 +77,7 @@ void main() {
   testWidgets('reminds with the age once the last export is old', (
     tester,
   ) async {
-    await TaskRepository(db).create(title: 'Breathe');
+    await DriftTaskRepository(db).create(title: 'Breathe');
     await BackupHistory(db)
         .recordExport(now.subtract(const Duration(days: 40)));
     await pump(tester);
@@ -86,7 +86,7 @@ void main() {
   });
 
   testWidgets('"Not now" snoozes it and remembers when', (tester) async {
-    await TaskRepository(db).create(title: 'Breathe');
+    await DriftTaskRepository(db).create(title: 'Breathe');
     await pump(tester);
 
     await tester.tap(find.text('Not now'));
@@ -97,7 +97,7 @@ void main() {
   });
 
   testWidgets('exporting records the date and hides it', (tester) async {
-    await TaskRepository(db).create(title: 'Breathe');
+    await DriftTaskRepository(db).create(title: 'Breathe');
     await pump(tester);
 
     await tester.tap(find.text('Export'));

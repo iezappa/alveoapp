@@ -5,11 +5,11 @@ import 'package:alveo/domain/cbt/cognitive_distortion.dart';
 
 void main() {
   late AppDatabase db;
-  late ThoughtRecordRepository repo;
+  late DriftThoughtRecordRepository repo;
 
   setUp(() {
     db = AppDatabase.forTesting();
-    repo = ThoughtRecordRepository(db);
+    repo = DriftThoughtRecordRepository(db);
   });
   tearDown(() => db.close());
 

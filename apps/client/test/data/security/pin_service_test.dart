@@ -5,12 +5,12 @@ import 'package:alveo/data/security/pin_service.dart';
 
 void main() {
   late AppDatabase db;
-  late SettingsRepository settings;
+  late DriftSettingsRepository settings;
   late PinService pin;
 
   setUp(() {
     db = AppDatabase.forTesting();
-    settings = SettingsRepository(db);
+    settings = DriftSettingsRepository(db);
     pin = PinService(settings);
   });
   tearDown(() => db.close());

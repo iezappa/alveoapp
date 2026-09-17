@@ -12,7 +12,7 @@ void main() {
   ) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    final id = await MoodRepository(
+    final id = await DriftMoodRepository(
       db,
     ).add(mood: 2, occurredAt: DateTime(2026, 8, 20, 9), note: 'rough morning');
 
@@ -37,6 +37,6 @@ void main() {
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
 
-    expect((await MoodRepository(db).getById(id))!.mood, 5);
+    expect((await DriftMoodRepository(db).getById(id))!.mood, 5);
   });
 }

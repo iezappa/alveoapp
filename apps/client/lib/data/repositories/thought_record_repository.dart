@@ -3,9 +3,10 @@ import 'package:uuid/uuid.dart';
 
 import '../../domain/cbt/cognitive_distortion.dart';
 import '../local/database.dart';
+import '../../domain/repositories/thought_record_repository.dart';
 
-class ThoughtRecordRepository {
-  ThoughtRecordRepository(this._db, {Uuid? uuid})
+class DriftThoughtRecordRepository implements ThoughtRecordRepository {
+  DriftThoughtRecordRepository(this._db, {Uuid? uuid})
     : _uuid = uuid ?? const Uuid();
 
   final AppDatabase _db;

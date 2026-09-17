@@ -23,7 +23,7 @@ void main() {
   testWidgets('open tasks sort before finished ones', (tester) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    final repo = TaskRepository(db);
+    final repo = DriftTaskRepository(db);
     final doneId = await repo.create(title: 'Old task');
     await repo.setStatus(doneId, TaskStatus.done);
     await repo.create(title: 'Breathe daily');
@@ -39,7 +39,7 @@ void main() {
   testWidgets('the checkbox marks a task done', (tester) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    final repo = TaskRepository(db);
+    final repo = DriftTaskRepository(db);
     await repo.create(title: 'Breathe daily');
 
     await _openTasks(tester, db);
@@ -75,7 +75,7 @@ void main() {
 
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    await TaskRepository(db).create(
+    await DriftTaskRepository(db).create(
       title: 'Practice grounding',
       descriptionMarkdown: 'five senses exercise',
     );

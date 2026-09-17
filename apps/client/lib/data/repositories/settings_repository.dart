@@ -1,8 +1,9 @@
 import '../local/database.dart';
+import '../../domain/repositories/settings_repository.dart';
 
 /// Thin accessor over the [AppSettings] key/value table.
-class SettingsRepository {
-  SettingsRepository(this._db);
+class DriftSettingsRepository implements SettingsRepository {
+  DriftSettingsRepository(this._db);
 
   final AppDatabase _db;
 

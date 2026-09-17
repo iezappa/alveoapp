@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../app/theme.dart';
 import '../../app/ui.dart';
 import '../../data/providers.dart';
-import '../../data/repositories/mood_repository.dart';
+import '../../domain/emotions/emotion_input.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/emotion_labels.dart';
 import '../shared/confirm_delete.dart';

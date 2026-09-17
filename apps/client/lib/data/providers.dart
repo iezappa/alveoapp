@@ -5,6 +5,7 @@ import 'local/database.dart';
 import 'local/database_health.dart';
 import 'local/storage_durability.dart';
 import 'obsidian/obsidian_service.dart';
+import '../domain/repositories/repositories.dart';
 import 'repositories/journal_repository.dart';
 import 'repositories/link_repository.dart';
 import 'repositories/medication_repository.dart';
@@ -34,7 +35,7 @@ final appDatabaseProvider = Provider<AppDatabase>((ref) {
 });
 
 final settingsRepositoryProvider = Provider<SettingsRepository>(
-  (ref) => SettingsRepository(ref.watch(appDatabaseProvider)),
+  (ref) => DriftSettingsRepository(ref.watch(appDatabaseProvider)),
 );
 
 final pinServiceProvider = Provider<PinService>(
@@ -42,7 +43,7 @@ final pinServiceProvider = Provider<PinService>(
 );
 
 final safetyPlanRepositoryProvider = Provider<SafetyPlanRepository>(
-  (ref) => SafetyPlanRepository(ref.watch(settingsRepositoryProvider)),
+  (ref) => DriftSafetyPlanRepository(ref.watch(settingsRepositoryProvider)),
 );
 
 final backupServiceProvider = Provider<BackupService>(
@@ -76,7 +77,7 @@ final obsidianVaultProvider = FutureProvider<String?>(
 );
 
 final moodRepositoryProvider = Provider<MoodRepository>(
-  (ref) => MoodRepository(ref.watch(appDatabaseProvider)),
+  (ref) => DriftMoodRepository(ref.watch(appDatabaseProvider)),
 );
 
 /// All mood check-ins, newest first. Invalidate after a new check-in.
@@ -85,7 +86,7 @@ final moodEntriesProvider = FutureProvider(
 );
 
 final tagRepositoryProvider = Provider<TagRepository>(
-  (ref) => TagRepository(ref.watch(appDatabaseProvider)),
+  (ref) => DriftTagRepository(ref.watch(appDatabaseProvider)),
 );
 
 /// Every tag, alphabetical.
@@ -100,27 +101,27 @@ final moodTagLinksProvider = FutureProvider((ref) {
 });
 
 final journalRepositoryProvider = Provider<JournalRepository>(
-  (ref) => JournalRepository(ref.watch(appDatabaseProvider)),
+  (ref) => DriftJournalRepository(ref.watch(appDatabaseProvider)),
 );
 
 final taskRepositoryProvider = Provider<TaskRepository>(
-  (ref) => TaskRepository(ref.watch(appDatabaseProvider)),
+  (ref) => DriftTaskRepository(ref.watch(appDatabaseProvider)),
 );
 
 final sessionRepositoryProvider = Provider<SessionRepository>(
-  (ref) => SessionRepository(ref.watch(appDatabaseProvider)),
+  (ref) => DriftSessionRepository(ref.watch(appDatabaseProvider)),
 );
 
 final linkRepositoryProvider = Provider<LinkRepository>(
-  (ref) => LinkRepository(ref.watch(appDatabaseProvider)),
+  (ref) => DriftLinkRepository(ref.watch(appDatabaseProvider)),
 );
 
 final thoughtRecordRepositoryProvider = Provider<ThoughtRecordRepository>(
-  (ref) => ThoughtRecordRepository(ref.watch(appDatabaseProvider)),
+  (ref) => DriftThoughtRecordRepository(ref.watch(appDatabaseProvider)),
 );
 
 final medicationRepositoryProvider = Provider<MedicationRepository>(
-  (ref) => MedicationRepository(ref.watch(appDatabaseProvider)),
+  (ref) => DriftMedicationRepository(ref.watch(appDatabaseProvider)),
 );
 
 final exportServiceProvider = Provider<ExportService>(

@@ -56,7 +56,7 @@ void main() {
   Future<String> backupWithOneEntry() async {
     final source = AppDatabase.forTesting();
     addTearDown(source.close);
-    await JournalRepository(source).create(
+    await DriftJournalRepository(source).create(
       title: 'Hoy',
       bodyMarkdown: 'querido',
       entryDate: DateTime(2026, 9, 1),

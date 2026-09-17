@@ -14,7 +14,7 @@ void main() {
   ) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    await PinService(SettingsRepository(db)).setPin('1234');
+    await PinService(DriftSettingsRepository(db)).setPin('1234');
 
     final container = ProviderContainer(
       overrides: [appDatabaseProvider.overrideWithValue(db)],

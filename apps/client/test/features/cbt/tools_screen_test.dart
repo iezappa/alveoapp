@@ -42,7 +42,7 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    final all = await ThoughtRecordRepository(db).getAll();
+    final all = await DriftThoughtRecordRepository(db).getAll();
     expect(all, hasLength(1));
     expect(all.single.situation, 'Meeting ran long');
     expect(all.single.automaticThought, 'I always mess up');
@@ -61,7 +61,7 @@ void main() {
 
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    await ThoughtRecordRepository(db).create(
+    await DriftThoughtRecordRepository(db).create(
       occurredAt: DateTime(2026, 8, 20),
       situation: 'Ran into an old friend',
       automaticThought: 'They must think I have not changed',

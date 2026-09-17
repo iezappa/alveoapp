@@ -9,13 +9,13 @@ import 'package:alveo/domain/journal/journal_section.dart';
 
 void main() {
   late AppDatabase db;
-  late JournalRepository journal;
+  late DriftJournalRepository journal;
   late ObsidianService obsidian;
   late Directory vault;
 
   setUp(() async {
     db = AppDatabase.forTesting();
-    journal = JournalRepository(db);
+    journal = DriftJournalRepository(db);
     obsidian = ObsidianService(journal);
     vault = await Directory.systemTemp.createTemp('alveo-vault-');
   });

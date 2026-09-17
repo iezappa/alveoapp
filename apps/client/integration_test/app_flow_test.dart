@@ -27,7 +27,7 @@ void main() {
     // boots. Otherwise the launch flow opens over the dashboard and this
     // drives the dialogs instead of the app.
     final database = AppDatabase.connect();
-    final settings = SettingsRepository(database);
+    final settings = DriftSettingsRepository(database);
     await settings.set(tutorialSeenSettingKey, 'true');
     await settings.set(disclaimerAcceptedSettingKey, 'true');
     await settings.set(backupNoticeAcceptedSettingKey, 'true');

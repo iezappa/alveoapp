@@ -8,6 +8,7 @@ import 'package:alveo/data/repositories/thought_record_repository.dart';
 import 'package:alveo/data/transfer/csv_export.dart';
 import 'package:alveo/domain/cbt/cognitive_distortion.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:alveo/domain/emotions/emotion_input.dart';
 
 /// Minimal RFC 4180 reader, to check the writer against something independent.
 List<List<String>> _parse(String csv) {
@@ -62,30 +63,30 @@ void main() {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
     await db.into(db.tags).insert(TagsCompanion.insert(id: 't', name: 'work'));
-    await MoodRepository(db).add(
+    await DriftMoodRepository(db).add(
       mood: 4,
       occurredAt: DateTime(2026, 8, 20, 9, 5),
       note: 'slept, finally',
       emotions: const [EmotionInput(emotionKey: 'joy', intensity: 3)],
       tagIds: ['t'],
     );
-    await JournalRepository(db).create(
+    await DriftJournalRepository(db).create(
       bodyMarkdown: 'line one\nline "two"',
       entryDate: DateTime(2026, 8, 21),
       title: 'Notes',
     );
-    await TaskRepository(db).create(title: 'Breathe');
-    await SessionRepository(db)
+    await DriftTaskRepository(db).create(title: 'Breathe');
+    await DriftSessionRepository(db)
         .create(scheduledFor: DateTime(2026, 9, 1, 10), agendaMarkdown: 'prep');
-    await ThoughtRecordRepository(db).create(
+    await DriftThoughtRecordRepository(db).create(
       occurredAt: DateTime(2026, 8, 22, 18),
       situation: 'meeting',
       automaticThought: 'they hate me',
       distortions: {CognitiveDistortion.allOrNothing},
     );
-    final med = await MedicationRepository(db)
+    final med = await DriftMedicationRepository(db)
         .create(name: 'Sertraline', dose: '50 mg');
-    await MedicationRepository(db)
+    await DriftMedicationRepository(db)
         .logDose(med, takenAt: DateTime(2026, 8, 23, 8));
 
     final csv = await CsvExportService(db).exportToCsv();

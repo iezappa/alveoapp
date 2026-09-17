@@ -6,11 +6,11 @@ import 'package:alveo/domain/safety/safety_plan.dart';
 
 void main() {
   late AppDatabase db;
-  late SafetyPlanRepository repo;
+  late DriftSafetyPlanRepository repo;
 
   setUp(() {
     db = AppDatabase.forTesting();
-    repo = SafetyPlanRepository(SettingsRepository(db));
+    repo = DriftSafetyPlanRepository(DriftSettingsRepository(db));
   });
   tearDown(() => db.close());
 

@@ -76,7 +76,7 @@ void main() {
   });
 
   testWidgets('deletes nothing until the word is typed', (tester) async {
-    await TaskRepository(db).create(title: 'Breathe');
+    await DriftTaskRepository(db).create(title: 'Breathe');
     await openSettings(tester);
     await tester.scrollUntilVisible(find.text('Delete all my data'), 200);
     await tester.tap(find.text('Delete all my data'));
@@ -91,7 +91,7 @@ void main() {
 
     await tester.tap(find.text('Cancel'));
     await tester.pumpAndSettle();
-    expect(await TaskRepository(db).getAll(), hasLength(1));
+    expect(await DriftTaskRepository(db).getAll(), hasLength(1));
     expect(restarts, 0);
   });
 
@@ -110,8 +110,8 @@ void main() {
   });
 
   testWidgets('once confirmed, wipes everything and restarts', (tester) async {
-    await TaskRepository(db).create(title: 'Breathe');
-    await SettingsRepository(db).set('profile.name', 'Ana');
+    await DriftTaskRepository(db).create(title: 'Breathe');
+    await DriftSettingsRepository(db).set('profile.name', 'Ana');
     await openSettings(tester);
     await tester.scrollUntilVisible(find.text('Delete all my data'), 200);
     await tester.tap(find.text('Delete all my data'));
@@ -122,8 +122,8 @@ void main() {
     await tester.tap(find.text('Delete everything'));
     await settle(tester);
 
-    expect(await TaskRepository(db).getAll(), isEmpty);
-    expect(await SettingsRepository(db).get('profile.name'), isNull);
+    expect(await DriftTaskRepository(db).getAll(), isEmpty);
+    expect(await DriftSettingsRepository(db).get('profile.name'), isNull);
     expect(restarts, 1);
   });
 }

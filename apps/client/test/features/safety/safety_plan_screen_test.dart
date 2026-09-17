@@ -36,7 +36,8 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    final loaded = await SafetyPlanRepository(SettingsRepository(db)).load();
+    final loaded = await DriftSafetyPlanRepository(DriftSettingsRepository(db))
+        .load();
     expect(loaded.warningSigns, 'shutting down');
   });
 }

@@ -40,8 +40,8 @@ void main() {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
     final now = DateTime.now();
-    await MoodRepository(db).add(mood: 4, occurredAt: now);
-    await MoodRepository(db)
+    await DriftMoodRepository(db).add(mood: 4, occurredAt: now);
+    await DriftMoodRepository(db)
         .add(mood: 2, occurredAt: now.subtract(const Duration(days: 3)));
 
     await _pump(tester, db);

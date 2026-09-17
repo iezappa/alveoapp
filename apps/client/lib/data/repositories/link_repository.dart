@@ -3,11 +3,12 @@ import 'package:drift/drift.dart';
 import '../../domain/links/link_target_type.dart';
 import '../../domain/links/linked_item.dart';
 import '../local/database.dart';
+import '../../domain/repositories/link_repository.dart';
 
 /// Manages associations between a session and other records (tasks, journal
 /// entries, mood entries).
-class LinkRepository {
-  LinkRepository(this._db);
+class DriftLinkRepository implements LinkRepository {
+  DriftLinkRepository(this._db);
 
   final AppDatabase _db;
 

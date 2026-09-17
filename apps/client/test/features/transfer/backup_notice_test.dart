@@ -14,7 +14,7 @@ void main() {
   setUp(() async {
     db = AppDatabase.forTesting();
     // The care disclaimer comes first; these tests are about what follows.
-    await SettingsRepository(db).set(disclaimerAcceptedSettingKey, 'true');
+    await DriftSettingsRepository(db).set(disclaimerAcceptedSettingKey, 'true');
   });
   tearDown(() => db.close());
 
@@ -35,7 +35,7 @@ void main() {
   testWidgets('someone onboarded before the notice sees it once', (
     tester,
   ) async {
-    final settings = SettingsRepository(db);
+    final settings = DriftSettingsRepository(db);
     await settings.set(tutorialSeenSettingKey, 'true');
     await settings.set(userNameSettingKey, 'Ana');
 
@@ -57,7 +57,7 @@ void main() {
   });
 
   testWidgets('is not shown again once accepted', (tester) async {
-    final settings = SettingsRepository(db);
+    final settings = DriftSettingsRepository(db);
     await settings.set(tutorialSeenSettingKey, 'true');
     await settings.set(userNameSettingKey, 'Ana');
     await settings.set(backupNoticeAcceptedSettingKey, 'true');

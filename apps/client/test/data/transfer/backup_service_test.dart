@@ -9,13 +9,14 @@ import 'package:alveo/data/repositories/task_repository.dart';
 import 'package:alveo/data/transfer/backup_service.dart';
 import 'package:alveo/domain/links/link_target_type.dart';
 import 'package:alveo/domain/transfer/import_report.dart';
+import 'package:alveo/domain/emotions/emotion_input.dart';
 
 Future<AppDatabase> _populatedSource() async {
   final db = AppDatabase.forTesting();
   await db
       .into(db.tags)
       .insert(TagsCompanion.insert(id: 'tag-work', name: 'work'));
-  await MoodRepository(db).add(
+  await DriftMoodRepository(db).add(
     mood: 4,
     occurredAt: DateTime(2026, 8, 20, 9),
     note: 'ok',
@@ -23,19 +24,19 @@ Future<AppDatabase> _populatedSource() async {
     tagIds: ['tag-work'],
     id: 'mood-1',
   );
-  await JournalRepository(db).create(
+  await DriftJournalRepository(db).create(
     bodyMarkdown: '# hi',
     entryDate: DateTime(2026, 8, 20),
     title: 'Notes',
     id: 'jrnl-1',
   );
-  await TaskRepository(db).create(title: 'Breathe', id: 'task-1');
-  await SessionRepository(db).create(
+  await DriftTaskRepository(db).create(title: 'Breathe', id: 'task-1');
+  await DriftSessionRepository(db).create(
     scheduledFor: DateTime(2026, 9, 1, 10),
     agendaMarkdown: 'prep',
     id: 'sess-1',
   );
-  await LinkRepository(db).link('sess-1', LinkTargetType.task, 'task-1');
+  await DriftLinkRepository(db).link('sess-1', LinkTargetType.task, 'task-1');
   return db;
 }
 
@@ -63,13 +64,19 @@ void main() {
       expect(report.tables['sessions']!.inserted, 1);
       expect(report.tables['sessionLinks']!.inserted, 1);
 
-      expect((await MoodRepository(target).getAll()).single.note, 'ok');
-      expect(await MoodRepository(target).emotionsFor('mood-1'), hasLength(1));
+      expect((await DriftMoodRepository(target).getAll()).single.note, 'ok');
       expect(
-        (await SessionRepository(target).getAll()).single.agendaMarkdown,
+        await DriftMoodRepository(target).emotionsFor('mood-1'),
+        hasLength(1),
+      );
+      expect(
+        (await DriftSessionRepository(target).getAll()).single.agendaMarkdown,
         'prep',
       );
-      expect(await LinkRepository(target).linkedItems('sess-1'), hasLength(1));
+      expect(
+        await DriftLinkRepository(target).linkedItems('sess-1'),
+        hasLength(1),
+      );
     },
   );
 

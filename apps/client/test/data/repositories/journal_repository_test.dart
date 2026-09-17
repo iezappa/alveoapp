@@ -1,16 +1,16 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:alveo/data/local/database.dart';
 import 'package:alveo/data/repositories/journal_repository.dart';
-import 'package:alveo/data/repositories/mood_repository.dart' show EmotionInput;
+import 'package:alveo/domain/emotions/emotion_input.dart';
 import 'package:alveo/domain/journal/journal_section.dart';
 
 void main() {
   late AppDatabase db;
-  late JournalRepository repo;
+  late DriftJournalRepository repo;
 
   setUp(() {
     db = AppDatabase.forTesting();
-    repo = JournalRepository(db);
+    repo = DriftJournalRepository(db);
   });
   tearDown(() => db.close());
 

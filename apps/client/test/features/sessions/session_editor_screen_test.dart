@@ -40,7 +40,7 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    final sessions = await SessionRepository(db).getAll();
+    final sessions = await DriftSessionRepository(db).getAll();
     expect(sessions, hasLength(1));
     expect(sessions.single.agendaMarkdown, contains('boundaries'));
   });
@@ -50,7 +50,7 @@ void main() {
   ) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    final id = await SessionRepository(db)
+    final id = await DriftSessionRepository(db)
         .create(scheduledFor: DateTime(2026, 9, 1, 10), agendaMarkdown: 'prep');
 
     await _openSessions(tester, db);
@@ -62,7 +62,7 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    final session = await SessionRepository(db).getById(id);
+    final session = await DriftSessionRepository(db).getById(id);
     expect(session!.agendaMarkdown, 'boundaries, sleep');
   });
 
@@ -82,7 +82,7 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    final saved = (await SessionRepository(db).getAll()).single;
+    final saved = (await DriftSessionRepository(db).getAll()).single;
     expect(saved.agendaMarkdown, contains('Since the last session'));
   });
 }

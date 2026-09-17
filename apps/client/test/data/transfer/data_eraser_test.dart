@@ -11,39 +11,40 @@ import 'package:alveo/data/security/pin_service.dart';
 import 'package:alveo/data/transfer/data_eraser.dart';
 import 'package:alveo/domain/links/link_target_type.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:alveo/domain/emotions/emotion_input.dart';
 
 Future<void> _populate(AppDatabase db) async {
   await db
       .into(db.tags)
       .insert(TagsCompanion.insert(id: 'tag-work', name: 'work'));
-  await MoodRepository(db).add(
+  await DriftMoodRepository(db).add(
     mood: 4,
     occurredAt: DateTime(2026, 8, 20, 9),
     emotions: const [EmotionInput(emotionKey: 'joy', intensity: 3)],
     tagIds: ['tag-work'],
     id: 'mood-1',
   );
-  await JournalRepository(db).create(
+  await DriftJournalRepository(db).create(
     bodyMarkdown: '# hi',
     entryDate: DateTime(2026, 8, 20),
     emotions: const [EmotionInput(emotionKey: 'fear', intensity: 2)],
     tagIds: ['tag-work'],
     id: 'jrnl-1',
   );
-  await TaskRepository(db).create(title: 'Breathe', id: 'task-1');
-  await SessionRepository(db)
+  await DriftTaskRepository(db).create(title: 'Breathe', id: 'task-1');
+  await DriftSessionRepository(db)
       .create(scheduledFor: DateTime(2026, 9, 1, 10), id: 'sess-1');
-  await LinkRepository(db).link('sess-1', LinkTargetType.task, 'task-1');
+  await DriftLinkRepository(db).link('sess-1', LinkTargetType.task, 'task-1');
 }
 
 void main() {
   late AppDatabase db;
-  late SettingsRepository settings;
+  late DriftSettingsRepository settings;
   late DataEraser eraser;
 
   setUp(() async {
     db = AppDatabase.forTesting();
-    settings = SettingsRepository(db);
+    settings = DriftSettingsRepository(db);
     eraser = DataEraser(db);
     await db.customSelect('SELECT 1').get(); // foreign keys on
   });
@@ -55,7 +56,7 @@ void main() {
     });
 
     test('is true once anything is written', () async {
-      await TaskRepository(db).create(title: 'Breathe');
+      await DriftTaskRepository(db).create(title: 'Breathe');
       expect(await eraser.holdsUserData(), isTrue);
     });
 

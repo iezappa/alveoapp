@@ -12,8 +12,8 @@ void main() {
   testWidgets('links a task to a session from the Links tab', (tester) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    await TaskRepository(db).create(title: 'Practice grounding');
-    await SessionRepository(db)
+    await DriftTaskRepository(db).create(title: 'Practice grounding');
+    await DriftSessionRepository(db)
         .create(scheduledFor: DateTime(2026, 9, 1, 10), agendaMarkdown: 'prep');
 
     await tester.pumpWidget(
@@ -40,7 +40,7 @@ void main() {
 
     expect(find.text('Practice grounding'), findsOneWidget);
 
-    final sessionId = (await SessionRepository(db).getAll()).single.id;
-    expect(await LinkRepository(db).linkedItems(sessionId), hasLength(1));
+    final sessionId = (await DriftSessionRepository(db).getAll()).single.id;
+    expect(await DriftLinkRepository(db).linkedItems(sessionId), hasLength(1));
   });
 }

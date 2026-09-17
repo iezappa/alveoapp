@@ -49,7 +49,7 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    final entries = await JournalRepository(db).getAll();
+    final entries = await DriftJournalRepository(db).getAll();
     expect(entries, hasLength(1));
     expect(entries.single.bodyMarkdown, contains('boundaries'));
   });
@@ -59,7 +59,7 @@ void main() {
   ) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    final id = await JournalRepository(db).create(
+    final id = await DriftJournalRepository(db).create(
       bodyMarkdown: 'first draft',
       entryDate: DateTime(2026, 8, 20),
       title: 'Draft',
@@ -77,7 +77,7 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    final entry = await JournalRepository(db).getById(id);
+    final entry = await DriftJournalRepository(db).getById(id);
     expect(entry!.bodyMarkdown, 'second draft');
   });
 }

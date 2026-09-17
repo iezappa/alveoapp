@@ -3,9 +3,10 @@ import 'package:uuid/uuid.dart';
 
 import '../local/database.dart';
 import '../local/tables.dart';
+import '../../domain/repositories/task_repository.dart';
 
-class TaskRepository {
-  TaskRepository(this._db, {Uuid? uuid}) : _uuid = uuid ?? const Uuid();
+class DriftTaskRepository implements TaskRepository {
+  DriftTaskRepository(this._db, {Uuid? uuid}) : _uuid = uuid ?? const Uuid();
 
   final AppDatabase _db;
   final Uuid _uuid;

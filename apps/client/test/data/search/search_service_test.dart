@@ -17,19 +17,19 @@ void main() {
   tearDown(() => db.close());
 
   test('finds matches across journal, task and mood, newest first', () async {
-    await JournalRepository(db).create(
+    await DriftJournalRepository(db).create(
       bodyMarkdown: 'talked about boundaries with my sister',
       entryDate: DateTime(2026, 8, 10),
     );
-    await TaskRepository(
+    await DriftTaskRepository(
       db,
     ).create(title: 'set boundaries at work', createdAt: DateTime(2026, 8, 20));
-    await MoodRepository(db).add(
+    await DriftMoodRepository(db).add(
       mood: 3,
       occurredAt: DateTime(2026, 8, 5),
       note: 'no boundaries today',
     );
-    await TaskRepository(db).create(title: 'unrelated');
+    await DriftTaskRepository(db).create(title: 'unrelated');
 
     final hits = await search.search('boundaries', {});
 
@@ -40,11 +40,11 @@ void main() {
   });
 
   test('the type filter narrows results', () async {
-    await JournalRepository(db).create(
+    await DriftJournalRepository(db).create(
       bodyMarkdown: 'a note about sleep',
       entryDate: DateTime(2026, 8, 10),
     );
-    await TaskRepository(db).create(title: 'track sleep');
+    await DriftTaskRepository(db).create(title: 'track sleep');
 
     final onlyTasks = await search.search('sleep', {SearchType.task});
     expect(onlyTasks, hasLength(1));
@@ -52,13 +52,13 @@ void main() {
   });
 
   test('queries shorter than two characters return nothing', () async {
-    await JournalRepository(db)
+    await DriftJournalRepository(db)
         .create(bodyMarkdown: 'aaa', entryDate: DateTime(2026, 8, 10));
     expect(await search.search('a', {}), isEmpty);
   });
 
   test('search is case-insensitive and builds an excerpt', () async {
-    await JournalRepository(db).create(
+    await DriftJournalRepository(db).create(
       bodyMarkdown:
           'A long entry that mentions Resilience somewhere inside it.',
       entryDate: DateTime(2026, 8, 10),

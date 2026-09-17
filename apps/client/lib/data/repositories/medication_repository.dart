@@ -2,9 +2,11 @@ import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
 import '../local/database.dart';
+import '../../domain/repositories/medication_repository.dart';
 
-class MedicationRepository {
-  MedicationRepository(this._db, {Uuid? uuid}) : _uuid = uuid ?? const Uuid();
+class DriftMedicationRepository implements MedicationRepository {
+  DriftMedicationRepository(this._db, {Uuid? uuid})
+    : _uuid = uuid ?? const Uuid();
 
   final AppDatabase _db;
   final Uuid _uuid;

@@ -55,7 +55,7 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    final creative = await JournalRepository(db)
+    final creative = await DriftJournalRepository(db)
         .getBySection(JournalSection.creative);
     expect(creative, hasLength(1));
     expect(creative.single.bodyMarkdown, 'a poem idea');
@@ -70,7 +70,7 @@ void main() {
 
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    await JournalRepository(db).create(
+    await DriftJournalRepository(db).create(
       bodyMarkdown: 'first light through the window',
       entryDate: DateTime(2026, 8, 20),
       title: 'Morning',
@@ -90,7 +90,7 @@ void main() {
     await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
     await tester.pumpAndSettle();
 
-    expect(await JournalRepository(db).getAll(), isEmpty);
+    expect(await DriftJournalRepository(db).getAll(), isEmpty);
     expect(find.text('Pick a record to see it here'), findsOneWidget);
   });
 }

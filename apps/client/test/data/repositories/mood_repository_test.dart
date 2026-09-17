@@ -2,16 +2,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:alveo/data/local/database.dart';
 import 'package:alveo/data/repositories/mood_repository.dart';
 import 'package:alveo/data/repositories/tag_repository.dart';
+import 'package:alveo/domain/emotions/emotion_input.dart';
 
 void main() {
   late AppDatabase db;
-  late MoodRepository mood;
-  late TagRepository tags;
+  late DriftMoodRepository mood;
+  late DriftTagRepository tags;
 
   setUp(() {
     db = AppDatabase.forTesting();
-    mood = MoodRepository(db);
-    tags = TagRepository(db);
+    mood = DriftMoodRepository(db);
+    tags = DriftTagRepository(db);
   });
   tearDown(() => db.close());
 

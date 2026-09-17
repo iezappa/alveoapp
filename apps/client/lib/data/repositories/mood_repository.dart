@@ -1,19 +1,14 @@
 import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../domain/emotions/emotion_input.dart';
+
 import '../../domain/validation.dart';
 import '../local/database.dart';
+import '../../domain/repositories/mood_repository.dart';
 
-/// One emotion to attach to a mood entry.
-class EmotionInput {
-  const EmotionInput({required this.emotionKey, required this.intensity});
-
-  final String emotionKey;
-  final int intensity;
-}
-
-class MoodRepository {
-  MoodRepository(this._db, {Uuid? uuid}) : _uuid = uuid ?? const Uuid();
+class DriftMoodRepository implements MoodRepository {
+  DriftMoodRepository(this._db, {Uuid? uuid}) : _uuid = uuid ?? const Uuid();
 
   final AppDatabase _db;
   final Uuid _uuid;

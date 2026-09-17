@@ -4,10 +4,11 @@ import 'package:uuid/uuid.dart';
 import '../../domain/journal/journal_section.dart';
 import '../../domain/validation.dart';
 import '../local/database.dart';
-import 'mood_repository.dart' show EmotionInput;
+import '../../domain/emotions/emotion_input.dart';
+import '../../domain/repositories/journal_repository.dart';
 
-class JournalRepository {
-  JournalRepository(this._db, {Uuid? uuid}) : _uuid = uuid ?? const Uuid();
+class DriftJournalRepository implements JournalRepository {
+  DriftJournalRepository(this._db, {Uuid? uuid}) : _uuid = uuid ?? const Uuid();
 
   final AppDatabase _db;
   final Uuid _uuid;

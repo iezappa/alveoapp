@@ -2,10 +2,11 @@ import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
 import '../local/database.dart';
+import '../../domain/repositories/tag_repository.dart';
 
 /// Shared context labels (people, places, situations).
-class TagRepository {
-  TagRepository(this._db, {Uuid? uuid}) : _uuid = uuid ?? const Uuid();
+class DriftTagRepository implements TagRepository {
+  DriftTagRepository(this._db, {Uuid? uuid}) : _uuid = uuid ?? const Uuid();
 
   final AppDatabase _db;
   final Uuid _uuid;

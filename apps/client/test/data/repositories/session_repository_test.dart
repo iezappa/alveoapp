@@ -4,11 +4,11 @@ import 'package:alveo/data/repositories/session_repository.dart';
 
 void main() {
   late AppDatabase db;
-  late SessionRepository repo;
+  late DriftSessionRepository repo;
 
   setUp(() {
     db = AppDatabase.forTesting();
-    repo = SessionRepository(db);
+    repo = DriftSessionRepository(db);
   });
   tearDown(() => db.close());
 

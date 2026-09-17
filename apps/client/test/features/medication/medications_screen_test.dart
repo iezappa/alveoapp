@@ -52,8 +52,8 @@ void main() {
     await tester.tap(find.byTooltip('Log a dose'));
     await tester.pumpAndSettle();
 
-    final doses = await MedicationRepository(db).dosesOn(
-      (await MedicationRepository(db).getAll()).single.id,
+    final doses = await DriftMedicationRepository(db).dosesOn(
+      (await DriftMedicationRepository(db).getAll()).single.id,
       DateTime.now(),
     );
     expect(doses, hasLength(1));

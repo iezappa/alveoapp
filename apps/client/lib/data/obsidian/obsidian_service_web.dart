@@ -1,5 +1,5 @@
 import '../../domain/obsidian/obsidian_report.dart';
-import '../repositories/journal_repository.dart';
+import '../../domain/repositories/journal_repository.dart';
 
 /// Web stub: Obsidian sync needs local filesystem access it does not have.
 class ObsidianService {

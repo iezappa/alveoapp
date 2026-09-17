@@ -2,9 +2,10 @@ import 'package:drift/drift.dart';
 import 'package:uuid/uuid.dart';
 
 import '../local/database.dart';
+import '../../domain/repositories/session_repository.dart';
 
-class SessionRepository {
-  SessionRepository(this._db, {Uuid? uuid}) : _uuid = uuid ?? const Uuid();
+class DriftSessionRepository implements SessionRepository {
+  DriftSessionRepository(this._db, {Uuid? uuid}) : _uuid = uuid ?? const Uuid();
 
   final AppDatabase _db;
   final Uuid _uuid;

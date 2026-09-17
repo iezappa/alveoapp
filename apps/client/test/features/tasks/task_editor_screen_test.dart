@@ -40,7 +40,7 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    final tasks = await TaskRepository(db).getAll();
+    final tasks = await DriftTaskRepository(db).getAll();
     expect(tasks, hasLength(1));
     expect(tasks.single.title, 'Practice grounding');
     expect(tasks.single.status, TaskStatus.pending);
@@ -49,7 +49,7 @@ void main() {
   testWidgets('edits a task and marks it done', (tester) async {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    final id = await TaskRepository(db).create(title: 'Draft task');
+    final id = await DriftTaskRepository(db).create(title: 'Draft task');
 
     await _openTasks(tester, db);
 
@@ -65,7 +65,7 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    final task = await TaskRepository(db).getById(id);
+    final task = await DriftTaskRepository(db).getById(id);
     expect(task!.title, 'Refined task');
     expect(task.status, TaskStatus.done);
     expect(task.completedAt, isNotNull);

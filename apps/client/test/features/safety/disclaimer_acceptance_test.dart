@@ -11,11 +11,11 @@ const _disclaimerTitle = 'Before you start';
 
 void main() {
   late AppDatabase db;
-  late SettingsRepository settings;
+  late DriftSettingsRepository settings;
 
   setUp(() {
     db = AppDatabase.forTesting();
-    settings = SettingsRepository(db);
+    settings = DriftSettingsRepository(db);
   });
   tearDown(() => db.close());
 

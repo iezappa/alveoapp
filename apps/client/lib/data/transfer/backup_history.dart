@@ -1,3 +1,4 @@
+import '../../domain/repositories/settings_repository.dart';
 import '../local/database.dart';
 import '../repositories/settings_repository.dart';
 
@@ -6,7 +7,7 @@ import '../repositories/settings_repository.dart';
 /// Kept in app settings, which backups do not carry: a restore must not bring
 /// back the date of an export that happened on another device.
 class BackupHistory {
-  BackupHistory(AppDatabase db) : _settings = SettingsRepository(db);
+  BackupHistory(AppDatabase db) : _settings = DriftSettingsRepository(db);
 
   final SettingsRepository _settings;
 

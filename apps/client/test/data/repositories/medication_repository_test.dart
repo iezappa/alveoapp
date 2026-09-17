@@ -4,11 +4,11 @@ import 'package:alveo/data/repositories/medication_repository.dart';
 
 void main() {
   late AppDatabase db;
-  late MedicationRepository repo;
+  late DriftMedicationRepository repo;
 
   setUp(() {
     db = AppDatabase.forTesting();
-    repo = MedicationRepository(db);
+    repo = DriftMedicationRepository(db);
   });
   tearDown(() => db.close());
 

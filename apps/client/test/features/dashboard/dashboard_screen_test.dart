@@ -48,7 +48,7 @@ void main() {
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
     final now = DateTime.now();
-    await SessionRepository(db)
+    await DriftSessionRepository(db)
         .create(scheduledFor: DateTime(now.year, now.month, now.day + 1, 10));
 
     await _pumpApp(tester, db);

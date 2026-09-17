@@ -2,8 +2,8 @@ import 'dart:io';
 
 import '../../domain/journal/journal_section.dart';
 import '../../domain/obsidian/obsidian_report.dart';
+import '../../domain/repositories/journal_repository.dart';
 import '../local/database.dart';
-import '../repositories/journal_repository.dart';
 import 'frontmatter.dart';
 
 /// Two-way bridge between the app's journal and a folder of Markdown files

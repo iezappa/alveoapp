@@ -8,17 +8,17 @@ import 'package:alveo/domain/links/link_target_type.dart';
 
 void main() {
   late AppDatabase db;
-  late LinkRepository links;
-  late SessionRepository sessions;
-  late TaskRepository tasks;
-  late JournalRepository journals;
+  late DriftLinkRepository links;
+  late DriftSessionRepository sessions;
+  late DriftTaskRepository tasks;
+  late DriftJournalRepository journals;
 
   setUp(() {
     db = AppDatabase.forTesting();
-    links = LinkRepository(db);
-    sessions = SessionRepository(db);
-    tasks = TaskRepository(db);
-    journals = JournalRepository(db);
+    links = DriftLinkRepository(db);
+    sessions = DriftSessionRepository(db);
+    tasks = DriftTaskRepository(db);
+    journals = DriftJournalRepository(db);
   });
   tearDown(() => db.close());
 

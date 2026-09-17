@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
 
-import '../repositories/settings_repository.dart';
+import '../../domain/repositories/settings_repository.dart';
 
 /// App-launch PIN gate.
 ///

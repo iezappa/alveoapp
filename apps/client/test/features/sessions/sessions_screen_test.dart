@@ -33,7 +33,7 @@ void main() {
 
     final db = AppDatabase.forTesting();
     addTearDown(db.close);
-    await SessionRepository(db).create(
+    await DriftSessionRepository(db).create(
       scheduledFor: DateTime(2026, 9, 1, 10),
       agendaMarkdown: 'talk about boundaries',
     );
@@ -84,7 +84,7 @@ void main() {
     await tester.tap(find.byTooltip('Save'));
     await tester.pumpAndSettle();
 
-    final sessions = await SessionRepository(db).getAll();
+    final sessions = await DriftSessionRepository(db).getAll();
     expect(sessions.single.agendaMarkdown, contains('inline agenda'));
     // Back to the empty detail pane.
     expect(find.text('Pick a record to see it here'), findsOneWidget);

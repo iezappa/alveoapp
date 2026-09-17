@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../app/ui.dart';
 import '../../data/providers.dart';
-import '../../data/repositories/mood_repository.dart' show EmotionInput;
+import '../../domain/emotions/emotion_input.dart';
 import '../../domain/journal/journal_section.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/emotion_labels.dart';
