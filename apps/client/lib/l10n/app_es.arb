@@ -356,5 +356,13 @@
   "csvFileType": "Planilla CSV",
   "csvSaved": "Planilla guardada",
   "whatsNewTitle": "Novedades en {version}",
-  "whatsNewClose": "Entendido"
+  "whatsNewClose": "Entendido",
+  "updateAvailableTitle": "Hay una versión nueva",
+  "updateAvailableBody": "La versión {version} está disponible.",
+  "updateAvailableBackupHint": "Esta versión cambia cómo se guardan tus datos. Exportá una copia antes de actualizar.",
+  "updateUnsupportedPath": "Tu versión es muy antigua para actualizar directo. Exportá una copia y mirá las instrucciones de la release.",
+  "updateActionReload": "Actualizar",
+  "updateActionDownload": "Descargar",
+  "updateActionExport": "Exportar",
+  "updateActionDismiss": "Ahora no"
 }

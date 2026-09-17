@@ -43,9 +43,12 @@ lugar privado.
 
 ## Conexiones a internet
 
-La app no hace peticiones de red por su cuenta. Solo abre lo que tocas: un
-número de las líneas de crisis, una página de donación o la página de contacto,
-en tu app de teléfono o tu navegador.
+La app consulta a GitHub — o, en la versión web, al servidor desde el que se
+cargó — si hay una versión nueva, como máximo una vez cada seis horas. Esa
+consulta no lleva nada tuyo: ningún identificador, ningún contenido, solo la
+versión por la que pregunta. Lo demás que abre es algo que tocaste: un número
+de las líneas de crisis, una página de donación o la página de contacto, en tu
+app de teléfono o tu navegador.
 
 ## Tus derechos y cómo borrar tus datos
 

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../features/recovery/storage_warning_banner.dart';
 import '../features/transfer/backup_reminder_banner.dart';
+import '../features/update/update_banner.dart';
 import '../l10n/app_localizations.dart';
 
 typedef _Dest = ({IconData icon, IconData selected, String label});
@@ -102,6 +103,7 @@ class _WithNotices extends StatelessWidget {
     children: [
       Expanded(child: child),
       const StorageWarningBanner(),
+      const UpdateBanner(),
       const BackupReminderBanner(),
     ],
   );

@@ -1,0 +1,3 @@
+// Talks to the app's own service worker on the web; a no-op elsewhere.
+export 'service_worker_bridge_native.dart'
+    if (dart.library.js_interop) 'service_worker_bridge_web.dart';

@@ -412,5 +412,14 @@
   "csvSaved": "Spreadsheet saved",
   "whatsNewTitle": "What's new in {version}",
   "@whatsNewTitle": {"placeholders": {"version": {"type": "String"}}},
-  "whatsNewClose": "Got it"
+  "whatsNewClose": "Got it",
+  "updateAvailableTitle": "A new version is available",
+  "updateAvailableBody": "Version {version} is available.",
+  "@updateAvailableBody": {"placeholders": {"version": {"type": "String"}}},
+  "updateAvailableBackupHint": "This version changes how your data is stored. Export a backup before updating.",
+  "updateUnsupportedPath": "Your version is too old to update directly. Export a backup and check the release instructions.",
+  "updateActionReload": "Update",
+  "updateActionDownload": "Download",
+  "updateActionExport": "Export",
+  "updateActionDismiss": "Not now"
 }

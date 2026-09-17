@@ -42,9 +42,12 @@ and outside this app: keep them somewhere private.
 
 ## Internet connections
 
-The app makes no network requests of its own. It only opens what you tap: a
-phone number from the crisis lines, a donation page, or the contact page, in
-your phone app or browser.
+The app asks GitHub — or, on the web, the server it was loaded from — whether
+a newer version exists, at most once every six hours. That request carries
+nothing of yours: no identifier, no content, only the version it is asking
+about. Everything else it opens is something you tapped: a phone number from
+the crisis lines, a donation page, or the contact page, in your phone app or
+browser.
 
 ## Your rights and how to delete your data
 
