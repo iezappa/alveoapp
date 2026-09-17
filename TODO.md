@@ -11,7 +11,7 @@ This app is the canonical reference for §2.2, the settings layout — the other
 apps were migrated to match it. Changing settings here changes the standard,
 so the edit belongs in that repository first.
 
-Last checked against it: **2026-09-16**.
+Last checked against it: **2026-09-17**.
 
 ---
 
@@ -55,18 +55,54 @@ Last checked against it: **2026-09-16**.
 
 ### P2
 
-- [ ] Repositories are concrete classes wired in `lib/data/providers.dart`;
-      move to interfaces when a second data source appears.
-- [ ] Settings still says "Data", where §2.2 names the section `TUS DATOS` /
-      "Your data".
-- [ ] About lacks privacy policy, terms, contact and licences links (the ACERCA DE
-      order in CUMPLIMIENTO.md) and the README lacks the backup section (§5.A.4).
-- [ ] Android platform is not added yet.
+- [ ] Drift's generated row classes are still the domain entities: the
+      repository interfaces in `lib/domain/repositories/` import
+      `data/local/database.dart`. Giving the domain its own entities and a
+      mapping layer is the next step, and only pays for itself when a second
+      data source exists.
+- [ ] The Android build has never run: this machine has no Android SDK, so
+      the Gradle signing config, the manifest queries, the file_picker save
+      path and `tool/release_apk.sh` past its pure checks are unverified.
+      Same for the Windows and macOS jobs and the Docker image.
+- [ ] Record the release keystore fingerprint in `docs/SIGNING.md` (it says
+      `PENDING`) before the first APK is published.
+- [ ] Run the §8.2 service-worker checklist in a real browser before the
+      first release that touches `web/`: scope, cache contents, offline
+      launch, the update flow and the kill switch.
 - [ ] The working copy under `Estandarizador/` is stale — it predates §2.2.
       Refresh it from the canonical repository, or read the standard there.
 - [ ] The integration test walks the bottom bar and asserts no section throws.
       The flows worth adding next are the ones with something at stake: a
       check-in written and read back, and the PIN lock.
+
+---
+
+## Resolved (Phases 2 and 3, 2026-09-17)
+
+- [x] `PRIVACY.md` and `TERMS.md` (Profile A, sensitive health data under Ley
+      25.326), bundled in both languages and readable offline from About,
+      alongside contact and licences.
+- [x] Settings in the §2.2 order, with a layout test and `meetsGuideline`
+      (tap targets, labels, contrast) on Settings and the five tabs in light
+      and dark.
+- [x] Drift schema dumps v1–v9 and a migration test from every version ever
+      shipped, data included.
+- [x] CSV export for reading, next to the JSON backup.
+- [x] Android platform, release signing that refuses to build without the
+      keystore, `tool/release_apk.sh` and `docs/SIGNING.md` / `RELEASING.md`.
+- [x] Release notes dialog after an update, from a changelog asset.
+- [x] Repository interfaces in `domain`, Drift implementations behind them,
+      and a test that keeps `drift` out of the screens.
+- [x] `updatedAt` on every table (schema v9) and in the backup (format 2).
+- [x] Own service worker (`web/sw.js`, `web/flutter_bootstrap.js`,
+      `tool/generate_sw.sh`), wired into the Pages deploy.
+- [x] `UpdateService` (§8.2) with the banner, the six-hour throttle and the
+      backup prompt on a schema change.
+- [x] `release.yml` for Linux, Windows, macOS, web and GHCR, with the
+      compliance gate; Windows and macOS platforms added.
+- [x] `deploy/` (Dockerfile, nginx with COOP/COEP, compose for ZimaOS on port
+      8083, ZIMAOS.md) and a README with the backup warning, crisis lines and
+      per-device install.
 
 ---
 
@@ -80,10 +116,34 @@ standard changes, or before a release.
       the disclaimer printed in full. This app defines that layout; a widget
       test asserting the structure keeps the reference honest, since a drift
       here silently redefines the standard for everyone.
+
+**§2.2 Settings** — Conforming: yes · Last reviewed: 2026-09-17 ·
+Asserted by: `apps/client/test/features/settings/settings_layout_test.dart`
+
+- [x] Body inside the shared page widget, with a maximum width
+- [x] One flat column — no section wrapped in a `Card`
+- [x] Every section opened by `SectionLabel`, in capitals
+- [x] Sections in the fixed order, with Obsidian (this app's own) before SUPPORT
+- [x] Separated by `Gap.vSection` — no loose `SizedBox(height: 28)`
+- [x] Every `ListTile` at `contentPadding: EdgeInsets.zero`
+- [x] Fixed short option sets in `SegmentedButton`, not `DropdownButton`
+- [x] The support block is the only `Card`, and prints no title of its own
+- [x] Disclaimer printed in full, outside any `ListTile`
+- [x] Profile A: backup notice first in YOUR DATA
+- [x] "Delete all my data" last in YOUR DATA, with confirmation
+- [x] ABOUT with privacy, terms, contact and licences
+- [x] `meetsGuideline` for tap targets and contrast, light and dark
+- [x] Layout test present and green
+
+Deliberate deviation, to carry back to the canonical repository: Obsidian sync
+is hidden on Android as well as on the web — it needs a vault folder on the
+filesystem, which the Storage Access Framework does not give.
 - [ ] **§2.1 Product patterns.** i18n through ARB files, onboarding shown once,
       local PIN, disclaimer accepted at onboarding and visible in settings,
       JSON import/export.
-- [ ] **§5 CI.** Analyse and test before deploying, not only building.
+- [ ] **§5 CI.** Analyse, format and test before deploying, not only building.
+- [ ] **§8.1/§8.2.** APK signed with the fixed keystore, update banner,
+      release notes, own service worker.
 - [ ] **§7 Testing.** Widget tests for the screens, `integration_test` for the
       critical flows.
 
