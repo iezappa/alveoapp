@@ -1,4 +1,6 @@
-import 'package:drift/drift.dart';
+import 'dart:convert';
+
+import 'package:drift/drift.dart' hide isNotNull;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:alveo/data/local/database.dart';
 import 'package:alveo/data/repositories/journal_repository.dart';
@@ -162,5 +164,37 @@ void main() {
       () => BackupService(target).importFromJson('just some text'),
       throwsA(isA<ImportException>()),
     );
+  });
+
+  test('the export declares format version 2 and carries updatedAt', () async {
+    final source = await _populatedSource();
+    addTearDown(source.close);
+    final bundle = jsonDecode(
+      await BackupService(source).exportToJson(),
+    ) as Map<String, dynamic>;
+
+    expect(bundle['version'], 2);
+    expect(bundle['schemaVersion'], AppDatabase.currentSchemaVersion);
+    final moods = (bundle['data'] as Map)['moodEntries'] as List;
+    expect((moods.single as Map)['updated_at'], isNotNull);
+  });
+
+  test('a version 1 backup imports, with updatedAt filled in', () async {
+    // Written before updatedAt existed: the rows carry no such column.
+    const old = '''
+{"format":"alveo-export","version":1,"schemaVersion":8,
+ "data":{"tags":[{"id":"tag-1","name":"work"}],
+         "moodEntries":[{"id":"m1","occurred_at":1756000000,"mood":4,
+                         "created_at":1756000000}]}}
+''';
+
+    final target = AppDatabase.forTesting();
+    addTearDown(target.close);
+    final report = await BackupService(target).importFromJson(old);
+
+    expect(report.tables['moodEntries']!.inserted, 1);
+    final stored = await target.select(target.moodEntries).getSingle();
+    expect(stored.mood, 4);
+    expect(stored.updatedAt, isNotNull);
   });
 }

@@ -42,6 +42,7 @@ class DriftTaskRepository implements TaskRepository {
   Future<void> setStatus(String id, TaskStatus status) {
     return (_db.update(_db.tasks)..where((t) => t.id.equals(id))).write(
       TasksCompanion(
+        updatedAt: Value(DateTime.now()),
         status: Value(status),
         completedAt: Value(status == TaskStatus.done ? DateTime.now() : null),
       ),
@@ -60,6 +61,7 @@ class DriftTaskRepository implements TaskRepository {
   }) {
     return (_db.update(_db.tasks)..where((t) => t.id.equals(id))).write(
       TasksCompanion(
+        updatedAt: Value(DateTime.now()),
         title: Value(title),
         descriptionMarkdown: Value(descriptionMarkdown),
         dueDate: Value(dueDate),
@@ -86,6 +88,7 @@ class DriftTaskRepository implements TaskRepository {
   }) {
     return (_db.update(_db.tasks)..where((t) => t.id.equals(id))).write(
       TasksCompanion(
+        updatedAt: Value(DateTime.now()),
         status: const Value(TaskStatus.done),
         completedAt: Value(completedAt ?? DateTime.now()),
         closingNote: Value(closingNote),

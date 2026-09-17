@@ -43,6 +43,7 @@ class DriftSessionRepository implements SessionRepository {
   }) {
     return (_db.update(_db.sessions)..where((t) => t.id.equals(id))).write(
       SessionsCompanion(
+        updatedAt: Value(DateTime.now()),
         scheduledFor: Value(scheduledFor),
         agendaMarkdown: Value(agendaMarkdown),
         notesMarkdown: Value(notesMarkdown),

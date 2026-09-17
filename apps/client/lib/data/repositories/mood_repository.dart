@@ -87,7 +87,11 @@ class DriftMoodRepository implements MoodRepository {
 
     await _db.transaction(() async {
       await (_db.update(_db.moodEntries)..where((t) => t.id.equals(id))).write(
-        MoodEntriesCompanion(mood: Value(mood), note: Value(note)),
+        MoodEntriesCompanion(
+          mood: Value(mood),
+          note: Value(note),
+          updatedAt: Value(DateTime.now()),
+        ),
       );
       await (_db.delete(
         _db.moodEntryEmotions,

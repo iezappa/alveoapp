@@ -59,8 +59,27 @@ class $MoodEntriesTable extends MoodEntries
     requiredDuringInsert: false,
     defaultValue: currentDateAndTime,
   );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, occurredAt, mood, note, createdAt];
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    occurredAt,
+    mood,
+    note,
+    createdAt,
+    updatedAt,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -106,6 +125,12 @@ class $MoodEntriesTable extends MoodEntries
         createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
       );
     }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -135,6 +160,10 @@ class $MoodEntriesTable extends MoodEntries
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
       )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -156,12 +185,17 @@ class MoodEntry extends DataClass implements Insertable<MoodEntry> {
   /// note with a full journal document.
   final String? note;
   final DateTime createdAt;
+
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  final DateTime updatedAt;
   const MoodEntry({
     required this.id,
     required this.occurredAt,
     required this.mood,
     this.note,
     required this.createdAt,
+    required this.updatedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -173,6 +207,7 @@ class MoodEntry extends DataClass implements Insertable<MoodEntry> {
       map['note'] = Variable<String>(note);
     }
     map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -183,6 +218,7 @@ class MoodEntry extends DataClass implements Insertable<MoodEntry> {
       mood: Value(mood),
       note: note == null && nullToAbsent ? const Value.absent() : Value(note),
       createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -197,6 +233,7 @@ class MoodEntry extends DataClass implements Insertable<MoodEntry> {
       mood: serializer.fromJson<int>(json['mood']),
       note: serializer.fromJson<String?>(json['note']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -208,6 +245,7 @@ class MoodEntry extends DataClass implements Insertable<MoodEntry> {
       'mood': serializer.toJson<int>(mood),
       'note': serializer.toJson<String?>(note),
       'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
@@ -217,12 +255,14 @@ class MoodEntry extends DataClass implements Insertable<MoodEntry> {
     int? mood,
     Value<String?> note = const Value.absent(),
     DateTime? createdAt,
+    DateTime? updatedAt,
   }) => MoodEntry(
     id: id ?? this.id,
     occurredAt: occurredAt ?? this.occurredAt,
     mood: mood ?? this.mood,
     note: note.present ? note.value : this.note,
     createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
   );
   MoodEntry copyWithCompanion(MoodEntriesCompanion data) {
     return MoodEntry(
@@ -233,6 +273,7 @@ class MoodEntry extends DataClass implements Insertable<MoodEntry> {
       mood: data.mood.present ? data.mood.value : this.mood,
       note: data.note.present ? data.note.value : this.note,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -243,13 +284,15 @@ class MoodEntry extends DataClass implements Insertable<MoodEntry> {
           ..write('occurredAt: $occurredAt, ')
           ..write('mood: $mood, ')
           ..write('note: $note, ')
-          ..write('createdAt: $createdAt')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, occurredAt, mood, note, createdAt);
+  int get hashCode =>
+      Object.hash(id, occurredAt, mood, note, createdAt, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -258,7 +301,8 @@ class MoodEntry extends DataClass implements Insertable<MoodEntry> {
           other.occurredAt == this.occurredAt &&
           other.mood == this.mood &&
           other.note == this.note &&
-          other.createdAt == this.createdAt);
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
 }
 
 class MoodEntriesCompanion extends UpdateCompanion<MoodEntry> {
@@ -267,6 +311,7 @@ class MoodEntriesCompanion extends UpdateCompanion<MoodEntry> {
   final Value<int> mood;
   final Value<String?> note;
   final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const MoodEntriesCompanion({
     this.id = const Value.absent(),
@@ -274,6 +319,7 @@ class MoodEntriesCompanion extends UpdateCompanion<MoodEntry> {
     this.mood = const Value.absent(),
     this.note = const Value.absent(),
     this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   MoodEntriesCompanion.insert({
@@ -282,6 +328,7 @@ class MoodEntriesCompanion extends UpdateCompanion<MoodEntry> {
     required int mood,
     this.note = const Value.absent(),
     this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        occurredAt = Value(occurredAt),
@@ -292,6 +339,7 @@ class MoodEntriesCompanion extends UpdateCompanion<MoodEntry> {
     Expression<int>? mood,
     Expression<String>? note,
     Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -300,6 +348,7 @@ class MoodEntriesCompanion extends UpdateCompanion<MoodEntry> {
       if (mood != null) 'mood': mood,
       if (note != null) 'note': note,
       if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -310,6 +359,7 @@ class MoodEntriesCompanion extends UpdateCompanion<MoodEntry> {
     Value<int>? mood,
     Value<String?>? note,
     Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
     return MoodEntriesCompanion(
@@ -318,6 +368,7 @@ class MoodEntriesCompanion extends UpdateCompanion<MoodEntry> {
       mood: mood ?? this.mood,
       note: note ?? this.note,
       createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -340,6 +391,9 @@ class MoodEntriesCompanion extends UpdateCompanion<MoodEntry> {
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -354,6 +408,7 @@ class MoodEntriesCompanion extends UpdateCompanion<MoodEntry> {
           ..write('mood: $mood, ')
           ..write('note: $note, ')
           ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -402,8 +457,25 @@ class $MoodEntryEmotionsTable extends MoodEntryEmotions
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
   @override
-  List<GeneratedColumn> get $columns => [moodEntryId, emotionKey, intensity];
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    moodEntryId,
+    emotionKey,
+    intensity,
+    updatedAt,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -443,6 +515,12 @@ class $MoodEntryEmotionsTable extends MoodEntryEmotions
     } else if (isInserting) {
       context.missing(_intensityMeta);
     }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -464,6 +542,10 @@ class $MoodEntryEmotionsTable extends MoodEntryEmotions
         DriftSqlType.int,
         data['${effectivePrefix}intensity'],
       )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -480,10 +562,15 @@ class MoodEntryEmotion extends DataClass
 
   /// 1..5. Validated in the domain layer (see [MoodEntries.mood]).
   final int intensity;
+
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  final DateTime updatedAt;
   const MoodEntryEmotion({
     required this.moodEntryId,
     required this.emotionKey,
     required this.intensity,
+    required this.updatedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -491,6 +578,7 @@ class MoodEntryEmotion extends DataClass
     map['mood_entry_id'] = Variable<String>(moodEntryId);
     map['emotion_key'] = Variable<String>(emotionKey);
     map['intensity'] = Variable<int>(intensity);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -499,6 +587,7 @@ class MoodEntryEmotion extends DataClass
       moodEntryId: Value(moodEntryId),
       emotionKey: Value(emotionKey),
       intensity: Value(intensity),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -511,6 +600,7 @@ class MoodEntryEmotion extends DataClass
       moodEntryId: serializer.fromJson<String>(json['moodEntryId']),
       emotionKey: serializer.fromJson<String>(json['emotionKey']),
       intensity: serializer.fromJson<int>(json['intensity']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -520,6 +610,7 @@ class MoodEntryEmotion extends DataClass
       'moodEntryId': serializer.toJson<String>(moodEntryId),
       'emotionKey': serializer.toJson<String>(emotionKey),
       'intensity': serializer.toJson<int>(intensity),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
@@ -527,10 +618,12 @@ class MoodEntryEmotion extends DataClass
     String? moodEntryId,
     String? emotionKey,
     int? intensity,
+    DateTime? updatedAt,
   }) => MoodEntryEmotion(
     moodEntryId: moodEntryId ?? this.moodEntryId,
     emotionKey: emotionKey ?? this.emotionKey,
     intensity: intensity ?? this.intensity,
+    updatedAt: updatedAt ?? this.updatedAt,
   );
   MoodEntryEmotion copyWithCompanion(MoodEntryEmotionsCompanion data) {
     return MoodEntryEmotion(
@@ -541,6 +634,7 @@ class MoodEntryEmotion extends DataClass
           ? data.emotionKey.value
           : this.emotionKey,
       intensity: data.intensity.present ? data.intensity.value : this.intensity,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -549,37 +643,43 @@ class MoodEntryEmotion extends DataClass
     return (StringBuffer('MoodEntryEmotion(')
           ..write('moodEntryId: $moodEntryId, ')
           ..write('emotionKey: $emotionKey, ')
-          ..write('intensity: $intensity')
+          ..write('intensity: $intensity, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(moodEntryId, emotionKey, intensity);
+  int get hashCode =>
+      Object.hash(moodEntryId, emotionKey, intensity, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is MoodEntryEmotion &&
           other.moodEntryId == this.moodEntryId &&
           other.emotionKey == this.emotionKey &&
-          other.intensity == this.intensity);
+          other.intensity == this.intensity &&
+          other.updatedAt == this.updatedAt);
 }
 
 class MoodEntryEmotionsCompanion extends UpdateCompanion<MoodEntryEmotion> {
   final Value<String> moodEntryId;
   final Value<String> emotionKey;
   final Value<int> intensity;
+  final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const MoodEntryEmotionsCompanion({
     this.moodEntryId = const Value.absent(),
     this.emotionKey = const Value.absent(),
     this.intensity = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   MoodEntryEmotionsCompanion.insert({
     required String moodEntryId,
     required String emotionKey,
     required int intensity,
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : moodEntryId = Value(moodEntryId),
        emotionKey = Value(emotionKey),
@@ -588,12 +688,14 @@ class MoodEntryEmotionsCompanion extends UpdateCompanion<MoodEntryEmotion> {
     Expression<String>? moodEntryId,
     Expression<String>? emotionKey,
     Expression<int>? intensity,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (moodEntryId != null) 'mood_entry_id': moodEntryId,
       if (emotionKey != null) 'emotion_key': emotionKey,
       if (intensity != null) 'intensity': intensity,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -602,12 +704,14 @@ class MoodEntryEmotionsCompanion extends UpdateCompanion<MoodEntryEmotion> {
     Value<String>? moodEntryId,
     Value<String>? emotionKey,
     Value<int>? intensity,
+    Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
     return MoodEntryEmotionsCompanion(
       moodEntryId: moodEntryId ?? this.moodEntryId,
       emotionKey: emotionKey ?? this.emotionKey,
       intensity: intensity ?? this.intensity,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -624,6 +728,9 @@ class MoodEntryEmotionsCompanion extends UpdateCompanion<MoodEntryEmotion> {
     if (intensity.present) {
       map['intensity'] = Variable<int>(intensity.value);
     }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -636,6 +743,7 @@ class MoodEntryEmotionsCompanion extends UpdateCompanion<MoodEntryEmotion> {
           ..write('moodEntryId: $moodEntryId, ')
           ..write('emotionKey: $emotionKey, ')
           ..write('intensity: $intensity, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1216,8 +1324,25 @@ class $JournalEntryEmotionsTable extends JournalEntryEmotions
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
   @override
-  List<GeneratedColumn> get $columns => [journalEntryId, emotionKey, intensity];
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    journalEntryId,
+    emotionKey,
+    intensity,
+    updatedAt,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1257,6 +1382,12 @@ class $JournalEntryEmotionsTable extends JournalEntryEmotions
     } else if (isInserting) {
       context.missing(_intensityMeta);
     }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -1278,6 +1409,10 @@ class $JournalEntryEmotionsTable extends JournalEntryEmotions
         DriftSqlType.int,
         data['${effectivePrefix}intensity'],
       )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -1294,10 +1429,15 @@ class JournalEntryEmotion extends DataClass
 
   /// 1..5. Validated in the domain layer.
   final int intensity;
+
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  final DateTime updatedAt;
   const JournalEntryEmotion({
     required this.journalEntryId,
     required this.emotionKey,
     required this.intensity,
+    required this.updatedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1305,6 +1445,7 @@ class JournalEntryEmotion extends DataClass
     map['journal_entry_id'] = Variable<String>(journalEntryId);
     map['emotion_key'] = Variable<String>(emotionKey);
     map['intensity'] = Variable<int>(intensity);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -1313,6 +1454,7 @@ class JournalEntryEmotion extends DataClass
       journalEntryId: Value(journalEntryId),
       emotionKey: Value(emotionKey),
       intensity: Value(intensity),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -1325,6 +1467,7 @@ class JournalEntryEmotion extends DataClass
       journalEntryId: serializer.fromJson<String>(json['journalEntryId']),
       emotionKey: serializer.fromJson<String>(json['emotionKey']),
       intensity: serializer.fromJson<int>(json['intensity']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -1334,6 +1477,7 @@ class JournalEntryEmotion extends DataClass
       'journalEntryId': serializer.toJson<String>(journalEntryId),
       'emotionKey': serializer.toJson<String>(emotionKey),
       'intensity': serializer.toJson<int>(intensity),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
@@ -1341,10 +1485,12 @@ class JournalEntryEmotion extends DataClass
     String? journalEntryId,
     String? emotionKey,
     int? intensity,
+    DateTime? updatedAt,
   }) => JournalEntryEmotion(
     journalEntryId: journalEntryId ?? this.journalEntryId,
     emotionKey: emotionKey ?? this.emotionKey,
     intensity: intensity ?? this.intensity,
+    updatedAt: updatedAt ?? this.updatedAt,
   );
   JournalEntryEmotion copyWithCompanion(JournalEntryEmotionsCompanion data) {
     return JournalEntryEmotion(
@@ -1355,6 +1501,7 @@ class JournalEntryEmotion extends DataClass
           ? data.emotionKey.value
           : this.emotionKey,
       intensity: data.intensity.present ? data.intensity.value : this.intensity,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -1363,20 +1510,23 @@ class JournalEntryEmotion extends DataClass
     return (StringBuffer('JournalEntryEmotion(')
           ..write('journalEntryId: $journalEntryId, ')
           ..write('emotionKey: $emotionKey, ')
-          ..write('intensity: $intensity')
+          ..write('intensity: $intensity, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(journalEntryId, emotionKey, intensity);
+  int get hashCode =>
+      Object.hash(journalEntryId, emotionKey, intensity, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is JournalEntryEmotion &&
           other.journalEntryId == this.journalEntryId &&
           other.emotionKey == this.emotionKey &&
-          other.intensity == this.intensity);
+          other.intensity == this.intensity &&
+          other.updatedAt == this.updatedAt);
 }
 
 class JournalEntryEmotionsCompanion
@@ -1384,17 +1534,20 @@ class JournalEntryEmotionsCompanion
   final Value<String> journalEntryId;
   final Value<String> emotionKey;
   final Value<int> intensity;
+  final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const JournalEntryEmotionsCompanion({
     this.journalEntryId = const Value.absent(),
     this.emotionKey = const Value.absent(),
     this.intensity = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   JournalEntryEmotionsCompanion.insert({
     required String journalEntryId,
     required String emotionKey,
     required int intensity,
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : journalEntryId = Value(journalEntryId),
        emotionKey = Value(emotionKey),
@@ -1403,12 +1556,14 @@ class JournalEntryEmotionsCompanion
     Expression<String>? journalEntryId,
     Expression<String>? emotionKey,
     Expression<int>? intensity,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (journalEntryId != null) 'journal_entry_id': journalEntryId,
       if (emotionKey != null) 'emotion_key': emotionKey,
       if (intensity != null) 'intensity': intensity,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1417,12 +1572,14 @@ class JournalEntryEmotionsCompanion
     Value<String>? journalEntryId,
     Value<String>? emotionKey,
     Value<int>? intensity,
+    Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
     return JournalEntryEmotionsCompanion(
       journalEntryId: journalEntryId ?? this.journalEntryId,
       emotionKey: emotionKey ?? this.emotionKey,
       intensity: intensity ?? this.intensity,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1439,6 +1596,9 @@ class JournalEntryEmotionsCompanion
     if (intensity.present) {
       map['intensity'] = Variable<int>(intensity.value);
     }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1451,6 +1611,7 @@ class JournalEntryEmotionsCompanion
           ..write('journalEntryId: $journalEntryId, ')
           ..write('emotionKey: $emotionKey, ')
           ..write('intensity: $intensity, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1545,6 +1706,18 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -1555,6 +1728,7 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
     status,
     completedAt,
     closingNote,
+    updatedAt,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1620,6 +1794,12 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
         ),
       );
     }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -1663,6 +1843,10 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
         DriftSqlType.string,
         data['${effectivePrefix}closing_note'],
       ),
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -1686,6 +1870,10 @@ class Task extends DataClass implements Insertable<Task> {
 
   /// How the task went — filled in when the user closes it.
   final String? closingNote;
+
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  final DateTime updatedAt;
   const Task({
     required this.id,
     required this.createdAt,
@@ -1695,6 +1883,7 @@ class Task extends DataClass implements Insertable<Task> {
     required this.status,
     this.completedAt,
     this.closingNote,
+    required this.updatedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1717,6 +1906,7 @@ class Task extends DataClass implements Insertable<Task> {
     if (!nullToAbsent || closingNote != null) {
       map['closing_note'] = Variable<String>(closingNote);
     }
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -1738,6 +1928,7 @@ class Task extends DataClass implements Insertable<Task> {
       closingNote: closingNote == null && nullToAbsent
           ? const Value.absent()
           : Value(closingNote),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -1759,6 +1950,7 @@ class Task extends DataClass implements Insertable<Task> {
       ),
       completedAt: serializer.fromJson<DateTime?>(json['completedAt']),
       closingNote: serializer.fromJson<String?>(json['closingNote']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -1775,6 +1967,7 @@ class Task extends DataClass implements Insertable<Task> {
       ),
       'completedAt': serializer.toJson<DateTime?>(completedAt),
       'closingNote': serializer.toJson<String?>(closingNote),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
@@ -1787,6 +1980,7 @@ class Task extends DataClass implements Insertable<Task> {
     TaskStatus? status,
     Value<DateTime?> completedAt = const Value.absent(),
     Value<String?> closingNote = const Value.absent(),
+    DateTime? updatedAt,
   }) => Task(
     id: id ?? this.id,
     createdAt: createdAt ?? this.createdAt,
@@ -1798,6 +1992,7 @@ class Task extends DataClass implements Insertable<Task> {
     status: status ?? this.status,
     completedAt: completedAt.present ? completedAt.value : this.completedAt,
     closingNote: closingNote.present ? closingNote.value : this.closingNote,
+    updatedAt: updatedAt ?? this.updatedAt,
   );
   Task copyWithCompanion(TasksCompanion data) {
     return Task(
@@ -1815,6 +2010,7 @@ class Task extends DataClass implements Insertable<Task> {
       closingNote: data.closingNote.present
           ? data.closingNote.value
           : this.closingNote,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -1828,7 +2024,8 @@ class Task extends DataClass implements Insertable<Task> {
           ..write('dueDate: $dueDate, ')
           ..write('status: $status, ')
           ..write('completedAt: $completedAt, ')
-          ..write('closingNote: $closingNote')
+          ..write('closingNote: $closingNote, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
@@ -1843,6 +2040,7 @@ class Task extends DataClass implements Insertable<Task> {
     status,
     completedAt,
     closingNote,
+    updatedAt,
   );
   @override
   bool operator ==(Object other) =>
@@ -1855,7 +2053,8 @@ class Task extends DataClass implements Insertable<Task> {
           other.dueDate == this.dueDate &&
           other.status == this.status &&
           other.completedAt == this.completedAt &&
-          other.closingNote == this.closingNote);
+          other.closingNote == this.closingNote &&
+          other.updatedAt == this.updatedAt);
 }
 
 class TasksCompanion extends UpdateCompanion<Task> {
@@ -1867,6 +2066,7 @@ class TasksCompanion extends UpdateCompanion<Task> {
   final Value<TaskStatus> status;
   final Value<DateTime?> completedAt;
   final Value<String?> closingNote;
+  final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const TasksCompanion({
     this.id = const Value.absent(),
@@ -1877,6 +2077,7 @@ class TasksCompanion extends UpdateCompanion<Task> {
     this.status = const Value.absent(),
     this.completedAt = const Value.absent(),
     this.closingNote = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   TasksCompanion.insert({
@@ -1888,6 +2089,7 @@ class TasksCompanion extends UpdateCompanion<Task> {
     required TaskStatus status,
     this.completedAt = const Value.absent(),
     this.closingNote = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        title = Value(title),
@@ -1901,6 +2103,7 @@ class TasksCompanion extends UpdateCompanion<Task> {
     Expression<int>? status,
     Expression<DateTime>? completedAt,
     Expression<String>? closingNote,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1913,6 +2116,7 @@ class TasksCompanion extends UpdateCompanion<Task> {
       if (status != null) 'status': status,
       if (completedAt != null) 'completed_at': completedAt,
       if (closingNote != null) 'closing_note': closingNote,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1926,6 +2130,7 @@ class TasksCompanion extends UpdateCompanion<Task> {
     Value<TaskStatus>? status,
     Value<DateTime?>? completedAt,
     Value<String?>? closingNote,
+    Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
     return TasksCompanion(
@@ -1937,6 +2142,7 @@ class TasksCompanion extends UpdateCompanion<Task> {
       status: status ?? this.status,
       completedAt: completedAt ?? this.completedAt,
       closingNote: closingNote ?? this.closingNote,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1970,6 +2176,9 @@ class TasksCompanion extends UpdateCompanion<Task> {
     if (closingNote.present) {
       map['closing_note'] = Variable<String>(closingNote.value);
     }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1987,6 +2196,7 @@ class TasksCompanion extends UpdateCompanion<Task> {
           ..write('status: $status, ')
           ..write('completedAt: $completedAt, ')
           ..write('closingNote: $closingNote, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -2017,8 +2227,20 @@ class $TagsTable extends Tags with TableInfo<$TagsTable, Tag> {
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
   );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, name];
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, name, updatedAt];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2044,6 +2266,12 @@ class $TagsTable extends Tags with TableInfo<$TagsTable, Tag> {
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -2061,6 +2289,10 @@ class $TagsTable extends Tags with TableInfo<$TagsTable, Tag> {
         DriftSqlType.string,
         data['${effectivePrefix}name'],
       )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -2073,17 +2305,26 @@ class $TagsTable extends Tags with TableInfo<$TagsTable, Tag> {
 class Tag extends DataClass implements Insertable<Tag> {
   final String id;
   final String name;
-  const Tag({required this.id, required this.name});
+
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  final DateTime updatedAt;
+  const Tag({required this.id, required this.name, required this.updatedAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
     map['name'] = Variable<String>(name);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
   TagsCompanion toCompanion(bool nullToAbsent) {
-    return TagsCompanion(id: Value(id), name: Value(name));
+    return TagsCompanion(
+      id: Value(id),
+      name: Value(name),
+      updatedAt: Value(updatedAt),
+    );
   }
 
   factory Tag.fromJson(
@@ -2094,6 +2335,7 @@ class Tag extends DataClass implements Insertable<Tag> {
     return Tag(
       id: serializer.fromJson<String>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -2102,15 +2344,20 @@ class Tag extends DataClass implements Insertable<Tag> {
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
       'name': serializer.toJson<String>(name),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
-  Tag copyWith({String? id, String? name}) =>
-      Tag(id: id ?? this.id, name: name ?? this.name);
+  Tag copyWith({String? id, String? name, DateTime? updatedAt}) => Tag(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
   Tag copyWithCompanion(TagsCompanion data) {
     return Tag(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -2118,42 +2365,51 @@ class Tag extends DataClass implements Insertable<Tag> {
   String toString() {
     return (StringBuffer('Tag(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name);
+  int get hashCode => Object.hash(id, name, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Tag && other.id == this.id && other.name == this.name);
+      (other is Tag &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.updatedAt == this.updatedAt);
 }
 
 class TagsCompanion extends UpdateCompanion<Tag> {
   final Value<String> id;
   final Value<String> name;
+  final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const TagsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   TagsCompanion.insert({
     required String id,
     required String name,
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        name = Value(name);
   static Insertable<Tag> custom({
     Expression<String>? id,
     Expression<String>? name,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -2161,11 +2417,13 @@ class TagsCompanion extends UpdateCompanion<Tag> {
   TagsCompanion copyWith({
     Value<String>? id,
     Value<String>? name,
+    Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
     return TagsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -2179,6 +2437,9 @@ class TagsCompanion extends UpdateCompanion<Tag> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -2190,6 +2451,7 @@ class TagsCompanion extends UpdateCompanion<Tag> {
     return (StringBuffer('TagsCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -2228,8 +2490,20 @@ class $MoodEntryTagsTable extends MoodEntryTags
       'REFERENCES tags (id) ON DELETE CASCADE',
     ),
   );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
   @override
-  List<GeneratedColumn> get $columns => [moodEntryId, tagId];
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [moodEntryId, tagId, updatedAt];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2261,6 +2535,12 @@ class $MoodEntryTagsTable extends MoodEntryTags
     } else if (isInserting) {
       context.missing(_tagIdMeta);
     }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -2278,6 +2558,10 @@ class $MoodEntryTagsTable extends MoodEntryTags
         DriftSqlType.string,
         data['${effectivePrefix}tag_id'],
       )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -2290,12 +2574,21 @@ class $MoodEntryTagsTable extends MoodEntryTags
 class MoodEntryTag extends DataClass implements Insertable<MoodEntryTag> {
   final String moodEntryId;
   final String tagId;
-  const MoodEntryTag({required this.moodEntryId, required this.tagId});
+
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  final DateTime updatedAt;
+  const MoodEntryTag({
+    required this.moodEntryId,
+    required this.tagId,
+    required this.updatedAt,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['mood_entry_id'] = Variable<String>(moodEntryId);
     map['tag_id'] = Variable<String>(tagId);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -2303,6 +2596,7 @@ class MoodEntryTag extends DataClass implements Insertable<MoodEntryTag> {
     return MoodEntryTagsCompanion(
       moodEntryId: Value(moodEntryId),
       tagId: Value(tagId),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -2314,6 +2608,7 @@ class MoodEntryTag extends DataClass implements Insertable<MoodEntryTag> {
     return MoodEntryTag(
       moodEntryId: serializer.fromJson<String>(json['moodEntryId']),
       tagId: serializer.fromJson<String>(json['tagId']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -2322,12 +2617,18 @@ class MoodEntryTag extends DataClass implements Insertable<MoodEntryTag> {
     return <String, dynamic>{
       'moodEntryId': serializer.toJson<String>(moodEntryId),
       'tagId': serializer.toJson<String>(tagId),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
-  MoodEntryTag copyWith({String? moodEntryId, String? tagId}) => MoodEntryTag(
+  MoodEntryTag copyWith({
+    String? moodEntryId,
+    String? tagId,
+    DateTime? updatedAt,
+  }) => MoodEntryTag(
     moodEntryId: moodEntryId ?? this.moodEntryId,
     tagId: tagId ?? this.tagId,
+    updatedAt: updatedAt ?? this.updatedAt,
   );
   MoodEntryTag copyWithCompanion(MoodEntryTagsCompanion data) {
     return MoodEntryTag(
@@ -2335,6 +2636,7 @@ class MoodEntryTag extends DataClass implements Insertable<MoodEntryTag> {
           ? data.moodEntryId.value
           : this.moodEntryId,
       tagId: data.tagId.present ? data.tagId.value : this.tagId,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -2342,44 +2644,51 @@ class MoodEntryTag extends DataClass implements Insertable<MoodEntryTag> {
   String toString() {
     return (StringBuffer('MoodEntryTag(')
           ..write('moodEntryId: $moodEntryId, ')
-          ..write('tagId: $tagId')
+          ..write('tagId: $tagId, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(moodEntryId, tagId);
+  int get hashCode => Object.hash(moodEntryId, tagId, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is MoodEntryTag &&
           other.moodEntryId == this.moodEntryId &&
-          other.tagId == this.tagId);
+          other.tagId == this.tagId &&
+          other.updatedAt == this.updatedAt);
 }
 
 class MoodEntryTagsCompanion extends UpdateCompanion<MoodEntryTag> {
   final Value<String> moodEntryId;
   final Value<String> tagId;
+  final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const MoodEntryTagsCompanion({
     this.moodEntryId = const Value.absent(),
     this.tagId = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   MoodEntryTagsCompanion.insert({
     required String moodEntryId,
     required String tagId,
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : moodEntryId = Value(moodEntryId),
        tagId = Value(tagId);
   static Insertable<MoodEntryTag> custom({
     Expression<String>? moodEntryId,
     Expression<String>? tagId,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (moodEntryId != null) 'mood_entry_id': moodEntryId,
       if (tagId != null) 'tag_id': tagId,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -2387,11 +2696,13 @@ class MoodEntryTagsCompanion extends UpdateCompanion<MoodEntryTag> {
   MoodEntryTagsCompanion copyWith({
     Value<String>? moodEntryId,
     Value<String>? tagId,
+    Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
     return MoodEntryTagsCompanion(
       moodEntryId: moodEntryId ?? this.moodEntryId,
       tagId: tagId ?? this.tagId,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -2405,6 +2716,9 @@ class MoodEntryTagsCompanion extends UpdateCompanion<MoodEntryTag> {
     if (tagId.present) {
       map['tag_id'] = Variable<String>(tagId.value);
     }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -2416,6 +2730,7 @@ class MoodEntryTagsCompanion extends UpdateCompanion<MoodEntryTag> {
     return (StringBuffer('MoodEntryTagsCompanion(')
           ..write('moodEntryId: $moodEntryId, ')
           ..write('tagId: $tagId, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -2454,8 +2769,20 @@ class $JournalEntryTagsTable extends JournalEntryTags
       'REFERENCES tags (id) ON DELETE CASCADE',
     ),
   );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
   @override
-  List<GeneratedColumn> get $columns => [journalEntryId, tagId];
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [journalEntryId, tagId, updatedAt];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2487,6 +2814,12 @@ class $JournalEntryTagsTable extends JournalEntryTags
     } else if (isInserting) {
       context.missing(_tagIdMeta);
     }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -2504,6 +2837,10 @@ class $JournalEntryTagsTable extends JournalEntryTags
         DriftSqlType.string,
         data['${effectivePrefix}tag_id'],
       )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -2516,12 +2853,21 @@ class $JournalEntryTagsTable extends JournalEntryTags
 class JournalEntryTag extends DataClass implements Insertable<JournalEntryTag> {
   final String journalEntryId;
   final String tagId;
-  const JournalEntryTag({required this.journalEntryId, required this.tagId});
+
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  final DateTime updatedAt;
+  const JournalEntryTag({
+    required this.journalEntryId,
+    required this.tagId,
+    required this.updatedAt,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['journal_entry_id'] = Variable<String>(journalEntryId);
     map['tag_id'] = Variable<String>(tagId);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -2529,6 +2875,7 @@ class JournalEntryTag extends DataClass implements Insertable<JournalEntryTag> {
     return JournalEntryTagsCompanion(
       journalEntryId: Value(journalEntryId),
       tagId: Value(tagId),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -2540,6 +2887,7 @@ class JournalEntryTag extends DataClass implements Insertable<JournalEntryTag> {
     return JournalEntryTag(
       journalEntryId: serializer.fromJson<String>(json['journalEntryId']),
       tagId: serializer.fromJson<String>(json['tagId']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -2548,20 +2896,26 @@ class JournalEntryTag extends DataClass implements Insertable<JournalEntryTag> {
     return <String, dynamic>{
       'journalEntryId': serializer.toJson<String>(journalEntryId),
       'tagId': serializer.toJson<String>(tagId),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
-  JournalEntryTag copyWith({String? journalEntryId, String? tagId}) =>
-      JournalEntryTag(
-        journalEntryId: journalEntryId ?? this.journalEntryId,
-        tagId: tagId ?? this.tagId,
-      );
+  JournalEntryTag copyWith({
+    String? journalEntryId,
+    String? tagId,
+    DateTime? updatedAt,
+  }) => JournalEntryTag(
+    journalEntryId: journalEntryId ?? this.journalEntryId,
+    tagId: tagId ?? this.tagId,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
   JournalEntryTag copyWithCompanion(JournalEntryTagsCompanion data) {
     return JournalEntryTag(
       journalEntryId: data.journalEntryId.present
           ? data.journalEntryId.value
           : this.journalEntryId,
       tagId: data.tagId.present ? data.tagId.value : this.tagId,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -2569,44 +2923,51 @@ class JournalEntryTag extends DataClass implements Insertable<JournalEntryTag> {
   String toString() {
     return (StringBuffer('JournalEntryTag(')
           ..write('journalEntryId: $journalEntryId, ')
-          ..write('tagId: $tagId')
+          ..write('tagId: $tagId, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(journalEntryId, tagId);
+  int get hashCode => Object.hash(journalEntryId, tagId, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is JournalEntryTag &&
           other.journalEntryId == this.journalEntryId &&
-          other.tagId == this.tagId);
+          other.tagId == this.tagId &&
+          other.updatedAt == this.updatedAt);
 }
 
 class JournalEntryTagsCompanion extends UpdateCompanion<JournalEntryTag> {
   final Value<String> journalEntryId;
   final Value<String> tagId;
+  final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const JournalEntryTagsCompanion({
     this.journalEntryId = const Value.absent(),
     this.tagId = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   JournalEntryTagsCompanion.insert({
     required String journalEntryId,
     required String tagId,
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : journalEntryId = Value(journalEntryId),
        tagId = Value(tagId);
   static Insertable<JournalEntryTag> custom({
     Expression<String>? journalEntryId,
     Expression<String>? tagId,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (journalEntryId != null) 'journal_entry_id': journalEntryId,
       if (tagId != null) 'tag_id': tagId,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -2614,11 +2975,13 @@ class JournalEntryTagsCompanion extends UpdateCompanion<JournalEntryTag> {
   JournalEntryTagsCompanion copyWith({
     Value<String>? journalEntryId,
     Value<String>? tagId,
+    Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
     return JournalEntryTagsCompanion(
       journalEntryId: journalEntryId ?? this.journalEntryId,
       tagId: tagId ?? this.tagId,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -2632,6 +2995,9 @@ class JournalEntryTagsCompanion extends UpdateCompanion<JournalEntryTag> {
     if (tagId.present) {
       map['tag_id'] = Variable<String>(tagId.value);
     }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -2643,6 +3009,7 @@ class JournalEntryTagsCompanion extends UpdateCompanion<JournalEntryTag> {
     return (StringBuffer('JournalEntryTagsCompanion(')
           ..write('journalEntryId: $journalEntryId, ')
           ..write('tagId: $tagId, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -2673,8 +3040,20 @@ class $AppSettingsTable extends AppSettings
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
   @override
-  List<GeneratedColumn> get $columns => [key, value];
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [key, value, updatedAt];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -2703,6 +3082,12 @@ class $AppSettingsTable extends AppSettings
     } else if (isInserting) {
       context.missing(_valueMeta);
     }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -2720,6 +3105,10 @@ class $AppSettingsTable extends AppSettings
         DriftSqlType.string,
         data['${effectivePrefix}value'],
       )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -2732,17 +3121,30 @@ class $AppSettingsTable extends AppSettings
 class AppSetting extends DataClass implements Insertable<AppSetting> {
   final String key;
   final String value;
-  const AppSetting({required this.key, required this.value});
+
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  final DateTime updatedAt;
+  const AppSetting({
+    required this.key,
+    required this.value,
+    required this.updatedAt,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['key'] = Variable<String>(key);
     map['value'] = Variable<String>(value);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
   AppSettingsCompanion toCompanion(bool nullToAbsent) {
-    return AppSettingsCompanion(key: Value(key), value: Value(value));
+    return AppSettingsCompanion(
+      key: Value(key),
+      value: Value(value),
+      updatedAt: Value(updatedAt),
+    );
   }
 
   factory AppSetting.fromJson(
@@ -2753,6 +3155,7 @@ class AppSetting extends DataClass implements Insertable<AppSetting> {
     return AppSetting(
       key: serializer.fromJson<String>(json['key']),
       value: serializer.fromJson<String>(json['value']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -2761,15 +3164,21 @@ class AppSetting extends DataClass implements Insertable<AppSetting> {
     return <String, dynamic>{
       'key': serializer.toJson<String>(key),
       'value': serializer.toJson<String>(value),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
-  AppSetting copyWith({String? key, String? value}) =>
-      AppSetting(key: key ?? this.key, value: value ?? this.value);
+  AppSetting copyWith({String? key, String? value, DateTime? updatedAt}) =>
+      AppSetting(
+        key: key ?? this.key,
+        value: value ?? this.value,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
   AppSetting copyWithCompanion(AppSettingsCompanion data) {
     return AppSetting(
       key: data.key.present ? data.key.value : this.key,
       value: data.value.present ? data.value.value : this.value,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -2777,44 +3186,51 @@ class AppSetting extends DataClass implements Insertable<AppSetting> {
   String toString() {
     return (StringBuffer('AppSetting(')
           ..write('key: $key, ')
-          ..write('value: $value')
+          ..write('value: $value, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(key, value);
+  int get hashCode => Object.hash(key, value, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AppSetting &&
           other.key == this.key &&
-          other.value == this.value);
+          other.value == this.value &&
+          other.updatedAt == this.updatedAt);
 }
 
 class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
   final Value<String> key;
   final Value<String> value;
+  final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const AppSettingsCompanion({
     this.key = const Value.absent(),
     this.value = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   AppSettingsCompanion.insert({
     required String key,
     required String value,
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : key = Value(key),
        value = Value(value);
   static Insertable<AppSetting> custom({
     Expression<String>? key,
     Expression<String>? value,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (key != null) 'key': key,
       if (value != null) 'value': value,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -2822,11 +3238,13 @@ class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
   AppSettingsCompanion copyWith({
     Value<String>? key,
     Value<String>? value,
+    Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
     return AppSettingsCompanion(
       key: key ?? this.key,
       value: value ?? this.value,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -2840,6 +3258,9 @@ class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
     if (value.present) {
       map['value'] = Variable<String>(value.value);
     }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -2851,6 +3272,7 @@ class AppSettingsCompanion extends UpdateCompanion<AppSetting> {
     return (StringBuffer('AppSettingsCompanion(')
           ..write('key: $key, ')
           ..write('value: $value, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -2928,6 +3350,18 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
         type: DriftSqlType.string,
         requiredDuringInsert: false,
       );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -2936,6 +3370,7 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
     agendaMarkdown,
     notesMarkdown,
     takeawaysMarkdown,
+    updatedAt,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -2998,6 +3433,12 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
         ),
       );
     }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -3031,6 +3472,10 @@ class $SessionsTable extends Sessions with TableInfo<$SessionsTable, Session> {
         DriftSqlType.string,
         data['${effectivePrefix}takeaways_markdown'],
       ),
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -3049,6 +3494,10 @@ class Session extends DataClass implements Insertable<Session> {
   final String? agendaMarkdown;
   final String? notesMarkdown;
   final String? takeawaysMarkdown;
+
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  final DateTime updatedAt;
   const Session({
     required this.id,
     required this.scheduledFor,
@@ -3056,6 +3505,7 @@ class Session extends DataClass implements Insertable<Session> {
     this.agendaMarkdown,
     this.notesMarkdown,
     this.takeawaysMarkdown,
+    required this.updatedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -3072,6 +3522,7 @@ class Session extends DataClass implements Insertable<Session> {
     if (!nullToAbsent || takeawaysMarkdown != null) {
       map['takeaways_markdown'] = Variable<String>(takeawaysMarkdown);
     }
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -3089,6 +3540,7 @@ class Session extends DataClass implements Insertable<Session> {
       takeawaysMarkdown: takeawaysMarkdown == null && nullToAbsent
           ? const Value.absent()
           : Value(takeawaysMarkdown),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -3106,6 +3558,7 @@ class Session extends DataClass implements Insertable<Session> {
       takeawaysMarkdown: serializer.fromJson<String?>(
         json['takeawaysMarkdown'],
       ),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -3118,6 +3571,7 @@ class Session extends DataClass implements Insertable<Session> {
       'agendaMarkdown': serializer.toJson<String?>(agendaMarkdown),
       'notesMarkdown': serializer.toJson<String?>(notesMarkdown),
       'takeawaysMarkdown': serializer.toJson<String?>(takeawaysMarkdown),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
@@ -3128,6 +3582,7 @@ class Session extends DataClass implements Insertable<Session> {
     Value<String?> agendaMarkdown = const Value.absent(),
     Value<String?> notesMarkdown = const Value.absent(),
     Value<String?> takeawaysMarkdown = const Value.absent(),
+    DateTime? updatedAt,
   }) => Session(
     id: id ?? this.id,
     scheduledFor: scheduledFor ?? this.scheduledFor,
@@ -3141,6 +3596,7 @@ class Session extends DataClass implements Insertable<Session> {
     takeawaysMarkdown: takeawaysMarkdown.present
         ? takeawaysMarkdown.value
         : this.takeawaysMarkdown,
+    updatedAt: updatedAt ?? this.updatedAt,
   );
   Session copyWithCompanion(SessionsCompanion data) {
     return Session(
@@ -3158,6 +3614,7 @@ class Session extends DataClass implements Insertable<Session> {
       takeawaysMarkdown: data.takeawaysMarkdown.present
           ? data.takeawaysMarkdown.value
           : this.takeawaysMarkdown,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -3169,7 +3626,8 @@ class Session extends DataClass implements Insertable<Session> {
           ..write('createdAt: $createdAt, ')
           ..write('agendaMarkdown: $agendaMarkdown, ')
           ..write('notesMarkdown: $notesMarkdown, ')
-          ..write('takeawaysMarkdown: $takeawaysMarkdown')
+          ..write('takeawaysMarkdown: $takeawaysMarkdown, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
@@ -3182,6 +3640,7 @@ class Session extends DataClass implements Insertable<Session> {
     agendaMarkdown,
     notesMarkdown,
     takeawaysMarkdown,
+    updatedAt,
   );
   @override
   bool operator ==(Object other) =>
@@ -3192,7 +3651,8 @@ class Session extends DataClass implements Insertable<Session> {
           other.createdAt == this.createdAt &&
           other.agendaMarkdown == this.agendaMarkdown &&
           other.notesMarkdown == this.notesMarkdown &&
-          other.takeawaysMarkdown == this.takeawaysMarkdown);
+          other.takeawaysMarkdown == this.takeawaysMarkdown &&
+          other.updatedAt == this.updatedAt);
 }
 
 class SessionsCompanion extends UpdateCompanion<Session> {
@@ -3202,6 +3662,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
   final Value<String?> agendaMarkdown;
   final Value<String?> notesMarkdown;
   final Value<String?> takeawaysMarkdown;
+  final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const SessionsCompanion({
     this.id = const Value.absent(),
@@ -3210,6 +3671,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
     this.agendaMarkdown = const Value.absent(),
     this.notesMarkdown = const Value.absent(),
     this.takeawaysMarkdown = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   SessionsCompanion.insert({
@@ -3219,6 +3681,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
     this.agendaMarkdown = const Value.absent(),
     this.notesMarkdown = const Value.absent(),
     this.takeawaysMarkdown = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        scheduledFor = Value(scheduledFor);
@@ -3229,6 +3692,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
     Expression<String>? agendaMarkdown,
     Expression<String>? notesMarkdown,
     Expression<String>? takeawaysMarkdown,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -3238,6 +3702,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
       if (agendaMarkdown != null) 'agenda_markdown': agendaMarkdown,
       if (notesMarkdown != null) 'notes_markdown': notesMarkdown,
       if (takeawaysMarkdown != null) 'takeaways_markdown': takeawaysMarkdown,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -3249,6 +3714,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
     Value<String?>? agendaMarkdown,
     Value<String?>? notesMarkdown,
     Value<String?>? takeawaysMarkdown,
+    Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
     return SessionsCompanion(
@@ -3258,6 +3724,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
       agendaMarkdown: agendaMarkdown ?? this.agendaMarkdown,
       notesMarkdown: notesMarkdown ?? this.notesMarkdown,
       takeawaysMarkdown: takeawaysMarkdown ?? this.takeawaysMarkdown,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -3283,6 +3750,9 @@ class SessionsCompanion extends UpdateCompanion<Session> {
     if (takeawaysMarkdown.present) {
       map['takeaways_markdown'] = Variable<String>(takeawaysMarkdown.value);
     }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -3298,6 +3768,7 @@ class SessionsCompanion extends UpdateCompanion<Session> {
           ..write('agendaMarkdown: $agendaMarkdown, ')
           ..write('notesMarkdown: $notesMarkdown, ')
           ..write('takeawaysMarkdown: $takeawaysMarkdown, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -3344,8 +3815,25 @@ class $SessionLinksTable extends SessionLinks
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
   @override
-  List<GeneratedColumn> get $columns => [sessionId, targetType, targetId];
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    sessionId,
+    targetType,
+    targetId,
+    updatedAt,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -3374,6 +3862,12 @@ class $SessionLinksTable extends SessionLinks
     } else if (isInserting) {
       context.missing(_targetIdMeta);
     }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -3397,6 +3891,10 @@ class $SessionLinksTable extends SessionLinks
         DriftSqlType.string,
         data['${effectivePrefix}target_id'],
       )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -3413,10 +3911,15 @@ class SessionLink extends DataClass implements Insertable<SessionLink> {
   final String sessionId;
   final LinkTargetType targetType;
   final String targetId;
+
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  final DateTime updatedAt;
   const SessionLink({
     required this.sessionId,
     required this.targetType,
     required this.targetId,
+    required this.updatedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -3428,6 +3931,7 @@ class SessionLink extends DataClass implements Insertable<SessionLink> {
       );
     }
     map['target_id'] = Variable<String>(targetId);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -3436,6 +3940,7 @@ class SessionLink extends DataClass implements Insertable<SessionLink> {
       sessionId: Value(sessionId),
       targetType: Value(targetType),
       targetId: Value(targetId),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -3450,6 +3955,7 @@ class SessionLink extends DataClass implements Insertable<SessionLink> {
         serializer.fromJson<int>(json['targetType']),
       ),
       targetId: serializer.fromJson<String>(json['targetId']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -3461,6 +3967,7 @@ class SessionLink extends DataClass implements Insertable<SessionLink> {
         $SessionLinksTable.$convertertargetType.toJson(targetType),
       ),
       'targetId': serializer.toJson<String>(targetId),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
@@ -3468,10 +3975,12 @@ class SessionLink extends DataClass implements Insertable<SessionLink> {
     String? sessionId,
     LinkTargetType? targetType,
     String? targetId,
+    DateTime? updatedAt,
   }) => SessionLink(
     sessionId: sessionId ?? this.sessionId,
     targetType: targetType ?? this.targetType,
     targetId: targetId ?? this.targetId,
+    updatedAt: updatedAt ?? this.updatedAt,
   );
   SessionLink copyWithCompanion(SessionLinksCompanion data) {
     return SessionLink(
@@ -3480,6 +3989,7 @@ class SessionLink extends DataClass implements Insertable<SessionLink> {
           ? data.targetType.value
           : this.targetType,
       targetId: data.targetId.present ? data.targetId.value : this.targetId,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -3488,37 +3998,42 @@ class SessionLink extends DataClass implements Insertable<SessionLink> {
     return (StringBuffer('SessionLink(')
           ..write('sessionId: $sessionId, ')
           ..write('targetType: $targetType, ')
-          ..write('targetId: $targetId')
+          ..write('targetId: $targetId, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(sessionId, targetType, targetId);
+  int get hashCode => Object.hash(sessionId, targetType, targetId, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is SessionLink &&
           other.sessionId == this.sessionId &&
           other.targetType == this.targetType &&
-          other.targetId == this.targetId);
+          other.targetId == this.targetId &&
+          other.updatedAt == this.updatedAt);
 }
 
 class SessionLinksCompanion extends UpdateCompanion<SessionLink> {
   final Value<String> sessionId;
   final Value<LinkTargetType> targetType;
   final Value<String> targetId;
+  final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const SessionLinksCompanion({
     this.sessionId = const Value.absent(),
     this.targetType = const Value.absent(),
     this.targetId = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   SessionLinksCompanion.insert({
     required String sessionId,
     required LinkTargetType targetType,
     required String targetId,
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : sessionId = Value(sessionId),
        targetType = Value(targetType),
@@ -3527,12 +4042,14 @@ class SessionLinksCompanion extends UpdateCompanion<SessionLink> {
     Expression<String>? sessionId,
     Expression<int>? targetType,
     Expression<String>? targetId,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (sessionId != null) 'session_id': sessionId,
       if (targetType != null) 'target_type': targetType,
       if (targetId != null) 'target_id': targetId,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -3541,12 +4058,14 @@ class SessionLinksCompanion extends UpdateCompanion<SessionLink> {
     Value<String>? sessionId,
     Value<LinkTargetType>? targetType,
     Value<String>? targetId,
+    Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
     return SessionLinksCompanion(
       sessionId: sessionId ?? this.sessionId,
       targetType: targetType ?? this.targetType,
       targetId: targetId ?? this.targetId,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -3565,6 +4084,9 @@ class SessionLinksCompanion extends UpdateCompanion<SessionLink> {
     if (targetId.present) {
       map['target_id'] = Variable<String>(targetId.value);
     }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -3577,6 +4099,7 @@ class SessionLinksCompanion extends UpdateCompanion<SessionLink> {
           ..write('sessionId: $sessionId, ')
           ..write('targetType: $targetType, ')
           ..write('targetId: $targetId, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -3707,6 +4230,18 @@ class $ThoughtRecordsTable extends ThoughtRecords
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -3720,6 +4255,7 @@ class $ThoughtRecordsTable extends ThoughtRecords
     alternativeThought,
     beliefAfter,
     emotionIntensityAfter,
+    updatedAt,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -3825,6 +4361,12 @@ class $ThoughtRecordsTable extends ThoughtRecords
         ),
       );
     }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -3878,6 +4420,10 @@ class $ThoughtRecordsTable extends ThoughtRecords
         DriftSqlType.int,
         data['${effectivePrefix}emotion_intensity_after'],
       ),
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -3909,6 +4455,10 @@ class ThoughtRecord extends DataClass implements Insertable<ThoughtRecord> {
 
   /// 0..10.
   final int? emotionIntensityAfter;
+
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  final DateTime updatedAt;
   const ThoughtRecord({
     required this.id,
     required this.occurredAt,
@@ -3921,6 +4471,7 @@ class ThoughtRecord extends DataClass implements Insertable<ThoughtRecord> {
     this.alternativeThought,
     this.beliefAfter,
     this.emotionIntensityAfter,
+    required this.updatedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -3948,6 +4499,7 @@ class ThoughtRecord extends DataClass implements Insertable<ThoughtRecord> {
     if (!nullToAbsent || emotionIntensityAfter != null) {
       map['emotion_intensity_after'] = Variable<int>(emotionIntensityAfter);
     }
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -3976,6 +4528,7 @@ class ThoughtRecord extends DataClass implements Insertable<ThoughtRecord> {
       emotionIntensityAfter: emotionIntensityAfter == null && nullToAbsent
           ? const Value.absent()
           : Value(emotionIntensityAfter),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -4002,6 +4555,7 @@ class ThoughtRecord extends DataClass implements Insertable<ThoughtRecord> {
       emotionIntensityAfter: serializer.fromJson<int?>(
         json['emotionIntensityAfter'],
       ),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -4019,6 +4573,7 @@ class ThoughtRecord extends DataClass implements Insertable<ThoughtRecord> {
       'alternativeThought': serializer.toJson<String?>(alternativeThought),
       'beliefAfter': serializer.toJson<int?>(beliefAfter),
       'emotionIntensityAfter': serializer.toJson<int?>(emotionIntensityAfter),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
@@ -4034,6 +4589,7 @@ class ThoughtRecord extends DataClass implements Insertable<ThoughtRecord> {
     Value<String?> alternativeThought = const Value.absent(),
     Value<int?> beliefAfter = const Value.absent(),
     Value<int?> emotionIntensityAfter = const Value.absent(),
+    DateTime? updatedAt,
   }) => ThoughtRecord(
     id: id ?? this.id,
     occurredAt: occurredAt ?? this.occurredAt,
@@ -4052,6 +4608,7 @@ class ThoughtRecord extends DataClass implements Insertable<ThoughtRecord> {
     emotionIntensityAfter: emotionIntensityAfter.present
         ? emotionIntensityAfter.value
         : this.emotionIntensityAfter,
+    updatedAt: updatedAt ?? this.updatedAt,
   );
   ThoughtRecord copyWithCompanion(ThoughtRecordsCompanion data) {
     return ThoughtRecord(
@@ -4082,6 +4639,7 @@ class ThoughtRecord extends DataClass implements Insertable<ThoughtRecord> {
       emotionIntensityAfter: data.emotionIntensityAfter.present
           ? data.emotionIntensityAfter.value
           : this.emotionIntensityAfter,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -4098,7 +4656,8 @@ class ThoughtRecord extends DataClass implements Insertable<ThoughtRecord> {
           ..write('emotionIntensityBefore: $emotionIntensityBefore, ')
           ..write('alternativeThought: $alternativeThought, ')
           ..write('beliefAfter: $beliefAfter, ')
-          ..write('emotionIntensityAfter: $emotionIntensityAfter')
+          ..write('emotionIntensityAfter: $emotionIntensityAfter, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
@@ -4116,6 +4675,7 @@ class ThoughtRecord extends DataClass implements Insertable<ThoughtRecord> {
     alternativeThought,
     beliefAfter,
     emotionIntensityAfter,
+    updatedAt,
   );
   @override
   bool operator ==(Object other) =>
@@ -4131,7 +4691,8 @@ class ThoughtRecord extends DataClass implements Insertable<ThoughtRecord> {
           other.emotionIntensityBefore == this.emotionIntensityBefore &&
           other.alternativeThought == this.alternativeThought &&
           other.beliefAfter == this.beliefAfter &&
-          other.emotionIntensityAfter == this.emotionIntensityAfter);
+          other.emotionIntensityAfter == this.emotionIntensityAfter &&
+          other.updatedAt == this.updatedAt);
 }
 
 class ThoughtRecordsCompanion extends UpdateCompanion<ThoughtRecord> {
@@ -4146,6 +4707,7 @@ class ThoughtRecordsCompanion extends UpdateCompanion<ThoughtRecord> {
   final Value<String?> alternativeThought;
   final Value<int?> beliefAfter;
   final Value<int?> emotionIntensityAfter;
+  final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const ThoughtRecordsCompanion({
     this.id = const Value.absent(),
@@ -4159,6 +4721,7 @@ class ThoughtRecordsCompanion extends UpdateCompanion<ThoughtRecord> {
     this.alternativeThought = const Value.absent(),
     this.beliefAfter = const Value.absent(),
     this.emotionIntensityAfter = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ThoughtRecordsCompanion.insert({
@@ -4173,6 +4736,7 @@ class ThoughtRecordsCompanion extends UpdateCompanion<ThoughtRecord> {
     this.alternativeThought = const Value.absent(),
     this.beliefAfter = const Value.absent(),
     this.emotionIntensityAfter = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        occurredAt = Value(occurredAt),
@@ -4190,6 +4754,7 @@ class ThoughtRecordsCompanion extends UpdateCompanion<ThoughtRecord> {
     Expression<String>? alternativeThought,
     Expression<int>? beliefAfter,
     Expression<int>? emotionIntensityAfter,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -4206,6 +4771,7 @@ class ThoughtRecordsCompanion extends UpdateCompanion<ThoughtRecord> {
       if (beliefAfter != null) 'belief_after': beliefAfter,
       if (emotionIntensityAfter != null)
         'emotion_intensity_after': emotionIntensityAfter,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -4222,6 +4788,7 @@ class ThoughtRecordsCompanion extends UpdateCompanion<ThoughtRecord> {
     Value<String?>? alternativeThought,
     Value<int?>? beliefAfter,
     Value<int?>? emotionIntensityAfter,
+    Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
     return ThoughtRecordsCompanion(
@@ -4238,6 +4805,7 @@ class ThoughtRecordsCompanion extends UpdateCompanion<ThoughtRecord> {
       beliefAfter: beliefAfter ?? this.beliefAfter,
       emotionIntensityAfter:
           emotionIntensityAfter ?? this.emotionIntensityAfter,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -4282,6 +4850,9 @@ class ThoughtRecordsCompanion extends UpdateCompanion<ThoughtRecord> {
         emotionIntensityAfter.value,
       );
     }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -4302,6 +4873,7 @@ class ThoughtRecordsCompanion extends UpdateCompanion<ThoughtRecord> {
           ..write('alternativeThought: $alternativeThought, ')
           ..write('beliefAfter: $beliefAfter, ')
           ..write('emotionIntensityAfter: $emotionIntensityAfter, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -4340,8 +4912,20 @@ class $ThoughtRecordDistortionsTable extends ThoughtRecordDistortions
       ).withConverter<CognitiveDistortion>(
         $ThoughtRecordDistortionsTable.$converterdistortion,
       );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
   @override
-  List<GeneratedColumn> get $columns => [recordId, distortion];
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [recordId, distortion, updatedAt];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -4361,6 +4945,12 @@ class $ThoughtRecordDistortionsTable extends ThoughtRecordDistortions
       );
     } else if (isInserting) {
       context.missing(_recordIdMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
     }
     return context;
   }
@@ -4384,6 +4974,10 @@ class $ThoughtRecordDistortionsTable extends ThoughtRecordDistortions
           data['${effectivePrefix}distortion'],
         )!,
       ),
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -4402,9 +4996,14 @@ class ThoughtRecordDistortion extends DataClass
     implements Insertable<ThoughtRecordDistortion> {
   final String recordId;
   final CognitiveDistortion distortion;
+
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  final DateTime updatedAt;
   const ThoughtRecordDistortion({
     required this.recordId,
     required this.distortion,
+    required this.updatedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -4415,6 +5014,7 @@ class ThoughtRecordDistortion extends DataClass
         $ThoughtRecordDistortionsTable.$converterdistortion.toSql(distortion),
       );
     }
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -4422,6 +5022,7 @@ class ThoughtRecordDistortion extends DataClass
     return ThoughtRecordDistortionsCompanion(
       recordId: Value(recordId),
       distortion: Value(distortion),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -4435,6 +5036,7 @@ class ThoughtRecordDistortion extends DataClass
       distortion: $ThoughtRecordDistortionsTable.$converterdistortion.fromJson(
         serializer.fromJson<int>(json['distortion']),
       ),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -4445,15 +5047,18 @@ class ThoughtRecordDistortion extends DataClass
       'distortion': serializer.toJson<int>(
         $ThoughtRecordDistortionsTable.$converterdistortion.toJson(distortion),
       ),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
   ThoughtRecordDistortion copyWith({
     String? recordId,
     CognitiveDistortion? distortion,
+    DateTime? updatedAt,
   }) => ThoughtRecordDistortion(
     recordId: recordId ?? this.recordId,
     distortion: distortion ?? this.distortion,
+    updatedAt: updatedAt ?? this.updatedAt,
   );
   ThoughtRecordDistortion copyWithCompanion(
     ThoughtRecordDistortionsCompanion data,
@@ -4463,6 +5068,7 @@ class ThoughtRecordDistortion extends DataClass
       distortion: data.distortion.present
           ? data.distortion.value
           : this.distortion,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -4470,45 +5076,52 @@ class ThoughtRecordDistortion extends DataClass
   String toString() {
     return (StringBuffer('ThoughtRecordDistortion(')
           ..write('recordId: $recordId, ')
-          ..write('distortion: $distortion')
+          ..write('distortion: $distortion, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(recordId, distortion);
+  int get hashCode => Object.hash(recordId, distortion, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ThoughtRecordDistortion &&
           other.recordId == this.recordId &&
-          other.distortion == this.distortion);
+          other.distortion == this.distortion &&
+          other.updatedAt == this.updatedAt);
 }
 
 class ThoughtRecordDistortionsCompanion
     extends UpdateCompanion<ThoughtRecordDistortion> {
   final Value<String> recordId;
   final Value<CognitiveDistortion> distortion;
+  final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const ThoughtRecordDistortionsCompanion({
     this.recordId = const Value.absent(),
     this.distortion = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ThoughtRecordDistortionsCompanion.insert({
     required String recordId,
     required CognitiveDistortion distortion,
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : recordId = Value(recordId),
        distortion = Value(distortion);
   static Insertable<ThoughtRecordDistortion> custom({
     Expression<String>? recordId,
     Expression<int>? distortion,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (recordId != null) 'record_id': recordId,
       if (distortion != null) 'distortion': distortion,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -4516,11 +5129,13 @@ class ThoughtRecordDistortionsCompanion
   ThoughtRecordDistortionsCompanion copyWith({
     Value<String>? recordId,
     Value<CognitiveDistortion>? distortion,
+    Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
     return ThoughtRecordDistortionsCompanion(
       recordId: recordId ?? this.recordId,
       distortion: distortion ?? this.distortion,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -4538,6 +5153,9 @@ class ThoughtRecordDistortionsCompanion
         ),
       );
     }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -4549,6 +5167,7 @@ class ThoughtRecordDistortionsCompanion
     return (StringBuffer('ThoughtRecordDistortionsCompanion(')
           ..write('recordId: $recordId, ')
           ..write('distortion: $distortion, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -4624,6 +5243,18 @@ class $MedicationsTable extends Medications
     requiredDuringInsert: false,
     defaultValue: currentDateAndTime,
   );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -4632,6 +5263,7 @@ class $MedicationsTable extends Medications
     scheduleNote,
     active,
     createdAt,
+    updatedAt,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -4685,6 +5317,12 @@ class $MedicationsTable extends Medications
         createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
       );
     }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -4718,6 +5356,10 @@ class $MedicationsTable extends Medications
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
       )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -4736,6 +5378,10 @@ class Medication extends DataClass implements Insertable<Medication> {
   final String? scheduleNote;
   final bool active;
   final DateTime createdAt;
+
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  final DateTime updatedAt;
   const Medication({
     required this.id,
     required this.name,
@@ -4743,6 +5389,7 @@ class Medication extends DataClass implements Insertable<Medication> {
     this.scheduleNote,
     required this.active,
     required this.createdAt,
+    required this.updatedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -4757,6 +5404,7 @@ class Medication extends DataClass implements Insertable<Medication> {
     }
     map['active'] = Variable<bool>(active);
     map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -4770,6 +5418,7 @@ class Medication extends DataClass implements Insertable<Medication> {
           : Value(scheduleNote),
       active: Value(active),
       createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -4785,6 +5434,7 @@ class Medication extends DataClass implements Insertable<Medication> {
       scheduleNote: serializer.fromJson<String?>(json['scheduleNote']),
       active: serializer.fromJson<bool>(json['active']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -4797,6 +5447,7 @@ class Medication extends DataClass implements Insertable<Medication> {
       'scheduleNote': serializer.toJson<String?>(scheduleNote),
       'active': serializer.toJson<bool>(active),
       'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
@@ -4807,6 +5458,7 @@ class Medication extends DataClass implements Insertable<Medication> {
     Value<String?> scheduleNote = const Value.absent(),
     bool? active,
     DateTime? createdAt,
+    DateTime? updatedAt,
   }) => Medication(
     id: id ?? this.id,
     name: name ?? this.name,
@@ -4814,6 +5466,7 @@ class Medication extends DataClass implements Insertable<Medication> {
     scheduleNote: scheduleNote.present ? scheduleNote.value : this.scheduleNote,
     active: active ?? this.active,
     createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
   );
   Medication copyWithCompanion(MedicationsCompanion data) {
     return Medication(
@@ -4825,6 +5478,7 @@ class Medication extends DataClass implements Insertable<Medication> {
           : this.scheduleNote,
       active: data.active.present ? data.active.value : this.active,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -4836,14 +5490,15 @@ class Medication extends DataClass implements Insertable<Medication> {
           ..write('dose: $dose, ')
           ..write('scheduleNote: $scheduleNote, ')
           ..write('active: $active, ')
-          ..write('createdAt: $createdAt')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode =>
-      Object.hash(id, name, dose, scheduleNote, active, createdAt);
+      Object.hash(id, name, dose, scheduleNote, active, createdAt, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -4853,7 +5508,8 @@ class Medication extends DataClass implements Insertable<Medication> {
           other.dose == this.dose &&
           other.scheduleNote == this.scheduleNote &&
           other.active == this.active &&
-          other.createdAt == this.createdAt);
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
 }
 
 class MedicationsCompanion extends UpdateCompanion<Medication> {
@@ -4863,6 +5519,7 @@ class MedicationsCompanion extends UpdateCompanion<Medication> {
   final Value<String?> scheduleNote;
   final Value<bool> active;
   final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const MedicationsCompanion({
     this.id = const Value.absent(),
@@ -4871,6 +5528,7 @@ class MedicationsCompanion extends UpdateCompanion<Medication> {
     this.scheduleNote = const Value.absent(),
     this.active = const Value.absent(),
     this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   MedicationsCompanion.insert({
@@ -4880,6 +5538,7 @@ class MedicationsCompanion extends UpdateCompanion<Medication> {
     this.scheduleNote = const Value.absent(),
     this.active = const Value.absent(),
     this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        name = Value(name);
@@ -4890,6 +5549,7 @@ class MedicationsCompanion extends UpdateCompanion<Medication> {
     Expression<String>? scheduleNote,
     Expression<bool>? active,
     Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -4899,6 +5559,7 @@ class MedicationsCompanion extends UpdateCompanion<Medication> {
       if (scheduleNote != null) 'schedule_note': scheduleNote,
       if (active != null) 'active': active,
       if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -4910,6 +5571,7 @@ class MedicationsCompanion extends UpdateCompanion<Medication> {
     Value<String?>? scheduleNote,
     Value<bool>? active,
     Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
     return MedicationsCompanion(
@@ -4919,6 +5581,7 @@ class MedicationsCompanion extends UpdateCompanion<Medication> {
       scheduleNote: scheduleNote ?? this.scheduleNote,
       active: active ?? this.active,
       createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -4944,6 +5607,9 @@ class MedicationsCompanion extends UpdateCompanion<Medication> {
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
     }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -4959,6 +5625,7 @@ class MedicationsCompanion extends UpdateCompanion<Medication> {
           ..write('scheduleNote: $scheduleNote, ')
           ..write('active: $active, ')
           ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -5005,8 +5672,20 @@ class $MedicationLogsTable extends MedicationLogs
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, medicationId, takenAt];
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, medicationId, takenAt, updatedAt];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -5043,6 +5722,12 @@ class $MedicationLogsTable extends MedicationLogs
     } else if (isInserting) {
       context.missing(_takenAtMeta);
     }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -5064,6 +5749,10 @@ class $MedicationLogsTable extends MedicationLogs
         DriftSqlType.dateTime,
         data['${effectivePrefix}taken_at'],
       )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
     );
   }
 
@@ -5077,10 +5766,15 @@ class MedicationLog extends DataClass implements Insertable<MedicationLog> {
   final String id;
   final String medicationId;
   final DateTime takenAt;
+
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  final DateTime updatedAt;
   const MedicationLog({
     required this.id,
     required this.medicationId,
     required this.takenAt,
+    required this.updatedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -5088,6 +5782,7 @@ class MedicationLog extends DataClass implements Insertable<MedicationLog> {
     map['id'] = Variable<String>(id);
     map['medication_id'] = Variable<String>(medicationId);
     map['taken_at'] = Variable<DateTime>(takenAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
     return map;
   }
 
@@ -5096,6 +5791,7 @@ class MedicationLog extends DataClass implements Insertable<MedicationLog> {
       id: Value(id),
       medicationId: Value(medicationId),
       takenAt: Value(takenAt),
+      updatedAt: Value(updatedAt),
     );
   }
 
@@ -5108,6 +5804,7 @@ class MedicationLog extends DataClass implements Insertable<MedicationLog> {
       id: serializer.fromJson<String>(json['id']),
       medicationId: serializer.fromJson<String>(json['medicationId']),
       takenAt: serializer.fromJson<DateTime>(json['takenAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
     );
   }
   @override
@@ -5117,6 +5814,7 @@ class MedicationLog extends DataClass implements Insertable<MedicationLog> {
       'id': serializer.toJson<String>(id),
       'medicationId': serializer.toJson<String>(medicationId),
       'takenAt': serializer.toJson<DateTime>(takenAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
     };
   }
 
@@ -5124,10 +5822,12 @@ class MedicationLog extends DataClass implements Insertable<MedicationLog> {
     String? id,
     String? medicationId,
     DateTime? takenAt,
+    DateTime? updatedAt,
   }) => MedicationLog(
     id: id ?? this.id,
     medicationId: medicationId ?? this.medicationId,
     takenAt: takenAt ?? this.takenAt,
+    updatedAt: updatedAt ?? this.updatedAt,
   );
   MedicationLog copyWithCompanion(MedicationLogsCompanion data) {
     return MedicationLog(
@@ -5136,6 +5836,7 @@ class MedicationLog extends DataClass implements Insertable<MedicationLog> {
           ? data.medicationId.value
           : this.medicationId,
       takenAt: data.takenAt.present ? data.takenAt.value : this.takenAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
     );
   }
 
@@ -5144,37 +5845,42 @@ class MedicationLog extends DataClass implements Insertable<MedicationLog> {
     return (StringBuffer('MedicationLog(')
           ..write('id: $id, ')
           ..write('medicationId: $medicationId, ')
-          ..write('takenAt: $takenAt')
+          ..write('takenAt: $takenAt, ')
+          ..write('updatedAt: $updatedAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, medicationId, takenAt);
+  int get hashCode => Object.hash(id, medicationId, takenAt, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is MedicationLog &&
           other.id == this.id &&
           other.medicationId == this.medicationId &&
-          other.takenAt == this.takenAt);
+          other.takenAt == this.takenAt &&
+          other.updatedAt == this.updatedAt);
 }
 
 class MedicationLogsCompanion extends UpdateCompanion<MedicationLog> {
   final Value<String> id;
   final Value<String> medicationId;
   final Value<DateTime> takenAt;
+  final Value<DateTime> updatedAt;
   final Value<int> rowid;
   const MedicationLogsCompanion({
     this.id = const Value.absent(),
     this.medicationId = const Value.absent(),
     this.takenAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   MedicationLogsCompanion.insert({
     required String id,
     required String medicationId,
     required DateTime takenAt,
+    this.updatedAt = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        medicationId = Value(medicationId),
@@ -5183,12 +5889,14 @@ class MedicationLogsCompanion extends UpdateCompanion<MedicationLog> {
     Expression<String>? id,
     Expression<String>? medicationId,
     Expression<DateTime>? takenAt,
+    Expression<DateTime>? updatedAt,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (medicationId != null) 'medication_id': medicationId,
       if (takenAt != null) 'taken_at': takenAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -5197,12 +5905,14 @@ class MedicationLogsCompanion extends UpdateCompanion<MedicationLog> {
     Value<String>? id,
     Value<String>? medicationId,
     Value<DateTime>? takenAt,
+    Value<DateTime>? updatedAt,
     Value<int>? rowid,
   }) {
     return MedicationLogsCompanion(
       id: id ?? this.id,
       medicationId: medicationId ?? this.medicationId,
       takenAt: takenAt ?? this.takenAt,
+      updatedAt: updatedAt ?? this.updatedAt,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -5219,6 +5929,9 @@ class MedicationLogsCompanion extends UpdateCompanion<MedicationLog> {
     if (takenAt.present) {
       map['taken_at'] = Variable<DateTime>(takenAt.value);
     }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -5231,6 +5944,7 @@ class MedicationLogsCompanion extends UpdateCompanion<MedicationLog> {
           ..write('id: $id, ')
           ..write('medicationId: $medicationId, ')
           ..write('takenAt: $takenAt, ')
+          ..write('updatedAt: $updatedAt, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -5358,6 +6072,7 @@ typedef $$MoodEntriesTableCreateCompanionBuilder =
       required int mood,
       Value<String?> note,
       Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 typedef $$MoodEntriesTableUpdateCompanionBuilder =
@@ -5367,6 +6082,7 @@ typedef $$MoodEntriesTableUpdateCompanionBuilder =
       Value<int> mood,
       Value<String?> note,
       Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 
@@ -5445,6 +6161,11 @@ class $$MoodEntriesTableFilterComposer
 
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -5532,6 +6253,11 @@ class $$MoodEntriesTableOrderingComposer
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$MoodEntriesTableAnnotationComposer
@@ -5559,6 +6285,9 @@ class $$MoodEntriesTableAnnotationComposer
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   Expression<T> moodEntryEmotionsRefs<T extends Object>(
     Expression<T> Function($$MoodEntryEmotionsTableAnnotationComposer a) f,
@@ -5648,6 +6377,7 @@ class $$MoodEntriesTableTableManager
                 Value<int> mood = const Value.absent(),
                 Value<String?> note = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MoodEntriesCompanion(
                 id: id,
@@ -5655,6 +6385,7 @@ class $$MoodEntriesTableTableManager
                 mood: mood,
                 note: note,
                 createdAt: createdAt,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -5664,6 +6395,7 @@ class $$MoodEntriesTableTableManager
                 required int mood,
                 Value<String?> note = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MoodEntriesCompanion.insert(
                 id: id,
@@ -5671,6 +6403,7 @@ class $$MoodEntriesTableTableManager
                 mood: mood,
                 note: note,
                 createdAt: createdAt,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -5764,6 +6497,7 @@ typedef $$MoodEntryEmotionsTableCreateCompanionBuilder =
       required String moodEntryId,
       required String emotionKey,
       required int intensity,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 typedef $$MoodEntryEmotionsTableUpdateCompanionBuilder =
@@ -5771,6 +6505,7 @@ typedef $$MoodEntryEmotionsTableUpdateCompanionBuilder =
       Value<String> moodEntryId,
       Value<String> emotionKey,
       Value<int> intensity,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 
@@ -5824,6 +6559,11 @@ class $$MoodEntryEmotionsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$MoodEntriesTableFilterComposer get moodEntryId {
     final $$MoodEntriesTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -5867,6 +6607,11 @@ class $$MoodEntryEmotionsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$MoodEntriesTableOrderingComposer get moodEntryId {
     final $$MoodEntriesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -5907,6 +6652,9 @@ class $$MoodEntryEmotionsTableAnnotationComposer
 
   GeneratedColumn<int> get intensity =>
       $composableBuilder(column: $table.intensity, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   $$MoodEntriesTableAnnotationComposer get moodEntryId {
     final $$MoodEntriesTableAnnotationComposer composer = $composerBuilder(
@@ -5968,11 +6716,13 @@ class $$MoodEntryEmotionsTableTableManager
                 Value<String> moodEntryId = const Value.absent(),
                 Value<String> emotionKey = const Value.absent(),
                 Value<int> intensity = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MoodEntryEmotionsCompanion(
                 moodEntryId: moodEntryId,
                 emotionKey: emotionKey,
                 intensity: intensity,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -5980,11 +6730,13 @@ class $$MoodEntryEmotionsTableTableManager
                 required String moodEntryId,
                 required String emotionKey,
                 required int intensity,
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MoodEntryEmotionsCompanion.insert(
                 moodEntryId: moodEntryId,
                 emotionKey: emotionKey,
                 intensity: intensity,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -6541,6 +7293,7 @@ typedef $$JournalEntryEmotionsTableCreateCompanionBuilder =
       required String journalEntryId,
       required String emotionKey,
       required int intensity,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 typedef $$JournalEntryEmotionsTableUpdateCompanionBuilder =
@@ -6548,6 +7301,7 @@ typedef $$JournalEntryEmotionsTableUpdateCompanionBuilder =
       Value<String> journalEntryId,
       Value<String> emotionKey,
       Value<int> intensity,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 
@@ -6603,6 +7357,11 @@ class $$JournalEntryEmotionsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$JournalEntriesTableFilterComposer get journalEntryId {
     final $$JournalEntriesTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -6646,6 +7405,11 @@ class $$JournalEntryEmotionsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$JournalEntriesTableOrderingComposer get journalEntryId {
     final $$JournalEntriesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -6686,6 +7450,9 @@ class $$JournalEntryEmotionsTableAnnotationComposer
 
   GeneratedColumn<int> get intensity =>
       $composableBuilder(column: $table.intensity, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   $$JournalEntriesTableAnnotationComposer get journalEntryId {
     final $$JournalEntriesTableAnnotationComposer composer = $composerBuilder(
@@ -6750,11 +7517,13 @@ class $$JournalEntryEmotionsTableTableManager
                 Value<String> journalEntryId = const Value.absent(),
                 Value<String> emotionKey = const Value.absent(),
                 Value<int> intensity = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => JournalEntryEmotionsCompanion(
                 journalEntryId: journalEntryId,
                 emotionKey: emotionKey,
                 intensity: intensity,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -6762,11 +7531,13 @@ class $$JournalEntryEmotionsTableTableManager
                 required String journalEntryId,
                 required String emotionKey,
                 required int intensity,
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => JournalEntryEmotionsCompanion.insert(
                 journalEntryId: journalEntryId,
                 emotionKey: emotionKey,
                 intensity: intensity,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -6843,6 +7614,7 @@ typedef $$TasksTableCreateCompanionBuilder = TasksCompanion Function({
   required TaskStatus status,
   Value<DateTime?> completedAt,
   Value<String?> closingNote,
+  Value<DateTime> updatedAt,
   Value<int> rowid,
 });
 typedef $$TasksTableUpdateCompanionBuilder = TasksCompanion Function({
@@ -6854,6 +7626,7 @@ typedef $$TasksTableUpdateCompanionBuilder = TasksCompanion Function({
   Value<TaskStatus> status,
   Value<DateTime?> completedAt,
   Value<String?> closingNote,
+  Value<DateTime> updatedAt,
   Value<int> rowid,
 });
 
@@ -6903,6 +7676,11 @@ class $$TasksTableFilterComposer extends Composer<_$AppDatabase, $TasksTable> {
 
   ColumnFilters<String> get closingNote => $composableBuilder(
     column: $table.closingNote,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -6955,6 +7733,11 @@ class $$TasksTableOrderingComposer
     column: $table.closingNote,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$TasksTableAnnotationComposer
@@ -6995,6 +7778,9 @@ class $$TasksTableAnnotationComposer
     column: $table.closingNote,
     builder: (column) => column,
   );
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 }
 
 class $$TasksTableTableManager
@@ -7033,6 +7819,7 @@ class $$TasksTableTableManager
                 Value<TaskStatus> status = const Value.absent(),
                 Value<DateTime?> completedAt = const Value.absent(),
                 Value<String?> closingNote = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => TasksCompanion(
                 id: id,
@@ -7043,6 +7830,7 @@ class $$TasksTableTableManager
                 status: status,
                 completedAt: completedAt,
                 closingNote: closingNote,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -7055,6 +7843,7 @@ class $$TasksTableTableManager
                 required TaskStatus status,
                 Value<DateTime?> completedAt = const Value.absent(),
                 Value<String?> closingNote = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => TasksCompanion.insert(
                 id: id,
@@ -7065,6 +7854,7 @@ class $$TasksTableTableManager
                 status: status,
                 completedAt: completedAt,
                 closingNote: closingNote,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -7092,11 +7882,13 @@ typedef $$TasksTableProcessedTableManager =
 typedef $$TagsTableCreateCompanionBuilder = TagsCompanion Function({
   required String id,
   required String name,
+  Value<DateTime> updatedAt,
   Value<int> rowid,
 });
 typedef $$TagsTableUpdateCompanionBuilder = TagsCompanion Function({
   Value<String> id,
   Value<String> name,
+  Value<DateTime> updatedAt,
   Value<int> rowid,
 });
 
@@ -7158,6 +7950,11 @@ class $$TagsTableFilterComposer extends Composer<_$AppDatabase, $TagsTable> {
 
   ColumnFilters<String> get name => $composableBuilder(
     column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -7229,6 +8026,11 @@ class $$TagsTableOrderingComposer extends Composer<_$AppDatabase, $TagsTable> {
     column: $table.name,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$TagsTableAnnotationComposer
@@ -7245,6 +8047,9 @@ class $$TagsTableAnnotationComposer
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   Expression<T> moodEntryTagsRefs<T extends Object>(
     Expression<T> Function($$MoodEntryTagsTableAnnotationComposer a) f,
@@ -7326,16 +8131,30 @@ class $$TagsTableTableManager
               $$TagsTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
               $$TagsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) => TagsCompanion(id: id, name: name, rowid: rowid),
-          createCompanionCallback: ({
-            required String id,
-            required String name,
-            Value<int> rowid = const Value.absent(),
-          }) => TagsCompanion.insert(id: id, name: name, rowid: rowid),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TagsCompanion(
+                id: id,
+                name: name,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TagsCompanion.insert(
+                id: id,
+                name: name,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
           withReferenceMapper: (p0) => p0
               .map(
                 (e) =>
@@ -7422,12 +8241,14 @@ typedef $$MoodEntryTagsTableCreateCompanionBuilder =
     MoodEntryTagsCompanion Function({
       required String moodEntryId,
       required String tagId,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 typedef $$MoodEntryTagsTableUpdateCompanionBuilder =
     MoodEntryTagsCompanion Function({
       Value<String> moodEntryId,
       Value<String> tagId,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 
@@ -7483,6 +8304,11 @@ class $$MoodEntryTagsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$MoodEntriesTableFilterComposer get moodEntryId {
     final $$MoodEntriesTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -7539,6 +8365,11 @@ class $$MoodEntryTagsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$MoodEntriesTableOrderingComposer get moodEntryId {
     final $$MoodEntriesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -7595,6 +8426,9 @@ class $$MoodEntryTagsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
   $$MoodEntriesTableAnnotationComposer get moodEntryId {
     final $$MoodEntriesTableAnnotationComposer composer = $composerBuilder(
       composer: this,
@@ -7672,20 +8506,24 @@ class $$MoodEntryTagsTableTableManager
               ({
                 Value<String> moodEntryId = const Value.absent(),
                 Value<String> tagId = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MoodEntryTagsCompanion(
                 moodEntryId: moodEntryId,
                 tagId: tagId,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
               ({
                 required String moodEntryId,
                 required String tagId,
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MoodEntryTagsCompanion.insert(
                 moodEntryId: moodEntryId,
                 tagId: tagId,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -7768,12 +8606,14 @@ typedef $$JournalEntryTagsTableCreateCompanionBuilder =
     JournalEntryTagsCompanion Function({
       required String journalEntryId,
       required String tagId,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 typedef $$JournalEntryTagsTableUpdateCompanionBuilder =
     JournalEntryTagsCompanion Function({
       Value<String> journalEntryId,
       Value<String> tagId,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 
@@ -7831,6 +8671,11 @@ class $$JournalEntryTagsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$JournalEntriesTableFilterComposer get journalEntryId {
     final $$JournalEntriesTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -7887,6 +8732,11 @@ class $$JournalEntryTagsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$JournalEntriesTableOrderingComposer get journalEntryId {
     final $$JournalEntriesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -7943,6 +8793,9 @@ class $$JournalEntryTagsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
   $$JournalEntriesTableAnnotationComposer get journalEntryId {
     final $$JournalEntriesTableAnnotationComposer composer = $composerBuilder(
       composer: this,
@@ -8022,20 +8875,24 @@ class $$JournalEntryTagsTableTableManager
               ({
                 Value<String> journalEntryId = const Value.absent(),
                 Value<String> tagId = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => JournalEntryTagsCompanion(
                 journalEntryId: journalEntryId,
                 tagId: tagId,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
               ({
                 required String journalEntryId,
                 required String tagId,
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => JournalEntryTagsCompanion.insert(
                 journalEntryId: journalEntryId,
                 tagId: tagId,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -8118,12 +8975,14 @@ typedef $$AppSettingsTableCreateCompanionBuilder =
     AppSettingsCompanion Function({
       required String key,
       required String value,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 typedef $$AppSettingsTableUpdateCompanionBuilder =
     AppSettingsCompanion Function({
       Value<String> key,
       Value<String> value,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 
@@ -8143,6 +9002,11 @@ class $$AppSettingsTableFilterComposer
 
   ColumnFilters<String> get value => $composableBuilder(
     column: $table.value,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -8165,6 +9029,11 @@ class $$AppSettingsTableOrderingComposer
     column: $table.value,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$AppSettingsTableAnnotationComposer
@@ -8181,6 +9050,9 @@ class $$AppSettingsTableAnnotationComposer
 
   GeneratedColumn<String> get value =>
       $composableBuilder(column: $table.value, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 }
 
 class $$AppSettingsTableTableManager
@@ -8212,19 +9084,28 @@ class $$AppSettingsTableTableManager
               $$AppSettingsTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
               $$AppSettingsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> key = const Value.absent(),
-            Value<String> value = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) => AppSettingsCompanion(key: key, value: value, rowid: rowid),
+          updateCompanionCallback:
+              ({
+                Value<String> key = const Value.absent(),
+                Value<String> value = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => AppSettingsCompanion(
+                key: key,
+                value: value,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
           createCompanionCallback:
               ({
                 required String key,
                 required String value,
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => AppSettingsCompanion.insert(
                 key: key,
                 value: value,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -8259,6 +9140,7 @@ typedef $$SessionsTableCreateCompanionBuilder = SessionsCompanion Function({
   Value<String?> agendaMarkdown,
   Value<String?> notesMarkdown,
   Value<String?> takeawaysMarkdown,
+  Value<DateTime> updatedAt,
   Value<int> rowid,
 });
 typedef $$SessionsTableUpdateCompanionBuilder = SessionsCompanion Function({
@@ -8268,6 +9150,7 @@ typedef $$SessionsTableUpdateCompanionBuilder = SessionsCompanion Function({
   Value<String?> agendaMarkdown,
   Value<String?> notesMarkdown,
   Value<String?> takeawaysMarkdown,
+  Value<DateTime> updatedAt,
   Value<int> rowid,
 });
 
@@ -8330,6 +9213,11 @@ class $$SessionsTableFilterComposer
 
   ColumnFilters<String> get takeawaysMarkdown => $composableBuilder(
     column: $table.takeawaysMarkdown,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -8397,6 +9285,11 @@ class $$SessionsTableOrderingComposer
     column: $table.takeawaysMarkdown,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$SessionsTableAnnotationComposer
@@ -8433,6 +9326,9 @@ class $$SessionsTableAnnotationComposer
     column: $table.takeawaysMarkdown,
     builder: (column) => column,
   );
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   Expression<T> sessionLinksRefs<T extends Object>(
     Expression<T> Function($$SessionLinksTableAnnotationComposer a) f,
@@ -8494,6 +9390,7 @@ class $$SessionsTableTableManager
                 Value<String?> agendaMarkdown = const Value.absent(),
                 Value<String?> notesMarkdown = const Value.absent(),
                 Value<String?> takeawaysMarkdown = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SessionsCompanion(
                 id: id,
@@ -8502,6 +9399,7 @@ class $$SessionsTableTableManager
                 agendaMarkdown: agendaMarkdown,
                 notesMarkdown: notesMarkdown,
                 takeawaysMarkdown: takeawaysMarkdown,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -8512,6 +9410,7 @@ class $$SessionsTableTableManager
                 Value<String?> agendaMarkdown = const Value.absent(),
                 Value<String?> notesMarkdown = const Value.absent(),
                 Value<String?> takeawaysMarkdown = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SessionsCompanion.insert(
                 id: id,
@@ -8520,6 +9419,7 @@ class $$SessionsTableTableManager
                 agendaMarkdown: agendaMarkdown,
                 notesMarkdown: notesMarkdown,
                 takeawaysMarkdown: takeawaysMarkdown,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -8582,6 +9482,7 @@ typedef $$SessionLinksTableCreateCompanionBuilder =
       required String sessionId,
       required LinkTargetType targetType,
       required String targetId,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 typedef $$SessionLinksTableUpdateCompanionBuilder =
@@ -8589,6 +9490,7 @@ typedef $$SessionLinksTableUpdateCompanionBuilder =
       Value<String> sessionId,
       Value<LinkTargetType> targetType,
       Value<String> targetId,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 
@@ -8631,6 +9533,11 @@ class $$SessionLinksTableFilterComposer
 
   ColumnFilters<String> get targetId => $composableBuilder(
     column: $table.targetId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -8677,6 +9584,11 @@ class $$SessionLinksTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$SessionsTableOrderingComposer get sessionId {
     final $$SessionsTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -8718,6 +9630,9 @@ class $$SessionLinksTableAnnotationComposer
 
   GeneratedColumn<String> get targetId =>
       $composableBuilder(column: $table.targetId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   $$SessionsTableAnnotationComposer get sessionId {
     final $$SessionsTableAnnotationComposer composer = $composerBuilder(
@@ -8774,11 +9689,13 @@ class $$SessionLinksTableTableManager
                 Value<String> sessionId = const Value.absent(),
                 Value<LinkTargetType> targetType = const Value.absent(),
                 Value<String> targetId = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SessionLinksCompanion(
                 sessionId: sessionId,
                 targetType: targetType,
                 targetId: targetId,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -8786,11 +9703,13 @@ class $$SessionLinksTableTableManager
                 required String sessionId,
                 required LinkTargetType targetType,
                 required String targetId,
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SessionLinksCompanion.insert(
                 sessionId: sessionId,
                 targetType: targetType,
                 targetId: targetId,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -8871,6 +9790,7 @@ typedef $$ThoughtRecordsTableCreateCompanionBuilder =
       Value<String?> alternativeThought,
       Value<int?> beliefAfter,
       Value<int?> emotionIntensityAfter,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 typedef $$ThoughtRecordsTableUpdateCompanionBuilder =
@@ -8886,6 +9806,7 @@ typedef $$ThoughtRecordsTableUpdateCompanionBuilder =
       Value<String?> alternativeThought,
       Value<int?> beliefAfter,
       Value<int?> emotionIntensityAfter,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 
@@ -8987,6 +9908,11 @@ class $$ThoughtRecordsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
   Expression<bool> thoughtRecordDistortionsRefs(
     Expression<bool> Function($$ThoughtRecordDistortionsTableFilterComposer f)
     f,
@@ -9078,6 +10004,11 @@ class $$ThoughtRecordsTableOrderingComposer
     column: $table.emotionIntensityAfter,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$ThoughtRecordsTableAnnotationComposer
@@ -9137,6 +10068,9 @@ class $$ThoughtRecordsTableAnnotationComposer
     column: $table.emotionIntensityAfter,
     builder: (column) => column,
   );
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   Expression<T> thoughtRecordDistortionsRefs<T extends Object>(
     Expression<T> Function($$ThoughtRecordDistortionsTableAnnotationComposer a)
@@ -9207,6 +10141,7 @@ class $$ThoughtRecordsTableTableManager
                 Value<String?> alternativeThought = const Value.absent(),
                 Value<int?> beliefAfter = const Value.absent(),
                 Value<int?> emotionIntensityAfter = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ThoughtRecordsCompanion(
                 id: id,
@@ -9220,6 +10155,7 @@ class $$ThoughtRecordsTableTableManager
                 alternativeThought: alternativeThought,
                 beliefAfter: beliefAfter,
                 emotionIntensityAfter: emotionIntensityAfter,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -9235,6 +10171,7 @@ class $$ThoughtRecordsTableTableManager
                 Value<String?> alternativeThought = const Value.absent(),
                 Value<int?> beliefAfter = const Value.absent(),
                 Value<int?> emotionIntensityAfter = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ThoughtRecordsCompanion.insert(
                 id: id,
@@ -9248,6 +10185,7 @@ class $$ThoughtRecordsTableTableManager
                 alternativeThought: alternativeThought,
                 beliefAfter: beliefAfter,
                 emotionIntensityAfter: emotionIntensityAfter,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -9312,12 +10250,14 @@ typedef $$ThoughtRecordDistortionsTableCreateCompanionBuilder =
     ThoughtRecordDistortionsCompanion Function({
       required String recordId,
       required CognitiveDistortion distortion,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 typedef $$ThoughtRecordDistortionsTableUpdateCompanionBuilder =
     ThoughtRecordDistortionsCompanion Function({
       Value<String> recordId,
       Value<CognitiveDistortion> distortion,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 
@@ -9369,6 +10309,11 @@ class $$ThoughtRecordDistortionsTableFilterComposer
     builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$ThoughtRecordsTableFilterComposer get recordId {
     final $$ThoughtRecordsTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -9404,6 +10349,11 @@ class $$ThoughtRecordDistortionsTableOrderingComposer
   });
   ColumnOrderings<int> get distortion => $composableBuilder(
     column: $table.distortion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -9445,6 +10395,9 @@ class $$ThoughtRecordDistortionsTableAnnotationComposer
         column: $table.distortion,
         builder: (column) => column,
       );
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   $$ThoughtRecordsTableAnnotationComposer get recordId {
     final $$ThoughtRecordsTableAnnotationComposer composer = $composerBuilder(
@@ -9511,20 +10464,24 @@ class $$ThoughtRecordDistortionsTableTableManager
               ({
                 Value<String> recordId = const Value.absent(),
                 Value<CognitiveDistortion> distortion = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ThoughtRecordDistortionsCompanion(
                 recordId: recordId,
                 distortion: distortion,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
               ({
                 required String recordId,
                 required CognitiveDistortion distortion,
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ThoughtRecordDistortionsCompanion.insert(
                 recordId: recordId,
                 distortion: distortion,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -9602,6 +10559,7 @@ typedef $$MedicationsTableCreateCompanionBuilder =
       Value<String?> scheduleNote,
       Value<bool> active,
       Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 typedef $$MedicationsTableUpdateCompanionBuilder =
@@ -9612,6 +10570,7 @@ typedef $$MedicationsTableUpdateCompanionBuilder =
       Value<String?> scheduleNote,
       Value<bool> active,
       Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 
@@ -9674,6 +10633,11 @@ class $$MedicationsTableFilterComposer
 
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
     column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -9741,6 +10705,11 @@ class $$MedicationsTableOrderingComposer
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$MedicationsTableAnnotationComposer
@@ -9771,6 +10740,9 @@ class $$MedicationsTableAnnotationComposer
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   Expression<T> medicationLogsRefs<T extends Object>(
     Expression<T> Function($$MedicationLogsTableAnnotationComposer a) f,
@@ -9832,6 +10804,7 @@ class $$MedicationsTableTableManager
                 Value<String?> scheduleNote = const Value.absent(),
                 Value<bool> active = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MedicationsCompanion(
                 id: id,
@@ -9840,6 +10813,7 @@ class $$MedicationsTableTableManager
                 scheduleNote: scheduleNote,
                 active: active,
                 createdAt: createdAt,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -9850,6 +10824,7 @@ class $$MedicationsTableTableManager
                 Value<String?> scheduleNote = const Value.absent(),
                 Value<bool> active = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MedicationsCompanion.insert(
                 id: id,
@@ -9858,6 +10833,7 @@ class $$MedicationsTableTableManager
                 scheduleNote: scheduleNote,
                 active: active,
                 createdAt: createdAt,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -9925,6 +10901,7 @@ typedef $$MedicationLogsTableCreateCompanionBuilder =
       required String id,
       required String medicationId,
       required DateTime takenAt,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 typedef $$MedicationLogsTableUpdateCompanionBuilder =
@@ -9932,6 +10909,7 @@ typedef $$MedicationLogsTableUpdateCompanionBuilder =
       Value<String> id,
       Value<String> medicationId,
       Value<DateTime> takenAt,
+      Value<DateTime> updatedAt,
       Value<int> rowid,
     });
 
@@ -9981,6 +10959,11 @@ class $$MedicationLogsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$MedicationsTableFilterComposer get medicationId {
     final $$MedicationsTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -10024,6 +11007,11 @@ class $$MedicationLogsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$MedicationsTableOrderingComposer get medicationId {
     final $$MedicationsTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -10062,6 +11050,9 @@ class $$MedicationLogsTableAnnotationComposer
 
   GeneratedColumn<DateTime> get takenAt =>
       $composableBuilder(column: $table.takenAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 
   $$MedicationsTableAnnotationComposer get medicationId {
     final $$MedicationsTableAnnotationComposer composer = $composerBuilder(
@@ -10120,11 +11111,13 @@ class $$MedicationLogsTableTableManager
                 Value<String> id = const Value.absent(),
                 Value<String> medicationId = const Value.absent(),
                 Value<DateTime> takenAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MedicationLogsCompanion(
                 id: id,
                 medicationId: medicationId,
                 takenAt: takenAt,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -10132,11 +11125,13 @@ class $$MedicationLogsTableTableManager
                 required String id,
                 required String medicationId,
                 required DateTime takenAt,
+                Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MedicationLogsCompanion.insert(
                 id: id,
                 medicationId: medicationId,
                 takenAt: takenAt,
+                updatedAt: updatedAt,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

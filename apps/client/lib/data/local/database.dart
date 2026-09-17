@@ -51,7 +51,7 @@ class AppDatabase extends _$AppDatabase {
 
   /// The schema this build writes, readable without opening a store — which
   /// is exactly when recovery needs it.
-  static const currentSchemaVersion = 8;
+  static const currentSchemaVersion = 9;
 
   /// In-memory database for tests. Each instance is isolated.
   factory AppDatabase.forTesting() => AppDatabase(openInMemory());
@@ -86,6 +86,41 @@ class AppDatabase extends _$AppDatabase {
       if (from < 8) {
         await m.createTable(medications);
         await m.createTable(medicationLogs);
+      }
+      if (from < 9) {
+        // updatedAt everywhere. Rows that were already there get their
+        // createdAt where there is one — "changed when it was written" is
+        // true and keeps the history — and the migration's own clock
+        // otherwise, which is the earliest moment anything is known about
+        // a row with no timestamp of its own.
+        for (final entry in <TableInfo, GeneratedColumn<DateTime>?>{
+          moodEntries: moodEntries.createdAt,
+          moodEntryEmotions: null,
+          journalEntryEmotions: null,
+          tasks: tasks.createdAt,
+          thoughtRecords: thoughtRecords.createdAt,
+          thoughtRecordDistortions: null,
+          medications: medications.createdAt,
+          medicationLogs: medicationLogs.takenAt,
+          tags: null,
+          moodEntryTags: null,
+          journalEntryTags: null,
+          appSettings: null,
+          sessions: sessions.createdAt,
+          sessionLinks: null,
+        }.entries) {
+          final table = entry.key;
+          final updatedAt = table.columnsByName['updated_at']!;
+          await m.alterTable(
+            TableMigration(
+              table,
+              newColumns: [updatedAt],
+              columnTransformer: {
+                if (entry.value != null) updatedAt: entry.value!,
+              },
+            ),
+          );
+        }
       }
     },
     beforeOpen: (details) async {

@@ -17,7 +17,10 @@ class BackupService {
   final AppDatabase _db;
 
   static const _format = 'alveo-export';
-  static const _formatVersion = 1;
+
+  /// Bumped to 2 when every table gained updatedAt (schema v9): a version 1
+  /// file has no such column, and its rows are stamped on import.
+  static const _formatVersion = 2;
 
   /// The one `app_settings` key we carry in backups. The rest of app settings
   /// (UI language, PIN) is intentionally device-local.

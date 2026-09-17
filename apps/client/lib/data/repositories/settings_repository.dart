@@ -1,3 +1,5 @@
+import 'package:drift/drift.dart';
+
 import '../local/database.dart';
 import '../../domain/repositories/settings_repository.dart';
 
@@ -18,7 +20,11 @@ class DriftSettingsRepository implements SettingsRepository {
     return _db
         .into(_db.appSettings)
         .insertOnConflictUpdate(
-          AppSettingsCompanion.insert(key: key, value: value),
+          AppSettingsCompanion.insert(
+            key: key,
+            value: value,
+            updatedAt: Value(DateTime.now()),
+          ),
         );
   }
 

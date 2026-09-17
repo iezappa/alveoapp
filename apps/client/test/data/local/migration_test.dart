@@ -11,13 +11,14 @@
 // drift exports an `isNull` expression builder that collides with the matcher.
 import 'package:alveo/data/local/database.dart';
 import 'package:alveo/domain/journal/journal_section.dart';
-import 'package:drift/drift.dart' hide isNull;
+import 'package:drift/drift.dart' hide isNull, isNotNull;
 import 'package:drift_dev/api/migrations_native.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../generated_migrations/schema.dart';
 import '../../generated_migrations/schema_v1.dart' as v1;
 import '../../generated_migrations/schema_v4.dart' as v4;
+import '../../generated_migrations/schema_v8.dart' as v8;
 
 void main() {
   driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
@@ -113,5 +114,34 @@ void main() {
     expect(entry.bodyMarkdown, 'before notebooks');
     expect(entry.section, JournalSection.oneLiner);
     expect(entry.isMonthlyReview, isFalse);
+  });
+
+  test('v9 stamps updatedAt from what the row already knew', () async {
+    final schema = await verifier.schemaAt(8);
+    final created = DateTime(2026, 5, 4, 12, 30);
+    final before = v8.DatabaseAtV8(schema.newConnection());
+    await before
+        .into(before.moodEntries)
+        .insert(
+          v8.MoodEntriesCompanion.insert(
+            id: 'm1',
+            occurredAt: DateTime(2026, 5, 4, 12).millisecondsSinceEpoch ~/ 1000,
+            mood: 3,
+            createdAt: Value(created.millisecondsSinceEpoch ~/ 1000),
+          ),
+        );
+    await before
+        .into(before.tags)
+        .insert(v8.TagsCompanion.insert(id: 't1', name: 'work'));
+    await before.close();
+
+    final db = AppDatabase(schema.newConnection());
+    addTearDown(db.close);
+    await verifier.migrateAndValidate(db, 9);
+
+    // A row with a createdAt keeps its own history.
+    expect((await db.select(db.moodEntries).getSingle()).updatedAt, created);
+    // One without gets a real timestamp rather than null.
+    expect((await db.select(db.tags).getSingle()).updatedAt, isNotNull);
   });
 }

@@ -40,6 +40,7 @@ class DriftMedicationRepository implements MedicationRepository {
   }) {
     return (_db.update(_db.medications)..where((t) => t.id.equals(id))).write(
       MedicationsCompanion(
+        updatedAt: Value(DateTime.now()),
         name: Value(name),
         dose: Value(dose),
         scheduleNote: Value(scheduleNote),

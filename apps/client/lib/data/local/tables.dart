@@ -34,6 +34,9 @@ class MoodEntries extends Table {
 
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   @override
   Set<Column> get primaryKey => {id};
 }
@@ -52,6 +55,9 @@ class MoodEntryEmotions extends Table {
   /// 1..5. Validated in the domain layer (see [MoodEntries.mood]).
   IntColumn get intensity => integer()();
 
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   @override
   Set<Column> get primaryKey => {moodEntryId, emotionKey};
 }
@@ -99,6 +105,9 @@ class JournalEntryEmotions extends Table {
   /// 1..5. Validated in the domain layer.
   IntColumn get intensity => integer()();
 
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   @override
   Set<Column> get primaryKey => {journalEntryId, emotionKey};
 }
@@ -120,6 +129,9 @@ class Tasks extends Table {
   /// How the task went — filled in when the user closes it.
   TextColumn get closingNote => text().nullable()();
 
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   @override
   Set<Column> get primaryKey => {id};
 }
@@ -155,6 +167,9 @@ class ThoughtRecords extends Table {
   /// 0..10.
   IntColumn get emotionIntensityAfter => integer().nullable()();
 
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   @override
   Set<Column> get primaryKey => {id};
 }
@@ -166,6 +181,9 @@ class ThoughtRecordDistortions extends Table {
 
   IntColumn get distortion => intEnum<CognitiveDistortion>()();
 
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   @override
   Set<Column> get primaryKey => {recordId, distortion};
 }
@@ -182,6 +200,9 @@ class Medications extends Table {
   BoolColumn get active => boolean().withDefault(const Constant(true))();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   @override
   Set<Column> get primaryKey => {id};
 }
@@ -193,6 +214,9 @@ class MedicationLogs extends Table {
       text().references(Medications, #id, onDelete: KeyAction.cascade)();
   DateTimeColumn get takenAt => dateTime()();
 
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   @override
   Set<Column> get primaryKey => {id};
 }
@@ -202,6 +226,9 @@ class Tags extends Table {
   TextColumn get id => text()();
   TextColumn get name => text().unique()();
 
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   @override
   Set<Column> get primaryKey => {id};
 }
@@ -212,6 +239,9 @@ class MoodEntryTags extends Table {
   TextColumn get tagId =>
       text().references(Tags, #id, onDelete: KeyAction.cascade)();
 
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   @override
   Set<Column> get primaryKey => {moodEntryId, tagId};
 }
@@ -222,6 +252,9 @@ class JournalEntryTags extends Table {
   TextColumn get tagId =>
       text().references(Tags, #id, onDelete: KeyAction.cascade)();
 
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   @override
   Set<Column> get primaryKey => {journalEntryId, tagId};
 }
@@ -233,6 +266,9 @@ class AppSettings extends Table {
   TextColumn get key => text()();
   TextColumn get value => text()();
 
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   @override
   Set<Column> get primaryKey => {key};
 }
@@ -251,6 +287,9 @@ class Sessions extends Table {
   TextColumn get notesMarkdown => text().nullable()();
   TextColumn get takeawaysMarkdown => text().nullable()();
 
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   @override
   Set<Column> get primaryKey => {id};
 }
@@ -266,6 +305,9 @@ class SessionLinks extends Table {
 
   TextColumn get targetId => text()();
 
+  /// Last time this row changed. Every table carries one: it costs nothing
+  /// today and is what a future sync would merge on (§1.1).
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
   @override
   Set<Column> get primaryKey => {sessionId, targetType, targetId};
 }

@@ -77,6 +77,7 @@ class DriftThoughtRecordRepository implements ThoughtRecordRepository {
         _db.thoughtRecords,
       )..where((t) => t.id.equals(id))).write(
         ThoughtRecordsCompanion(
+          updatedAt: Value(DateTime.now()),
           occurredAt: Value(occurredAt),
           situation: Value(situation),
           automaticThought: Value(automaticThought),
