@@ -343,5 +343,9 @@
   "sensitiveExportBody": "Este archivo contiene tus notas de terapia sin cifrar. Guardalo en un lugar privado.",
   "sensitiveExportMute": "No volver a mostrar en esta sesión",
   "sensitiveExportContinue": "Continuar",
-  "pinWebCaveat": "En la versión web, el PIN disuade el acceso casual pero no protege frente a alguien con acceso a este navegador o dispositivo."
+  "pinWebCaveat": "En la versión web, el PIN disuade el acceso casual pero no protege frente a alguien con acceso a este navegador o dispositivo.",
+  "privacyPolicy": "Política de privacidad",
+  "termsOfUse": "Términos de uso",
+  "developerContact": "Desarrollador y contacto",
+  "openSourceLicenses": "Licencias"
 }

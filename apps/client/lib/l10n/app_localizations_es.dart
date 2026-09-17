@@ -1040,4 +1040,16 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get pinWebCaveat =>
       'En la versión web, el PIN disuade el acceso casual pero no protege frente a alguien con acceso a este navegador o dispositivo.';
+
+  @override
+  String get privacyPolicy => 'Política de privacidad';
+
+  @override
+  String get termsOfUse => 'Términos de uso';
+
+  @override
+  String get developerContact => 'Desarrollador y contacto';
+
+  @override
+  String get openSourceLicenses => 'Licencias';
 }

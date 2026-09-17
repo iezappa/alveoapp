@@ -88,6 +88,7 @@ flutter:
   # see assets/fonts/*-OFL.txt.
   assets:
     - assets/fonts/
+    - assets/legal/
 
   fonts:
     - family: Lora

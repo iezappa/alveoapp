@@ -2023,6 +2023,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'On the web version, the PIN deters casual access but does not protect against someone with access to this browser or device.'**
   String get pinWebCaveat;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @termsOfUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of use'**
+  String get termsOfUse;
+
+  /// No description provided for @developerContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Developer and contact'**
+  String get developerContact;
+
+  /// No description provided for @openSourceLicenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Licenses'**
+  String get openSourceLicenses;
 }
 
 class _AppLocalizationsDelegate

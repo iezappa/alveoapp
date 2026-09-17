@@ -10,6 +10,7 @@ import '../../app/ui.dart';
 import '../../app/user_profile_controller.dart';
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../legal/legal_document_screen.dart';
 import '../obsidian/obsidian_actions.dart';
 import '../safety/crisis_resources.dart';
 import '../security/pin_dialogs.dart';
@@ -242,9 +243,47 @@ class SettingsScreen extends ConsumerWidget {
               const SizedBox(height: 16),
               const CrisisResourcesCard(),
               const SizedBox(height: 12),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.privacy_tip_outlined),
+                title: Text(l10n.privacyPolicy),
+                onTap: () => _openLegal(context, LegalDocument.privacy),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.gavel_outlined),
+                title: Text(l10n.termsOfUse),
+                onTap: () => _openLegal(context, LegalDocument.terms),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.mail_outline),
+                title: Text(l10n.developerContact),
+                subtitle: const Text('$developerName\n$contactUrl'),
+                isThreeLine: true,
+                onTap: () => launchExternalUrl(Uri.parse(contactUrl)),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.description_outlined),
+                title: Text(l10n.openSourceLicenses),
+                onTap: () => showLicensePage(
+                  context: context,
+                  applicationName: l10n.appTitle,
+                  applicationLegalese: developerName,
+                ),
+              ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _openLegal(BuildContext context, LegalDocument document) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => LegalDocumentScreen(document: document),
       ),
     );
   }

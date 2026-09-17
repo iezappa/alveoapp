@@ -1038,4 +1038,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get pinWebCaveat =>
       'On the web version, the PIN deters casual access but does not protect against someone with access to this browser or device.';
+
+  @override
+  String get privacyPolicy => 'Privacy policy';
+
+  @override
+  String get termsOfUse => 'Terms of use';
+
+  @override
+  String get developerContact => 'Developer and contact';
+
+  @override
+  String get openSourceLicenses => 'Licenses';
 }
