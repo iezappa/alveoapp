@@ -118,7 +118,7 @@ void main() {
       expect(find.byType(CrisisResourcesCard), findsOneWidget);
       expect(
         tester.getTopLeft(find.byType(CrisisResourcesCard)).dy,
-        greaterThan(tester.getTopLeft(find.text('ABOUT THIS APP')).dy),
+        greaterThan(tester.getTopLeft(find.text('ABOUT')).dy),
       );
     });
 
@@ -131,6 +131,7 @@ void main() {
         300,
         scrollable: find.byType(Scrollable).first,
       );
+      await _centre(tester, find.text('Safety plan'));
       await tester.tap(find.text('Safety plan'));
       await tester.pumpAndSettle();
 
@@ -141,4 +142,11 @@ void main() {
       );
     });
   });
+}
+
+/// Scrolls [finder] to the middle of the viewport, clear of the bottom bar
+/// that would otherwise swallow the tap.
+Future<void> _centre(WidgetTester tester, Finder finder) async {
+  await Scrollable.ensureVisible(tester.element(finder), alignment: 0.5);
+  await tester.pumpAndSettle();
 }

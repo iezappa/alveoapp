@@ -78,3 +78,10 @@ class SectionLabel extends StatelessWidget {
     );
   }
 }
+
+/// Named spacing, so a screen cannot drift to its own numbers.
+abstract final class Gap {
+  /// Between two sections of a flat settings-like column.
+  static const section = 28.0;
+  static const vSection = SizedBox(height: section);
+}

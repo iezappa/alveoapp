@@ -295,7 +295,6 @@ class _CheckInCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   IconButton(
-                    visualDensity: VisualDensity.compact,
                     icon: const Icon(Icons.history, size: 20),
                     onPressed: () => context.push('/mood-history'),
                     tooltip: l10n.moodHistoryTitle,

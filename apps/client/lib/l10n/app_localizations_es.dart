@@ -22,7 +22,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get languageSpanish => 'Español';
 
   @override
-  String get supportSection => 'Apoyo';
+  String get supportSection => 'Soporte';
 
   @override
   String get supportTitle => 'Apoyá mis proyectos';
@@ -124,7 +124,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pinRemoved => 'PIN quitado';
 
   @override
-  String get dataSectionTitle => 'Datos';
+  String get dataSectionTitle => 'Tus datos';
 
   @override
   String get exportBackup => 'Exportar copia';
@@ -1052,4 +1052,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get openSourceLicenses => 'Licencias';
+
+  @override
+  String get profileSection => 'Perfil';
+
+  @override
+  String get securitySection => 'Seguridad';
+
+  @override
+  String get aboutSection => 'Acerca de';
 }

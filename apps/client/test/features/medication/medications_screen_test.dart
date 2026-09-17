@@ -20,6 +20,7 @@ Future<void> _openMeds(WidgetTester tester, AppDatabase db) async {
     300,
     scrollable: find.byType(Scrollable).first,
   );
+  await _centre(tester, find.text('Medications'));
   await tester.tap(find.text('Medications')); // dashboard quick link
   await tester.pumpAndSettle();
 }
@@ -58,4 +59,11 @@ void main() {
     expect(doses, hasLength(1));
     expect(find.text('1 dose today'), findsOneWidget);
   });
+}
+
+/// Scrolls [finder] to the middle of the viewport, clear of the bottom bar
+/// that would otherwise swallow the tap.
+Future<void> _centre(WidgetTester tester, Finder finder) async {
+  await Scrollable.ensureVisible(tester.element(finder), alignment: 0.5);
+  await tester.pumpAndSettle();
 }

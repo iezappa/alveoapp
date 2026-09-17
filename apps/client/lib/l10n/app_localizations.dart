@@ -323,7 +323,7 @@ abstract class AppLocalizations {
   /// No description provided for @dataSectionTitle.
   ///
   /// In en, this message translates to:
-  /// **'Data'**
+  /// **'Your data'**
   String get dataSectionTitle;
 
   /// No description provided for @exportBackup.
@@ -2047,6 +2047,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Licenses'**
   String get openSourceLicenses;
+
+  /// No description provided for @profileSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profileSection;
+
+  /// No description provided for @securitySection.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get securitySection;
+
+  /// No description provided for @aboutSection.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get aboutSection;
 }
 
 class _AppLocalizationsDelegate

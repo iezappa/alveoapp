@@ -88,8 +88,8 @@ class SettingsScreen extends ConsumerWidget {
                     ),
                 ],
               ),
-              const SizedBox(height: 28),
-              SectionLabel(l10n.namePromptLabel),
+              Gap.vSection,
+              SectionLabel(l10n.profileSection),
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.person_outline),
@@ -97,14 +97,7 @@ class SettingsScreen extends ConsumerWidget {
                 subtitle: (name != null && name.isNotEmpty) ? Text(name) : null,
                 onTap: () => promptForName(context, ref, initial: name),
               ),
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.school_outlined),
-                title: Text(l10n.settingsTutorial),
-                subtitle: Text(l10n.settingsTutorialSubtitle),
-                onTap: () => showTutorial(context),
-              ),
-              const SizedBox(height: 28),
+              Gap.vSection,
               SectionLabel(l10n.settingsLanguage),
               SegmentedButton<String>(
                 segments: [
@@ -118,8 +111,8 @@ class SettingsScreen extends ConsumerWidget {
                       .setLocale(Locale(selection.first));
                 },
               ),
-              const SizedBox(height: 28),
-              SectionLabel(l10n.pinSectionTitle),
+              Gap.vSection,
+              SectionLabel(l10n.securitySection),
               // On the web the PIN is a deterrent, not protection: say so
               // where it is set, not in a document nobody opens.
               if (isWeb) ...[
@@ -159,7 +152,37 @@ class SettingsScreen extends ConsumerWidget {
                         onTap: () => _setPin(context, ref),
                       ),
               ),
-              const SizedBox(height: 28),
+              Gap.vSection,
+              // Obsidian sync needs local filesystem access — desktop only.
+              if (!isWeb) ...[
+                SectionLabel(l10n.obsidianSection),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.folder_open_outlined),
+                  title: Text(l10n.obsidianVaultFolder),
+                  subtitle: Text(
+                    vault.asData?.value ?? l10n.obsidianNotSet,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  onTap: () => pickObsidianVault(context, ref),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.arrow_upward),
+                  enabled: vault.asData?.value != null,
+                  title: Text(l10n.obsidianExport),
+                  onTap: () => runObsidianExport(context, ref),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.arrow_downward),
+                  enabled: vault.asData?.value != null,
+                  title: Text(l10n.obsidianImport),
+                  onTap: () => runObsidianImport(context, ref),
+                ),
+                Gap.vSection,
+              ],
               SectionLabel(l10n.dataSectionTitle),
               // The backup notice, always on screen and above the export:
               // someone should learn that no server has a copy before they
@@ -198,41 +221,11 @@ class SettingsScreen extends ConsumerWidget {
                 onTap: () => runImportBackup(context, ref),
               ),
               const EraseAllDataTile(),
-              // Obsidian sync needs local filesystem access — desktop only.
-              if (!isWeb) ...[
-                const SizedBox(height: 28),
-                SectionLabel(l10n.obsidianSection),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.folder_open_outlined),
-                  title: Text(l10n.obsidianVaultFolder),
-                  subtitle: Text(
-                    vault.asData?.value ?? l10n.obsidianNotSet,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  onTap: () => pickObsidianVault(context, ref),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.arrow_upward),
-                  enabled: vault.asData?.value != null,
-                  title: Text(l10n.obsidianExport),
-                  onTap: () => runObsidianExport(context, ref),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.arrow_downward),
-                  enabled: vault.asData?.value != null,
-                  title: Text(l10n.obsidianImport),
-                  onTap: () => runObsidianImport(context, ref),
-                ),
-              ],
-              const SizedBox(height: 28),
+              Gap.vSection,
               SectionLabel(l10n.supportSection),
               const SupportProjectsCard(),
-              const SizedBox(height: 28),
-              SectionLabel(l10n.settingsDisclaimerTitle),
+              Gap.vSection,
+              SectionLabel(l10n.aboutSection),
               Text(
                 l10n.settingsDisclaimerBody,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -242,7 +235,6 @@ class SettingsScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 16),
               const CrisisResourcesCard(),
-              const SizedBox(height: 12),
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.privacy_tip_outlined),
@@ -272,6 +264,13 @@ class SettingsScreen extends ConsumerWidget {
                   applicationName: l10n.appTitle,
                   applicationLegalese: developerName,
                 ),
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.school_outlined),
+                title: Text(l10n.settingsTutorial),
+                subtitle: Text(l10n.settingsTutorialSubtitle),
+                onTap: () => showTutorial(context),
               ),
             ],
           ),
@@ -377,20 +376,25 @@ class _AccentSwatch extends StatelessWidget {
       child: InkResponse(
         onTap: onTap,
         radius: 28,
-        child: Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: accent.seed,
-            border: Border.all(
-              color: selected ? scheme.onSurface : Colors.transparent,
-              width: 2,
+        child: SizedBox.square(
+          dimension: 48,
+          child: Center(
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: accent.seed,
+                border: Border.all(
+                  color: selected ? scheme.onSurface : Colors.transparent,
+                  width: 2,
+                ),
+              ),
+              child: selected
+                  ? const Icon(Icons.check, size: 18, color: Colors.white)
+                  : null,
             ),
           ),
-          child: selected
-              ? const Icon(Icons.check, size: 18, color: Colors.white)
-              : null,
         ),
       ),
     );

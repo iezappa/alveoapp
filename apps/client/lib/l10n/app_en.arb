@@ -52,7 +52,7 @@
   "pinUpdated": "PIN updated",
   "pinRemoved": "PIN removed",
 
-  "dataSectionTitle": "Data",
+  "dataSectionTitle": "Your data",
   "exportBackup": "Export backup",
   "importBackup": "Import backup",
   "backupFileType": "Alveo backup",
@@ -402,5 +402,8 @@
   "privacyPolicy": "Privacy policy",
   "termsOfUse": "Terms of use",
   "developerContact": "Developer and contact",
-  "openSourceLicenses": "Licenses"
+  "openSourceLicenses": "Licenses",
+  "profileSection": "Profile",
+  "securitySection": "Security",
+  "aboutSection": "About"
 }

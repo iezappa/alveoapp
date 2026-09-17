@@ -124,7 +124,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pinRemoved => 'PIN removed';
 
   @override
-  String get dataSectionTitle => 'Data';
+  String get dataSectionTitle => 'Your data';
 
   @override
   String get exportBackup => 'Export backup';
@@ -1050,4 +1050,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get openSourceLicenses => 'Licenses';
+
+  @override
+  String get profileSection => 'Profile';
+
+  @override
+  String get securitySection => 'Security';
+
+  @override
+  String get aboutSection => 'About';
 }

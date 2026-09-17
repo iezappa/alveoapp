@@ -5,7 +5,7 @@
   "languageEnglish": "Inglés",
   "languageSpanish": "Español",
 
-  "supportSection": "Apoyo",
+  "supportSection": "Soporte",
   "supportTitle": "Apoyá mis proyectos",
   "supportBody": "Alveo es gratis y funciona sin conexión. Si te sirve, podés colaborar para que pueda seguir manteniendo mis proyectos.",
   "supportCafecito": "Cafecito (Argentina)",
@@ -42,7 +42,7 @@
   "pinUpdated": "PIN actualizado",
   "pinRemoved": "PIN quitado",
 
-  "dataSectionTitle": "Datos",
+  "dataSectionTitle": "Tus datos",
   "exportBackup": "Exportar copia",
   "importBackup": "Importar copia",
   "backupFileType": "Copia de Alveo",
@@ -347,5 +347,8 @@
   "privacyPolicy": "Política de privacidad",
   "termsOfUse": "Términos de uso",
   "developerContact": "Desarrollador y contacto",
-  "openSourceLicenses": "Licencias"
+  "openSourceLicenses": "Licencias",
+  "profileSection": "Perfil",
+  "securitySection": "Seguridad",
+  "aboutSection": "Acerca de"
 }
