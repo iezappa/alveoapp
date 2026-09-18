@@ -7,6 +7,8 @@ import 'package:alveo/data/repositories/journal_repository.dart';
 import 'package:alveo/features/journal/journal_editor_screen.dart';
 import 'package:alveo/main.dart';
 
+import '../../helpers/refuse_writes.dart';
+
 Finder _editorField() => find.descendant(
   of: find.byType(JournalEditorScreen),
   matching: find.byType(TextField),
@@ -79,5 +81,38 @@ void main() {
 
     final entry = await DriftJournalRepository(db).getById(id);
     expect(entry!.bodyMarkdown, 'second draft');
+  });
+
+  testWidgets('keeps the typed text when the entry could not be saved', (
+    tester,
+  ) async {
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await _openJournal(tester, db);
+
+    await tester.tap(find.byTooltip('New entry'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(ListTile, 'One-liners'));
+    await tester.pumpAndSettle();
+    await tester.enterText(_editorField().last, 'words I cannot lose');
+    await tester.pump();
+
+    await refuseWrites(db, 'journal_entries');
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(saveFailedMessage), findsOneWidget);
+    // Still in the editor, with the text, so it can be retried or copied.
+    expect(find.byType(JournalEditorScreen), findsOneWidget);
+    expect(find.text('words I cannot lose'), findsWidgets);
+    final save = tester.widget<IconButton>(
+      find
+          .ancestor(
+            of: find.byTooltip('Save'),
+            matching: find.byType(IconButton),
+          )
+          .first,
+    );
+    expect(save.onPressed, isNotNull);
   });
 }

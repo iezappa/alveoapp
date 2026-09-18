@@ -7,6 +7,7 @@ import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../shared/confirm_delete.dart';
 import 'medication_providers.dart';
+import '../shared/save_failure.dart';
 
 class MedicationEditorScreen extends ConsumerStatefulWidget {
   const MedicationEditorScreen({super.key, this.medicationId});
@@ -66,21 +67,28 @@ class _MedicationEditorScreenState
     String? textOrNull(TextEditingController c) =>
         c.text.trim().isEmpty ? null : c.text.trim();
 
-    if (widget.medicationId == null) {
-      await repo.create(
-        name: _name.text.trim(),
-        dose: textOrNull(_dose),
-        scheduleNote: textOrNull(_schedule),
-      );
-    } else {
-      await repo.update(
-        id: widget.medicationId!,
-        name: _name.text.trim(),
-        dose: textOrNull(_dose),
-        scheduleNote: textOrNull(_schedule),
-        active: _active,
-      );
+    final saved = await saveOrReport(context, () async {
+      if (widget.medicationId == null) {
+        await repo.create(
+          name: _name.text.trim(),
+          dose: textOrNull(_dose),
+          scheduleNote: textOrNull(_schedule),
+        );
+      } else {
+        await repo.update(
+          id: widget.medicationId!,
+          name: _name.text.trim(),
+          dose: textOrNull(_dose),
+          scheduleNote: textOrNull(_schedule),
+          active: _active,
+        );
+      }
+    });
+    if (!saved) {
+      if (mounted) setState(() => _saving = false);
+      return;
     }
+
     ref.invalidate(medicationListProvider);
 
     if (!mounted) return;

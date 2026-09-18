@@ -7,6 +7,8 @@ import 'package:alveo/data/repositories/medication_repository.dart';
 import 'package:alveo/features/medication/medication_editor_screen.dart';
 import 'package:alveo/main.dart';
 
+import '../../helpers/refuse_writes.dart';
+
 Future<void> _openMeds(WidgetTester tester, AppDatabase db) async {
   await tester.pumpWidget(
     ProviderScope(
@@ -58,6 +60,43 @@ void main() {
     );
     expect(doses, hasLength(1));
     expect(find.text('1 dose today'), findsOneWidget);
+  });
+
+  testWidgets('says so when the medication could not be saved', (tester) async {
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await _openMeds(tester, db);
+    await tester.tap(find.text('New medication'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find
+          .descendant(
+            of: find.byType(MedicationEditorScreen),
+            matching: find.byType(TextField),
+          )
+          .first,
+      'Melatonin',
+    );
+
+    await refuseWrites(db, 'medications');
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(saveFailedMessage), findsOneWidget);
+    expect(find.byType(MedicationEditorScreen), findsOneWidget);
+  });
+
+  testWidgets('says so when the dose could not be logged', (tester) async {
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await DriftMedicationRepository(db).create(name: 'Melatonin');
+    await _openMeds(tester, db);
+
+    await refuseWrites(db, 'medication_logs');
+    await tester.tap(find.byTooltip('Log a dose'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(saveFailedMessage), findsOneWidget);
   });
 }
 

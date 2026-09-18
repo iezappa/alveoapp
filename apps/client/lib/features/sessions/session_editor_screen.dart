@@ -9,6 +9,7 @@ import '../../l10n/emotion_labels.dart';
 import '../journal/live_markdown_field.dart';
 import 'session_links_tab.dart';
 import 'session_providers.dart';
+import '../shared/save_failure.dart';
 
 class SessionEditorScreen extends ConsumerStatefulWidget {
   const SessionEditorScreen({super.key, this.sessionId, this.onDone});
@@ -128,21 +129,27 @@ class _SessionEditorScreenState extends ConsumerState<SessionEditorScreen> {
     String? textOrNull(TextEditingController c) =>
         c.text.trim().isEmpty ? null : c.text;
 
-    if (widget.sessionId == null) {
-      await repo.create(
-        scheduledFor: _scheduledFor,
-        agendaMarkdown: textOrNull(_agenda),
-        notesMarkdown: textOrNull(_notes),
-        takeawaysMarkdown: textOrNull(_takeaways),
-      );
-    } else {
-      await repo.update(
-        id: widget.sessionId!,
-        scheduledFor: _scheduledFor,
-        agendaMarkdown: textOrNull(_agenda),
-        notesMarkdown: textOrNull(_notes),
-        takeawaysMarkdown: textOrNull(_takeaways),
-      );
+    final saved = await saveOrReport(context, () async {
+      if (widget.sessionId == null) {
+        await repo.create(
+          scheduledFor: _scheduledFor,
+          agendaMarkdown: textOrNull(_agenda),
+          notesMarkdown: textOrNull(_notes),
+          takeawaysMarkdown: textOrNull(_takeaways),
+        );
+      } else {
+        await repo.update(
+          id: widget.sessionId!,
+          scheduledFor: _scheduledFor,
+          agendaMarkdown: textOrNull(_agenda),
+          notesMarkdown: textOrNull(_notes),
+          takeawaysMarkdown: textOrNull(_takeaways),
+        );
+      }
+    });
+    if (!saved) {
+      if (mounted) setState(() => _saving = false);
+      return;
     }
 
     ref.invalidate(sessionListProvider);

@@ -8,6 +8,7 @@ import '../../data/local/tables.dart';
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import 'task_providers.dart';
+import '../shared/save_failure.dart';
 
 class TaskEditorScreen extends ConsumerStatefulWidget {
   const TaskEditorScreen({super.key, this.taskId, this.onDone});
@@ -92,32 +93,38 @@ class _TaskEditorScreenState extends ConsumerState<TaskEditorScreen> {
     final description = _descriptionController.text.trim();
     final closingNote = _closingNoteController.text.trim();
 
-    if (widget.taskId == null) {
-      final id = await repo.create(
-        title: title,
-        descriptionMarkdown: description.isEmpty ? null : description,
-        dueDate: _dueDate,
-      );
-      if (_status != TaskStatus.pending || closingNote.isNotEmpty) {
+    final saved = await saveOrReport(context, () async {
+      if (widget.taskId == null) {
+        final id = await repo.create(
+          title: title,
+          descriptionMarkdown: description.isEmpty ? null : description,
+          dueDate: _dueDate,
+        );
+        if (_status != TaskStatus.pending || closingNote.isNotEmpty) {
+          await repo.update(
+            id: id,
+            title: title,
+            descriptionMarkdown: description.isEmpty ? null : description,
+            dueDate: _dueDate,
+            status: _status,
+            closingNote: closingNote.isEmpty ? null : closingNote,
+          );
+        }
+      } else {
         await repo.update(
-          id: id,
+          id: widget.taskId!,
           title: title,
           descriptionMarkdown: description.isEmpty ? null : description,
           dueDate: _dueDate,
           status: _status,
           closingNote: closingNote.isEmpty ? null : closingNote,
+          completedAt: _existing?.completedAt,
         );
       }
-    } else {
-      await repo.update(
-        id: widget.taskId!,
-        title: title,
-        descriptionMarkdown: description.isEmpty ? null : description,
-        dueDate: _dueDate,
-        status: _status,
-        closingNote: closingNote.isEmpty ? null : closingNote,
-        completedAt: _existing?.completedAt,
-      );
+    });
+    if (!saved) {
+      if (mounted) setState(() => _saving = false);
+      return;
     }
 
     ref.invalidate(taskListProvider);

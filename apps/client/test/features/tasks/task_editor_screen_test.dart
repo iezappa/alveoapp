@@ -8,6 +8,8 @@ import 'package:alveo/data/repositories/task_repository.dart';
 import 'package:alveo/features/tasks/task_editor_screen.dart';
 import 'package:alveo/main.dart';
 
+import '../../helpers/refuse_writes.dart';
+
 Finder _inEditor(Finder matching) =>
     find.descendant(of: find.byType(TaskEditorScreen), matching: matching);
 
@@ -69,5 +71,24 @@ void main() {
     expect(task!.title, 'Refined task');
     expect(task.status, TaskStatus.done);
     expect(task.completedAt, isNotNull);
+  });
+
+  testWidgets('says so when the task could not be saved', (tester) async {
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await _openTasks(tester, db);
+    await tester.tap(find.byTooltip('New task'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      _inEditor(find.byType(TextField)).first,
+      'Call the clinic',
+    );
+
+    await refuseWrites(db, 'tasks');
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(saveFailedMessage), findsOneWidget);
+    expect(find.text('Call the clinic'), findsWidgets);
   });
 }

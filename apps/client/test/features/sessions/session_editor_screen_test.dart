@@ -7,6 +7,8 @@ import 'package:alveo/data/repositories/session_repository.dart';
 import 'package:alveo/features/sessions/session_editor_screen.dart';
 import 'package:alveo/main.dart';
 
+import '../../helpers/refuse_writes.dart';
+
 Finder _editorField() => find.descendant(
   of: find.byType(SessionEditorScreen),
   matching: find.byType(TextField),
@@ -84,5 +86,23 @@ void main() {
 
     final saved = (await DriftSessionRepository(db).getAll()).single;
     expect(saved.agendaMarkdown, contains('Since the last session'));
+  });
+
+  testWidgets('keeps the notes when the session could not be saved', (
+    tester,
+  ) async {
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await _openSessions(tester, db);
+    await tester.tap(find.byTooltip('New session'));
+    await tester.pumpAndSettle();
+    await tester.enterText(_editorField().first, 'talk about boundaries');
+
+    await refuseWrites(db, 'sessions');
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(saveFailedMessage), findsOneWidget);
+    expect(find.text('talk about boundaries'), findsWidgets);
   });
 }

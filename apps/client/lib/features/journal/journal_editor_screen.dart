@@ -12,6 +12,7 @@ import '../../l10n/emotion_labels.dart';
 import '../check_in/plutchik_wheel.dart';
 import 'journal_providers.dart';
 import 'live_markdown_field.dart';
+import '../shared/save_failure.dart';
 
 class JournalEditorScreen extends ConsumerStatefulWidget {
   const JournalEditorScreen({
@@ -131,22 +132,28 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
         EmotionInput(emotionKey: key, intensity: _defaultIntensity),
     ];
 
-    if (widget.entryId == null) {
-      await repo.create(
-        bodyMarkdown: body,
-        entryDate: _entryDate,
-        title: title,
-        section: _section,
-        isMonthlyReview: _isReview,
-        emotions: emotions,
-      );
-    } else {
-      await repo.updateBody(
-        id: widget.entryId!,
-        bodyMarkdown: body,
-        title: title,
-      );
-      await repo.replaceEmotions(widget.entryId!, emotions);
+    final saved = await saveOrReport(context, () async {
+      if (widget.entryId == null) {
+        await repo.create(
+          bodyMarkdown: body,
+          entryDate: _entryDate,
+          title: title,
+          section: _section,
+          isMonthlyReview: _isReview,
+          emotions: emotions,
+        );
+      } else {
+        await repo.updateBody(
+          id: widget.entryId!,
+          bodyMarkdown: body,
+          title: title,
+        );
+        await repo.replaceEmotions(widget.entryId!, emotions);
+      }
+    });
+    if (!saved) {
+      if (mounted) setState(() => _saving = false);
+      return;
     }
 
     ref.invalidate(journalListProvider);

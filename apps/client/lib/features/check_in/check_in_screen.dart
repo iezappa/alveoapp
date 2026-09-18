@@ -11,6 +11,7 @@ import '../../l10n/emotion_labels.dart';
 import '../shared/confirm_delete.dart';
 import 'mood_weather.dart';
 import 'plutchik_wheel.dart';
+import '../shared/save_failure.dart';
 
 class CheckInScreen extends ConsumerStatefulWidget {
   const CheckInScreen({super.key, this.moodEntryId});
@@ -100,24 +101,32 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
     ];
     final repo = ref.read(moodRepositoryProvider);
     final tagRepo = ref.read(tagRepositoryProvider);
-    final tagIds = [for (final name in _tags) await tagRepo.findOrCreate(name)];
+    final saved = await saveOrReport(context, () async {
+      final tagIds = [
+        for (final name in _tags) await tagRepo.findOrCreate(name),
+      ];
 
-    if (widget.moodEntryId == null) {
-      await repo.add(
-        mood: _mood,
-        occurredAt: DateTime.now(),
-        note: note.isEmpty ? null : note,
-        emotions: emotions,
-        tagIds: tagIds,
-      );
-    } else {
-      await repo.update(
-        id: widget.moodEntryId!,
-        mood: _mood,
-        note: note.isEmpty ? null : note,
-        emotions: emotions,
-        tagIds: tagIds,
-      );
+      if (widget.moodEntryId == null) {
+        await repo.add(
+          mood: _mood,
+          occurredAt: DateTime.now(),
+          note: note.isEmpty ? null : note,
+          emotions: emotions,
+          tagIds: tagIds,
+        );
+      } else {
+        await repo.update(
+          id: widget.moodEntryId!,
+          mood: _mood,
+          note: note.isEmpty ? null : note,
+          emotions: emotions,
+          tagIds: tagIds,
+        );
+      }
+    });
+    if (!saved) {
+      if (mounted) setState(() => _saving = false);
+      return;
     }
 
     ref.invalidate(moodEntriesProvider);

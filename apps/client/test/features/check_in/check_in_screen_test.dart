@@ -7,6 +7,8 @@ import 'package:alveo/data/repositories/mood_repository.dart';
 import 'package:alveo/features/check_in/plutchik_wheel.dart';
 import 'package:alveo/main.dart';
 
+import '../../helpers/refuse_writes.dart';
+
 void main() {
   testWidgets('a check-in persists the mood score and selected emotions', (
     tester,
@@ -54,5 +56,28 @@ void main() {
     final emotions = await repo.emotionsFor(entries.single.id);
     expect(emotions.map((e) => e.emotionKey), ['joy']);
     expect(emotions.single.intensity, 3); // default intensity
+  });
+
+  testWidgets('says so when the check-in could not be saved', (tester) async {
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [appDatabaseProvider.overrideWithValue(db)],
+        child: const AlveoApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Daily check-in'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('mood-4')));
+    await tester.pump();
+
+    await refuseWrites(db, 'mood_entries');
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(saveFailedMessage), findsOneWidget);
+    expect(find.text('How are you feeling?'), findsOneWidget);
   });
 }

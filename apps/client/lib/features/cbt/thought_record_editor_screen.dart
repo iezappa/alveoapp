@@ -9,6 +9,7 @@ import '../../domain/cbt/cognitive_distortion.dart';
 import '../../l10n/app_localizations.dart';
 import 'cbt_labels.dart';
 import 'thought_record_providers.dart';
+import '../shared/save_failure.dart';
 
 /// The guided thought-record form: situation → automatic thought → belief →
 /// emotion → distortions → alternative thought → re-rating.
@@ -114,33 +115,39 @@ class _ThoughtRecordEditorScreenState
     String? textOrNull(TextEditingController c) =>
         c.text.trim().isEmpty ? null : c.text.trim();
 
-    if (widget.recordId == null) {
-      await repo.create(
-        occurredAt: _occurredAt,
-        situation: _situation.text.trim(),
-        automaticThought: _automatic.text.trim(),
-        beliefBefore: _beliefBefore.round(),
-        emotionLabel: textOrNull(_emotion),
-        emotionIntensityBefore: _intensityBefore.round(),
-        distortions: _distortions,
-        alternativeThought: textOrNull(_alternative),
-        beliefAfter: _beliefAfter.round(),
-        emotionIntensityAfter: _intensityAfter.round(),
-      );
-    } else {
-      await repo.update(
-        id: widget.recordId!,
-        occurredAt: _occurredAt,
-        situation: _situation.text.trim(),
-        automaticThought: _automatic.text.trim(),
-        beliefBefore: _beliefBefore.round(),
-        emotionLabel: textOrNull(_emotion),
-        emotionIntensityBefore: _intensityBefore.round(),
-        distortions: _distortions,
-        alternativeThought: textOrNull(_alternative),
-        beliefAfter: _beliefAfter.round(),
-        emotionIntensityAfter: _intensityAfter.round(),
-      );
+    final saved = await saveOrReport(context, () async {
+      if (widget.recordId == null) {
+        await repo.create(
+          occurredAt: _occurredAt,
+          situation: _situation.text.trim(),
+          automaticThought: _automatic.text.trim(),
+          beliefBefore: _beliefBefore.round(),
+          emotionLabel: textOrNull(_emotion),
+          emotionIntensityBefore: _intensityBefore.round(),
+          distortions: _distortions,
+          alternativeThought: textOrNull(_alternative),
+          beliefAfter: _beliefAfter.round(),
+          emotionIntensityAfter: _intensityAfter.round(),
+        );
+      } else {
+        await repo.update(
+          id: widget.recordId!,
+          occurredAt: _occurredAt,
+          situation: _situation.text.trim(),
+          automaticThought: _automatic.text.trim(),
+          beliefBefore: _beliefBefore.round(),
+          emotionLabel: textOrNull(_emotion),
+          emotionIntensityBefore: _intensityBefore.round(),
+          distortions: _distortions,
+          alternativeThought: textOrNull(_alternative),
+          beliefAfter: _beliefAfter.round(),
+          emotionIntensityAfter: _intensityAfter.round(),
+        );
+      }
+    });
+    if (!saved) {
+      if (mounted) setState(() => _saving = false);
+      return;
     }
 
     ref.invalidate(thoughtRecordListProvider);

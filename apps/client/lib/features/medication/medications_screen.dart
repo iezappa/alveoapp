@@ -8,6 +8,7 @@ import '../../data/local/database.dart';
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import 'medication_providers.dart';
+import '../shared/save_failure.dart';
 
 class MedicationsScreen extends ConsumerWidget {
   const MedicationsScreen({super.key});
@@ -99,10 +100,13 @@ class _MedicationTile extends ConsumerWidget {
                   ),
                 IconButton.filledTonal(
                   onPressed: () async {
-                    await ref
-                        .read(medicationRepositoryProvider)
-                        .logDose(med.id);
-                    ref.invalidate(medicationListProvider);
+                    final logged = await saveOrReport(
+                      context,
+                      () => ref
+                          .read(medicationRepositoryProvider)
+                          .logDose(med.id),
+                    );
+                    if (logged) ref.invalidate(medicationListProvider);
                   },
                   icon: const Icon(Icons.add),
                   tooltip: l10n.medicationTake,

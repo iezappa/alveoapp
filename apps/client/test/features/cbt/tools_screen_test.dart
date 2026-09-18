@@ -7,6 +7,8 @@ import 'package:alveo/data/repositories/thought_record_repository.dart';
 import 'package:alveo/features/cbt/thought_record_editor_screen.dart';
 import 'package:alveo/main.dart';
 
+import '../../helpers/refuse_writes.dart';
+
 Finder _editorFields() => find.descendant(
   of: find.byType(ThoughtRecordEditorScreen),
   matching: find.byType(TextField),
@@ -76,5 +78,26 @@ void main() {
 
     expect(find.text('They must think I have not changed'), findsOneWidget);
     expect(find.text('Edit'), findsOneWidget);
+  });
+
+  testWidgets('says so when the thought record could not be saved', (
+    tester,
+  ) async {
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await _openTools(tester, db);
+    await tester.tap(find.byTooltip('Use a tool'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('New thought record'));
+    await tester.pumpAndSettle();
+    await tester.enterText(_editorFields().at(0), 'Meeting ran long');
+    await tester.enterText(_editorFields().at(1), 'I always mess up');
+
+    await refuseWrites(db, 'thought_records');
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(saveFailedMessage), findsOneWidget);
+    expect(find.text('I always mess up'), findsWidgets);
   });
 }

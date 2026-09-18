@@ -9,6 +9,7 @@ import '../../domain/safety/safety_plan.dart';
 import '../../l10n/app_localizations.dart';
 import 'crisis_resources.dart';
 import 'safety_plan_providers.dart';
+import '../shared/save_failure.dart';
 
 class SafetyPlanScreen extends ConsumerStatefulWidget {
   const SafetyPlanScreen({super.key});
@@ -92,7 +93,14 @@ class _SafetyPlanScreenState extends ConsumerState<SafetyPlanScreen> {
           if (!c.isBlank) c.toContact(),
       ],
     );
-    await ref.read(safetyPlanRepositoryProvider).save(plan);
+    final saved = await saveOrReport(context, () async {
+      await ref.read(safetyPlanRepositoryProvider).save(plan);
+    });
+    if (!saved) {
+      if (mounted) setState(() => _saving = false);
+      return;
+    }
+
     ref.invalidate(safetyPlanProvider);
 
     if (!mounted) return;
