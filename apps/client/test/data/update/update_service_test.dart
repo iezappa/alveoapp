@@ -100,6 +100,51 @@ void main() {
       expect(info!.schemaChange, isTrue);
       expect(info.minSupportedVersion, const AppVersion(0, 9, 0));
     });
+    group('tells a broken answer apart from no answer', () {
+      Future<List<String>> problemsFor(MockClient client) async {
+        final problems = <String>[];
+        await GitHubUpdateService(
+          installed: _installed,
+          client: client,
+          repository: 'iezappa/alveoapp',
+          onProblem: (what, _) => problems.add(what),
+        ).check();
+        return problems;
+      }
+
+      test('reports a body that is not JSON', () async {
+        expect(
+          await problemsFor(
+            MockClient((_) async => http.Response('<html>oops</html>', 200)),
+          ),
+          hasLength(1),
+        );
+      });
+
+      test('reports a tag it cannot read', () async {
+        expect(
+          await problemsFor(
+            MockClient(
+              (_) async => http.Response('{"tag_name":"release-7"}', 200),
+            ),
+          ),
+          hasLength(1),
+        );
+      });
+
+      test('does not report being offline or an HTTP error', () async {
+        expect(
+          await problemsFor(
+            MockClient((_) async => throw const SocketExceptionStub()),
+          ),
+          isEmpty,
+        );
+        expect(
+          await problemsFor(MockClient((_) async => http.Response('', 503))),
+          isEmpty,
+        );
+      });
+    });
   });
 
   group('web', () {
@@ -140,6 +185,35 @@ void main() {
       ).check();
 
       expect(info, isNull);
+    });
+    test(
+      'reports an unreadable version.json but still honours the worker',
+      () async {
+        final problems = <String>[];
+        final info = await WebUpdateService(
+          installed: _installed,
+          client: MockClient((_) async => http.Response('<html>', 200)),
+          baseUri: Uri.parse('/alveoapp/'),
+          hasWaitingWorker: () async => true,
+          onProblem: (what, _) => problems.add(what),
+        ).check();
+
+        expect(problems, contains('version.json'));
+        expect(info, isNotNull);
+      },
+    );
+
+    test('does not report being offline', () async {
+      final problems = <String>[];
+      await WebUpdateService(
+        installed: _installed,
+        client: MockClient((_) async => throw const SocketExceptionStub()),
+        baseUri: Uri.parse('/alveoapp/'),
+        hasWaitingWorker: () async => false,
+        onProblem: (what, _) => problems.add(what),
+      ).check();
+
+      expect(problems, isEmpty);
     });
   });
 }

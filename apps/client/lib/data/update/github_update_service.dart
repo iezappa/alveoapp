@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 import '../../domain/release_notes/app_version.dart';
 import '../../domain/update/update_info.dart';
+import 'update_check_problem.dart';
 
 /// Asks GitHub Releases what the newest version is (Android, Windows, Linux,
 /// macOS). Unauthenticated — never embed a token in the app.
@@ -13,6 +14,7 @@ class GitHubUpdateService implements UpdateService {
     required this.repository,
     required this.client,
     this.timeout = const Duration(seconds: 5),
+    this.onProblem = reportUpdateCheckProblem,
   });
 
   final AppVersion installed;
@@ -20,10 +22,17 @@ class GitHubUpdateService implements UpdateService {
   final http.Client client;
   final Duration timeout;
 
+  /// Told when GitHub answered with something this app cannot read.
+  final UpdateCheckProblemReporter onProblem;
+
   @override
   Future<UpdateInfo?> check() async {
+    // Not reaching GitHub is normal and fixes itself; an answer this app
+    // cannot read does not. Only the second is reported — the user sees the
+    // same silence either way.
+    final http.Response response;
     try {
-      final response = await client
+      response = await client
           .get(
             Uri.parse(
               'https://api.github.com/repos/$repository/releases/latest',
@@ -31,12 +40,27 @@ class GitHubUpdateService implements UpdateService {
             headers: const {'Accept': 'application/vnd.github+json'},
           )
           .timeout(timeout);
-      if (response.statusCode != 200) return null;
+    } on Object {
+      return null; // No connection is a normal case, not an error.
+    }
+    if (response.statusCode != 200) return null;
 
-      final release = jsonDecode(response.body) as Map<String, dynamic>;
-      final latest = AppVersion.tryParse(release['tag_name'] as String?);
-      if (latest == null || !(latest > installed)) return null;
+    final Map<String, dynamic> release;
+    final AppVersion latest;
+    try {
+      release = jsonDecode(response.body) as Map<String, dynamic>;
+      final tag = AppVersion.tryParse(release['tag_name'] as String?);
+      if (tag == null) {
+        throw FormatException('unreadable tag_name', release['tag_name']);
+      }
+      latest = tag;
+    } on Object catch (error) {
+      onProblem('the GitHub release', error);
+      return null;
+    }
+    if (!(latest > installed)) return null;
 
+    try {
       final assets = (release['assets'] as List? ?? const [])
           .whereType<Map>()
           .toList();
@@ -64,8 +88,9 @@ class GitHubUpdateService implements UpdateService {
           metadata['minSupportedVersion'] as String?,
         ),
       );
-    } on Object {
-      return null; // No connection is a normal case, not an error.
+    } on Object catch (error) {
+      onProblem('the GitHub release', error);
+      return null;
     }
   }
 
