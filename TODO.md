@@ -76,6 +76,17 @@ Last checked against it: **2026-09-18**.
       launch, the update flow and the kill switch.
 - [ ] The working copy under `Estandarizador/` is stale — it predates §2.2.
       Refresh it from the canonical repository, or read the standard there.
+- [ ] Schema dumps v1–v7 were reconstructed from history, so the migration
+      tests validate against a derived ground truth. From the next release
+      that moves the schema, capture the dump at release time from the tagged
+      commit (docs/RELEASING.md, "Database schema dumps").
+- [ ] The CI step that expects `assembleRelease --dry-run` to be refused by
+      the signing gate has not run yet (no Android SDK here). Watch the first
+      CI run: if Gradle does not fire `taskGraph.whenReady` under
+      `--dry-run`, the step fails with "a release build was planned".
+- [ ] The migration stays inside one transaction, and v9's `alterTable`
+      turns `PRAGMA foreign_keys = OFF` into a no-op there. That is safe only
+      because nothing enables foreign keys before `beforeOpen`; keep it so.
 - [ ] The integration test walks the bottom bar and asserts no section throws.
       The flows worth adding next are the ones with something at stake: a
       check-in written and read back, and the PIN lock.
@@ -132,6 +143,25 @@ Last checked against it: **2026-09-18**.
 - [x] `deploy/nginx.conf` sends a Content-Security-Policy, `frame-ancestors
       'none'` / `X-Frame-Options: DENY` and `Referrer-Policy: no-referrer` on
       the documents it serves.
+
+## Resolved (Phase 5, reliability review, 2026-09-18)
+
+- [x] Migrations are crash-atomic: one transaction around `onUpgrade`, and
+      every step idempotent (`_addColumnIfMissing`, v9 skips tables already
+      rebuilt), so a store half-upgraded by an earlier build still opens.
+      `migration_interrupted_test.dart` builds those states by hand.
+- [x] `release.yml` runs format, analyze and test in a `check` job that every
+      build job needs; `test/ci/release_workflow_test.dart` walks `needs`.
+- [x] `updatedAt` coverage for every table. Replacing a journal entry's
+      emotions and linking/unlinking session items now stamp the parent,
+      since a deleted child row leaves nothing behind to carry the change.
+- [x] The layering test says it is an import check, and resolves every
+      repository provider against one database at runtime.
+- [x] CI asks Gradle to plan a release build and expects the signing gate to
+      refuse it.
+- [x] Update checks report an unreadable answer (debug console only), never
+      being offline.
+- [x] The CSV export also defuses formulas behind a leading tab or CR.
 
 ---
 

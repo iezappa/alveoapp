@@ -34,3 +34,20 @@ Requirements: the Android SDK with build-tools (`apksigner` on `PATH` or under
    (the name the README and Obtainium expect).
 
 The script's pure checks are covered by `tool/release_apk_test.sh`.
+
+## Database schema dumps
+
+`apps/client/drift_schemas/` is the ground truth the migration tests validate
+against. v1–v7 were not captured when they shipped: they were reconstructed
+from history by dumping the code at the last commit of each version, so those
+tests check the migrations against a derived shape, not the one users' stores
+actually have. From the next release on, capture the dump **at release time**,
+from the tagged commit, whenever `currentSchemaVersion` moved:
+
+    cd apps/client
+    dart run drift_dev schema dump lib/data/local/database.dart drift_schemas/
+    dart run drift_dev schema generate --data-classes --companions \
+      drift_schemas/ test/generated_migrations/
+
+Commit it with the release. A dump taken later from a different commit is a
+reconstruction again.
