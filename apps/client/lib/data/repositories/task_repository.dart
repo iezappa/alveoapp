@@ -11,16 +11,20 @@ class DriftTaskRepository implements TaskRepository {
   final AppDatabase _db;
   final Uuid _uuid;
 
-  /// Creates a task in [TaskStatus.pending] and returns its id.
+  /// Creates a task in [status] (pending unless told otherwise) and returns
+  /// its id. It is a single insert, so a task is never left half-saved.
   @override
   Future<String> create({
     required String title,
     String? descriptionMarkdown,
     DateTime? dueDate,
+    TaskStatus status = TaskStatus.pending,
+    String? closingNote,
     DateTime? createdAt,
     String? id,
   }) async {
     final taskId = id ?? _uuid.v4();
+    final now = DateTime.now();
 
     await _db
         .into(_db.tasks)
@@ -28,10 +32,12 @@ class DriftTaskRepository implements TaskRepository {
           TasksCompanion.insert(
             id: taskId,
             title: title,
-            status: TaskStatus.pending,
+            status: status,
             descriptionMarkdown: Value(descriptionMarkdown),
             dueDate: Value(dueDate),
-            createdAt: Value(createdAt ?? DateTime.now()),
+            closingNote: Value(closingNote),
+            completedAt: Value(status == TaskStatus.done ? now : null),
+            createdAt: Value(createdAt ?? now),
           ),
         );
 

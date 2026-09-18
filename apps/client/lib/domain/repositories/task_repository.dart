@@ -2,10 +2,13 @@ import '../../data/local/database.dart';
 import '../../data/local/tables.dart';
 
 abstract interface class TaskRepository {
+  /// Creates a task in one write, [status] and all, and returns its id.
   Future<String> create({
     required String title,
     String? descriptionMarkdown,
     DateTime? dueDate,
+    TaskStatus status = TaskStatus.pending,
+    String? closingNote,
     DateTime? createdAt,
     String? id,
   });

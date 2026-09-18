@@ -95,21 +95,13 @@ class _TaskEditorScreenState extends ConsumerState<TaskEditorScreen> {
 
     final saved = await saveOrReport(context, () async {
       if (widget.taskId == null) {
-        final id = await repo.create(
+        await repo.create(
           title: title,
           descriptionMarkdown: description.isEmpty ? null : description,
           dueDate: _dueDate,
+          status: _status,
+          closingNote: closingNote.isEmpty ? null : closingNote,
         );
-        if (_status != TaskStatus.pending || closingNote.isNotEmpty) {
-          await repo.update(
-            id: id,
-            title: title,
-            descriptionMarkdown: description.isEmpty ? null : description,
-            dueDate: _dueDate,
-            status: _status,
-            closingNote: closingNote.isEmpty ? null : closingNote,
-          );
-        }
       } else {
         await repo.update(
           id: widget.taskId!,

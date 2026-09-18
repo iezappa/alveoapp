@@ -91,4 +91,57 @@ void main() {
     expect(find.text(saveFailedMessage), findsOneWidget);
     expect(find.text('Call the clinic'), findsWidgets);
   });
+
+  // A new task that starts out done used to be written twice: inserted as
+  // pending, then updated to done. When that second write was refused, a
+  // pending task the user never saved was left behind.
+  testWidgets('a new task is saved whole or not at all', (tester) async {
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await _openTasks(tester, db);
+    await tester.tap(find.byTooltip('New task'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      _inEditor(find.byType(TextField)).first,
+      'Call the clinic',
+    );
+    await tester.tap(_inEditor(find.text('Done')));
+    await tester.pumpAndSettle();
+
+    // Refuse whichever write records the task as done: the second write of
+    // a two-step save, the only write of an atomic one.
+    for (final op in ['INSERT', 'UPDATE']) {
+      await db.customStatement(
+        'CREATE TRIGGER refuse_done_$op BEFORE $op ON tasks '
+        'WHEN NEW.status = ${TaskStatus.done.index} '
+        "BEGIN SELECT RAISE(ABORT, 'refused'); END",
+      );
+    }
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    expect(await DriftTaskRepository(db).getAll(), isEmpty);
+    expect(find.text(saveFailedMessage), findsOneWidget);
+    expect(find.text('Call the clinic'), findsWidgets);
+  });
+
+  testWidgets('a new task that starts out done is saved done', (tester) async {
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await _openTasks(tester, db);
+    await tester.tap(find.byTooltip('New task'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      _inEditor(find.byType(TextField)).first,
+      'Call the clinic',
+    );
+    await tester.tap(_inEditor(find.text('Done')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    final task = (await DriftTaskRepository(db).getAll()).single;
+    expect(task.status, TaskStatus.done);
+    expect(task.completedAt, isNotNull);
+  });
 }
