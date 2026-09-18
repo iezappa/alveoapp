@@ -9,6 +9,7 @@ abstract interface class MoodRepository {
     String? note,
     List<EmotionInput> emotions,
     List<String> tagIds,
+    List<String> tagNames,
     String? id,
   });
 
@@ -18,6 +19,7 @@ abstract interface class MoodRepository {
     String? note,
     List<EmotionInput> emotions,
     List<String> tagIds,
+    List<String> tagNames,
   });
 
   Future<List<Tag>> tagsFor(String moodEntryId);

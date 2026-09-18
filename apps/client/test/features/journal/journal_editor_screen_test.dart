@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:alveo/data/local/database.dart';
 import 'package:alveo/data/providers.dart';
 import 'package:alveo/data/repositories/journal_repository.dart';
+import 'package:alveo/domain/emotions/emotion_input.dart';
 import 'package:alveo/features/journal/journal_editor_screen.dart';
 import 'package:alveo/main.dart';
 
@@ -114,5 +115,39 @@ void main() {
           .first,
     );
     expect(save.onPressed, isNotNull);
+  });
+
+  // Editing an entry wrote the body, then the emotions, as two separate
+  // writes. When the second was refused, the new body stayed saved even
+  // though the editor said the save had failed.
+  testWidgets('an edited entry is saved whole or not at all', (tester) async {
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    final id = await DriftJournalRepository(db).create(
+      bodyMarkdown: 'first draft',
+      entryDate: DateTime(2026, 8, 20),
+      title: 'Draft',
+      // The refusal below fires per row, so there has to be one to replace.
+      emotions: const [EmotionInput(emotionKey: 'joy', intensity: 3)],
+    );
+    await _openJournal(tester, db);
+    await tester.tap(find.text('Draft'));
+    await tester.pumpAndSettle();
+    await tester.enterText(_editorField().last, 'second draft');
+    await tester.pump();
+
+    await db.customStatement(
+      'CREATE TRIGGER refuse_emotions BEFORE DELETE ON journal_entry_emotions '
+      "BEGIN SELECT RAISE(ABORT, 'refused'); END",
+    );
+    await tester.tap(find.byTooltip('Save'));
+    await tester.pumpAndSettle();
+
+    expect(
+      (await DriftJournalRepository(db).getById(id))!.bodyMarkdown,
+      'first draft',
+    );
+    expect(find.text(saveFailedMessage), findsOneWidget);
+    expect(find.text('second draft'), findsWidgets);
   });
 }

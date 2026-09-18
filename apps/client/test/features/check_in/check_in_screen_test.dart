@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:alveo/data/local/database.dart';
 import 'package:alveo/data/providers.dart';
 import 'package:alveo/data/repositories/mood_repository.dart';
+import 'package:alveo/data/repositories/tag_repository.dart';
 import 'package:alveo/features/check_in/plutchik_wheel.dart';
 import 'package:alveo/main.dart';
 
@@ -79,5 +80,40 @@ void main() {
 
     expect(find.text(saveFailedMessage), findsOneWidget);
     expect(find.text('How are you feeling?'), findsOneWidget);
+  });
+
+  // The tags of a check-in were created before the check-in itself. When the
+  // check-in was refused, its new tags stayed behind on their own.
+  testWidgets('a check-in with new tags is saved whole or not at all', (
+    tester,
+  ) async {
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [appDatabaseProvider.overrideWithValue(db)],
+        child: const AlveoApp(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Daily check-in'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('mood-4')));
+    await tester.pump();
+    await tester.scrollUntilVisible(
+      find.text('Add a tag'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.enterText(find.widgetWithText(TextField, 'Add a tag'), 'work');
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.pumpAndSettle();
+
+    await refuseWrites(db, 'mood_entries');
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    expect(await DriftTagRepository(db).all(), isEmpty);
+    expect(find.text(saveFailedMessage), findsOneWidget);
   });
 }

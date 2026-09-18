@@ -147,8 +147,8 @@ class _JournalEditorScreenState extends ConsumerState<JournalEditorScreen> {
           id: widget.entryId!,
           bodyMarkdown: body,
           title: title,
+          emotions: emotions,
         );
-        await repo.replaceEmotions(widget.entryId!, emotions);
       }
     });
     if (!saved) {

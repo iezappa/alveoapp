@@ -5,6 +5,7 @@ import '../../domain/emotions/emotion_input.dart';
 
 import '../../domain/validation.dart';
 import '../local/database.dart';
+import 'tag_repository.dart';
 import '../../domain/repositories/mood_repository.dart';
 
 class DriftMoodRepository implements MoodRepository {
@@ -15,7 +16,8 @@ class DriftMoodRepository implements MoodRepository {
 
   /// Records an emotional check-in and returns its id.
   ///
-  /// Domain rules (mood/intensity range, known emotion keys) are enforced
+  /// [tagNames] are found or created in the same transaction as the check-in,
+  /// so a refused check-in leaves no new tags behind. Domain rules (mood/intensity range, known emotion keys) are enforced
   /// here before anything is written.
   @override
   Future<String> add({
@@ -24,6 +26,7 @@ class DriftMoodRepository implements MoodRepository {
     String? note,
     List<EmotionInput> emotions = const [],
     List<String> tagIds = const [],
+    List<String> tagNames = const [],
     String? id,
   }) async {
     validateMoodScale(mood);
@@ -35,6 +38,7 @@ class DriftMoodRepository implements MoodRepository {
     final entryId = id ?? _uuid.v4();
 
     await _db.transaction(() async {
+      tagIds = [...tagIds, ...await _findOrCreateTags(tagNames)];
       await _db
           .into(_db.moodEntries)
           .insert(
@@ -80,6 +84,7 @@ class DriftMoodRepository implements MoodRepository {
     String? note,
     List<EmotionInput> emotions = const [],
     List<String> tagIds = const [],
+    List<String> tagNames = const [],
   }) async {
     validateMoodScale(mood);
     for (final e in emotions) {
@@ -88,6 +93,7 @@ class DriftMoodRepository implements MoodRepository {
     }
 
     await _db.transaction(() async {
+      tagIds = [...tagIds, ...await _findOrCreateTags(tagNames)];
       await (_db.update(_db.moodEntries)..where((t) => t.id.equals(id))).write(
         MoodEntriesCompanion(
           mood: Value(mood),
@@ -122,6 +128,12 @@ class DriftMoodRepository implements MoodRepository {
         });
       }
     });
+  }
+
+  /// Must run inside the caller's transaction, so the tags share its fate.
+  Future<List<String>> _findOrCreateTags(List<String> names) async {
+    final tags = DriftTagRepository(_db, uuid: _uuid);
+    return [for (final name in names) await tags.findOrCreate(name)];
   }
 
   /// Tags attached to [moodEntryId].

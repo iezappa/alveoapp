@@ -100,19 +100,14 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
         EmotionInput(emotionKey: entry.key, intensity: entry.value),
     ];
     final repo = ref.read(moodRepositoryProvider);
-    final tagRepo = ref.read(tagRepositoryProvider);
     final saved = await saveOrReport(context, () async {
-      final tagIds = [
-        for (final name in _tags) await tagRepo.findOrCreate(name),
-      ];
-
       if (widget.moodEntryId == null) {
         await repo.add(
           mood: _mood,
           occurredAt: DateTime.now(),
           note: note.isEmpty ? null : note,
           emotions: emotions,
-          tagIds: tagIds,
+          tagNames: _tags.toList(),
         );
       } else {
         await repo.update(
@@ -120,7 +115,7 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
           mood: _mood,
           note: note.isEmpty ? null : note,
           emotions: emotions,
-          tagIds: tagIds,
+          tagNames: _tags.toList(),
         );
       }
     });

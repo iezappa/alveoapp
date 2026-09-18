@@ -17,10 +17,13 @@ abstract interface class JournalRepository {
     String? id,
   });
 
+  /// Rewrites the body and title, and, when [emotions] is given, replaces
+  /// the emotion set in the same transaction.
   Future<void> updateBody({
     required String id,
     required String bodyMarkdown,
     String? title,
+    List<EmotionInput>? emotions,
     DateTime? updatedAt,
   });
 

@@ -81,23 +81,32 @@ class DriftJournalRepository implements JournalRepository {
   }
 
   /// Rewrites the body and title and bumps `updatedAt`. A null [title]
-  /// clears it.
+  /// clears it. When [emotions] is given the emotion set is replaced in the
+  /// same transaction, so a refused write leaves the entry as it was.
   @override
   Future<void> updateBody({
     required String id,
     required String bodyMarkdown,
     String? title,
+    List<EmotionInput>? emotions,
     DateTime? updatedAt,
-  }) {
-    return (_db.update(
-      _db.journalEntries,
-    )..where((t) => t.id.equals(id))).write(
-      JournalEntriesCompanion(
-        bodyMarkdown: Value(bodyMarkdown),
-        title: Value(title),
-        updatedAt: Value(updatedAt ?? DateTime.now()),
-      ),
-    );
+  }) async {
+    for (final e in emotions ?? const <EmotionInput>[]) {
+      validateEmotionKey(e.emotionKey);
+      validateIntensity(e.intensity);
+    }
+    await _db.transaction(() async {
+      await (_db.update(
+        _db.journalEntries,
+      )..where((t) => t.id.equals(id))).write(
+        JournalEntriesCompanion(
+          bodyMarkdown: Value(bodyMarkdown),
+          title: Value(title),
+          updatedAt: Value(updatedAt ?? DateTime.now()),
+        ),
+      );
+      if (emotions != null) await _writeEmotions(id, emotions);
+    });
   }
 
   /// All journal entries, newest first.
@@ -175,22 +184,26 @@ class DriftJournalRepository implements JournalRepository {
       // The removed rows leave nothing behind, so the entry carries the change.
       await (_db.update(_db.journalEntries)..where((t) => t.id.equals(id)))
           .write(JournalEntriesCompanion(updatedAt: Value(DateTime.now())));
-      await (_db.delete(
-        _db.journalEntryEmotions,
-      )..where((t) => t.journalEntryId.equals(id))).go();
-      if (emotions.isNotEmpty) {
-        await _db.batch((b) {
-          b.insertAll(_db.journalEntryEmotions, [
-            for (final e in emotions)
-              JournalEntryEmotionsCompanion.insert(
-                journalEntryId: id,
-                emotionKey: e.emotionKey,
-                intensity: e.intensity,
-              ),
-          ]);
-        });
-      }
+      await _writeEmotions(id, emotions);
     });
+  }
+
+  Future<void> _writeEmotions(String id, List<EmotionInput> emotions) async {
+    await (_db.delete(
+      _db.journalEntryEmotions,
+    )..where((t) => t.journalEntryId.equals(id))).go();
+    if (emotions.isNotEmpty) {
+      await _db.batch((b) {
+        b.insertAll(_db.journalEntryEmotions, [
+          for (final e in emotions)
+            JournalEntryEmotionsCompanion.insert(
+              journalEntryId: id,
+              emotionKey: e.emotionKey,
+              intensity: e.intensity,
+            ),
+        ]);
+      });
+    }
   }
 
   @override
