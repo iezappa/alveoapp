@@ -56,6 +56,10 @@ void main() {
 
   test('neutralises spreadsheet formulas', () {
     expect(csvField('=1+1'), "'=1+1");
+    // Spreadsheets skip a leading tab or CR before deciding, so these hide a
+    // formula from a check that only looks at the first character.
+    expect(csvField('\t=SUM(A1)'), "'\t=SUM(A1)");
+    expect(csvField('\r=SUM(A1)'), '"\'\r=SUM(A1)"');
     expect(csvField('+54 11'), "'+54 11");
   });
 

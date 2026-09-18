@@ -17,10 +17,11 @@ const csvRecordTypes = [
 ];
 
 /// Quotes [value] per RFC 4180 when needed, and defuses leading characters a
-/// spreadsheet would run as a formula.
+/// spreadsheet would run as a formula — including a leading tab or carriage
+/// return, which spreadsheets skip before deciding.
 String csvField(String value) {
   var v = value;
-  if (v.isNotEmpty && '=+-@'.contains(v[0])) v = "'$v";
+  if (v.isNotEmpty && '=+-@\t\r'.contains(v[0])) v = "'$v";
   if (v.contains(RegExp(r'[",\r\n]'))) {
     return '"${v.replaceAll('"', '""')}"';
   }
