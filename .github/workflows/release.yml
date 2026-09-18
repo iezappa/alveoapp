@@ -73,20 +73,28 @@ jobs:
             exit 1
           fi
       # Compliance gate (CUMPLIMIENTO.md): legal docs present and filled in,
-      # no analytics/ads/tracking packages unless explicitly allowlisted after
+      # in English and Spanish (STACK-APPS-DINAMICAS.md, multilingual docs),
+      # release notes for every version in both languages, no analytics/ads/tracking packages unless explicitly allowlisted after
       # implementing a consent flow. Space-separated package names.
       - name: Check legal docs and tracking dependencies
         env:
           TRACKING_ALLOWLIST: ""
         run: |
           fail=0
-          for doc in ../../PRIVACY.md ../../TERMS.md; do
+          for doc in ../../PRIVACY.md ../../PRIVACY.es.md \
+                     ../../TERMS.md ../../TERMS.es.md; do
             if [ ! -f "$doc" ]; then
               echo "::error::Missing ${doc#../../} (templates/legal, CUMPLIMIENTO.md)"; fail=1
             elif grep -q '{{' "$doc"; then
               echo "::error::${doc#../../} still contains {{...}} placeholders"; fail=1
             fi
           done
+          notes_versions() {
+            grep -o '"version"[[:space:]]*:[[:space:]]*"[^"]*"' "assets/release_notes/$1.json" | sort
+          }
+          if [ "$(notes_versions en)" != "$(notes_versions es)" ]; then
+            echo "::error::assets/release_notes/en.json and es.json list different versions"; fail=1
+          fi
           for pkg in firebase_analytics google_mobile_ads facebook_app_events \
                      appsflyer_sdk adjust_sdk amplitude_flutter mixpanel_flutter \
                      posthog_flutter segment_analytics flutter_branch_sdk \

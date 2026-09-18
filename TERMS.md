@@ -1,5 +1,7 @@
 # Alveo terms of use
 
+**English** · [Español](TERMS.es.md)
+
 Last updated: 2026-09-16
 
 By using Alveo you accept these terms. If you do not agree, do not use the

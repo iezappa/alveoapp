@@ -14,15 +14,56 @@ Widget _host(Locale locale, LegalDocument doc) => MaterialApp(
 
 void main() {
   group('bundled legal documents', () {
-    test('the English copies are the repository PRIVACY.md and TERMS.md', () {
+    test('each bundled copy is byte-identical to its repository file', () {
+      const pairs = {
+        'assets/legal/privacy_en.md': '../../PRIVACY.md',
+        'assets/legal/privacy_es.md': '../../PRIVACY.es.md',
+        'assets/legal/terms_en.md': '../../TERMS.md',
+        'assets/legal/terms_es.md': '../../TERMS.es.md',
+      };
+      pairs.forEach((asset, root) {
+        expect(
+          File(asset).readAsBytesSync(),
+          File(root).readAsBytesSync(),
+          reason: '$asset != $root',
+        );
+      });
+    });
+
+    test('the asset follows the locale, with English as the fallback', () {
       expect(
-        File('assets/legal/privacy_en.md').readAsStringSync(),
-        File('../../PRIVACY.md').readAsStringSync(),
+        LegalDocument.privacy.assetFor(const Locale('es')),
+        'assets/legal/privacy_es.md',
       );
       expect(
-        File('assets/legal/terms_en.md').readAsStringSync(),
-        File('../../TERMS.md').readAsStringSync(),
+        LegalDocument.privacy.assetFor(const Locale('es', 'AR')),
+        'assets/legal/privacy_es.md',
       );
+      expect(
+        LegalDocument.terms.assetFor(const Locale('en')),
+        'assets/legal/terms_en.md',
+      );
+      expect(
+        LegalDocument.terms.assetFor(const Locale('fr')),
+        'assets/legal/terms_en.md',
+      );
+    });
+
+    test('both languages ship for every document', () {
+      for (final doc in LegalDocument.values) {
+        for (final lang in LegalDocument.languages) {
+          final file = File(doc.assetFor(Locale(lang)));
+          expect(file.existsSync(), isTrue, reason: file.path);
+        }
+      }
+    });
+
+    test('the language switcher line is not rendered in the app', () {
+      final blocks = parseBlocks(
+        File('assets/legal/privacy_es.md').readAsStringSync(),
+      );
+      expect(blocks.any((b) => b.text.contains('English')), isFalse);
+      expect(blocks.first.kind, LegalBlockKind.title);
     });
 
     test('every locale has both documents, with no template markers', () {

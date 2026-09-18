@@ -18,9 +18,14 @@ enum LegalDocument {
   const LegalDocument(this._stem);
   final String _stem;
 
+  /// Languages the documents are written in. English is the fallback.
+  static const languages = ['en', 'es'];
+
   /// The asset for [locale], falling back to English.
   String assetFor(Locale locale) {
-    final lang = locale.languageCode == 'es' ? 'es' : 'en';
+    final lang = languages.contains(locale.languageCode)
+        ? locale.languageCode
+        : 'en';
     return 'assets/legal/${_stem}_$lang.md';
   }
 }
@@ -104,7 +109,15 @@ class LegalBlock {
   final String text;
 }
 
-/// Splits the document into blocks, joining hard-wrapped lines.
+/// The `**English** · [Español](X.es.md)` line under each title. It links
+/// the repository copies to each other and means nothing inside the app.
+final _languageSwitcher = RegExp(
+  r'^(\*\*English\*\*|\[English\]\([^)]*\)) · '
+  r'(\*\*Español\*\*|\[Español\]\([^)]*\))$',
+);
+
+/// Splits the document into blocks, joining hard-wrapped lines. The language
+/// switcher line is dropped.
 List<LegalBlock> parseBlocks(String source) {
   final blocks = <LegalBlock>[];
   LegalBlockKind? kind;
@@ -119,7 +132,7 @@ List<LegalBlock> parseBlocks(String source) {
 
   for (final raw in source.split('\n')) {
     final line = raw.trim();
-    if (line.isEmpty) {
+    if (line.isEmpty || _languageSwitcher.hasMatch(line)) {
       flush();
     } else if (line.startsWith('## ')) {
       flush();

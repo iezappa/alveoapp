@@ -55,6 +55,9 @@ void main() {
     expect(release, contains('version-check'));
     expect(release, contains('PRIVACY.md'));
     expect(release, contains('TERMS.md'));
+    expect(release, contains('PRIVACY.es.md'));
+    expect(release, contains('TERMS.es.md'));
+    expect(release, contains('release_notes/\$1.json'));
     expect(release, contains('TRACKING_ALLOWLIST'));
   });
 

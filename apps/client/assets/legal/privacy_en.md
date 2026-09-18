@@ -1,5 +1,7 @@
 # Alveo privacy policy
 
+**English** · [Español](PRIVACY.es.md)
+
 Last updated: 2026-09-18
 
 Alveo is a free app developed by Zeke Zappa Developments (iezappa). This policy explains, in plain

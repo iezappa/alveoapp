@@ -51,4 +51,14 @@ void main() {
     }
     expect(pubspec, contains('assets/release_notes/'));
   });
+
+  test('every version has notes in both English and Spanish', () {
+    List<AppVersion> versions(String lang) => [
+      for (final n in ReleaseNotes.parse(
+        File('assets/release_notes/$lang.json').readAsStringSync(),
+      ).all)
+        n.version,
+    ];
+    expect(versions('es'), versions('en'));
+  });
 }
