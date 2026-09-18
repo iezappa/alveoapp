@@ -124,3 +124,20 @@ jobs:
 
       - name: Check the release signing scripts
         run: bash tool/release_apk_test.sh
+
+      # The keystore never reaches CI, so a release build must be refused.
+      # --dry-run only plans the task graph, which is when the gate in
+      # android/app/build.gradle.kts fires; nothing is compiled, and Gradle is
+      # already warm from the debug build above.
+      - name: Check that release signing is enforced
+        working-directory: apps/client/android
+        run: |
+          if ./gradlew app:assembleRelease --dry-run >gate.log 2>&1; then
+            echo "::error::a release build was planned without key.properties"
+            exit 1
+          fi
+          grep -q "Release signing is not configured" gate.log || {
+            cat gate.log
+            echo "::error::the release build failed, but not at the signing gate"
+            exit 1
+          }
