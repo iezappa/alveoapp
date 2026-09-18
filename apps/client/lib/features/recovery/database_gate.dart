@@ -29,6 +29,9 @@ class DatabaseGate extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final health = ref.watch(databaseHealthProvider).asData?.value;
+    if (health is DatabaseHeldByOlderVersion) {
+      return const OlderVersionOpenScreen();
+    }
     if (health is! DatabaseUnopenable) return child;
 
     // Its own navigator: this replaces the app's, and the confirmation
@@ -177,6 +180,55 @@ class _DatabaseRecoveryScreenState
                   ),
                   icon: const Icon(Icons.restart_alt),
                   label: Text(l10n.recoveryReset),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Asks the user to close the tab that still runs the previous release.
+///
+/// Offers nothing destructive: the store is sound, only held at the old
+/// schema by that tab, and it upgrades on the next load once the tab is gone.
+/// Like the recovery screen it reads nothing from the store.
+class OlderVersionOpenScreen extends StatelessWidget {
+  const OlderVersionOpenScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+
+    return Scaffold(
+      body: SafeArea(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: kContentMaxWidth),
+            child: ListView(
+              padding: const EdgeInsets.all(kGutter),
+              children: [
+                const SizedBox(height: 24),
+                Icon(
+                  Icons.tab_outlined,
+                  size: 56,
+                  color: theme.colorScheme.primary,
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  l10n.staleStoreTitle,
+                  style: theme.textTheme.headlineSmall,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  l10n.staleStoreBody,
+                  style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
