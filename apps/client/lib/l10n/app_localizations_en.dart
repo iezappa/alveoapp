@@ -1030,9 +1030,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'This file contains your therapy notes unencrypted. Store it somewhere private.';
 
   @override
-  String get sensitiveExportMute => 'Don\'t show again this session';
-
-  @override
   String get sensitiveExportContinue => 'Continue';
 
   @override

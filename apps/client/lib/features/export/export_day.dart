@@ -34,7 +34,7 @@ Future<void> runDailyExport(BuildContext context, WidgetRef ref) async {
     return;
   }
 
-  if (!context.mounted || !await confirmSensitiveExport(context, ref)) return;
+  if (!context.mounted || !await confirmSensitiveExport(context)) return;
 
   final markdown = await service.buildDailyMarkdown(
     day,

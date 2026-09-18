@@ -25,7 +25,7 @@ Future<void> runExportCsv(BuildContext context, WidgetRef ref) async {
   final l10n = AppLocalizations.of(context);
   final messenger = ScaffoldMessenger.of(context);
 
-  if (!await confirmSensitiveExport(context, ref)) return;
+  if (!await confirmSensitiveExport(context)) return;
 
   final csv = await ref.read(csvExportServiceProvider).exportToCsv();
   final now = DateTime.now();
@@ -46,7 +46,7 @@ Future<void> runExportBackup(BuildContext context, WidgetRef ref) async {
   final l10n = AppLocalizations.of(context);
   final messenger = ScaffoldMessenger.of(context);
 
-  if (!await confirmSensitiveExport(context, ref)) return;
+  if (!await confirmSensitiveExport(context)) return;
 
   final json = await ref.read(backupServiceProvider).exportToJson();
 

@@ -28,7 +28,7 @@ Future<void> runObsidianExport(BuildContext context, WidgetRef ref) async {
     return;
   }
 
-  if (!context.mounted || !await confirmSensitiveExport(context, ref)) return;
+  if (!context.mounted || !await confirmSensitiveExport(context)) return;
 
   try {
     final report = await ref.read(obsidianServiceProvider).exportJournal(vault);

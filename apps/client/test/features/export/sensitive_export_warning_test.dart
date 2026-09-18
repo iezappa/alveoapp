@@ -1,7 +1,6 @@
 import 'package:alveo/data/local/database.dart';
 import 'package:alveo/data/providers.dart';
 import 'package:alveo/features/export/file_saver_provider.dart';
-import 'package:alveo/features/export/sensitive_export_warning.dart';
 import 'package:alveo/features/transfer/backup_actions.dart';
 import 'package:alveo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -93,41 +92,25 @@ void main() {
     expect(saves, 1);
   });
 
-  testWidgets('asks again next time unless muted for the session', (
-    tester,
-  ) async {
+  testWidgets('warns again on every later export', (tester) async {
+    await pump(tester);
+
+    for (var i = 1; i <= 3; i++) {
+      await tester.tap(find.text('export'));
+      await settle(tester);
+      expect(find.text(_warning), findsOneWidget);
+      await tester.tap(find.text('Continue'));
+      await settle(tester);
+      expect(saves, i);
+    }
+  });
+
+  testWidgets('offers no way to silence the warning', (tester) async {
     await pump(tester);
 
     await tester.tap(find.text('export'));
     await settle(tester);
-    await tester.tap(find.text('Continue'));
-    await settle(tester);
 
-    await tester.tap(find.text('export'));
-    await settle(tester);
-    expect(find.text(_warning), findsOneWidget);
-
-    await tester.tap(find.text("Don't show again this session"));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('Continue'));
-    await settle(tester);
-
-    await tester.tap(find.text('export'));
-    await settle(tester);
-    expect(find.text(_warning), findsNothing);
-    expect(saves, 3);
-  });
-
-  test('muting lasts only as long as the app runs', () {
-    final container = ProviderContainer();
-    addTearDown(container.dispose);
-
-    expect(container.read(sensitiveExportWarningMutedProvider), isFalse);
-    container.read(sensitiveExportWarningMutedProvider.notifier).mute();
-    expect(container.read(sensitiveExportWarningMutedProvider), isTrue);
-
-    final nextRun = ProviderContainer();
-    addTearDown(nextRun.dispose);
-    expect(nextRun.read(sensitiveExportWarningMutedProvider), isFalse);
+    expect(find.byType(CheckboxListTile), findsNothing);
   });
 }

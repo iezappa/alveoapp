@@ -2006,12 +2006,6 @@ abstract class AppLocalizations {
   /// **'This file contains your therapy notes unencrypted. Store it somewhere private.'**
   String get sensitiveExportBody;
 
-  /// No description provided for @sensitiveExportMute.
-  ///
-  /// In en, this message translates to:
-  /// **'Don\'t show again this session'**
-  String get sensitiveExportMute;
-
   /// No description provided for @sensitiveExportContinue.
   ///
   /// In en, this message translates to:

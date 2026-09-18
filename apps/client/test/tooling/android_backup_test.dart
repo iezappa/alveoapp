@@ -20,9 +20,8 @@ void main() {
       contains('android:dataExtractionRules="@xml/data_extraction_rules"'),
     );
 
-    final rules = File(
-      'android/app/src/main/res/xml/data_extraction_rules.xml',
-    ).readAsStringSync();
+    final rules = File('android/app/src/main/res/xml/data_extraction_rules.xml')
+        .readAsStringSync();
     expect(rules, contains('<cloud-backup>'));
     expect(rules, contains('<device-transfer>'));
     expect(
@@ -36,9 +35,8 @@ void main() {
       manifest,
       contains('android:fullBackupContent="@xml/full_backup_content"'),
     );
-    final content = File(
-      'android/app/src/main/res/xml/full_backup_content.xml',
-    ).readAsStringSync();
+    final content = File('android/app/src/main/res/xml/full_backup_content.xml')
+        .readAsStringSync();
     expect(content, contains('<exclude'));
   });
 }

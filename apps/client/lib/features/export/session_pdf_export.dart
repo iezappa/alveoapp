@@ -25,7 +25,7 @@ Future<void> runSessionPdfExport(
   final messenger = ScaffoldMessenger.of(context);
   final locale = Localizations.localeOf(context).toString();
 
-  if (!await confirmSensitiveExport(context, ref)) return;
+  if (!await confirmSensitiveExport(context)) return;
 
   final bytes = await buildSessionPdf(
     session,

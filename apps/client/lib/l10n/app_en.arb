@@ -396,7 +396,6 @@
   "crisisCallError": "Couldn't start a call. Dial the number yourself.",
   "sensitiveExportTitle": "Keep this file private",
   "sensitiveExportBody": "This file contains your therapy notes unencrypted. Store it somewhere private.",
-  "sensitiveExportMute": "Don't show again this session",
   "sensitiveExportContinue": "Continue",
   "pinWebCaveat": "On the web version, the PIN deters casual access but does not protect against someone with access to this browser or device.",
   "privacyPolicy": "Privacy policy",
