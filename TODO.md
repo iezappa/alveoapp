@@ -11,7 +11,7 @@ This app is the canonical reference for §2.2, the settings layout — the other
 apps were migrated to match it. Changing settings here changes the standard,
 so the edit belongs in that repository first.
 
-Last checked against it: **2026-09-17**.
+Last checked against it: **2026-09-18**.
 
 ---
 
@@ -32,8 +32,9 @@ Last checked against it: **2026-09-17**.
 - [x] Disclaimer accepted at onboarding (existing users once); crisis lines
       (Línea 135, (011) 5275-1135, 911) in Settings → About, at the top of the
       safety plan and in the disclaimer.
-- [x] Warning before every unencrypted export (JSON, Obsidian, session PDF,
-      daily Markdown), mutable for the session only.
+- [x] Warning before every unencrypted export (JSON, CSV, Obsidian, session
+      PDF, daily Markdown). It was mutable for the session until Phase 4, when
+      the mute was removed.
 - [x] Web PIN caveat in the PIN section and the new-PIN dialog.
 
 ## Open
@@ -43,6 +44,10 @@ Last checked against it: **2026-09-17**.
 - [ ] Re-verify the crisis numbers at asistenciaalsuicida.org.ar before each
       release (TODO in `lib/features/safety/crisis_resources.dart`). 0800 345
       1435 is listed in CUMPLIMIENTO.md but was left out as unverified.
+- [ ] Check the CSP in `deploy/nginx.conf` in a browser against the Docker
+      image: the directives were read off the built output, not exercised.
+      Watch the console for CSP violations, especially around the CanvasKit
+      workers and the fonts.
 - [ ] Check the web behaviour in real browsers: which storage drift picks on
       GitHub Pages (no COOP/COEP headers, so likely IndexedDB), whether
       `persist()` is granted, and that recovery really deletes the browser
@@ -103,6 +108,30 @@ Last checked against it: **2026-09-17**.
 - [x] `deploy/` (Dockerfile, nginx with COOP/COEP, compose for ZimaOS on port
       8083, ZIMAOS.md) and a README with the backup warning, crisis lines and
       per-device install.
+
+---
+
+## Resolved (Phase 4, security review, 2026-09-18)
+
+- [x] Android backup opt-out: `allowBackup="false"` plus
+      `data_extraction_rules.xml` (cloud backup and device transfer) and
+      `full_backup_content.xml`, so the Drift database — therapy notes and the
+      PIN salt/hash — is never copied to a Google account or a new phone.
+      Guarded by `test/tooling/android_backup_test.dart`; PRIVACY.md, the
+      bundled legal documents and the README say so.
+- [x] The unencrypted-export warning can no longer be silenced. Muting it once
+      used to let every later export of any kind write in the clear without a
+      word.
+- [x] Every GitHub action pinned to a full commit SHA with its version in a
+      comment (`ci.yml`, `deploy-web.yml`, `release.yml`), and the release
+      scripts take `github.ref_name` and the repository name from the
+      environment instead of `${{ }}` inside the script body.
+- [x] `deploy/Dockerfile` defaults to the pinned Flutter image and the docker
+      job passes `FLUTTER_IMAGE` from `FLUTTER_VERSION`, so the published
+      image is built with the same SDK as everything else.
+- [x] `deploy/nginx.conf` sends a Content-Security-Policy, `frame-ancestors
+      'none'` / `X-Frame-Options: DENY` and `Referrer-Policy: no-referrer` on
+      the documents it serves.
 
 ---
 
