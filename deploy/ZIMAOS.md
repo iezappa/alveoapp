@@ -1,5 +1,7 @@
 # Serving Alveo from a ZimaOS server
 
+**English** · [Español](ZIMAOS.es.md)
+
 This serves the web/PWA build of Alveo from a home ZimaOS server, so the
 people in a household can install it without going through GitHub Pages.
 

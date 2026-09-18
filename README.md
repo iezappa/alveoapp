@@ -1,5 +1,7 @@
 # Alveo 🌊
 
+**English** · [Español](README.es.md)
+
 **A calm, private, local‑first companion for personal therapy work.**
 
 <p align="center">
