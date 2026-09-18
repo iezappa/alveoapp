@@ -13,7 +13,11 @@
 # Only the tiny nginx stage is resolved per target platform: no QEMU emulation
 # of the Flutter SDK is needed.
 
-ARG FLUTTER_IMAGE=ghcr.io/cirruslabs/flutter:stable
+# Pinned, not ":stable": a toolchain that changes under you turns a rebuild of
+# an old tag into a different image. Keep this in step with FLUTTER_VERSION in
+# .github/workflows/ci.yml and release.yml (the release workflow passes the
+# same version in as a build argument).
+ARG FLUTTER_IMAGE=ghcr.io/cirruslabs/flutter:3.47.1
 
 # ---------- Stage 1: build Flutter web ----------
 FROM --platform=$BUILDPLATFORM ${FLUTTER_IMAGE} AS build
