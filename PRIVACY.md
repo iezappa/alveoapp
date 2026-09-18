@@ -1,6 +1,6 @@
 # Alveo privacy policy
 
-Last updated: 2026-09-16
+Last updated: 2026-09-18
 
 Alveo is a free app developed by Zeke Zappa Developments (iezappa). This policy explains, in plain
 language, what happens to what you write in it.
@@ -32,6 +32,10 @@ uses no tracking cookies.
 Nothing is encrypted at rest. The optional PIN keeps casual eyes out of the
 app; on the web version it is only a deterrent and does not protect against
 someone with access to your browser or device.
+
+On Android the app switches off the system backup, so neither Google's
+automatic backup nor the transfer to a new phone copies the app's database
+anywhere. The only copy that leaves the device is one you export yourself.
 
 ## Exports are files you control
 

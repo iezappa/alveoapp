@@ -168,6 +168,10 @@ and choose **Add to Home Screen**. When a new version is published the app shows
   exported backups as sensitive files.
 - Nothing is uploaded. A publicly hosted web build still only ever sees an empty
   local database in each visitor's browser.
+- On Android the app opts out of the system backup (`android:allowBackup="false"`
+  plus rule files that deny cloud backup and device‑to‑device transfer), so the
+  database is never copied into a Google account or onto a new phone. The only
+  backup is the one you export yourself.
 - To erase everything: **Settings → Your data → Delete all my data**.
 
 - [Privacy policy](PRIVACY.md) · [Terms of use](TERMS.md)
