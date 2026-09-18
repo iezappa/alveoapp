@@ -98,6 +98,27 @@ void main() {
 
     expect(find.text(saveFailedMessage), findsOneWidget);
   });
+
+  testWidgets('says so when the medication could not be deleted', (
+    tester,
+  ) async {
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await DriftMedicationRepository(db).create(name: 'Melatonin');
+    await _openMeds(tester, db);
+    await tester.tap(find.text('Melatonin'));
+    await tester.pumpAndSettle();
+
+    await refuseDeletes(db, 'medications');
+    await tester.tap(find.byTooltip('Delete'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(deleteFailedMessage), findsOneWidget);
+    expect(find.byType(MedicationEditorScreen), findsOneWidget);
+    expect(await DriftMedicationRepository(db).getAll(), hasLength(1));
+  });
 }
 
 /// Scrolls [finder] to the middle of the viewport, clear of the bottom bar

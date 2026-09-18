@@ -11,22 +11,40 @@ import '../../l10n/app_localizations.dart';
 /// was kept. This turns it into a message they can act on. Callers stay where
 /// they are on failure, so whatever was typed is still there to retry or copy.
 /// The log gets the error only, never what was being saved.
-Future<bool> saveOrReport(
+Future<bool> saveOrReport(BuildContext context, Future<void> Function() save) =>
+    _writeOrReport(
+      context,
+      save,
+      message: AppLocalizations.of(context).saveFailed,
+      log: 'Saving failed',
+    );
+
+/// Runs [delete] and tells the user when it throws; returns whether it worked.
+///
+/// Without it a refused delete leaves the record in place with nothing on
+/// screen to say so. Callers stay where they are on failure.
+Future<bool> deleteOrReport(
   BuildContext context,
-  Future<void> Function() save,
-) async {
+  Future<void> Function() delete,
+) => _writeOrReport(
+  context,
+  delete,
+  message: AppLocalizations.of(context).deleteFailed,
+  log: 'Deleting failed',
+);
+
+Future<bool> _writeOrReport(
+  BuildContext context,
+  Future<void> Function() write, {
+  required String message,
+  required String log,
+}) async {
   final messenger = ScaffoldMessenger.maybeOf(context);
-  final message = AppLocalizations.of(context).saveFailed;
   try {
-    await save();
+    await write();
     return true;
   } on Object catch (error, stack) {
-    developer.log(
-      'Saving failed',
-      name: 'alveo',
-      error: error,
-      stackTrace: stack,
-    );
+    developer.log(log, name: 'alveo', error: error, stackTrace: stack);
     messenger?.showSnackBar(SnackBar(content: Text(message)));
     return false;
   }

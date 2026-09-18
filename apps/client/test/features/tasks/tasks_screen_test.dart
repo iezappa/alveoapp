@@ -7,6 +7,8 @@ import 'package:alveo/data/providers.dart';
 import 'package:alveo/data/repositories/task_repository.dart';
 import 'package:alveo/main.dart';
 
+import '../../helpers/refuse_writes.dart';
+
 Future<void> _openTasks(WidgetTester tester, AppDatabase db) async {
   await tester.pumpWidget(
     ProviderScope(
@@ -89,5 +91,28 @@ void main() {
 
     expect(find.text('five senses exercise'), findsOneWidget);
     expect(find.text('Edit'), findsOneWidget);
+  });
+
+  // A refused delete used to vanish: the task stayed with nothing on screen
+  // to say so, and the user walked away believing it was gone.
+  testWidgets('says so when the task could not be deleted', (tester) async {
+    tester.view.physicalSize = const Size(1400, 1000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await DriftTaskRepository(db).create(title: 'Breathe daily');
+    await _openTasks(tester, db);
+    await tester.tap(find.widgetWithText(ListTile, 'Breathe daily'));
+    await tester.pumpAndSettle();
+
+    await refuseDeletes(db, 'tasks');
+    await tester.tap(find.byTooltip('Delete'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(deleteFailedMessage), findsOneWidget);
+    expect(await DriftTaskRepository(db).getAll(), hasLength(1));
   });
 }

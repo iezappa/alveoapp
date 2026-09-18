@@ -140,8 +140,12 @@ class _CheckInScreenState extends ConsumerState<CheckInScreen> {
   }
 
   Future<void> _delete() async {
-    if (!await confirmDelete(context)) return;
-    await ref.read(moodRepositoryProvider).delete(widget.moodEntryId!);
+    if (!await confirmDelete(context) || !mounted) return;
+    final deleted = await deleteOrReport(
+      context,
+      () => ref.read(moodRepositoryProvider).delete(widget.moodEntryId!),
+    );
+    if (!deleted) return;
     ref.invalidate(moodEntriesProvider);
     if (mounted) _leave();
   }

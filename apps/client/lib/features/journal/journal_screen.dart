@@ -9,6 +9,7 @@ import '../../data/providers.dart';
 import '../../domain/journal/journal_section.dart';
 import '../../l10n/app_localizations.dart';
 import '../shared/confirm_delete.dart';
+import '../shared/save_failure.dart';
 import '../shared/master_detail_shell.dart';
 import 'journal_editor_screen.dart';
 import 'journal_labels.dart';
@@ -90,8 +91,12 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
   }
 
   Future<void> _delete(String id) async {
-    if (!await confirmDelete(context)) return;
-    await ref.read(journalRepositoryProvider).delete(id);
+    if (!await confirmDelete(context) || !mounted) return;
+    final deleted = await deleteOrReport(
+      context,
+      () => ref.read(journalRepositoryProvider).delete(id),
+    );
+    if (!deleted) return;
     ref.invalidate(journalListProvider);
     if (mounted) setState(() => _selectedId = null);
   }

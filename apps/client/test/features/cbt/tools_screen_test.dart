@@ -100,4 +100,33 @@ void main() {
     expect(find.text(saveFailedMessage), findsOneWidget);
     expect(find.text('I always mess up'), findsWidgets);
   });
+
+  // A refused delete used to vanish: the thought record stayed with nothing on screen
+  // to say so, and the user walked away believing it was gone.
+  testWidgets('says so when the thought record could not be deleted', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1400, 1000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await DriftThoughtRecordRepository(db).create(
+      occurredAt: DateTime(2026, 8, 20),
+      situation: 'Meeting ran long',
+      automaticThought: 'I always mess up',
+    );
+    await _openTools(tester, db);
+    await tester.tap(find.widgetWithText(ListTile, 'Meeting ran long'));
+    await tester.pumpAndSettle();
+
+    await refuseDeletes(db, 'thought_records');
+    await tester.tap(find.byTooltip('Delete'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(deleteFailedMessage), findsOneWidget);
+    expect(await DriftThoughtRecordRepository(db).getAll(), hasLength(1));
+  });
 }

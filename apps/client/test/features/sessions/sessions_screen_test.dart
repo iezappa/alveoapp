@@ -7,6 +7,8 @@ import 'package:alveo/data/repositories/session_repository.dart';
 import 'package:alveo/features/sessions/session_editor_screen.dart';
 import 'package:alveo/main.dart';
 
+import '../../helpers/refuse_writes.dart';
+
 Future<void> _openSessionsWide(WidgetTester tester, AppDatabase db) async {
   tester.view.physicalSize = const Size(1400, 1000);
   tester.view.devicePixelRatio = 1.0;
@@ -88,5 +90,31 @@ void main() {
     expect(sessions.single.agendaMarkdown, contains('inline agenda'));
     // Back to the empty detail pane.
     expect(find.text('Pick a record to see it here'), findsOneWidget);
+  });
+
+  // A refused delete used to vanish: the session stayed with nothing on screen
+  // to say so, and the user walked away believing it was gone.
+  testWidgets('says so when the session could not be deleted', (tester) async {
+    tester.view.physicalSize = const Size(1400, 1000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await DriftSessionRepository(db).create(
+      scheduledFor: DateTime(2026, 9, 1, 10),
+      agendaMarkdown: 'talk about boundaries',
+    );
+    await _openSessionsWide(tester, db);
+    await tester.tap(find.byType(ListTile).first);
+    await tester.pumpAndSettle();
+
+    await refuseDeletes(db, 'sessions');
+    await tester.tap(find.byTooltip('Delete'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(deleteFailedMessage), findsOneWidget);
+    expect(await DriftSessionRepository(db).getAll(), hasLength(1));
   });
 }

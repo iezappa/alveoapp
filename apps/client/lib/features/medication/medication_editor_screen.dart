@@ -99,8 +99,12 @@ class _MedicationEditorScreenState
   }
 
   Future<void> _delete() async {
-    if (!await confirmDelete(context)) return;
-    await ref.read(medicationRepositoryProvider).delete(widget.medicationId!);
+    if (!await confirmDelete(context) || !mounted) return;
+    final deleted = await deleteOrReport(
+      context,
+      () => ref.read(medicationRepositoryProvider).delete(widget.medicationId!),
+    );
+    if (!deleted) return;
     ref.invalidate(medicationListProvider);
     if (mounted) _leave();
   }

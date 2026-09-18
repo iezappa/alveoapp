@@ -8,6 +8,7 @@ import '../../data/local/database.dart';
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../shared/confirm_delete.dart';
+import '../shared/save_failure.dart';
 import '../shared/master_detail_shell.dart';
 import 'session_editor_screen.dart';
 import 'session_preview.dart';
@@ -68,8 +69,12 @@ class _SessionsScreenState extends ConsumerState<SessionsScreen> {
   }
 
   Future<void> _delete(String id) async {
-    if (!await confirmDelete(context)) return;
-    await ref.read(sessionRepositoryProvider).delete(id);
+    if (!await confirmDelete(context) || !mounted) return;
+    final deleted = await deleteOrReport(
+      context,
+      () => ref.read(sessionRepositoryProvider).delete(id),
+    );
+    if (!deleted) return;
     ref.invalidate(sessionListProvider);
     if (mounted) setState(() => _selectedId = null);
   }

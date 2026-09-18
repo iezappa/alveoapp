@@ -9,6 +9,7 @@ import '../../data/local/tables.dart';
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../shared/confirm_delete.dart';
+import '../shared/save_failure.dart';
 import '../shared/master_detail_shell.dart';
 import 'task_editor_screen.dart';
 import 'task_preview.dart';
@@ -69,8 +70,12 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
   }
 
   Future<void> _delete(String id) async {
-    if (!await confirmDelete(context)) return;
-    await ref.read(taskRepositoryProvider).delete(id);
+    if (!await confirmDelete(context) || !mounted) return;
+    final deleted = await deleteOrReport(
+      context,
+      () => ref.read(taskRepositoryProvider).delete(id),
+    );
+    if (!deleted) return;
     ref.invalidate(taskListProvider);
     if (mounted) setState(() => _selectedId = null);
   }

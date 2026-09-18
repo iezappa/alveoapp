@@ -8,6 +8,7 @@ import '../../data/local/database.dart';
 import '../../data/providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../shared/confirm_delete.dart';
+import '../shared/save_failure.dart';
 import '../shared/master_detail_shell.dart';
 import 'thought_record_editor_screen.dart';
 import 'thought_record_preview.dart';
@@ -100,8 +101,12 @@ class _ToolsScreenState extends ConsumerState<ToolsScreen> {
   }
 
   Future<void> _delete(String id) async {
-    if (!await confirmDelete(context)) return;
-    await ref.read(thoughtRecordRepositoryProvider).delete(id);
+    if (!await confirmDelete(context) || !mounted) return;
+    final deleted = await deleteOrReport(
+      context,
+      () => ref.read(thoughtRecordRepositoryProvider).delete(id),
+    );
+    if (!deleted) return;
     ref.invalidate(thoughtRecordListProvider);
     if (mounted) setState(() => _selectedId = null);
   }

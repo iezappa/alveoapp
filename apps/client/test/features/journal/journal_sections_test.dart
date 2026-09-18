@@ -8,6 +8,8 @@ import 'package:alveo/domain/journal/journal_section.dart';
 import 'package:alveo/features/journal/journal_editor_screen.dart';
 import 'package:alveo/main.dart';
 
+import '../../helpers/refuse_writes.dart';
+
 Finder _editorField() => find.descendant(
   of: find.byType(JournalEditorScreen),
   matching: find.byType(TextField),
@@ -92,5 +94,34 @@ void main() {
 
     expect(await DriftJournalRepository(db).getAll(), isEmpty);
     expect(find.text('Pick a record to see it here'), findsOneWidget);
+  });
+
+  // A refused delete used to vanish: the journal entry stayed with nothing on screen
+  // to say so, and the user walked away believing it was gone.
+  testWidgets('says so when the journal entry could not be deleted', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1400, 1000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+    final db = AppDatabase.forTesting();
+    addTearDown(db.close);
+    await DriftJournalRepository(db).create(
+      bodyMarkdown: 'first light',
+      entryDate: DateTime(2026, 8, 20),
+      title: 'Morning',
+    );
+    await _openJournal(tester, db);
+    await tester.tap(find.widgetWithText(ListTile, 'Morning'));
+    await tester.pumpAndSettle();
+
+    await refuseDeletes(db, 'journal_entries');
+    await tester.tap(find.byTooltip('Delete'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Delete'));
+    await tester.pumpAndSettle();
+
+    expect(find.text(deleteFailedMessage), findsOneWidget);
+    expect(await DriftJournalRepository(db).getAll(), hasLength(1));
   });
 }
