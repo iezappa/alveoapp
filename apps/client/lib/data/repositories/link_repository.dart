@@ -14,37 +14,62 @@ class DriftLinkRepository implements LinkRepository {
 
   @override
   Future<void> link(String sessionId, LinkTargetType type, String targetId) {
-    return _db
-        .into(_db.sessionLinks)
-        .insert(
-          SessionLinksCompanion.insert(
-            sessionId: sessionId,
-            targetType: type,
-            targetId: targetId,
-          ),
-          mode: InsertMode.insertOrIgnore,
-        );
+    return _db.transaction(() async {
+      await _touch([sessionId]);
+      await _db
+          .into(_db.sessionLinks)
+          .insert(
+            SessionLinksCompanion.insert(
+              sessionId: sessionId,
+              targetType: type,
+              targetId: targetId,
+            ),
+            mode: InsertMode.insertOrIgnore,
+          );
+    });
   }
 
   @override
   Future<void> unlink(String sessionId, LinkTargetType type, String targetId) {
-    return (_db.delete(_db.sessionLinks)..where(
-          (t) =>
-              t.sessionId.equals(sessionId) &
-              t.targetType.equalsValue(type) &
-              t.targetId.equals(targetId),
-        ))
-        .go();
+    return _db.transaction(() async {
+      await _touch([sessionId]);
+      await (_db.delete(_db.sessionLinks)..where(
+            (t) =>
+                t.sessionId.equals(sessionId) &
+                t.targetType.equalsValue(type) &
+                t.targetId.equals(targetId),
+          ))
+          .go();
+    });
   }
 
   /// Drops every link that points at [targetId] of [type]. Call this when the
   /// target record itself is deleted.
   @override
   Future<void> removeLinksTo(LinkTargetType type, String targetId) {
-    return (_db.delete(_db.sessionLinks)..where(
-          (t) => t.targetType.equalsValue(type) & t.targetId.equals(targetId),
-        ))
-        .go();
+    return _db.transaction(() async {
+      final where =
+          (_db.select(_db.sessionLinks)..where(
+                (t) =>
+                    t.targetType.equalsValue(type) &
+                    t.targetId.equals(targetId),
+              ))
+              .map((l) => l.sessionId);
+      await _touch(await where.get());
+      await (_db.delete(_db.sessionLinks)..where(
+            (t) => t.targetType.equalsValue(type) & t.targetId.equals(targetId),
+          ))
+          .go();
+    });
+  }
+
+  /// A link is part of its session: a removed link leaves no row behind, so
+  /// the session's updatedAt is what records that it changed.
+  Future<void> _touch(List<String> sessionIds) async {
+    if (sessionIds.isEmpty) return;
+    await (_db.update(_db.sessions)..where((t) => t.id.isIn(sessionIds))).write(
+      SessionsCompanion(updatedAt: Value(DateTime.now())),
+    );
   }
 
   /// Items linked to [sessionId], resolved against live rows (dangling links

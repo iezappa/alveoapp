@@ -172,6 +172,9 @@ class DriftJournalRepository implements JournalRepository {
       validateIntensity(e.intensity);
     }
     await _db.transaction(() async {
+      // The removed rows leave nothing behind, so the entry carries the change.
+      await (_db.update(_db.journalEntries)..where((t) => t.id.equals(id)))
+          .write(JournalEntriesCompanion(updatedAt: Value(DateTime.now())));
       await (_db.delete(
         _db.journalEntryEmotions,
       )..where((t) => t.journalEntryId.equals(id))).go();
